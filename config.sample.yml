@@ -1,0 +1,5 @@
+db:
+  user: root
+  pass: 
+  host: localhost
+  name: db_name
