@@ -14,10 +14,10 @@ module Readable
     item_urls.each do |item_url|
       sql = '
         DELETE
-          i, iw, ei
-        FROM      items          AS  i
-        LEFT JOIN items_words    AS iw ON i.id = iw.item_id
-        LEFT JOIN entities_items AS ei ON i.id = ei.item_id
+          i, iw, ui
+        FROM      items       AS  i
+        LEFT JOIN items_words AS iw ON i.id = iw.item_id
+        LEFT JOIN users_items AS ui ON i.id = ui.item_id
         WHERE
           i.url = "' + @@db.escape_string(item_url) + '"
         ;'
@@ -107,28 +107,28 @@ module Readable
     return words, words_count
   end
 
-  def Readable.rank_words(entity_id)
+  def Readable.rank_words(user_id)
     sql = '
-      INSERT INTO entities_words (
-        entity_id,
+      INSERT INTO users_words (
+        user_id,
         word_id,
         score
       )
       SELECT
-        main.entity_id                   AS entity_id,
+        main.user_id                   AS user_id,
         main.word_id                     AS word_id,
         main.vote * ( @row := @row + 1 ) AS score
       FROM (
         SELECT
            w.id        AS word_id,
-          ei.entity_id AS entity_id,
-          SUM(ei.vote) AS vote
-        FROM      words          AS  w
-        LEFT JOIN items_words    AS iw ON  w.id      = iw.word_id
-        LEFT JOIN items          AS  i ON iw.item_id =  i.id
-        LEFT JOIN entities_items AS ei ON  i.id      = ei.item_id
+          ui.user_id AS user_id,
+          SUM(ui.vote) AS vote
+        FROM      words       AS  w
+        LEFT JOIN items_words AS iw ON  w.id      = iw.word_id
+        LEFT JOIN items       AS  i ON iw.item_id =  i.id
+        LEFT JOIN users_items AS ui ON  i.id      = ui.item_id
         WHERE
-          ei.entity_id = ' + entity_id.to_s + '
+          ui.user_id = ' + user_id.to_s + '
         GROUP BY w.id
         ORDER BY count DESC
       ) AS main, (
@@ -139,18 +139,18 @@ module Readable
     @@db.query(sql)
   end
 
-  def Readable.get_top_items(entity_id)
+  def Readable.get_top_items(user_id)
     sql = '
       SELECT
         i.url,
-        SUM(ew.score) AS score
-      FROM      items          AS  i
-      LEFT JOIN items_words    AS iw ON  i.id      = iw.item_id
-      LEFT JOIN entities_words AS ew ON iw.word_id = ew.word_id
-      LEFT JOIN entities_items AS ei ON  i.id      = ei.item_id
+        SUM(uw.score) AS score
+      FROM      items       AS  i
+      LEFT JOIN items_words AS iw ON  i.id      = iw.item_id
+      LEFT JOIN users_words AS uw ON iw.word_id = uw.word_id
+      LEFT JOIN users_items AS ui ON  i.id      = ui.item_id
       WHERE
-        ew.entity_id = ' + entity_id.to_s + ' AND
-        ei.item_id   IS NULL
+        uw.user_id = ' + user_id.to_s + ' AND
+        ui.item_id   IS NULL
       GROUP BY i.id
       ORDER BY
         score DESC
@@ -167,34 +167,34 @@ module Readable
     return items
   end
 
-  def Readable.entity_clear(entity_id)
+  def Readable.user_clear(user_id)
     sql = '
       DELETE
-      FROM entities_items
+      FROM users_items
       WHERE
-        entity_id = ' + entity_id.to_s + '
+        user_id = ' + user_id.to_s + '
       ;'
 
     @@db.query(sql)
 
     sql = '
       DELETE
-      FROM entities_words
+      FROM users_words
       WHERE
-        entity_id = ' + entity_id.to_s + '
+        user_id = ' + user_id.to_s + '
       ;'
 
     @@db.query(sql)
   end
 
-  def Readable.vote(entity_id, item_url, vote)
+  def Readable.vote(user_id, item_url, vote)
     sql = '
-      INSERT IGNORE INTO entities_items (
-        entity_id,
+      INSERT IGNORE INTO users_items (
+        user_id,
         item_id,
         vote
       ) VALUES (
-        ' + entity_id.to_s + ',
+        ' + user_id.to_s + ',
         ( SELECT id FROM items WHERE url = "' + @@db.escape_string(item_url) + '" ),
         ' + vote.to_s + '
       )
@@ -206,9 +206,9 @@ module Readable
   end
 end
 
-entity_id = 1
+user_id = 1
 
-Readable.entity_clear(entity_id)
+Readable.user_clear(user_id)
 
 test_data = YAML.load_file('test_data.yml')
 
@@ -216,13 +216,13 @@ item_urls = test_data['urls_like'] | test_data['urls_dislike'] | test_data['urls
 
 Readable.analyze_items(item_urls)
 
-test_data['urls_like'   ].each { |url| Readable.vote(entity_id, url,  1) }
-test_data['urls_dislike'].each { |url| Readable.vote(entity_id, url, -1) }
+test_data['urls_like'   ].each { |url| Readable.vote(user_id, url,  1) }
+test_data['urls_dislike'].each { |url| Readable.vote(user_id, url, -1) }
 
-Readable.rank_words(entity_id)
+Readable.rank_words(user_id)
 
 puts "\n" + 'Unread items in order of relavance:'
 
-items = Readable.get_top_items(entity_id)
+items = Readable.get_top_items(user_id)
 
 items.each { |item| puts item['url'] }

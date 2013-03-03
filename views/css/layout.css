@@ -1,0 +1,23 @@
+body {
+	overflow-y: scroll;
+	padding-top: 80px;
+}
+
+p {
+	margin: 0 0 20px;
+}
+
+article {
+	border-bottom: 1px solid #e5e5e5;
+	margin-bottom: 26px;
+	text-align: justify;
+}
+
+.divider {
+  border-bottom: 1px solid #e5e5e5;
+	margin-bottom: 26px;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	margin-top: 3px;
+}
