@@ -17,8 +17,6 @@ class Signup extends \Swiftlet\Controller
 		$password       = isset($_POST['password'])        ? $_POST['password']        : '';
 		$passwordRepeat = isset($_POST['password-repeat']) ? $_POST['password-repeat'] : '';
 
-		$this->view->set('email', $email);
-
 		if ( !empty($_POST) ) {
 			$success = false;
 			$error   = false;
@@ -52,8 +50,13 @@ class Signup extends \Swiftlet\Controller
 				}
 			}
 
-			$this->view->set('success', $success);
-			$this->view->set('error', $error);
+			if ( $success ) {
+				$this->view->set('success', $success);
+			} else {
+				$this->view->set('error', $error);
+
+				$this->view->set('email', $email);
+			}
 		}
 	}
 }
