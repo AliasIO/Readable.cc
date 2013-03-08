@@ -29,8 +29,8 @@ class Feeds extends \Swiftlet\Controller
 			$urls   = !empty($_POST['url'    ]) && is_array($_POST['url'   ]) ? $_POST['url'   ] : array();
 			$delete = !empty($_POST['delete' ]) && is_array($_POST['delete']) ? $_POST['delete'] : array();
 
-			$name = !empty($names['new']) ? $names['new'] : '';
-			$url  = !empty($urls['new'])  ? $urls['new']  : '';
+			$nameNew = !empty($names['new']) ? $names['new'] : '';
+			$urlNew  = !empty($urls['new'])  ? $urls['new']  : '';
 
 			unset($names['new']);
 			unset($urls['new']);
@@ -71,6 +71,9 @@ class Feeds extends \Swiftlet\Controller
 				}
 			}
 
+			$name = $nameNew;
+			$url  = $urlNew;
+
 			// Add new feed
 			if ( $name || $url ) {
 				if ( !$url ) {
@@ -110,11 +113,9 @@ class Feeds extends \Swiftlet\Controller
 							INSERT IGNORE INTO feeds (
 								url,
 								created_at,
-								last_fetched_at,
-								last_read_at
+								last_fetched_at
 							) VALUES (
 								:url,
-								NOW(),
 								NOW(),
 								NOW()
 							)
@@ -174,6 +175,11 @@ class Feeds extends \Swiftlet\Controller
 
 			if ( $error ) {
 				$this->view->set('error', $error);
+
+				$this->view->set('name-new', $nameNew);
+				$this->view->set('url-new',  $urlNew);
+
+				$this->view->set('error-url-new', true);
 			} else {
 				$this->view->set('success', 'Feeds have been saved successfully.');
 			}

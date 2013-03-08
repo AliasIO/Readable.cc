@@ -20,44 +20,40 @@
 </div>
 <?php endif ?>
 
-<div class="row">
-	<div class="span12">
-		<form method="post" action="<?php echo $this->app->getRootPath() ?>signup" class="form-signin form-horizontal well">
-			<br>
+<form method="post" action="<?php echo $this->app->getRootPath() ?>signup" class="form-signin form-horizontal well">
+	<br>
 
-			<fieldset>
-				<div class="control-group">
-					<label class="control-label" for="email">Email address</label>
+	<fieldset>
+		<div class="control-group <?php echo $this->get('error-email') ? 'error' : '' ?>">
+			<label class="control-label" for="email">Email address</label>
 
-					<div class="controls">
-						<input id="email" name="email" class="input-xlarge" type="text" value="<?php echo $this->get('email') ?>">
-					</div>
-				</div>
+			<div class="controls">
+				<input id="email" name="email" class="input-xlarge" type="text" value="<?php echo $this->get('email') ?>">
+			</div>
+		</div>
 
-				<div class="control-group">
-					<label class="control-label" for="password">Password</label>
+		<div class="control-group <?php echo $this->get('error-password') ? 'error' : '' ?>">
+			<label class="control-label" for="password">Password</label>
 
-					<div class="controls">
-						<input id="password" name="password" class="input-xlarge" type="password">
-					</div>
-				</div>
+			<div class="controls">
+				<input id="password" name="password" class="input-xlarge" type="password">
+			</div>
+		</div>
 
-				<div class="control-group">
-					<label class="control-label" for="password-repeat">Repeat password</label>
+		<div class="control-group <?php echo $this->get('error-password-repeat') ? 'error' : '' ?>">
+			<label class="control-label" for="password-repeat">Repeat password</label>
 
-					<div class="controls">
-						<input id="password" name="password-repeat" class="input-xlarge" type="password">
-					</div>
-				</div>
+			<div class="controls">
+				<input id="password" name="password-repeat" class="input-xlarge" type="password">
+			</div>
+		</div>
 
-				<div class="control-group">
-					<div class="controls">
-						<button class="btn btn-inverse" type="submit"><i class="icon-user icon-white"></i> Create account</button>
-					</div>
-				</div>
-			</fieldset>
-		</form>
-	</div>
-</div>
+		<div class="control-group">
+			<div class="controls">
+				<button class="btn btn-inverse" type="submit"><i class="icon-user icon-white"></i> Create account</button>
+			</div>
+		</div>
+	</fieldset>
+</form>
 
 <?php require 'footer.html.php' ?>

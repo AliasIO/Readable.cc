@@ -13,6 +13,13 @@ article {
 	text-align: justify;
 }
 
+.container {
+	padding: 0 20px;
+	min-width: 320px;
+	max-width: 940px;
+	width: auto !important;
+}
+
 .divider {
   border-bottom: 1px solid #e5e5e5;
 	margin-bottom: 26px;
@@ -20,4 +27,21 @@ article {
 
 [class^="icon-"], [class*=" icon-"] {
 	margin-top: 3px;
+}
+
+@media all and (max-width: 699px) {
+	.navbar-fixed-top li span {
+		display: none;
+	}
+
+	.control-group .control-label {
+		float: none;
+		font-weight: bold;
+		text-align: left;
+		width: auto;
+	}
+
+	.control-group .controls {
+		margin-left: 0;
+	}
 }

@@ -6,9 +6,10 @@ class Auth extends \Swiftlet\Model
 {
 	const
 		USER_NOT_FOUND     = 1,
-		PASSWORD_INCORRECT = 2,
-		EMAIL_IN_USE       = 3,
-		EMAIL_INVALID      = 4
+		PASSWORD_EMPTY     = 2,
+		PASSWORD_INCORRECT = 3,
+		EMAIL_IN_USE       = 4,
+		EMAIL_INVALID      = 5
 		;
 
 	protected
@@ -64,6 +65,10 @@ class Auth extends \Swiftlet\Model
 	 */
 	public function register($email, $password)
 	{
+		if ( !$password ) {
+			throw new \Exception('No password specified', self::PASSWORD_EMPTY);
+		}
+
 		if ( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
 			throw new \Exception('Email address invalid', self::EMAIL_INVALID);
 		}

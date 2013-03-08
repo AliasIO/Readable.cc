@@ -39,10 +39,15 @@ class Signin extends \Swiftlet\Controller
 					case $auth::EMAIL_INVALID:
 						$error = 'Please provide a valid email address.';
 
+						$this->view->set('error-email', true);
+
 						break;
 					case $auth::USER_NOT_FOUND:
 					case $auth::PASSWORD_INCORRECT:
 						$error = 'The provided email address or password is incorrect, please try again.';
+
+						$this->view->set('error-email', true);
+						$this->view->set('error-password', true);
 
 						break;
 				}

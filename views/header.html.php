@@ -6,7 +6,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<link href="<?php echo $this->app->getRootPath() ?>views/lib/bootstrap/css/readable.min.css" rel="stylesheet">
+		<link href="<?php echo $this->app->getRootPath() ?>views/lib/bootstrap/css/readable.css" rel="stylesheet">
 		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css" rel="stylesheet">
 	</head>
 	<body>
@@ -14,22 +14,21 @@
 			<div class="navbar-inner">
 				<div class="container">
 					<a class="brand" href="<?php echo $this->app->getRootPath() ?>">Readable.cc</a>
-					<nav class="nav-collapse">
-						<ul class="nav">
-							<li class="<?php echo $this->name == 'index' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>"><i class="icon-fire"></i> Popular</a></li>
-							<li class="<?php echo $this->name == 'personal' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>personal"><i class="icon-star"></i> Personal</a></li>
-						</ul>
 
-						<ul class="nav pull-right">
-							<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
-							<li class="<?php echo $this->name == 'feeds'   ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>feeds"><i class="icon-align-justify"></i> Manage feeds</a></li>
-							<li class="<?php echo $this->name == 'signout' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signout"><i class="icon-off"></i> Sign out</a></li>
-							<?php else: ?>
-							<li class="<?php echo $this->name == 'signup'  ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signup"><i class="icon-user"></i> Create account</a></li>
-							<li class="<?php echo $this->name == 'signin'  ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signin"><i class="icon-hand-right"></i> Sign in</a></li>
-							<?php endif ?>
-						</ul>
-					</nav><!-- /.nav-collapse -->
+					<ul class="nav">
+						<li class="<?php echo $this->name == 'index' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>"><i class="icon-fire"></i><span> Popular</span></a></li>
+						<li class="<?php echo $this->name == 'personal' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>personal"><i class="icon-star"></i><span> Personal</span></a></li>
+					</ul>
+
+					<ul class="nav pull-right">
+						<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
+						<li class="<?php echo $this->name == 'feeds'   ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>feeds"><i class="icon-align-justify"></i><span> Manage feeds</span></a></li>
+						<li class="<?php echo $this->name == 'signout' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signout"><i class="icon-off"></i><span> Sign out</span></a></li>
+						<?php else: ?>
+						<li class="<?php echo $this->name == 'signup'  ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signup"><i class="icon-user"></i><span> Create account</span></a></li>
+						<li class="<?php echo $this->name == 'signin'  ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signin"><i class="icon-hand-right"></i><span> Sign in</span></a></li>
+						<?php endif ?>
+					</ul>
 				</div>
 			</div><!-- /navbar-inner -->
 		</header><!-- /navbar -->
