@@ -28,6 +28,8 @@ class Personal extends \Swiftlet\Controller
 			exit;
 		}
 
+		require_once 'HTMLPurifier/Bootstrap.php';
+
 		$this->view->name = 'personal-ajax';
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
@@ -53,6 +55,26 @@ class Personal extends \Swiftlet\Controller
 
 		$result = $sth->fetchAll(\PDO::FETCH_OBJ);
 
-		$this->view->set('items', $result);
+		$items = $result;
+
+		foreach ( $items as $item ) {
+			$item->contents = $this->_clean($item->contents);
+		}
+
+		$this->view->set('items', $items);
+	}
+
+	/**
+	 * TODO
+	 */
+	private function _clean($html)
+	{
+		$config = \HTMLPurifier_Config::createDefault();
+
+		$config->set('HTML.Allowed', 'h1,h2,h3,h4,h5,h6,p,ul,ol,li,a[href],em,strong,img[src],code,br');
+
+		$purifier = new \HTMLPurifier($config);
+
+		return $purifier->purify($html);
 	}
 }
