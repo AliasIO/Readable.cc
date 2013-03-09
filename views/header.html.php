@@ -8,6 +8,13 @@
 
 		<link href="<?php echo $this->app->getRootPath() ?>views/lib/bootstrap/css/readable.css" rel="stylesheet">
 		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css" rel="stylesheet">
+
+		<script src="<?php echo $this->app->getRootPath() ?>views/lib/jquery-1.9.1.min.js"></script>
+		<script src="<?php echo $this->app->getRootPath() ?>views/js/readable.js"></script>
+
+		<script>
+			readable.rootPath = '<?php echo $this->app->getRootPath() ?>';
+		</script>
 	</head>
 	<body>
 		<header class="navbar navbar-fixed-top ">
