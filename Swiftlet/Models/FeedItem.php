@@ -44,7 +44,7 @@ class FeedItem extends \Swiftlet\Model
 
 		if ( $this->id ) {
 			// Extract words
-			$contents = trim(preg_replace('/\s+/', ' ', preg_replace('/\b([0-9]+.)\b/', ' ', preg_replace('/\W/', ' ', preg_replace('/&[a-z]+/', '', strtolower(strip_tags($data->contents)))))));
+			$contents = trim(preg_replace('/\s+/', ' ', preg_replace('/\b([0-9]+.)\b/', ' ', preg_replace('/\W/', ' ', preg_replace('/&[a-z]+/', '', strtolower(strip_tags($data->title . ' ' . $data->contents)))))));
 
 			$words = explode(' ', $contents);
 

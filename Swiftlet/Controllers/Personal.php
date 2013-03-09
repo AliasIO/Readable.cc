@@ -37,6 +37,7 @@ class Personal extends \Swiftlet\Controller
 		$sth = $dbh->prepare('
 			SELECT
 				users_feeds.name AS feed_name,
+				items.id,
 				items.url,
 				items.title,
 				items.contents,
@@ -71,7 +72,9 @@ class Personal extends \Swiftlet\Controller
 	{
 		$config = \HTMLPurifier_Config::createDefault();
 
-		$config->set('HTML.Allowed', 'h1,h2,h3,h4,h5,h6,p,ul,ol,li,a[href],em,strong,img[src],code,br');
+		$config->set('HTML.Allowed', 'h1,h2,h3,h4,h5,h6,a[href],p,em,strong,img[src],code,br');
+		$config->set('HTML.SafeObject', true);
+		$config->set('Output.FlashCompat', true);
 
 		$purifier = new \HTMLPurifier($config);
 

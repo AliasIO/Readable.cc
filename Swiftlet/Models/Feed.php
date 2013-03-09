@@ -5,7 +5,7 @@ namespace Swiftlet\Models;
 class Feed extends \Swiftlet\Model
 {
 	const
-		FEED_INVALID  = 1,
+		FEED_INVALID = 1,
 		SERVER_ERROR = 2
 		;
 

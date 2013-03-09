@@ -14,8 +14,8 @@ class Cron extends \Swiftlet\Controller
 				feeds.id,
 				feeds.url
 			FROM      users
-			LEFT JOIN users_feeds ON       users.id      = users_feeds.user_id
-			LEFT JOIN feeds       ON users_feeds.feed_id =       feeds.id
+			INNER JOIN users_feeds ON       users.id      = users_feeds.user_id
+			INNER JOIN feeds       ON users_feeds.feed_id =       feeds.id
 			WHERE
 				users.last_active_at  > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY) -- AND
 				-- feeds.last_fetched_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL  1 DAY)
@@ -36,7 +36,7 @@ class Cron extends \Swiftlet\Controller
 			try {
 				$feed->fetch($result->url);
 			} catch ( \Exception $e ) {
-				echo 'feed: ' . $e->getMessage() . '<br>';
+				echo 'feed: ' . $e->getCode() . ' ' . $e->getMessage() . '<br>';
 
 				break;
 			}

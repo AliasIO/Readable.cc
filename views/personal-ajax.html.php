@@ -1,5 +1,5 @@
 <?php foreach ( $this->get('items') as $item ): ?>
-<article>
+<article data-item-id="<?php echo $item->id ?>">
 	<h1><a href="<?php echo $item->url ?>"><?php echo $item->title ?></a></h1>
 
 	<p class="article-date">
