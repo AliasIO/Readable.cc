@@ -86,10 +86,16 @@ class Auth extends \Swiftlet\Model
 		$sth = $dbh->prepare('
 			INSERT INTO users (
 				email,
-				password
+				password,
+				created_at,
+				updated_at,
+				last_active_at
 			) VALUES (
 				:email,
-				:password
+				:password,
+				UTC_TIMESTAMP(),
+				UTC_TIMESTAMP(),
+				UTC_TIMESTAMP()
 			)
 			;');
 
@@ -114,7 +120,8 @@ class Auth extends \Swiftlet\Model
 
 		$sth = $dbh->prepare('
 			UPDATE users SET
-				password = :password
+				password = :password,
+				updated_at = UTC_TIMESTAMP()
 			WHERE
 				id    = :id OR
 				email = :id

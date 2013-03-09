@@ -5,7 +5,7 @@ namespace Swiftlet\Controllers;
 class Feeds extends \Swiftlet\Controller
 {
 	protected
-		$title = 'Manage RSS feeds'
+		$title = 'Manage feeds'
 		;
 
 	/**
@@ -79,45 +79,49 @@ class Feeds extends \Swiftlet\Controller
 				if ( !$url ) {
 					$error = 'Please provide a URL.';
 				} else {
+					$feed = $this->app->getModel('feed');
+
 					try {
-						$result = $this->_fetch($url);
-
-						// Find RSS feed URL in an HTML page
-						preg_match('/<link[^>]+rel=("|\')alternate\1[^>]*>/is', $result->contents, $match);
-
-						if ( !empty($match) && preg_match('/type=("|\').*?rss.*?\1/is', $match[0]) ) {
-							preg_match('/href=("|\')(.+?)\1/i', $match[0], $match);
-
-							if ( isset($match[2]) ) {
-								$url = $match[2];
-
-								$result = $this->_fetch($url);
-							}
-						}
-
-						if ( !$this->_isRss($result->contents) ) {
-							$error = 'No valid RSS feed found at the specified URL.';
-						}
+						$feed->fetch($url);
 					} catch ( \Exception $e ) {
-						$error = 'The feed at the specified URL could not be fetched, please try again.';
+						if ( $e->getCode = $feed::FEED_INVALID ) {
+							// Find feed URL in an HTML page
+							preg_match('/<link[^>]+rel=("|\')alternate\1[^>]*>/is', $feed->getContents(), $match);
+
+							if ( !empty($match) && preg_match('/type=("|\').*?rss.*?\1/is', $match[0]) ) {
+								preg_match('/href=("|\')(.+?)\1/i', $match[0], $match);
+
+								if ( isset($match[2]) ) {
+									$url = $match[2];
+
+									$feed = $this->app->getModel('feed');
+
+									try {
+										$feed->fetch($url);
+									} catch ( \Exception $e ) {
+										$error = 'Feed found but could not be fetched, please try again.';
+									}
+								}
+							}
+						} else {
+							$error = 'The feed at the specified URL could not be fetched, please try again.';
+						}
 					}
 
 					if ( $error ) {
 						$this->view->set('name-new', $name);
 						$this->view->set('url-new',  $url);
 					} else {
-						$url = $result->url;
+						$url = $feed->getEffectiveUrl();
 
 						// Add the feed
 						$sth = $dbh->prepare('
 							INSERT IGNORE INTO feeds (
 								url,
-								created_at,
-								last_fetched_at
+								created_at
 							) VALUES (
 								:url,
-								NOW(),
-								NOW()
+								UTC_TIMESTAMP()
 							)
 							;');
 
@@ -205,63 +209,5 @@ class Feeds extends \Swiftlet\Controller
 		$result = $sth->fetchAll(\PDO::FETCH_OBJ);
 
 		$this->view->set('feeds', $result);
-	}
-
-	/**
-	 * Fetch a URL using cURL
-	 *
-	 * @param string $url
-	 * @return object
-	 */
-	private function _fetch($url)
-	{
-		$ch = curl_init($url);
-
-		curl_setopt_array($ch, array(
-			CURLOPT_SSL_VERIFYPEER => false,
-			CURLOPT_HEADER         => true,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_MAXREDIRS      => 3,
-			CURLOPT_TIMEOUT        => 5,
-			CURLOPT_USERAGENT      => 'http://readable.cc'
-			));
-
-		$response = curl_exec($ch);
-
-		if ( curl_errno($ch) !== 0 ) {
-			throw new \Exception(curl_error($ch));
-		}
-
-		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-		if ( $httpCode != 200 ) {
-			throw new \Exception('cURL request returned HTTP code ' . $httpCode);
-		}
-
-		$result = new \stdClass();
-
-		$result->url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-
-		$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-
-		$result->contents = substr($response, $headerSize);
-
-		return $result;
-	}
-
-	/**
-	 * Test if a string is a valid RSS feed
-	 *
-	 * @param string $xml
-	 * @return bool
-	 */
-	private function _isRss($xml)
- 	{
-		try {
-			$xml = new \SimpleXMLElement($xml);
-
-			return $xml->getName() == 'rss';
-		} catch ( \Exception $e ) { }
 	}
 }

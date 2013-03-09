@@ -31,6 +31,20 @@ class Signin extends \Swiftlet\Controller
 				$session->set('id',    $user->id);
 				$session->set('email', $user->email);
 
+				$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+				$sth = $dbh->prepare('
+					UPDATE users SET
+						last_active_at = UTC_TIMESTAMP()
+					WHERE
+						id = :id
+					LIMIT 1
+					;');
+
+				$sth->bindParam('id', $user->id);
+
+				$sth->execute();
+
 				header('Location: ' . $this->app->getRootPath() . 'personal');
 			} catch ( \Exception $e ) {
 				$error = 'An unknown error ocurred.';
@@ -46,7 +60,7 @@ class Signin extends \Swiftlet\Controller
 					case $auth::PASSWORD_INCORRECT:
 						$error = 'The provided email address or password is incorrect, please try again.';
 
-						$this->view->set('error-email', true);
+						$this->view->set('error-email',    true);
 						$this->view->set('error-password', true);
 
 						break;

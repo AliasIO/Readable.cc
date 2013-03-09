@@ -32,6 +32,7 @@ DROP TABLE IF EXISTS `readable_cc`.`items` ;
 CREATE  TABLE IF NOT EXISTS `readable_cc`.`items` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `url` VARCHAR(255) NOT NULL ,
+  `title` VARCHAR(255) NULL ,
   `contents` TEXT NULL ,
   `posted_at` DATETIME NOT NULL ,
   `feed_id` INT(11) UNSIGNED NULL DEFAULT NULL ,
