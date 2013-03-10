@@ -67,7 +67,11 @@ class Feed extends \Swiftlet\Model
 				$this->feedType = 'rss';
 			}
 		} catch ( \Exception $e ) {
-			throw new \Exception($e->getMessage(), FEED_INVALID);
+			throw new \Exception($e->getMessage(), self::FEED_INVALID);
+		}
+
+		if ( !$this->feedType ) {
+			throw new \Exception('Invalid feed', self::FEED_INVALID);
 		}
 	}
 

@@ -6,14 +6,19 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+		<meta name="description" content="The readable feed reader. Content automagically filtered to suit your interest.">
+		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
+
 		<link href="<?php echo $this->app->getRootPath() ?>views/lib/bootstrap/css/readable.css" rel="stylesheet">
 		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css" rel="stylesheet">
 
 		<script src="<?php echo $this->app->getRootPath() ?>views/lib/jquery-1.9.1.min.js"></script>
+		<script src="<?php echo $this->app->getRootPath() ?>views/lib/mousetrap.min.js"></script>
 		<script src="<?php echo $this->app->getRootPath() ?>views/js/readable.js"></script>
 
 		<script>
 			readable.rootPath = '<?php echo $this->app->getRootPath() ?>';
+			readable.view     = '<?php echo $this->name ?>';
 		</script>
 	</head>
 	<body>

@@ -9,6 +9,7 @@ a {
 
 a:hover, a:active, a:focus {
 	color: inherit;
+	outline: none;
 }
 
 p {
@@ -21,7 +22,7 @@ code {
 
 .container {
 	padding: 0 20px;
-	min-width: 320px;
+	min-width: 260px;
 	max-width: 940px;
 	width: auto !important;
 }
@@ -35,27 +36,12 @@ code {
 	margin-top: 3px;
 }
 
-@media all and (max-width: 699px) {
-	.navbar-fixed-top li span {
-		display: none;
-	}
-
-	.control-group .control-label {
-		float: none;
-		font-weight: bold;
-		text-align: left;
-		width: auto;
-	}
-
-	.control-group .controls {
-		margin-left: 0;
-	}
-}
-
 .alert {
 	border-top: none;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
+	cursor: pointer;
+	margin-right: 20px;
 	position: fixed;
 	top: 60px;
 	width: 889px;
@@ -68,14 +54,23 @@ code {
 
 article {
 	border-bottom: 1px solid #e5e5e5;
-	padding: 26px 0 26px 0;
+	margin-bottom: 26px;
+	padding-bottom: 26px;
 }
 
-article:first-child {
-	padding-top: 0;
-}
+	article .item-toggle {
+		display: none;
+	}
 
-	article .article-date {
+	article.inactive.collapsed h1 {
+		text-decoration: line-through;
+	}
+
+	article.collapsed .item-wrap {
+		display: none;
+	}
+
+	article .item-date {
 		font-size: small;
 	}
 
@@ -99,6 +94,15 @@ article:first-child {
 		text-decoration: none;;
 	}
 
+	article h1 a, article h1 a:active, article h1 a:focus {
+		text-decoration: none;
+	}
+
+	article h1 a:hover {
+		color: #666;
+		text-decoration: none;
+	}
+
 	article img {
 		background: #fff;
 		border: 1px solid #e5e5e5;
@@ -113,3 +117,49 @@ article:first-child {
 	article img:hover {
 		max-height: 1000px;
 	}
+
+@media all and (max-width: 995px) {
+	.alert {
+		width: auto;
+	}
+}
+
+@media all and (max-width: 699px) {
+	.navbar-fixed-top li span {
+		display: none;
+	}
+
+	.control-group .control-label {
+		float: none;
+		font-weight: bold;
+		text-align: left;
+		width: auto;
+	}
+
+	.control-group .controls {
+		margin-left: 0;
+	}
+}
+
+@media all and (max-width: 369px) {
+	body {
+		padding-top: 40px;
+	}
+
+	.navbar-inner {
+		min-height: 40px;
+	}
+
+	.navbar .brand, .navbar .nav > li > a {
+		padding: 7px 15px;
+	}
+
+	.navbar .brand {
+		font-size: 14px !important;
+		padding-right: 0;
+	}
+
+	.alert {
+		top: 40px;
+	}
+}

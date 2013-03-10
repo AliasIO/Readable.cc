@@ -84,7 +84,9 @@ class Feeds extends \Swiftlet\Controller
 					try {
 						$feed->fetch($url);
 					} catch ( \Exception $e ) {
-						if ( $e->getCode = $feed::FEED_INVALID ) {
+						if ( $e->getCode() == $feed::FEED_INVALID ) {
+							$error = 'No feed found at the specified URL.';
+
 							// Find feed URL in an HTML page
 							preg_match('/<link[^>]+rel=("|\')alternate\1[^>]*>/is', $feed->getContents(), $match);
 
@@ -98,6 +100,8 @@ class Feeds extends \Swiftlet\Controller
 
 									try {
 										$feed->fetch($url);
+
+										$error = false;
 									} catch ( \Exception $e ) {
 										$error = 'Feed found but could not be fetched, please try again.';
 									}

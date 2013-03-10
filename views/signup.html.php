@@ -6,16 +6,12 @@
 
 <?php if ( $this->get('success') ): ?>
 <div class="alert alert-success">
-	<a class="close">&times;</a>
-
 	<?php echo $this->get('success'); ?>
 </div>
 <?php endif ?>
 
 <?php if ( $this->get('error') ): ?>
 <div class="alert alert-error">
-	<a class="close">&times;</a>
-
 	<?php echo $this->get('error'); ?>
 </div>
 <?php endif ?>

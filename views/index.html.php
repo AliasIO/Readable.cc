@@ -3,7 +3,7 @@
 <?php if ( !$this->app->getSingleton('session')->get('id') ): ?>
 <div class="alert alert-block">
 	<p>
-		<a href="<?php echo $this->app->getRootPath() ?>signup">Sign up</a> to manage your own RSS feeds. Readable filters content automagically to suit your interests.
+		<a href="<?php echo $this->app->getRootPath() ?>signup">Sign up</a> to manage your own feeds. Readable filters content automagically to suit your interests.
 	</p>
 </div>
 <?php endif ?>
