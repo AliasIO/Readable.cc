@@ -52,7 +52,7 @@ var readable = (function($) {
 
 						app.items.highlightActive();
 					}
-				}, 500);
+				}, 200);
 
 				// Expand collapsed item when clicked
 				$('#items').on('click', 'article.collapsed', function(e) {
@@ -108,7 +108,7 @@ var readable = (function($) {
 
 			highlightActive: function(instant) {
 				var
-					cutOff = parseInt($('body').css('padding-top')) + 80,
+					cutOff = parseInt($('body').css('padding-top')) + 90,
 					offset = $(document).scrollTop()
 					;
 
