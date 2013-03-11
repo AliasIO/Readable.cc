@@ -16,10 +16,16 @@
 				<i class="icon-thumbs-up<?php echo $item->vote == 1 ? ' icon-white' : '' ?>"></i>
 				Interesting
 			</button>
+
 			<button class="btn btn-small item-vote<?php echo $item->vote == -1 ? ' btn-inverse voted' : '' ?>" data-item-id="<?php echo $item->id ?>" data-vote="-1">
 				<i class="icon-thumbs-down<?php echo $item->vote == -1 ? ' icon-white' : '' ?>"></i>
 				Boring
 			</button>
+
+			<label for="unread-<?php echo $item->id ?>">
+				<input class="keep-unread" type="checkbox" id="unread-<?php echo $item->id ?>" data-item-id="<?php echo $item->id ?>" value="1">
+				Keep unread
+			</label>
 		</p>
 	</div>
 </article>

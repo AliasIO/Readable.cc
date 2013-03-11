@@ -172,8 +172,9 @@ class Personal extends \Swiftlet\Controller
 		}
 
 		$itemId = isset($_POST['item_id']) ? (int) $_POST['item_id'] : null;
+		$read   = isset($_POST['read'])    ? (int) $_POST['read']    : null;
 
-		if ( !$itemId ) {
+		if ( !$itemId || ( $read != 0 && $read != 1 ) ) {
 			header('HTTP/1.0 400 Bad Request');
 
 			exit(json_encode(array('error' => 'Invalid arguments')));
@@ -189,14 +190,15 @@ class Personal extends \Swiftlet\Controller
       ) VALUES (
 				:user_id,
 				:item_id,
-				1
+				:read
       )
       ON DUPLICATE KEY UPDATE
-        `read` = 1
+        `read` = :read
 			;');
 
 		$sth->bindParam('user_id', $userId);
 		$sth->bindParam('item_id', $itemId);
+		$sth->bindParam('read',    $read);
 
 		try {
 			$sth->execute();
@@ -205,6 +207,8 @@ class Personal extends \Swiftlet\Controller
 
 			exit(json_encode(array('error' => 'Something went wrong, please try again.')));
 		}
+
+		exit;
 	}
 
 	/**

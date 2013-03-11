@@ -93,6 +93,24 @@ article {
 			text-decoration: none;
 		}
 
+		article .article-buttons button {
+			margin-right: 10px;
+		}
+
+		article .article-buttons label {
+			color: #999;
+			display: inline-block;
+			font-size: small;
+		}
+
+		article .article-buttons label:hover {
+			color: inherit;
+		}
+
+		article .article-buttons input[type="checkbox"] {
+			margin-top: 0;
+		}
+
 	article p {
 		text-align: justify;
 	}

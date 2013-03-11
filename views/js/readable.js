@@ -174,7 +174,7 @@ var readable = (function($) {
 									.addClass('inactive')
 									;
 
-								app.items.markAsRead(app.items.activeItemId);
+								app.items.markAsRead(app.items.activeItemId, app.items.activeItem.find('.keep-unread').is(':checked') ? 0 : 1);
 							}
 
 							$(this)
@@ -222,11 +222,11 @@ var readable = (function($) {
 				});
 			},
 
-			markAsRead: function(itemId) {
+			markAsRead: function(itemId, read) {
 				$.ajax({
 					url: app.rootPath + 'personal/read',
 					method: 'post',
-					data: { item_id: itemId }
+					data: { item_id: itemId, read: read }
 				});
 			}
 		}
