@@ -4,7 +4,7 @@
 
 	<div class="item-wrap">
 		<p class="item-date">
-			<em>Posted <?php echo $item->feed_name ? ' by ' . $item->feed_name : '' ?> on <?php echo date('F j, Y', strtotime($item->posted_at)) ?> (score: <?php echo number_format($item->score) ?>)</em>
+			<em><i class="icon-bookmark"></i> Posted <?php echo $item->feed_name ? ' by ' . $item->feed_name : '' ?> on <?php echo date('F j, Y', strtotime($item->posted_at)) ?> (score: <?php echo number_format($item->score) ?>)</em>
 		</p>
 
 		<?php echo $this->htmlDecode($item->contents) ?>

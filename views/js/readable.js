@@ -92,8 +92,9 @@ var readable = (function($) {
 					}
 				}, 200);
 
-				$('#items').on('load', 'img', function(e) {
-					console.log($(this).width());
+				// Expand collapsed item when clicked
+				$('#items').on('change', 'input.keep-unread', function(e) {
+					app.items.markAsRead($(this).data('item-id'), $(this).is(':checked') ? 0 : 1);
 				});
 
 				// Expand collapsed item when clicked

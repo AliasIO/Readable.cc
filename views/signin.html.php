@@ -16,7 +16,7 @@
 			<label class="control-label" for="email">Email address</label>
 
 			<div class="controls">
-				<input id="email" name="email" class="input-xlarge" type="text" value="<?php echo $this->get('email') ?>">
+				<input id="email" name="email" class="input-xlarge" type="email" value="<?php echo $this->get('email') ?>">
 			</div>
 		</div>
 
@@ -30,7 +30,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-inverse" type="submit"><i class="icon-hand-right icon-white"></i> Sign in</button>
+				<button class="btn btn-primary" type="submit"><i class="icon-hand-right icon-white"></i> Sign in</button>
 			</div>
 		</div>
 	</fieldset>

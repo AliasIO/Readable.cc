@@ -3,15 +3,6 @@ body {
 	padding-top: 80px;
 }
 
-a {
-	color: inherit;
-}
-
-a:hover, a:active, a:focus {
-	color: inherit;
-	outline: none;
-}
-
 p {
 	margin: 0 0 20px;
 }
@@ -85,6 +76,10 @@ article {
 		font-size: small;
 	}
 
+	article .item-date i {
+		margin-top: 2px;
+	}
+
 	article .article-buttons {
 		margin-top: 20px;
 	}
@@ -103,7 +98,7 @@ article {
 			font-size: small;
 		}
 
-		article .article-buttons label:hover {
+		article.active .article-buttons label:hover {
 			color: inherit;
 		}
 
@@ -126,10 +121,11 @@ article {
 
 	article h1 a, article h1 a:hover, article h1 a:active, article h1 a:focus {
 		border-bottom: none;
+		text-decoration: none;
 	}
 
-	article h1 a:hover {
-		color: #666;
+	article.active h1 a:hover:after {
+		content: ' \2192'
 	}
 
 	article img {
