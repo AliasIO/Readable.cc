@@ -13,6 +13,12 @@ class Account extends \Swiftlet\Controller
 	 */
 	public function index()
 	{
+		if ( !( $userId = $this->app->getSingleton('session')->get('id') ) ) {
+			header('Location: ' . $this->app->getRootPath() . 'signin');
+
+			exit;
+		}
+
 		$email          = isset($_POST['email'])           ? $_POST['email']           : '';
 		$password       = isset($_POST['password'])        ? $_POST['password']        : '';
 		$passwordRepeat = isset($_POST['password-repeat']) ? $_POST['password-repeat'] : '';
