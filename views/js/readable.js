@@ -12,16 +12,7 @@ var readable = (function($) {
 		},
 
 		init: function() {
-			$('.alert')
-				.stop()
-				.css({ opacity: 0, marginTop: -40 })
-				.show()
-				.animate({ opacity: 1, marginTop: 0 }, 300)
-				;
-
-			$('.alert').click(function() {
-				$(this).stop().animate({ opacity: 0, marginTop: -40 }, 200, function() { $(this).hide() })
-			});
+			$('.alert').click(function() { $(this).stop().hide(); });
 
 			app.navBar.init();
 		},

@@ -40,10 +40,13 @@ blockquote p {
 
 .alert {
 	cursor: pointer;
+}
+
+.alert.alert-float {
+	cursor: pointer;
 	margin-right: 20px;
 	position: fixed;
-	top: 50px;
-	width: 889px;
+	top: 80px;
 	z-index: 9999;
 }
 
