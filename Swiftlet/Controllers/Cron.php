@@ -36,9 +36,9 @@ class Cron extends \Swiftlet\Controller
 			try {
 				$feed->fetch($result->url);
 			} catch ( \Exception $e ) {
-				echo 'feed: ' . $e->getCode() . ' ' . $e->getMessage() . '<br>';
+				echo $result->url . ': (' . $e->getCode() . ') ' . $e->getMessage() . '<br>';
 
-				break;
+				continue;
 			}
 
 			foreach ( $feed->getItems() as $item ) {

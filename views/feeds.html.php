@@ -17,11 +17,8 @@
 <?php endif ?>
 
 <form id="form-feeds" method="post" action="<?php echo $this->app->getRootPath() ?>feeds" class="form-feeds form-horizontal well">
-	<fieldset>
 		<div id="feeds">
-			<h4>Add a feed<h4>
-
-			<div class="feed">
+			<fieldset>
 				<div class="control-group">
 					<label class="control-label" for="name-new">Name</label>
 
@@ -37,13 +34,11 @@
 						<input id="url-new" name="url[new]" class="input-block-level" type="text" value="<?php echo $this->get('url-new') ?>" placeholder="Website or RSS feed URL">
 					</div>
 				</div>
-
-				<div class="divider"></div>
-			</div>
+			</fieldset>
 
 			<?php if ( $feeds = $this->get('feeds') ): ?>
 			<?php foreach ( $feeds as $feed ): ?>
-			<div class="feed">
+			<fieldset>
 				<div class="control-group">
 					<label class="control-label" for="name-<?php echo $feed->id ?>">Name</label>
 
@@ -67,13 +62,12 @@
 						<input id="delete-<?php echo $feed->id ?>" name="delete[<?php echo $feed->id ?>]" type="checkbox" value="1">
 					</div>
 				</div>
-
-				<div class="divider"></div>
-			</div>
+			</fieldset>
 			<?php endforeach ?>
 			<?php endif ?>
 		</div>
 
+	<fieldset>
 		<div class="control-group">
 			<div class="controls">
 				<button class="btn btn-inverse" type="submit"><i class="icon-align-justify icon-white"></i> Save feeds</button>

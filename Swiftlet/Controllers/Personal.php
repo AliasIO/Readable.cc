@@ -47,18 +47,18 @@ class Personal extends \Swiftlet\Controller
 				items.title,
 				items.contents,
 				items.posted_at,
-				users_items.vote,
-				SUM(users_words.score) AS score
+				COALESCE(users_items.vote, 0) AS vote,
+				COALESCE(SUM(users_words.score), 0) AS score
 			FROM      users_feeds
       INNER JOIN       items ON items.feed_id       = users_feeds.feed_id
       LEFT  JOIN users_items ON users_items.item_id =       items.id
       LEFT  JOIN items_words ON items_words.item_id =       items.id
-      LEFT  JOIN users_words ON users_words.word_id = items_words.word_id
-      WHERE
-        users_words.user_id = :user_id
+      LEFT  JOIN users_words ON users_words.word_id = items_words.word_id AND users_words.user_id = :user_id
+			WHERE
+				users_items.read != 1 OR users_items.read IS NULL
       GROUP BY items.id
       ORDER BY score DESC, items.posted_at ASC
-			LIMIT 1000
+			LIMIT 500
 			;');
 
 		$sth->bindParam('user_id', $userId);
@@ -157,6 +157,57 @@ class Personal extends \Swiftlet\Controller
 	}
 
 	/**
+	 * Mark item as read
+	 */
+	public function read()
+	{
+		header('Content-type: application/json');
+
+		if ( !( $userId = $this->app->getSingleton('session')->get('id') ) ) {
+			header('HTTP/1.0 403 Forbidden');
+
+			exit(json_encode(array(
+				'error' => 'You need to be logged in to mark items as read'
+				)));
+		}
+
+		$itemId = isset($_POST['item_id']) ? (int) $_POST['item_id'] : null;
+
+		if ( !$itemId ) {
+			header('HTTP/1.0 400 Bad Request');
+
+			exit(json_encode(array('error' => 'Invalid arguments')));
+		}
+
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+      INSERT IGNORE INTO users_items (
+        user_id,
+        item_id,
+        `read`
+      ) VALUES (
+				:user_id,
+				:item_id,
+				1
+      )
+      ON DUPLICATE KEY UPDATE
+        `read` = 1
+			;');
+
+		$sth->bindParam('user_id', $userId);
+		$sth->bindParam('item_id', $itemId);
+
+		try {
+			$sth->execute();
+		} catch ( \Exception $e ) {
+			header('HTTP/1.0 500 Server Error');
+
+			exit(json_encode(array('error' => 'Something went wrong, please try again.')));
+		}
+	}
+
+	/**
 	 * Sanitise HTML
 	 *
 	 * @param string $html
@@ -164,15 +215,25 @@ class Personal extends \Swiftlet\Controller
 	 */
 	private function _clean($html)
 	{
+		// Remove FeedBurner cruft
+		$html = preg_replace('/(<div class="feedflare.+?<\/div>|<img[^>]+?(feedsportal|feedburner)\.com[^>]+?>)/s', '', $html);
+
 		$config = \HTMLPurifier_Config::createDefault();
 
-		$config->set('HTML.Allowed', 'h1,h2,h3,h4,h5,h6,a[href],p,em,strong,img[src],code,br');
+		$config->set('HTML.Allowed', 'h1,h2,h3,h4,h5,h6,a[href],p,ul,ol,li,blockquote,em,i,strong,b,img[src],pre,code,table,thead,tbody,tfoot,tr,th,td');
+		$config->set('AutoFormat.AutoParagraph', true);
+		$config->set('AutoFormat.RemoveEmpty', true);
+		$config->set('AutoFormat.RemoveEmpty.RemoveNbsp', true);
 		$config->set('HTML.SafeObject', true);
 		$config->set('Output.FlashCompat', true);
 
 		$purifier = new \HTMLPurifier($config);
 
-		return $purifier->purify($html);
+		$html = $purifier->purify($html);
+
+		$html = preg_replace('/<table>/', '<table class="table table-bordered table-striped table-hover">', $html);
+
+		return $html;
 	}
 
 	/**

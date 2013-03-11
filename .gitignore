@@ -1,3 +1,4 @@
 config.php
 parser/config.yml
 tags
+HTMLPurifier/DefinitionCache/Serializer/HTML/

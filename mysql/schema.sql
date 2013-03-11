@@ -150,12 +150,14 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`users_items` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `user_id` INT(11) UNSIGNED NOT NULL ,
   `item_id` INT(11) UNSIGNED NOT NULL ,
-  `vote` TINYINT(1) NOT NULL ,
+  `vote` TINYINT(1) NOT NULL DEFAULT 0 ,
+  `read` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `user_item` (`user_id` ASC, `item_id` ASC) ,
   INDEX `vote` (`vote` ASC) ,
   INDEX `users_items_user_id` (`user_id` ASC) ,
   INDEX `users_items_item_id` (`item_id` ASC) ,
+  INDEX `read` (`read` ASC) ,
   CONSTRAINT `users_items_user_id`
     FOREIGN KEY (`user_id` )
     REFERENCES `readable_cc`.`users` (`id` )

@@ -35,6 +35,7 @@
 					<ul class="nav pull-right">
 						<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
 						<li class="<?php echo $this->name == 'feeds'   ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>feeds"><i class="icon-align-justify"></i><span> Manage feeds</span></a></li>
+						<li class="<?php echo $this->name == 'account'  ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>account"><i class="icon-user"></i><span> Account</span></a></li>
 						<li class="<?php echo $this->name == 'signout' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signout"><i class="icon-off"></i><span> Sign out</span></a></li>
 						<?php else: ?>
 						<li class="<?php echo $this->name == 'signup'  ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signup"><i class="icon-user"></i><span> Create account</span></a></li>

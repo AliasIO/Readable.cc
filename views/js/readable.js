@@ -13,13 +13,51 @@ var readable = (function($) {
 
 		init: function() {
 			$('.alert')
+				.stop()
 				.css({ opacity: 0, marginTop: -40 })
+				.show()
 				.animate({ opacity: 1, marginTop: 0 }, 300)
 				;
 
 			$('.alert').click(function() {
-				$(this).animate({ opacity: 0, marginTop: -40 }, 200)
+				$(this).stop().animate({ opacity: 0, marginTop: -40 }, 200, function() { $(this).hide() })
 			});
+
+			app.navBar.init();
+		},
+
+		navBar: {
+			anchor:    null,
+			scrollTop: null,
+			direction: null,
+
+			init: function() {
+				$(document).bind('scroll', app.navBar.scroll);
+			},
+
+			scroll: function() {
+				direction = $(document).scrollTop() < app.navBar.scrollTop ? 'up' : 'down';
+
+				if ( direction !== app.navBar.direction ) {
+					app.navBar.anchor = $(document).scrollTop() - ( direction === 'up' ? $('.navbar').outerHeight() : 0 );
+
+					app.navBar.direction = direction;
+				}
+
+				$('.navbar').css({ top: Math.min(0, Math.max(direction === 'up' ? parseInt($('.navbar').css('top')) : - $('.navbar').outerHeight(), app.navBar.anchor - $(document).scrollTop())) });
+
+				app.navBar.scrollTop = $(document).scrollTop();
+			},
+
+			pin: function(instant) {
+				app.navBar.direction = 'up';
+				app.navBar.anchor    = $(document).scrollTop();
+				app.navBar.scrollTop = $(document).scrollTop();
+
+				$(document).unbind('scroll', app.navBar.scroll);
+
+				$('.navbar').animate({ top: 0 }, instant ? 0 : 300);
+			}
 		},
 
 		items: {
@@ -53,6 +91,10 @@ var readable = (function($) {
 						app.items.highlightActive();
 					}
 				}, 200);
+
+				$('#items').on('load', 'img', function(e) {
+					console.log($(this).width());
+				});
 
 				// Expand collapsed item when clicked
 				$('#items').on('click', 'article.collapsed', function(e) {
@@ -96,13 +138,17 @@ var readable = (function($) {
 			},
 
 			scrollTo: function(el, instant) {
-				if ( !el.length ) {
+				if ( !el || !el.length ) {
 					return;
 				}
 
-				$('html, body')
+				app.navBar.pin(instant);
+
+				$('html')
 					.animate({ scrollTop: el.offset().top - parseInt($('body').css('padding-top')) }, instant ? 0 : 300, function() {
 						app.items.highlightActive(instant);
+
+						app.navBar.init();
 					});
 			},
 
@@ -127,6 +173,8 @@ var readable = (function($) {
 									.removeClass('active')
 									.addClass('inactive')
 									;
+
+								app.items.markAsRead(app.items.activeItemId);
 							}
 
 							$(this)
@@ -171,6 +219,14 @@ var readable = (function($) {
 				.always(function(data) {
 					buttonUp  .removeAttr('disabled');
 					buttonDown.removeAttr('disabled');
+				});
+			},
+
+			markAsRead: function(itemId) {
+				$.ajax({
+					url: app.rootPath + 'personal/read',
+					method: 'post',
+					data: { item_id: itemId }
 				});
 			}
 		}
