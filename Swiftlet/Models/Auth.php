@@ -120,7 +120,7 @@ class Auth extends \Swiftlet\Model
 
 		$sth = $dbh->prepare('
 			UPDATE users SET
-				password = :password,
+				password   = :password,
 				updated_at = UTC_TIMESTAMP()
 			WHERE
 				id    = :id OR
@@ -128,7 +128,8 @@ class Auth extends \Swiftlet\Model
 			LIMIT 1
 			;');
 
-		$sth->bindParam(':id', $id);
+		$sth->bindParam(':id',       $id);
+		$sth->bindParam(':password', $hash);
 
 		return $sth->execute();
 	}
@@ -146,7 +147,8 @@ class Auth extends \Swiftlet\Model
 			SELECT
 				id,
 				email,
-				password
+				password,
+				timezone
 			FROM users
 			WHERE
 				id    = :id OR

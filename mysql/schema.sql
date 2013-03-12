@@ -101,6 +101,7 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`users` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `email` VARCHAR(255) NULL DEFAULT NULL ,
   `password` VARCHAR(255) NULL DEFAULT NULL ,
+  `timezone` INT(11) NULL DEFAULT 0 ,
   `created_at` DATETIME NULL ,
   `updated_at` DATETIME NULL ,
   `last_active_at` DATETIME NULL ,
