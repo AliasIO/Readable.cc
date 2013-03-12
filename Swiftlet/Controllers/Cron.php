@@ -41,14 +41,7 @@ class Cron extends \Swiftlet\Controller
 				continue;
 			}
 
-			foreach ( $feed->getItems() as $item ) {
-				$feedItem = $this->app->getSingleton('feedItem');
-
-				$feedItem->feed = $feed;
-				$feedItem->xml  = $item;
-
-				$feedItem->save();
-			}
+			$feed->saveItems();
 		}
 	}
 }

@@ -6,7 +6,9 @@ class Feed extends \Swiftlet\Model
 {
 	const
 		FEED_INVALID = 1,
-		SERVER_ERROR = 2
+		SERVER_ERROR = 2,
+		XSD_RSS      = 'rss-2.0.xsd',
+		XSD_ATOM     = 'atom.xsd'
 		;
 
 	public
@@ -18,7 +20,8 @@ class Feed extends \Swiftlet\Model
 		$effectiveUrl,
 		$contents,
 		$xml,
-		$feedType
+		$feedType,
+		$items = array()
 		;
 
 	/**
@@ -58,20 +61,48 @@ class Feed extends \Swiftlet\Model
 
 		$this->contents = substr($response, $headerSize);
 
-		try {
-			$xml = new \SimpleXMLElement($this->contents);
+		// Validate feed
+		libxml_use_internal_errors(true);
 
-			if ( $xml->getName() == 'rss' ) {
-				$this->xml = $xml;
+		$xml = new \DOMDocument();
 
-				$this->feedType = 'rss';
+		$xml->loadXml($this->contents);
+
+		$valid = $xml->schemaValidate(self::XSD_RSS);
+
+		if ( $valid ) {
+			$this->feedType = 'rss';
+		} else {
+			$valid = $xml->schemaValidate(self::XSD_ATOM);
+
+			if ( $valid ) {
+				$this->feedType = 'atom';
 			}
-		} catch ( \Exception $e ) {
-			throw new \Exception($e->getMessage(), self::FEED_INVALID);
 		}
 
-		if ( !$this->feedType ) {
+		if ( !$valid ) {
 			throw new \Exception('Invalid feed', self::FEED_INVALID);
+		}
+
+		$this->xml = new \SimpleXMLElement($this->contents);
+
+		// Get items
+		$itemsXml = array();
+
+		switch ( $this->feedType ) {
+			case 'rss':
+				$itemsXml[] = $this->xml->channel->item;
+
+				break;
+		}
+
+		foreach ( $itemsXml as $xml ) {
+			$item = $this->app->getModel('feedItem');
+
+			$item->feed = $this;
+			$item->xml  = $xml;
+
+			$this->items[] = $item;
 		}
 	}
 
@@ -82,16 +113,19 @@ class Feed extends \Swiftlet\Model
 	 */
 	public function getItems()
 	{
-		$items = array();
+		return $this->item();
+	}
 
-		switch ( $this->feedType ) {
-			case 'rss':
-				$items = $this->xml->channel->item;
-
-				break;
+	/**
+	 * Save feed items
+	 *
+	 * return mixed
+	 */
+	public function saveItems()
+	{
+		foreach ( $this->items as $item ) {
+			$item->save();
 		}
-
-		return $items;
 	}
 
 	/**
