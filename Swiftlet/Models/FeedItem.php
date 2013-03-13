@@ -4,14 +4,26 @@ namespace Swiftlet\Models;
 
 class FeedItem extends \Swiftlet\Model
 {
-	public
+	protected
 		$id,
 		$feed,
-		$url,
-		$title,
-		$contents,
-		$postedAt
+		$xml
 		;
+
+	/**
+	 * Initialise a feed item
+	 *
+	 * @param @object $feed
+	 * @param @object $xml
+	 * @return object
+	 */
+	public function init(Feed $feed, \SimpleXMLElement $xml)
+	{
+		$this->feed = $feed;
+		$this->xml  = $xml;
+
+		return $this;
+	}
 
 	public function save()
 	{
@@ -35,10 +47,12 @@ class FeedItem extends \Swiftlet\Model
 			)
 			;');
 
-		$sth->bindParam('title',     $this->title);
-		$sth->bindParam('url',       $this->url);
-		$sth->bindParam('contents',  $this->contents);
-		$sth->bindParam('posted_at', $this->postedAt);
+		$data = $this->getData();
+
+		$sth->bindParam('title',     $data->title);
+		$sth->bindParam('url',       $data->url);
+		$sth->bindParam('contents',  $data->contents);
+		$sth->bindParam('posted_at', $data->postedAt);
 		$sth->bindParam('feed_id',   $this->feed->id);
 
 		$sth->execute();
@@ -47,7 +61,7 @@ class FeedItem extends \Swiftlet\Model
 
 		if ( $this->id ) {
 			// Extract words
-			$contents = trim(preg_replace('/\s+/', ' ', preg_replace('/\b([0-9]+.)\b/', ' ', preg_replace('/\W/', ' ', preg_replace('/&[a-z]+/', '', strtolower(strip_tags($this->title . ' ' . $this->contents)))))));
+			$contents = trim(preg_replace('/\s+/', ' ', preg_replace('/\b([0-9]+.)\b/', ' ', preg_replace('/\W/', ' ', preg_replace('/&[a-z]+/', '', strtolower(strip_tags($data->title . ' ' . $data->contents)))))));
 
 			$words = explode(' ', $contents);
 
@@ -104,5 +118,25 @@ class FeedItem extends \Swiftlet\Model
 
 			$sth->execute();
 		}
+	}
+
+	/**
+	 * Get item data
+	 *
+	 * @return object
+	 */
+	private function getData()
+	{
+		$data = new \stdClass;
+
+		switch ( $this->feed->getFeedType() ) {
+			case 'rss':
+				$data->url      = (string) $this->xml->link;
+				$data->title    = (string) $this->xml->title;
+				$data->contents = (string) $this->xml->description;
+				$data->postedAt = date('Y-m-d H:i', strtotime((string) $this->xml->pubDate));
+		}
+
+		return $data;
 	}
 }

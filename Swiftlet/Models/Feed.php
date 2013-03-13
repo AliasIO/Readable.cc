@@ -22,7 +22,8 @@ class Feed extends \Swiftlet\Model
 		$xml,
 		$feedType,
 		$title,
-		$link
+		$link,
+		$items = array()
 		;
 
 	/**
@@ -114,24 +115,20 @@ class Feed extends \Swiftlet\Model
 	 */
 	public function getItems()
 	{
-		$items = array();
+		if ( $this->items ) {
+			return $this->items;
+		}
 
 		switch ( $this->feedType ) {
 			case 'rss':
 				foreach ( $this->xml->channel->item as $xml ) {
-					$item = $this->app->getModel('feedItem');
+					$item = $this->app->getModel('feedItem')->init($this, $xml);
 
-					$item->feed     = $this;
-					$item->url      = (string) $xml->link;
-					$item->title    = (string) $xml->title;
-					$item->contents = (string) $xml->description;
-					$item->postedAt = date('Y-m-d H:i', strtotime((string) $xml->pubDate));
-
-					$items[] = $item;
+					$this->items[] = $item;
 				}
 		}
 
-		return $items;
+		return $this->items;
 	}
 
 	/**
