@@ -22,16 +22,12 @@ class Cron extends \Swiftlet\Controller
 			GROUP BY feeds.id
 			;');
 
-		$sth->bindParam('url', $url);
-
 		$sth->execute();
 
 		$results = $sth->fetchAll(\PDO::FETCH_OBJ);
 
 		foreach ( $results as $result ) {
 			$feed = $this->app->getModel('feed');
-
-			$feed->id = $result->id;
 
 			try {
 				$feed->fetch($result->url);
@@ -40,6 +36,8 @@ class Cron extends \Swiftlet\Controller
 
 				continue;
 			}
+
+			$feed->id = $result->id;
 
 			$feed->saveItems();
 		}

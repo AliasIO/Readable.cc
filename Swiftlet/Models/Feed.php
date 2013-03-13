@@ -17,11 +17,12 @@ class Feed extends \Swiftlet\Model
 		;
 
 	protected
-		$effectiveUrl,
+		$url,
 		$contents,
 		$xml,
 		$feedType,
-		$items = array()
+		$title,
+		$link
 		;
 
 	/**
@@ -55,7 +56,7 @@ class Feed extends \Swiftlet\Model
 			throw new \Exception('cURL request returned HTTP code ' . $httpCode, self::SERVER_ERROR);
 		}
 
-		$this->effectiveUrl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+		$this->url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 
 		$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 
@@ -68,42 +69,42 @@ class Feed extends \Swiftlet\Model
 
 		$xml->loadXml($this->contents);
 
-		$valid = $xml->schemaValidate(self::XSD_RSS);
+		$this->feedType = $xml->schemaValidate(self::XSD_RSS) ? 'rss' : ( $xml->schemaValidate(self::XSD_ATOM) ? 'atom' : '' );
 
-		if ( $valid ) {
-			$this->feedType = 'rss';
-		} else {
-			$valid = $xml->schemaValidate(self::XSD_ATOM);
-
-			if ( $valid ) {
-				$this->feedType = 'atom';
-			}
-		}
-
-		if ( !$valid ) {
+		if ( !$this->feedType ) {
 			throw new \Exception('Invalid feed', self::FEED_INVALID);
 		}
 
 		$this->xml = new \SimpleXMLElement($this->contents);
 
-		// Get items
-		$itemsXml = array();
-
+		// Get feed details
 		switch ( $this->feedType ) {
 			case 'rss':
-				$itemsXml[] = $this->xml->channel->item;
+				$this->title = (string) $this->xml->channel->title;
+				$this->link  = (string) $this->xml->channel->link;
 
 				break;
 		}
+	}
 
-		foreach ( $itemsXml as $xml ) {
-			$item = $this->app->getModel('feedItem');
+	/**
+	 * Get feed title
+	 *
+	 * return string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
 
-			$item->feed = $this;
-			$item->xml  = $xml;
-
-			$this->items[] = $item;
-		}
+	/**
+	 * Get feed link
+	 *
+	 * return string
+	 */
+	public function getLink()
+	{
+		return $this->link;
 	}
 
 	/**
@@ -113,7 +114,24 @@ class Feed extends \Swiftlet\Model
 	 */
 	public function getItems()
 	{
-		return $this->item();
+		$items = array();
+
+		switch ( $this->feedType ) {
+			case 'rss':
+				foreach ( $this->xml->channel->item as $xml ) {
+					$item = $this->app->getModel('feedItem');
+
+					$item->feed     = $this;
+					$item->url      = (string) $xml->link;
+					$item->title    = (string) $xml->title;
+					$item->contents = (string) $xml->description;
+					$item->postedAt = date('Y-m-d H:i', strtotime((string) $xml->pubDate));
+
+					$items[] = $item;
+				}
+		}
+
+		return $items;
 	}
 
 	/**
@@ -123,19 +141,19 @@ class Feed extends \Swiftlet\Model
 	 */
 	public function saveItems()
 	{
-		foreach ( $this->items as $item ) {
+		foreach ( $this->getItems() as $item ) {
 			$item->save();
 		}
 	}
 
 	/**
-	 * Get the effective URL
+	 * Get the URL
 	 *
 	 * @return string
 	 */
-	public function getEffectiveUrl()
+	public function getUrl()
 	{
-		return $this->effectiveUrl;
+		return $this->url;
 	}
 
 	/**

@@ -7,7 +7,10 @@ class FeedItem extends \Swiftlet\Model
 	public
 		$id,
 		$feed,
-		$xml
+		$url,
+		$title,
+		$contents,
+		$postedAt
 		;
 
 	public function save()
@@ -20,22 +23,22 @@ class FeedItem extends \Swiftlet\Model
 				title,
 				contents,
 				posted_at,
-				feed_id
+				feed_id,
+				created_at
 			) VALUES (
 				:url,
 				:title,
 				:contents,
 				:posted_at,
-				:feed_id
+				:feed_id,
+				UTC_TIMESTAMP()
 			)
 			;');
 
-		$data = $this->_getData();
-
-		$sth->bindParam('title',     $data->title);
-		$sth->bindParam('url',       $data->url);
-		$sth->bindParam('contents',  $data->contents);
-		$sth->bindParam('posted_at', $data->postedAt);
+		$sth->bindParam('title',     $this->title);
+		$sth->bindParam('url',       $this->url);
+		$sth->bindParam('contents',  $this->contents);
+		$sth->bindParam('posted_at', $this->postedAt);
 		$sth->bindParam('feed_id',   $this->feed->id);
 
 		$sth->execute();
@@ -44,7 +47,7 @@ class FeedItem extends \Swiftlet\Model
 
 		if ( $this->id ) {
 			// Extract words
-			$contents = trim(preg_replace('/\s+/', ' ', preg_replace('/\b([0-9]+.)\b/', ' ', preg_replace('/\W/', ' ', preg_replace('/&[a-z]+/', '', strtolower(strip_tags($data->title . ' ' . $data->contents)))))));
+			$contents = trim(preg_replace('/\s+/', ' ', preg_replace('/\b([0-9]+.)\b/', ' ', preg_replace('/\W/', ' ', preg_replace('/&[a-z]+/', '', strtolower(strip_tags($this->title . ' ' . $this->contents)))))));
 
 			$words = explode(' ', $contents);
 
@@ -101,29 +104,5 @@ class FeedItem extends \Swiftlet\Model
 
 			$sth->execute();
 		}
-	}
-
-	private function _getData()
-	{
-		$data = (object) array(
-			'title'    => '',
-			'url'      => '',
-			'contents' => '',
-			'postedAt' => ''
-			);
-
-		switch ( $this->feed->getFeedType() ) {
-			case 'rss':
-				$data = (object) array(
-					'title'    => $this->xml->title,
-					'url'      => $this->xml->link,
-					'contents' => $this->xml->description,
-					'postedAt' => date('Y-m-d H:i:s', strtotime($this->xml->pubDate))
-					);
-
-				break;
-		}
-
-		return $data;
 	}
 }

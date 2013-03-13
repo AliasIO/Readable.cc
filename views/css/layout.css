@@ -3,6 +3,15 @@ body {
 	padding-top: 80px;
 }
 
+a {
+	border-bottom: 1px solid #ccc;
+}
+
+a:hover {
+	border-bottom: 1px solid #333;
+	text-decoration: none;
+}
+
 p {
 	margin: 0 0 20px;
 }
@@ -20,6 +29,10 @@ blockquote p {
 	font-weight: inherit;
 	line-height: inherit;
 	margin-bottom: inherit;
+}
+
+.navbar a {
+	border-bottom: none;
 }
 
 .container {
@@ -113,15 +126,6 @@ article {
 		text-align: justify;
 	}
 
-	article a {
-		border-bottom: 1px solid #ccc;
-	}
-
-	article a:hover {
-		border-bottom: 1px solid #333;
-		text-decoration: none;
-	}
-
 	article h1 a, article h1 a:hover, article h1 a:active, article h1 a:focus {
 		border-bottom: none;
 		text-decoration: none;
@@ -172,6 +176,17 @@ fieldset:last-child {
 	border-bottom: none;
 	margin-bottom: 0;
 }
+
+#manage-feeds-feeds {
+}
+
+	#manage-feeds-feeds td {
+		vertical-align: middle;
+	}
+
+	#manage-feeds-feeds button {
+		white-space: nowrap;
+	}
 
 @media all and (max-width: 995px) {
 	.alert {

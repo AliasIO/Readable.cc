@@ -21,61 +21,13 @@ class Feeds extends \Swiftlet\Controller
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
-		if ( !empty($_POST) ) {
-			$success = false;
-			$error   = false;
+		$success = false;
+		$error   = false;
 
-			$names  = !empty($_POST['name'   ]) && is_array($_POST['name'  ]) ? $_POST['name'  ] : array();
-			$urls   = !empty($_POST['url'    ]) && is_array($_POST['url'   ]) ? $_POST['url'   ] : array();
-			$delete = !empty($_POST['delete' ]) && is_array($_POST['delete']) ? $_POST['delete'] : array();
+		if ( !empty($_POST['form']) ) {
+			if ( $_POST['form'] == 'new' ) {
+				$url = !empty($_POST['url']) ? $_POST['url'] : '';
 
-			$nameNew = !empty($names['new']) ? $names['new'] : '';
-			$urlNew  = !empty($urls['new'])  ? $urls['new']  : '';
-
-			unset($names['new']);
-			unset($urls['new']);
-
-			// Update/delete existing feeds
-			if ( !empty($names) ) {
-				foreach ( $names as $feedId => $name ) {
-					if ( isset($delete[$feedId]) ) {
-						$sth = $dbh->prepare('
-							DELETE
-							FROM users_feeds
-							WHERE
-								user_id = :user_id AND
-								feed_id = :feed_id
-							LIMIT 1
-							;');
-
-						$sth->bindParam('user_id', $userId);
-						$sth->bindParam('feed_id', $feedId);
-
-						$result = $sth->execute();
-					} else {
-						$sth = $dbh->prepare('
-							UPDATE users_feeds SET
-								name = :name
-							WHERE
-								user_id = :user_id AND
-								feed_id = :feed_id
-							LIMIT 1
-							;');
-
-						$sth->bindParam('name',    $name);
-						$sth->bindParam('user_id', $userId);
-						$sth->bindParam('feed_id', $feedId);
-
-						$result = $sth->execute();
-					}
-				}
-			}
-
-			$name = $nameNew;
-			$url  = $urlNew;
-
-			// Add new feed
-			if ( $name || $url ) {
 				if ( !$url ) {
 					$error = 'Please provide a URL.';
 				} else {
@@ -112,24 +64,29 @@ class Feeds extends \Swiftlet\Controller
 						}
 					}
 
-					if ( $error ) {
-						$this->view->set('name-new', $name);
-						$this->view->set('url-new',  $url);
-					} else {
-						$url = $feed->getEffectiveUrl();
+					if ( !$error ) {
+						$url   = $feed->getUrl();
+						$title = $feed->getTitle();
+						$link  = $feed->getLink();
 
 						// Add the feed
 						$sth = $dbh->prepare('
 							INSERT IGNORE INTO feeds (
 								url,
+								title,
+								link,
 								created_at
 							) VALUES (
 								:url,
+								:title,
+								:link,
 								UTC_TIMESTAMP()
 							)
 							;');
 
-						$sth->bindParam('url', $url);
+						$sth->bindParam('url',   $url);
+						$sth->bindParam('title', $title);
+						$sth->bindParam('link',  $link);
 
 						$result = $sth->execute();
 
@@ -162,44 +119,41 @@ class Feeds extends \Swiftlet\Controller
 							$sth = $dbh->prepare('
 								INSERT IGNORE INTO users_feeds (
 									user_id,
-									feed_id,
-									name
+									feed_id
 								) VALUES (
 									:user_id,
-									:feed_id,
-									:name
+									:feed_id
 								)
 								;');
 
 							$sth->bindParam('user_id', $userId);
 							$sth->bindParam('feed_id', $feedId);
-							$sth->bindParam('name',    $name);
 
 							$sth->execute();
 						}
 					}
 				}
-			}
 
-			if ( $error ) {
-				$this->view->set('error', $error);
+				if ( $error ) {
+					$this->view->set('error', $error);
 
-				$this->view->set('name-new', $nameNew);
-				$this->view->set('url-new',  $urlNew);
+					$this->view->set('url',  $url);
 
-				$this->view->set('error-url-new', true);
-			} else {
-				$this->view->set('success', 'Feeds have been saved successfully.');
+					$this->view->set('error-new', true);
+				} else {
+					$this->view->set('success', 'The feed has been added.');
+				}
 			}
 		}
 
 		$sth = $dbh->prepare('
 			SELECT
-				users_feeds.name,
 				feeds.id,
-				feeds.url
+				feeds.url,
+				feeds.title,
+				feeds.link
 			FROM      users_feeds
-			LEFT JOIN feeds       ON users_feeds.feed_id = feeds.id
+			LEFT JOIN feeds ON users_feeds.feed_id = feeds.id
 			WHERE
 				users_feeds.user_id = :user_id
 			ORDER BY users_feeds.id DESC
