@@ -180,12 +180,16 @@ fieldset:last-child {
 #manage-feeds-feeds {
 }
 
-	#manage-feeds-feeds td {
-		vertical-align: middle;
+	#manage-feeds-feeds li {
 	}
 
-	#manage-feeds-feeds button {
-		white-space: nowrap;
+	#manage-feeds-feeds li .feed-remove {
+		color: #9c0001;
+		visibility: hidden;
+	}
+
+	#manage-feeds-feeds li:hover .feed-remove {
+		visibility: visible;
 	}
 
 @media all and (max-width: 995px) {

@@ -13,11 +13,7 @@ class Feeds extends \Swiftlet\Controller
 	 */
 	public function index()
 	{
-		if ( !( $userId = $this->app->getSingleton('session')->get('id') ) ) {
-			header('Location: ' . $this->app->getRootPath() . 'signin');
-
-			exit;
-		}
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
@@ -36,31 +32,16 @@ class Feeds extends \Swiftlet\Controller
 					try {
 						$feed->fetch($url);
 					} catch ( \Exception $e ) {
-						if ( $e->getCode() == $feed::FEED_INVALID ) {
-							$error = 'No feed found at the specified URL.';
+						switch ( $e->getCode() ) {
+							case $feed::FEED_INVALID:
+								$error = 'No valid feed found at the specified URL.';
 
-							// Find feed URL in an HTML page
-							preg_match('/<link[^>]+rel=("|\')alternate\1[^>]*>/is', $feed->getContents(), $match);
+								break;
+							case $feed::SERVER_ERROR:
+							default:
+								$error = 'Failed to fetch the feed at the specified URL, please try again.';
 
-							if ( !empty($match) && preg_match('/type=("|\').*?rss.*?\1/is', $match[0]) ) {
-								preg_match('/href=("|\')(.+?)\1/i', $match[0], $match);
-
-								if ( isset($match[2]) ) {
-									$url = $match[2];
-
-									$feed = $this->app->getModel('feed');
-
-									try {
-										$feed->fetch($url);
-
-										$error = false;
-									} catch ( \Exception $e ) {
-										$error = 'Feed found but could not be fetched, please try again.';
-									}
-								}
-							}
-						} else {
-							$error = 'The feed at the specified URL could not be fetched, please try again.';
+								break;
 						}
 					}
 
@@ -167,5 +148,35 @@ class Feeds extends \Swiftlet\Controller
 		$result = $sth->fetchAll(\PDO::FETCH_OBJ);
 
 		$this->view->set('feeds', $result);
+	}
+
+	/**
+	 * Delete feeds
+	 */
+	public function remove()
+	{
+		$userId = $this->app->getSingleton('helper')->ensureValidUser(true);
+
+		if ( !empty($_POST['id']) ) {
+			$feedId = $_POST['id'];
+
+			$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+			$sth = $dbh->prepare('
+				DELETE
+				FROM users_feeds
+				WHERE
+					user_id = :user_id AND
+					feed_id = :feed_id
+				LIMIT 1
+				;');
+
+			$sth->bindParam('user_id', $userId);
+			$sth->bindParam('feed_id', $feedId);
+
+			$sth->execute();
+		}
+
+		exit;
 	}
 }

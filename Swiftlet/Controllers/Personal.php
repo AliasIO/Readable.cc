@@ -13,11 +13,7 @@ class Personal extends \Swiftlet\Controller
 	 */
 	public function index()
 	{
-		if ( !( $userId = $this->app->getSingleton('session')->get('id') ) ) {
-			header('Location: ' . $this->app->getRootPath() . 'signin');
-
-			exit;
-		}
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
 
 		$this->app->getSingleton('learn')->learn($userId);
 	}
@@ -27,13 +23,7 @@ class Personal extends \Swiftlet\Controller
 	 */
 	public function items()
 	{
-		if ( !( $userId = $this->app->getSingleton('session')->get('id') ) ) {
-			header('HTTP/1.0 403 Forbidden');
-
-			exit;
-		}
-
-		require_once 'HTMLPurifier/Bootstrap.php';
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
 
 		$this->view->name = 'feed-items';
 
@@ -81,13 +71,7 @@ class Personal extends \Swiftlet\Controller
 	{
 		header('Content-type: application/json');
 
-		if ( !( $userId = $this->app->getSingleton('session')->get('id') ) ) {
-			header('HTTP/1.0 403 Forbidden');
-
-			exit(json_encode(array(
-				'error' => 'You need to be logged in to vote'
-				)));
-		}
+		$userId = $this->app->getSingleton('helper')->ensureValidUser(true);
 
 		$itemId = isset($_POST['item_id']) ? (int) $_POST['item_id'] : null;
 		$vote   = isset($_POST['vote'])    ? (int) $_POST['vote']    : null;
@@ -159,13 +143,7 @@ class Personal extends \Swiftlet\Controller
 	{
 		header('Content-type: application/json');
 
-		if ( !( $userId = $this->app->getSingleton('session')->get('id') ) ) {
-			header('HTTP/1.0 403 Forbidden');
-
-			exit(json_encode(array(
-				'error' => 'You need to be logged in to mark items as read'
-				)));
-		}
+		$userId = $this->app->getSingleton('helper')->ensureValidUser(true);
 
 		$itemId = isset($_POST['item_id']) ? (int) $_POST['item_id'] : null;
 		$read   = isset($_POST['read'])    ? (int) $_POST['read']    : null;
@@ -215,6 +193,8 @@ class Personal extends \Swiftlet\Controller
 	 */
 	private function _clean($html)
 	{
+		require_once 'HTMLPurifier/Bootstrap.php';
+
 		// Remove FeedBurner cruft
 		$html = preg_replace('/(<div class="feedflare.+?<\/div>|<img[^>]+?(feedsportal|feedburner)\.com[^>]+?>)/s', '', $html);
 

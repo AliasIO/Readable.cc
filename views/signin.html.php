@@ -11,6 +11,8 @@
 <?php endif ?>
 
 <form method="post" action="<?php echo $this->app->getRootPath() ?>signin" class="form-signin form-horizontal well">
+	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
+
 	<fieldset>
 		<div class="control-group <?php echo $this->get('error-email') ? 'error' : '' ?>">
 			<label class="control-label" for="email">Email address</label>

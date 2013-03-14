@@ -18,9 +18,8 @@ class Feed extends \Swiftlet\Model
 
 	protected
 		$url,
-		$contents,
 		$xml,
-		$feedType,
+		$type,
 		$title,
 		$link,
 		$items = array()
@@ -33,6 +32,78 @@ class Feed extends \Swiftlet\Model
 	 */
 	public function fetch($url)
 	{
+		$response = $this->curl($url);
+
+		$this->type = $this->validate($response->body);
+
+		// Not a valid feed, perhaps the page is HTML. Find linked feeds.
+		if ( !$this->type ) {
+			$html = new \DOMDocument();
+
+			$html->loadHtml($response->body);
+
+			$links = $html->getElementsByTagName('link');
+
+			foreach ( $links as $link ) {
+				if ( $link->getAttribute('rel') == 'alternate' ) {
+					if ( $link->getAttribute('type') == 'application/rss+xml' || $link->getAttribute('type') == 'application/atom+xml' ) {
+						$response = $this->curl($link->getAttribute('href'));
+
+						$this->type = $this->validate($response->body);
+
+						if ( $this->type ) {
+							break;
+						}
+					}
+				}
+			}
+
+			if ( !$this->type ) {
+				throw new \Exception('Invalid feed', self::FEED_INVALID);
+			}
+		}
+
+		$this->url = $response->url;
+
+		$this->xml = new \SimpleXMLElement($response->body);
+
+		// Get feed details
+		switch ( $this->type ) {
+			case 'rss':
+				$this->title = (string) $this->xml->channel->title;
+				$this->link  = (string) $this->xml->channel->link;
+
+				break;
+		}
+	}
+
+	/**
+	 * Validate XML, determine if it's valid RSS or Atom
+	 *
+	 * @param object $xml
+	 * @return string
+	 */
+	protected function validate($xml)
+	{
+		libxml_use_internal_errors(true);
+
+		$dom = new \DOMDocument();
+
+		$dom->loadXml($xml);
+
+		return $dom->schemaValidate(self::XSD_RSS) ? 'rss' : ( $dom->schemaValidate(self::XSD_ATOM) ? 'atom' : '' );
+	}
+
+	/**
+	 * Fetch a page
+	 *
+	 * @param string $url
+	 * @return object
+	 */
+	protected function curl($url)
+	{
+		$response = new \stdClass;
+
 		$ch = curl_init($url);
 
 		curl_setopt_array($ch, array(
@@ -45,7 +116,7 @@ class Feed extends \Swiftlet\Model
 			CURLOPT_USERAGENT      => 'http://readable.cc'
 			));
 
-		$response = curl_exec($ch);
+		$result = curl_exec($ch);
 
 		if ( curl_errno($ch) !== 0 ) {
 			throw new \Exception(curl_error($ch), self::SERVER_ERROR);
@@ -57,55 +128,13 @@ class Feed extends \Swiftlet\Model
 			throw new \Exception('cURL request returned HTTP code ' . $httpCode, self::SERVER_ERROR);
 		}
 
-		$this->url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+		$response->url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 
 		$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 
-		$this->contents = substr($response, $headerSize);
+		$response->body = substr($result, $headerSize);
 
-		// Validate feed
-		libxml_use_internal_errors(true);
-
-		$xml = new \DOMDocument();
-
-		$xml->loadXml($this->contents);
-
-		$this->feedType = $xml->schemaValidate(self::XSD_RSS) ? 'rss' : ( $xml->schemaValidate(self::XSD_ATOM) ? 'atom' : '' );
-
-		if ( !$this->feedType ) {
-			throw new \Exception('Invalid feed', self::FEED_INVALID);
-		}
-
-		$this->xml = new \SimpleXMLElement($this->contents);
-
-		// Get feed details
-		switch ( $this->feedType ) {
-			case 'rss':
-				$this->title = (string) $this->xml->channel->title;
-				$this->link  = (string) $this->xml->channel->link;
-
-				break;
-		}
-	}
-
-	/**
-	 * Get feed title
-	 *
-	 * return string
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
-
-	/**
-	 * Get feed link
-	 *
-	 * return string
-	 */
-	public function getLink()
-	{
-		return $this->link;
+		return $response;
 	}
 
 	/**
@@ -119,7 +148,7 @@ class Feed extends \Swiftlet\Model
 			return $this->items;
 		}
 
-		switch ( $this->feedType ) {
+		switch ( $this->type ) {
 			case 'rss':
 				foreach ( $this->xml->channel->item as $xml ) {
 					$item = $this->app->getModel('feedItem')->init($this, $xml);
@@ -144,6 +173,26 @@ class Feed extends \Swiftlet\Model
 	}
 
 	/**
+	 * Get feed title
+	 *
+	 * return string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
+	/**
+	 * Get feed link
+	 *
+	 * return string
+	 */
+	public function getLink()
+	{
+		return $this->link;
+	}
+
+	/**
 	 * Get the URL
 	 *
 	 * @return string
@@ -154,32 +203,12 @@ class Feed extends \Swiftlet\Model
 	}
 
 	/**
-	 * Get the body of the cURL response
-	 *
-	 * @return string
-	 */
-	public function getContents()
-	{
-		return $this->contents;
-	}
-
-	/**
-	 * Return XML if the feed is valid
-	 *
-	 * @return object
-	 */
-	public function getXml()
-	{
-		return $this->xml;
-	}
-
-	/**
 	 * Return the feed type
 	 *
 	 * @return string
 	 */
-	public function getFeedType()
+	public function getType()
 	{
-		return $this->feedType;
+		return $this->type;
 	}
 }

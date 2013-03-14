@@ -42,4 +42,13 @@ class Session extends \Swiftlet\Model
 
 		$_SESSION = array();
 	}
+
+	/**
+	 * Get session ID
+	 * @return string
+	 */
+	public function getId()
+	{
+		return session_id();
+	}
 }

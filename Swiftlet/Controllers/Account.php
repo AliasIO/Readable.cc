@@ -13,13 +13,7 @@ class Account extends \Swiftlet\Controller
 	 */
 	public function index()
 	{
-		$session = $this->app->getSingleton('session');
-
-		if ( !( $userId = $session->get('id') ) ) {
-			header('Location: ' . $this->app->getRootPath() . 'signin');
-
-			exit;
-		}
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
 
 		$this->view->set('timeZones', array(
 			'-720' => '(GMT -12:00) Eniwetok, Kwajalein',
@@ -54,6 +48,8 @@ class Account extends \Swiftlet\Controller
 			'660'  => '(GMT +11:00) Magadan, Solomon Islands, New Caledonia',
 			'720'  => '(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka'
 			));
+
+		$session = $this->app->getSingleton('session');
 
 		$this->view->set('email',    $session->get('email'));
 		$this->view->set('timezone', $session->get('timezone'));

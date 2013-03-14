@@ -129,7 +129,7 @@ class FeedItem extends \Swiftlet\Model
 	{
 		$data = new \stdClass;
 
-		switch ( $this->feed->getFeedType() ) {
+		switch ( $this->feed->getType() ) {
 			case 'rss':
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;

@@ -14,6 +14,20 @@ var readable = (function($) {
 		init: function() {
 			$('.alert').click(function() { $(this).stop().hide(); });
 
+			if ( $('#manage-feeds-feeds').length ) {
+				$('#manage-feeds-feeds .feed-remove').click(function() {
+					if ( confirm('Are you sure you wish to remove ' + $(this).data('feed-name') + '?') ) {
+						$(this).closest('li').fadeOut();
+
+						$.ajax({
+							url: app.rootPath + 'feeds/remove',
+							method: 'post',
+							data: { id: $(this).data('feed-id'), sessionId: app.sessionId }
+						});
+					}
+				});
+			}
+
 			app.navBar.init();
 		},
 
@@ -197,7 +211,7 @@ var readable = (function($) {
 				$.ajax({
 					url: app.rootPath + 'personal/vote',
 					method: 'post',
-					data: { item_id: itemId, vote: vote }
+					data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
 				}).done(function(data) {
 					buttonUp  .removeClass('btn-inverse voted').find('i').removeClass('icon-white');
 					buttonDown.removeClass('btn-inverse voted').find('i').removeClass('icon-white');
@@ -218,7 +232,7 @@ var readable = (function($) {
 				$.ajax({
 					url: app.rootPath + 'personal/read',
 					method: 'post',
-					data: { item_id: itemId, read: read }
+					data: { item_id: itemId, read: read, sessionId: app.sessionId }
 				});
 			}
 		}

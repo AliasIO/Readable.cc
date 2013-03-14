@@ -19,24 +19,23 @@
 <?php if ( $feeds = $this->get('feeds') ): ?>
 <h3>Subscribed feeds</h3>
 
-<table id="manage-feeds-feeds" class="table table-bordered table-striped">
+<ul id="manage-feeds-feeds">
 	<?php foreach ( $feeds as $feed ): ?>
-	<tr>
-		<td>
-			<a href="<?php echo $feed->link ?>"><?php echo $feed->title ?></a>
-		</td>
-		<td width="1">
-			<button class="btn-small btn-danger feed-remove" href="#" data-feed-name="<?php echo $feed->title ?>"><i class="icon-trash icon-white"></i> Remove</button>
-		</td>
-	</tr>
+	<li>
+		<a href="<?php echo $feed->link ?>"><?php echo $feed->title ?></a>
+		<a class="feed-remove" href="javascript: void(0);" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
+			<i class="icon-trash"></i> Remove
+		</a>
+	</li>
 	<?php endforeach ?>
-</table>
+</ul>
 <?php endif ?>
 
 <h3>Add a new feed</h3>
 
 <form id="form-feeds" method="post" action="<?php echo $this->app->getRootPath() ?>feeds" class="form-feeds form-horizontal well">
 	<input type="hidden" name="form" value="new">
+	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
 		<div class="control-group <?php echo $this->get('error-url') ? 'error' : '' ?>">
@@ -59,6 +58,7 @@
 
 <form id="form-feeds" method="post" action="<?php echo $this->app->getRootPath() ?>feeds" class="form-feeds form-horizontal well">
 	<input type="hidden" name="form" value="import">
+	<input type="hidden" name="sessionId" value="<?php $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
 		<div class="control-group">
