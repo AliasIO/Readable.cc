@@ -29,8 +29,9 @@ class Feed extends \Swiftlet\Model
 	 * Fetch a URL using cURL
 	 *
 	 * @param string $url
+	 * @param bool $findLinked
 	 */
-	public function fetch($url)
+	public function fetch($url, $findLinked = true)
 	{
 		$response = $this->curl($url);
 
@@ -38,21 +39,23 @@ class Feed extends \Swiftlet\Model
 
 		// Not a valid feed, perhaps the page is HTML. Find linked feeds.
 		if ( !$this->type ) {
-			$html = new \DOMDocument();
+			if ( $findLinked ) {
+				$html = new \DOMDocument();
 
-			$html->loadHtml($response->body);
+				$html->loadHtml($response->body);
 
-			$links = $html->getElementsByTagName('link');
+				$links = $html->getElementsByTagName('link');
 
-			foreach ( $links as $link ) {
-				if ( $link->getAttribute('rel') == 'alternate' ) {
-					if ( $link->getAttribute('type') == 'application/rss+xml' || $link->getAttribute('type') == 'application/atom+xml' ) {
-						$response = $this->curl($link->getAttribute('href'));
+				foreach ( $links as $link ) {
+					if ( $link->getAttribute('rel') == 'alternate' ) {
+						if ( $link->getAttribute('type') == 'application/rss+xml' || $link->getAttribute('type') == 'application/atom+xml' ) {
+							$response = $this->curl($link->getAttribute('href'));
 
-						$this->type = $this->validate($response->body);
+							$this->type = $this->validate($response->body);
 
-						if ( $this->type ) {
-							break;
+							if ( $this->type ) {
+								break;
+							}
 						}
 					}
 				}

@@ -30,7 +30,7 @@ class Cron extends \Swiftlet\Controller
 			$feed = $this->app->getModel('feed');
 
 			try {
-				$feed->fetch($result->url);
+				$feed->fetch($result->url, false);
 			} catch ( \Exception $e ) {
 				echo $result->url . ': (' . $e->getCode() . ') ' . $e->getMessage() . '<br>';
 

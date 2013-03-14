@@ -22,10 +22,13 @@
 <ul id="manage-feeds-feeds">
 	<?php foreach ( $feeds as $feed ): ?>
 	<li>
-		<a href="<?php echo $feed->link ?>"><?php echo $feed->title ?></a>
-		<a class="feed-remove" href="javascript: void(0);" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
-			<i class="icon-trash"></i> Remove
-		</a>
+		<strong><a href="<?php echo $feed->link ?>"><?php echo $feed->title ?></a></strong> &mdash;
+		<small>
+			<a href="<?php echo $feed->url ?>"><?php echo parse_url($feed->url, PHP_URL_HOST) ?></a>
+			<a class="feed-remove" href="javascript: void(0);" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
+				<i class="icon-trash"></i> Remove
+			</a>
+		</small>
 	</li>
 	<?php endforeach ?>
 </ul>
