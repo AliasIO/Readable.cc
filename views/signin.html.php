@@ -33,6 +33,7 @@
 		<div class="control-group">
 			<div class="controls">
 				<button class="btn btn-primary" type="submit"><i class="icon-hand-right icon-white"></i> Sign in</button>
+				&nbsp; <small><a href="<?php echo $this->app->getRootPath() ?>forgot">Forgot password?</a></small>
 			</div>
 		</div>
 	</fieldset>

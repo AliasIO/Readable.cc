@@ -34,7 +34,7 @@
 <h3>Add a new feed</h3>
 
 <form id="form-feeds" method="post" action="<?php echo $this->app->getRootPath() ?>feeds" class="form-feeds form-horizontal well">
-	<input type="hidden" name="form" value="new">
+	<input type="hidden" name="form" value="add">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
@@ -56,9 +56,9 @@
 
 <h3>Import & export</h3>
 
-<form id="form-feeds" method="post" action="<?php echo $this->app->getRootPath() ?>feeds" class="form-feeds form-horizontal well">
+<form id="form-feeds" method="post" action="<?php echo $this->app->getRootPath() ?>feeds" class="form-feeds form-horizontal well" enctype="multipart/form-data">
 	<input type="hidden" name="form" value="import">
-	<input type="hidden" name="sessionId" value="<?php $this->app->getSingleton('session')->getId() ?>">
+	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
 		<div class="control-group">
