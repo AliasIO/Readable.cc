@@ -27,10 +27,12 @@
 				Boring
 			</button>
 
+			<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
 			<label for="unread-<?php echo $item->id ?>">
 				<input class="keep-unread" type="checkbox" id="unread-<?php echo $item->id ?>" data-item-id="<?php echo $item->id ?>" value="1">
 				Keep unread
 			</label>
+			<?php endif ?>
 		</p>
 	</div>
 </article>

@@ -132,7 +132,7 @@ var readable = (function($) {
 				});
 
 				$.ajax({
-					url: app.rootPath + 'personal/items',
+					url: app.rootPath + app.view + '/items',
 					context: $('#items')
 				}).done(function(data) {
 					$(this).removeClass('loading').append(data);

@@ -13,9 +13,6 @@ class Index extends \Swiftlet\Controller
 	 */
 	public function index()
 	{
-		$userId = $this->app->getSingleton('helper')->ensureValidUser();
-
-		$this->app->getSingleton('learn')->learn($userId);
 	}
 
 	/**
