@@ -44,7 +44,8 @@ class Personal extends \Swiftlet\Controller
 			INNER JOIN       items ON items.id = users_items.item_id
       INNER JOIN       feeds ON feeds.id =       items.feed_id
 			WHERE
-				users_items.read != 1 OR users_items.read IS NULL
+				users_items.user_id = :user_id AND
+				( users_items.read != 1 OR users_items.read IS NULL )
       ORDER BY score DESC, items.posted_at ASC
 			LIMIT 500
 			;');
