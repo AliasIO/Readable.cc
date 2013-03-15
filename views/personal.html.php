@@ -1,7 +1,7 @@
 <?php require 'header.html.php' ?>
 
 <div id="items">
-	<?php require 'feed-items.html.php' ?>
+	<?php require 'read.html.php' ?>
 </div>
 
 <script>

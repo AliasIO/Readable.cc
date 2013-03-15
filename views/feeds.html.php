@@ -17,16 +17,16 @@
 <?php endif ?>
 
 <?php if ( $feeds = $this->get('feeds') ): ?>
-<h3>Subscribed feeds</h3>
+<h3>Subscriptions</h3>
 
-<ul id="manage-feeds-feeds">
+<ul id="subscriptions">
 	<?php foreach ( $feeds as $feed ): ?>
 	<li>
 		<strong><a href="<?php echo $feed->link ?>"><?php echo $feed->title ?></a></strong> &mdash;
 		<small>
 			<a href="<?php echo $feed->url ?>"><?php echo parse_url($feed->url, PHP_URL_HOST) ?></a>
 			<a class="feed-remove" href="javascript: void(0);" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
-				<i class="icon-trash"></i> Remove
+				<i class="icon-minus-sign"></i> Unsubscribe
 			</a>
 		</small>
 	</li>
@@ -34,10 +34,10 @@
 </ul>
 <?php endif ?>
 
-<h3>Add a new feed</h3>
+<h3>Add a subscription</h3>
 
 <form id="form-feeds" method="post" action="<?php echo $this->app->getRootPath() ?>feeds" class="form-feeds form-horizontal well">
-	<input type="hidden" name="form" value="add">
+	<input type="hidden" name="form" value="subscribe">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
@@ -79,5 +79,9 @@
 		</div>
 	</fieldset>
 </form>
+
+<script>
+	readable.manageFeeds.init();
+</script>
 
 <?php require 'footer.html.php' ?>

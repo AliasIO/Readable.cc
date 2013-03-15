@@ -177,18 +177,18 @@ fieldset:last-child {
 	margin-bottom: 0;
 }
 
-#manage-feeds-feeds {
+#subscriptions {
 }
 
-	#manage-feeds-feeds li {
+	#subscriptions li {
 	}
 
-	#manage-feeds-feeds li .feed-remove {
+	#subscriptions li .unsubscribe {
 		color: #9c0001;
 		visibility: hidden;
 	}
 
-	#manage-feeds-feeds li:hover .feed-remove {
+	#subscriptions li:hover .unsubscribe {
 		visibility: visible;
 	}
 

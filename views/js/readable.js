@@ -14,20 +14,6 @@ var readable = (function($) {
 		init: function() {
 			$('.alert').click(function() { $(this).stop().hide(); });
 
-			if ( $('#manage-feeds-feeds').length ) {
-				$('#manage-feeds-feeds .feed-remove').click(function() {
-					if ( confirm('Are you sure you wish to remove ' + $(this).data('feed-name') + '?') ) {
-						$(this).closest('li').fadeOut();
-
-						$.ajax({
-							url: app.rootPath + 'feeds/remove',
-							method: 'post',
-							data: { id: $(this).data('feed-id'), sessionId: app.sessionId }
-						});
-					}
-				});
-			}
-
 			app.navBar.init();
 		},
 
@@ -126,9 +112,34 @@ var readable = (function($) {
 				$('#items').on('click', '.item-vote', function(e) {
 					e.preventDefault();
 
-					$(this).attr('disabled', 'disabled').blur();
+					$(this).blur();
 
 					app.items.vote($(this).data('item-id'), $(this).hasClass('voted') ? 0 : $(this).data('vote'));
+				});
+
+				// Register votes
+				$('#items').on('click', '.subscribe, .unsubscribe', function(e) {
+					e.preventDefault();
+
+					$(this).blur();
+
+					var action = $(this).hasClass('subscribe') ? 'subscribe' : 'unsubscribe';
+
+					if ( action === 'subscribe' ) {
+						$(this)
+							.removeClass('subscribe')
+							.addClass('unsubscribe')
+							.html('<i class="icon-minus-sign"></i> Unsubscribe')
+							;
+					} else {
+						$(this)
+							.removeClass('unsubscribe')
+							.addClass('subscribe')
+							.html('<i class="icon-plus-sign"></i> Subscribe')
+							;
+					}
+
+					app.items.subscribe($(this).data('feed-id'), action);
 				});
 
 				/*
@@ -210,35 +221,54 @@ var readable = (function($) {
 
 			vote: function(itemId, vote) {
 				var
-					buttonUp   = $('article button.item-vote[data-item-id=' + itemId + '][data-vote=1]'),
-					buttonDown = $('article button.item-vote[data-item-id=' + itemId + '][data-vote=-1]')
+					buttonUp     = $('article button.item-vote[data-item-id=' + itemId + '][data-vote=1]'),
+					buttonDown   = $('article button.item-vote[data-item-id=' + itemId + '][data-vote=-1]'),
+					buttonActive = vote == 1 ? buttonUp : ( vote == -1 ? buttonDown : null )
 					;
 
+				buttonUp  .removeClass('btn-inverse voted').find('i').removeClass('icon-white');
+				buttonDown.removeClass('btn-inverse voted').find('i').removeClass('icon-white');
+
+				if ( buttonActive ) {
+					buttonActive.addClass('btn-inverse voted').find('i').addClass('icon-white');
+				}
+
 				$.ajax({
-					url: app.rootPath + 'personal/vote',
+					url: app.rootPath + app.view + '/vote',
 					method: 'post',
 					data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
-				}).done(function(data) {
-					buttonUp  .removeClass('btn-inverse voted').find('i').removeClass('icon-white');
-					buttonDown.removeClass('btn-inverse voted').find('i').removeClass('icon-white');
-
-					var button = data.vote == 1 ? buttonUp : ( data.vote == -1 ? buttonDown : null );
-
-					if ( button ) {
-						button.addClass('btn-inverse voted').find('i').addClass('icon-white');
-					}
-				})
-				.always(function(data) {
-					buttonUp  .removeAttr('disabled');
-					buttonDown.removeAttr('disabled');
 				});
 			},
 
 			markAsRead: function(itemId, read) {
 				$.ajax({
-					url: app.rootPath + 'personal/read',
+					url: app.rootPath + app.view + '/read',
 					method: 'post',
 					data: { item_id: itemId, read: read, sessionId: app.sessionId }
+				});
+			},
+
+			subscribe: function(feedId, action) {
+				$.ajax({
+					url: app.rootPath + app.view + '/subscribe',
+					method: 'post',
+					data: { feed_id: feedId, action: action, sessionId: app.sessionId }
+				});
+			}
+		},
+
+		subscriptions: {
+			init: function() {
+				$('#subscriptions .subscription-remove').click(function() {
+					if ( confirm('Are you sure you wish to unsubscribe from ' + $(this).data('feed-name') + '?') ) {
+						$(this).closest('li').fadeOut();
+
+						$.ajax({
+							url: app.rootPath + 'subscriptions/unscubscribe',
+							method: 'post',
+							data: { id: $(this).data('feed-id'), sessionId: app.sessionId }
+						});
+					}
 				});
 			}
 		}

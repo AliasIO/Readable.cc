@@ -21,7 +21,7 @@ class Index extends \Swiftlet\Controllers\Read
 	 */
 	public function items()
 	{
-		$this->view->name = 'feed-items';
+		$this->view->name = 'read';
 
 		$this->getItems();
 	}
@@ -35,6 +35,7 @@ class Index extends \Swiftlet\Controllers\Read
 
 		$sth = $dbh->prepare('
       SELECT
+				feeds.id    AS feed_id,
 				feeds.title AS feed_title,
 				feeds.link  AS feed_link,
 				items.id,
