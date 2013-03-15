@@ -13,15 +13,24 @@ class Index extends \Swiftlet\Controllers\Read
 	 */
 	public function index()
 	{
+		$this->getItems();
 	}
 
 	/**
-	 * Get personal items
+	 * Get popular items
 	 */
 	public function items()
 	{
 		$this->view->name = 'feed-items';
 
+		$this->getItems();
+	}
+
+	/**
+	 * Get popular items
+	 */
+	public function getItems()
+	{
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		$sth = $dbh->prepare('
@@ -39,7 +48,7 @@ class Index extends \Swiftlet\Controllers\Read
 			INNER JOIN       items ON items.id = users_items.item_id
       INNER JOIN       feeds ON feeds.id =       items.feed_id
       ORDER BY score DESC, items.posted_at ASC
-			LIMIT 500
+			LIMIT 10
 			;');
 
 		$sth->execute();

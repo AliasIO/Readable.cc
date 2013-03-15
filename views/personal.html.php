@@ -1,6 +1,7 @@
 <?php require 'header.html.php' ?>
 
-<div id="items" class="loading">
+<div id="items">
+	<?php require 'feed-items.html.php' ?>
 </div>
 
 <script>

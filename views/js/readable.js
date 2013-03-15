@@ -131,6 +131,7 @@ var readable = (function($) {
 					app.items.vote($(this).data('item-id'), $(this).hasClass('voted') ? 0 : $(this).data('vote'));
 				});
 
+				/*
 				$.ajax({
 					url: app.rootPath + app.view + '/items',
 					context: $('#items')
@@ -141,6 +142,11 @@ var readable = (function($) {
 
 					app.items.highlightActive(true);
 				});
+				*/
+
+				$('article.inactive').css({ opacity: .3 });
+
+				app.items.highlightActive(true);
 			},
 
 			scrollTo: function(el, instant) {
