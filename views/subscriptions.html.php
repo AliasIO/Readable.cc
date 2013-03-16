@@ -12,7 +12,7 @@
 
 <?php if ( $this->get('error') ): ?>
 <div class="alert alert-error">
-	<?php echo $this->get('error'); ?>
+	<?php echo $this->get('error', false); ?>
 </div>
 <?php endif ?>
 

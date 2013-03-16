@@ -15,8 +15,6 @@ class Personal extends \Swiftlet\Controllers\Read
 	{
 		$userId = $this->app->getSingleton('helper')->ensureValidUser();
 
-		$this->app->getSingleton('learn')->learn($userId);
-
 		$this->getItems();
 	}
 
@@ -63,7 +61,7 @@ class Personal extends \Swiftlet\Controllers\Read
 				users_items.user_id = ? AND
 				( users_items.read != 1 OR users_items.read IS NULL )
 				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
-      ORDER BY score DESC, items.posted_at ASC
+      ORDER BY DATE(items.posted_at) DESC, users_items.score DESC
 			LIMIT 10
 			;');
 
@@ -83,8 +81,13 @@ class Personal extends \Swiftlet\Controllers\Read
 
 		foreach ( $items as $item ) {
 			$this->purify($item->contents);
+			$this->localize($item->posted_at);
 		}
 
 		$this->view->set('items', $items);
+
+		if ( !$items ) {
+			$this->view->name = 'personal-empty';
+		}
 	}
 }

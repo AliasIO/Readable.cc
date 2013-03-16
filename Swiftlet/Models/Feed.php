@@ -22,7 +22,8 @@ class Feed extends \Swiftlet\Model
 		$type,
 		$title,
 		$link,
-		$items = array()
+		$items = array(),
+		$dummy = false
 		;
 
 	/**
@@ -33,6 +34,21 @@ class Feed extends \Swiftlet\Model
 	 */
 	public function fetch($url, $findLinked = true)
 	{
+		// Set last fetch attempt date
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+			UPDATE feeds SET
+				last_fetch_attempted_at = UTC_TIMESTAMP()
+			WHERE
+				url = :url
+			LIMIT 1
+			;');
+
+		$sth->bindParam('url', $url);
+
+		$sth->execute();
+
 		$response = $this->curl($url);
 
 		$this->type = $this->validate($response->body);
@@ -78,6 +94,40 @@ class Feed extends \Swiftlet\Model
 
 				break;
 		}
+
+		// Set last fetched date
+		$sth = $dbh->prepare('
+			UPDATE feeds SET
+				last_fetched_at = UTC_TIMESTAMP()
+			WHERE
+				url = :url
+			LIMIT 1
+			;');
+
+		$sth->bindParam('url', $url);
+
+		$sth->execute();
+
+		return $this;
+	}
+
+	/**
+	 * Dummy feed object
+	 *
+	 * @param string $title
+	 * @param string $url
+	 * @param string $link
+	 * @return object
+	 */
+	public function dummy($title, $url, $link)
+	{
+		$this->title = $title;
+		$this->url   = $url;
+		$this->link  = $link;
+
+		$this->dummy = true;
+
+		return $this;
 	}
 
 	/**
@@ -147,6 +197,10 @@ class Feed extends \Swiftlet\Model
 	 */
 	public function getItems()
 	{
+		if ( $this->dummy ) {
+			return array();
+		}
+
 		if ( $this->items ) {
 			return $this->items;
 		}
@@ -164,9 +218,86 @@ class Feed extends \Swiftlet\Model
 	}
 
 	/**
+	 * Save feed
+	 */
+	public function save()
+	{
+		$userId = $this->app->getSingleton('session')->get('id');
+
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		// Add the feed
+		$sth = $dbh->prepare('
+			INSERT IGNORE INTO feeds (
+				url,
+				title,
+				link,
+				created_at,
+				last_fetched_at,
+				last_fetch_attempted_at
+			) VALUES (
+				:url,
+				:title,
+				:link,
+				UTC_TIMESTAMP(),
+				' . ( $this->dummy ? 'NULL' : 'UTC_TIMESTAMP()' ) . ',
+				' . ( $this->dummy ? 'NULL' : 'UTC_TIMESTAMP()' ) . '
+			)
+			;');
+
+		$sth->bindParam('url',   $this->url);
+		$sth->bindParam('title', $this->title);
+		$sth->bindParam('link',  $this->link);
+
+		$result = $sth->execute();
+
+		$this->id = $dbh->lastInsertId();
+
+		// Nothing was inserted, feed may already exist
+		if ( !$this->id ) {
+			$sth = $dbh->prepare('
+				SELECT
+					id
+				FROM feeds
+				WHERE
+					url = :url
+				LIMIT 1
+				;');
+
+			$sth->bindParam('url', $this->url);
+
+			$sth->execute();
+
+			$result = $sth->fetch(\PDO::FETCH_OBJ);
+
+			if ( $result ) {
+				$this->id = $result->id;
+			}
+		}
+
+		// Cross reference feed and user
+		if ( $this->id ) {
+			$sth = $dbh->prepare('
+				INSERT IGNORE INTO users_feeds (
+					user_id,
+					feed_id
+				) VALUES (
+					:user_id,
+					:feed_id
+				)
+				;');
+
+			$sth->bindParam('user_id', $userId);
+			$sth->bindParam('feed_id', $this->id);
+
+			$sth->execute();
+		}
+
+		$this->saveItems();
+	}
+
+	/**
 	 * Save feed items
-	 *
-	 * return mixed
 	 */
 	public function saveItems()
 	{

@@ -14,6 +14,10 @@ var readable = (function($) {
 		init: function() {
 			// Hide alerts on click
 			$(document).on('click', '.alert', function() {
+				if ( $(this).hasClass('alert-sticky') ) {
+					return;
+				}
+
 				if ( $(this).hasClass('alert-float') ) {
 					$(this).stop().fadeOut(200);
 
@@ -25,7 +29,7 @@ var readable = (function($) {
 
 			$(window).resize(function() {
 				$('.alert-float').outerWidth($('#contents').width());
-			});
+			}).resize();
 
 			if ( !app.signedIn && app.view == 'index' ) {
 				app.notice($('.modal-welcome').html(), true);

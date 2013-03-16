@@ -13,6 +13,18 @@ class Learn extends \Swiftlet\Model
 	{
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
+		// Update user
+		$sth = $dbh->prepare('
+			UPDATE users SET
+				last_learned_at = UTC_TIMESTAMP()
+			WHERE
+				id = :id
+			;');
+
+		$sth->bindParam('id', $userId);
+
+		$sth->execute();
+
 		// Rank words
 		$sth = $dbh->prepare('
       REPLACE INTO users_words (

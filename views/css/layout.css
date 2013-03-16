@@ -60,7 +60,6 @@ blockquote p {
 }
 
 .alert.alert-float {
-	cursor: pointer;
 	position: fixed;
 	top: 100px;
 	z-index: 9999;
@@ -68,6 +67,10 @@ blockquote p {
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
      -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
           box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+}
+
+.alert.alert-sticky {
+	cursor: default;
 }
 
 #items.loading {

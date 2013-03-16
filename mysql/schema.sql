@@ -16,11 +16,13 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`feeds` (
   `url` VARCHAR(255) NOT NULL ,
   `title` VARCHAR(225) NULL ,
   `link` VARCHAR(225) NULL ,
-  `created_at` DATETIME NULL DEFAULT NULL ,
+  `created_at` DATETIME NOT NULL ,
   `last_fetched_at` DATETIME NULL DEFAULT NULL ,
+  `last_fetch_attempted_at` DATETIME NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `url` (`url` ASC) ,
-  INDEX `last_fetched_at` (`last_fetched_at` ASC) )
+  INDEX `last_fetched_at` (`last_fetched_at` ASC) ,
+  INDEX `last_fetch_attempted_at` (`last_fetch_attempted_at` ASC) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8;
@@ -108,9 +110,11 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`users` (
   `created_at` DATETIME NULL ,
   `updated_at` DATETIME NULL ,
   `last_active_at` DATETIME NULL ,
+  `last_learned_at` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `email` (`email` ASC) ,
-  INDEX `last_active_at` (`last_active_at` ASC) )
+  INDEX `last_active_at` (`last_active_at` ASC) ,
+  INDEX `last_learned_at` (`last_learned_at` ASC) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8;

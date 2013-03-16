@@ -7,7 +7,7 @@
 			<em>
 				<i class="icon-bookmark"></i>
 				Posted by <a href="<?php echo $item->feed_link ?>"><?php echo $item->feed_title ?></a>
-				on <?php echo date('F j, Y', strtotime($item->posted_at)) ?>
+				on <?php echo date('F j, Y', $item->posted_at) ?>
 				<!--(score: <?php echo number_format($item->score) ?>)-->
 				&mdash; <a href="javascript: void(0);" class="subscription <?php echo $item->feed_subscribed ? 'unscubscribe' : 'subscribe' ?>" data-feed-id="<?php echo $item->feed_id ?>">
 					<?php if ( $item->feed_subscribed ): ?>

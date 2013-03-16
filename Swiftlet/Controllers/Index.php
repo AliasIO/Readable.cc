@@ -90,6 +90,7 @@ class Index extends \Swiftlet\Controllers\Read
 
 		foreach ( $items as $item ) {
 			$this->purify($item->contents);
+			$this->localize($item->posted_at);
 		}
 
 		$this->view->set('items', $items);

@@ -10,7 +10,7 @@ class Subscriptions extends \Swiftlet\Controller
 		;
 
 	protected
-		$title = 'Manage feeds'
+		$title = 'Manage subscriptions'
 		;
 
 	/**
@@ -119,31 +119,55 @@ class Subscriptions extends \Swiftlet\Controller
 		$success = false;
 		$error   = false;
 
-		if ( !empty($_FILES['file']) ) {
-			$file = $_FILES['file']['tmp_name'];
+		if ( !empty($_FILES['file']) )
+		{
+			if ( $_FILES['file']['error'] == UPLOAD_ERR_OK ) {
+				$file = $_FILES['file']['tmp_name'];
 
-			// Validate OPML
-			libxml_use_internal_errors(true);
+				// Validate OPML
+				libxml_use_internal_errors(true);
 
-			$dom = new \DOMDocument();
+				$dom = new \DOMDocument();
 
-			$dom->load($file);
+				$dom->load($file);
 
-			if ( !$dom->schemaValidate(self::XSD_OPML) ) {
-				$error = 'The OPML file appears to be invalid.';
-			} else {
-				$xml = new \SimpleXMLElement(file_get_contents($file));
+				if ( !$dom->schemaValidate(self::XSD_OPML) ) {
+					$error = 'The OPML file appears to be invalid.';
+				} else {
+					$xml = new \SimpleXMLElement(file_get_contents($file));
 
-				$feeds = array();
+					$feeds = array();
 
-				foreach ( $xml->body->outline as $outline ) {
-					foreach ( $outline as $feed ) {
-						$url   = $feed->attributes()->xmlUrl;
-						$title = $feed->attributes()->title;
-						$link  = $feed->attributes()->htmlUrl;
+					foreach ( $xml->body->outline as $outline ) {
+						foreach ( $outline as $xml ) {
+							$url   = $xml->attributes()->xmlUrl;
+							$title = $xml->attributes()->title;
+							$link  = $xml->attributes()->htmlUrl;
 
-						$this->saveFeed($url, $title, $link);
+							$feed = $this->app->getModel('feed')->dummy($title, $url, $link);
+
+							$feed->save();
+						}
 					}
+				}
+			} else {
+				switch ( $_FILES['file']['error'] ) {
+					case UPLOAD_ERR_INI_SIZE:
+					case UPLOAD_ERR_FORM_SIZE:
+						$error = 'The uploaded file is too large.';
+
+						break;
+					case UPLOAD_ERR_NO_TMP_DIR:
+					case UPLOAD_ERR_CANT_WRITE:
+					case UPLOAD_ERR_EXTENSION:
+						$error = 'Upload failed due to a configuration error.';
+
+						break;
+
+					case UPLOAD_ERR_PARTIAL:
+					case UPLOAD_ERR_NO_FILE:
+					default:
+						$error = 'File upload failed, please try again.';
 				}
 			}
 		}
@@ -153,7 +177,7 @@ class Subscriptions extends \Swiftlet\Controller
 
 			$this->view->set('error-file', true);
 		} else {
-			$this->view->set('success', 'The feeds have been added.');
+			$this->view->set('success', 'Subscriptions have been added successfully.');
 		}
 	}
 
@@ -185,81 +209,5 @@ class Subscriptions extends \Swiftlet\Controller
 		}
 
 		exit;
-	}
-
-	/**
-	 * Save feed
-	 *
-	 * @param string $url
-	 * @param string $title
-	 * @param string $link
-	 */
-	protected function saveFeed($url, $title, $link) {
-		$userId = $this->app->getSingleton('session')->get('id');
-
-		$dbh = $this->app->getSingleton('pdo')->getHandle();
-
-		// Add the feed
-		$sth = $dbh->prepare('
-			INSERT IGNORE INTO feeds (
-				url,
-				title,
-				link,
-				created_at
-			) VALUES (
-				:url,
-				:title,
-				:link,
-				UTC_TIMESTAMP()
-			)
-			;');
-
-		$sth->bindParam('url',   $url);
-		$sth->bindParam('title', $title);
-		$sth->bindParam('link',  $link);
-
-		$result = $sth->execute();
-
-		$feedId = $dbh->lastInsertId();
-
-		// Nothing was inserted, feed may already exist
-		if ( !$feedId ) {
-			$sth = $dbh->prepare('
-				SELECT
-					id
-				FROM feeds
-				WHERE
-					url = :url
-				LIMIT 1
-				;');
-
-			$sth->bindParam('url', $url);
-
-			$sth->execute();
-
-			$result = $sth->fetch(\PDO::FETCH_OBJ);
-
-			if ( $result ) {
-				$feedId = $result->id;
-			}
-		}
-
-		// Cross reference feed and user
-		if ( $feedId ) {
-			$sth = $dbh->prepare('
-				INSERT IGNORE INTO users_feeds (
-					user_id,
-					feed_id
-				) VALUES (
-					:user_id,
-					:feed_id
-				)
-				;');
-
-			$sth->bindParam('user_id', $userId);
-			$sth->bindParam('feed_id', $feedId);
-
-			$sth->execute();
-		}
 	}
 }

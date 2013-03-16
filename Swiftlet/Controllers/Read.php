@@ -199,4 +199,15 @@ class Read extends \Swiftlet\Controller
 
 		$html = preg_replace('/<table>/', '<table class="table table-bordered table-striped table-hover">', $html);
 	}
+
+	/**
+	 * Apply local time-zone offset to UTC date-time
+	 *
+	 * @param string $dateTime
+	 * @return int
+	 */
+	protected function localize(&$dateTime)
+	{
+		$dateTime = strtotime($dateTime) + $this->app->getSingleton('session')->get('timezone');
+	}
 }
