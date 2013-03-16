@@ -1,4 +1,3 @@
-config.php
 config/pdo.php
 parser/config.yml
 tags
