@@ -322,8 +322,15 @@ var readable = (function($) {
 				if ( $(document).scrollTop() + $(window).height() > $(document).height() / 1.2 ) {
 					$(document).unbind('scroll', app.items.infiniteScroll);
 
+					var excludes = [];
+
+					$('article').each(function() {
+						excludes.push($(this).data('item-id'));
+					});
+
 					$.ajax({
-						url: app.rootPath + app.view + '/items/' + ( app.items.page + 1 ),
+						url: app.rootPath + app.view + '/items',
+						data: { page: app.items.page + 1, excludes: excludes.join(' ') },
 						context: $('#items')
 					}).done(function(data) {
 						$(this).append(data);

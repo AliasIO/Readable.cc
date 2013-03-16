@@ -39,6 +39,8 @@ class Personal extends \Swiftlet\Controllers\Read
 	{
 		$userId = $this->app->getSingleton('session')->get('id');
 
+		$excludes = !empty($_GET['excludes']) ? explode(' ', $_GET['excludes']) : array();
+
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		$sth = $dbh->prepare('
@@ -58,13 +60,20 @@ class Personal extends \Swiftlet\Controllers\Read
 			INNER JOIN       items ON items.id = users_items.item_id
       INNER JOIN       feeds ON feeds.id =       items.feed_id
 			WHERE
-				users_items.user_id = :user_id AND
+				users_items.user_id = ? AND
 				( users_items.read != 1 OR users_items.read IS NULL )
+				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
       ORDER BY score DESC, items.posted_at ASC
 			LIMIT 10
 			;');
 
-		$sth->bindParam('user_id', $userId);
+		$i = 1;
+
+		$sth->bindParam($i ++, $userId);
+
+		foreach( $excludes as $key => $itemId ) {
+			$sth->bindParam($i ++, $excludes[$key]);
+		}
 
 		$sth->execute();
 

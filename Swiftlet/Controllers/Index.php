@@ -35,7 +35,8 @@ class Index extends \Swiftlet\Controllers\Read
 
 		$args = $this->app->getArgs();
 
-		$page = !empty($args[0]) ? (int) $args[0] : 1;
+		$page     = !empty($_GET['page'])     ? (int) $_GET['page']             : 1;
+		$excludes = !empty($_GET['excludes']) ? explode(' ', $_GET['excludes']) : array();
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
