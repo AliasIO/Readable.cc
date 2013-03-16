@@ -2,6 +2,8 @@
 
 <html>
 	<head>
+		<meta charset="utf-8">
+
 		<title><?php echo $this->htmlEncode($this->app->getConfig('siteName')) . ' - ' . $this->get('pageTitle') ?></title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,11 +22,12 @@
 			readable.rootPath  = '<?php echo $this->app->getRootPath() ?>';
 			readable.view      = '<?php echo $this->name ?>';
 			readable.sessionId = '<?php echo $this->app->getSingleton('session')->getId() ?>';
+			readable.signedIn  = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
 		</script>
 	</head>
 	<body>
 		<header class="navbar navbar-fixed-top">
-			<div class="navbar-inner">
+			<nav class="navbar-inner">
 				<div class="container">
 					<a class="brand" href="<?php echo $this->app->getRootPath() ?>">Readable.cc</a>
 
@@ -44,7 +47,7 @@
 						<?php endif ?>
 					</ul>
 				</div>
-			</div><!-- /navbar-inner -->
+			</nav><!-- /navbar-inner -->
 		</header><!-- /navbar -->
 
-		<div class="container">
+		<div id="contents" class="container">

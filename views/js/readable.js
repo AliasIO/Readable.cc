@@ -12,9 +12,45 @@ var readable = (function($) {
 		},
 
 		init: function() {
-			$('.alert').click(function() { $(this).stop().hide(); });
+			// Hide alerts on click
+			$(document).on('click', '.alert', function() {
+				if ( $(this).hasClass('alert-float') ) {
+					$(this).stop().fadeOut(200);
+
+					$('article.active').animate({ opacity: 1 }, 200);
+				} else {
+					$(this).stop().hide();
+				}
+			});
+
+			$(window).resize(function() {
+				$('.alert-float').outerWidth($('#contents').width());
+			});
+
+			if ( !app.signedIn && app.view == 'index' ) {
+				app.notice($('.modal-welcome').html(), true);
+			}
 
 			app.navBar.init();
+		},
+
+		// Display alert
+		notice: function(message, instant) {
+			$('article.active').stop().animate({ opacity: .3 }, instant ? 0 : 200);
+
+			$('.alert').hide();
+
+			$('<div class="alert alert-float">' + message + '</div>')
+				.stop()
+				.hide()
+				.outerWidth($('#contents').width())
+				.appendTo('#contents')
+				.fadeIn(instant ? 0 : 200)
+				;
+		},
+
+		notSignedIn: function() {
+			app.notice($('.modal-signin').html());
 		},
 
 		navBar: {
@@ -24,6 +60,7 @@ var readable = (function($) {
 
 			init: function() {
 				$(document).bind('scroll', app.navBar.scroll);
+				$(document).bind('scroll', app.items.infiniteScroll);
 			},
 
 			scroll: function() {
@@ -65,6 +102,12 @@ var readable = (function($) {
 				Mousetrap.bind('j', function() { app.items.scrollTo(app.items.nextItem,     true); });
 				Mousetrap.bind('k', function() { app.items.scrollTo(app.items.previousItem, true); });
 
+				$(document).ajaxError(function(e, xhr) {
+					if ( xhr.status === 403 ) {
+						app.notSignedIn();
+					}
+				});
+
 				// Add space to allow the last item to be scrolled to the top of the page
 				$(window).resize(function() {
 					$('body').css({ paddingBottom: $(window).height() - 200 });
@@ -82,11 +125,6 @@ var readable = (function($) {
 						app.items.highlightActive();
 					}
 				}, 200);
-
-				// Expand collapsed item when clicked
-				$('#items').on('change', 'input.keep-unread', function(e) {
-					app.items.markAsRead($(this).data('item-id'), $(this).is(':checked') ? 0 : 1);
-				});
 
 				// Expand collapsed item when clicked
 				$('#items').on('click', 'article.collapsed', function(e) {
@@ -109,7 +147,7 @@ var readable = (function($) {
 				});
 
 				// Register votes
-				$('#items').on('click', '.item-vote', function(e) {
+				$('#items').on('click', 'article.active .item-vote', function(e) {
 					e.preventDefault();
 
 					$(this).blur();
@@ -118,28 +156,23 @@ var readable = (function($) {
 				});
 
 				// Register votes
-				$('#items').on('click', '.subscribe, .unsubscribe', function(e) {
+				$('#items').on('click', 'article.active .subscription', function(e) {
 					e.preventDefault();
 
 					$(this).blur();
 
-					var action = $(this).hasClass('subscribe') ? 'subscribe' : 'unsubscribe';
+					var
+						feedId = $(this).data('feed-id'),
+						action = $(this).hasClass('subscribe') ? 'subscribe' : 'unsubscribe'
+						;
 
-					if ( action === 'subscribe' ) {
-						$(this)
-							.removeClass('subscribe')
-							.addClass('unsubscribe')
-							.html('<i class="icon-minus-sign"></i> Unsubscribe')
-							;
-					} else {
-						$(this)
-							.removeClass('unsubscribe')
-							.addClass('subscribe')
-							.html('<i class="icon-plus-sign"></i> Subscribe')
-							;
-					}
+					app.items.subscribe(feedId, action);
+				});
 
-					app.items.subscribe($(this).data('feed-id'), action);
+				$('#items').on('change', 'article.active .keep-unread', function(e) {
+					$(this).blur();
+
+					app.items.markAsRead($(this).data('item-id'), $(this).is(':checked') ? 0 : 1);
 				});
 
 				/*
@@ -212,6 +245,9 @@ var readable = (function($) {
 							app.items.activeItem   = $(this);
 							app.items.previousItem = $(this).prev();
 							app.items.nextItem     = $(this).next();
+
+							// Hide floating alerts
+							$('.alert-float').click();
 						}
 
 						return false;
@@ -220,10 +256,17 @@ var readable = (function($) {
 			},
 
 			vote: function(itemId, vote) {
+				if ( !app.signedIn ) {
+					app.notSignedIn();
+
+					return;
+				}
+
 				var
-					buttonUp     = $('article button.item-vote[data-item-id=' + itemId + '][data-vote=1]'),
-					buttonDown   = $('article button.item-vote[data-item-id=' + itemId + '][data-vote=-1]'),
-					buttonActive = vote == 1 ? buttonUp : ( vote == -1 ? buttonDown : null )
+					buttonUp         = $('article .item-vote[data-item-id=' + itemId + '][data-vote=1]'),
+					buttonDown       = $('article .item-vote[data-item-id=' + itemId + '][data-vote=-1]'),
+					buttonLastActive = $('article .item-vote[data-item-id=' + itemId + '].voted'),
+					buttonActive     = vote == 1 ? buttonUp : ( vote == -1 ? buttonDown : null )
 					;
 
 				buttonUp  .removeClass('btn-inverse voted').find('i').removeClass('icon-white');
@@ -237,34 +280,73 @@ var readable = (function($) {
 					url: app.rootPath + app.view + '/vote',
 					method: 'post',
 					data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
+				}).fail(function() {
+					buttonUp  .removeClass('btn-inverse voted').find('i').removeClass('icon-white');
+					buttonDown.removeClass('btn-inverse voted').find('i').removeClass('icon-white');
+
+					if ( buttonLastActive ) {
+						buttonLastActive.addClass('btn-inverse voted').find('i').addClass('icon-white');
+					}
 				});
 			},
 
 			markAsRead: function(itemId, read) {
-				$.ajax({
-					url: app.rootPath + app.view + '/read',
-					method: 'post',
-					data: { item_id: itemId, read: read, sessionId: app.sessionId }
-				});
+				if ( app.signedIn ) {
+					$.ajax({
+						url: app.rootPath + app.view + '/read',
+						method: 'post',
+						data: { item_id: itemId, read: read, sessionId: app.sessionId }
+					}).fail(function() {
+						$('article .keep-unread[data-item-id=' + itemId + ']').prop('checked', read);
+					});
+				}
 			},
 
 			subscribe: function(feedId, action) {
+				if ( !app.signedIn ) {
+					app.notSignedIn();
+
+					return;
+				}
+
+				el = $('article .subscription[data-feed-id=' + feedId + ']');
+
+				if ( action === 'subscribe' ) {
+					el.removeClass('subscribe').addClass('unsubscribe').html('<i class="icon-minus-sign"></i> Unsubscribe');
+				} else {
+					el.removeClass('unsubscribe').addClass('subscribe').html('<i class="icon-plus-sign"></i> Subscribe');
+				}
+
 				$.ajax({
 					url: app.rootPath + app.view + '/subscribe',
 					method: 'post',
 					data: { feed_id: feedId, action: action, sessionId: app.sessionId }
+				}).fail(function(data) {
+					if ( action === 'unsubscribe' ) {
+						el.removeClass('subscribe').addClass('unsubscribe').html('<i class="icon-minus-sign"></i> Unsubscribe');
+					} else {
+						el.removeClass('unsubscribe').addClass('subscribe').html('<i class="icon-plus-sign"></i> Subscribe');
+					}
 				});
+			},
+
+			infiniteScroll: function(e) {
+				if ( $(document).scrollTop() + $(window).height() > $(document).height() / 2 ) {
+					$(document).unbind('scroll', app.items.infiniteScroll);
+
+					console.log('load');
+				}
 			}
 		},
 
 		subscriptions: {
 			init: function() {
-				$('#subscriptions .subscription-remove').click(function() {
+				$('#subscriptions .unsubscribe').click(function() {
 					if ( confirm('Are you sure you wish to unsubscribe from ' + $(this).data('feed-name') + '?') ) {
 						$(this).closest('li').fadeOut();
 
 						$.ajax({
-							url: app.rootPath + 'subscriptions/unscubscribe',
+							url: app.rootPath + 'subscriptions/unsubscribe',
 							method: 'post',
 							data: { id: $(this).data('feed-id'), sessionId: app.sessionId }
 						});

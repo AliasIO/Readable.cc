@@ -60,7 +60,7 @@ class Read extends \Swiftlet\Controller
 			exit(json_encode(array('message' => 'Something went wrong, please try again.')));
 		}
 
-		exit;
+		exit(json_encode(array()));
 	}
 
 	/**
@@ -109,7 +109,7 @@ class Read extends \Swiftlet\Controller
 			exit(json_encode(array('message' => 'Something went wrong, please try again.')));
 		}
 
-		exit;
+		exit(json_encode(array()));
 	}
 
 	/**
@@ -164,9 +164,8 @@ class Read extends \Swiftlet\Controller
 			exit(json_encode(array('message' => 'Something went wrong, please try again.')));
 		}
 
-		exit;
+		exit(json_encode(array()));
 	}
-
 
 	/**
 	 * Sanitise HTML

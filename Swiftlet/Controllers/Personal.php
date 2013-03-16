@@ -52,7 +52,8 @@ class Personal extends \Swiftlet\Controllers\Read
 				items.contents,
 				items.posted_at,
 				users_items.vote,
-				users_items.score
+				users_items.score,
+				1 AS feed_subscribed
 			FROM       users_items
 			INNER JOIN       items ON items.id = users_items.item_id
       INNER JOIN       feeds ON feeds.id =       items.feed_id

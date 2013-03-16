@@ -51,16 +51,23 @@ blockquote p {
 	margin-top: 3px;
 }
 
+.modal {
+	display: none;
+}
+
 .alert {
 	cursor: pointer;
 }
 
 .alert.alert-float {
 	cursor: pointer;
-	margin-right: 20px;
 	position: fixed;
-	top: 80px;
+	top: 100px;
 	z-index: 9999;
+	width: auto;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 }
 
 #items.loading {
@@ -190,6 +197,29 @@ fieldset:last-child {
 
 	#subscriptions li:hover .unsubscribe {
 		visibility: visible;
+	}
+
+#feedback {
+	border: 2px solid #fff;
+	line-height: 30px;
+	font-size: small;
+	position: fixed;
+	text-align: center;
+	bottom: 0;
+	margin: 0;
+	right: 0;
+	width: 100px;
+}
+
+	#feedback a {
+		background: #ccc;
+		border: none;
+		display: block;
+		color: #fff;
+	}
+
+	#feedback a:hover {
+		background: #333;
 	}
 
 @media all and (max-width: 995px) {
