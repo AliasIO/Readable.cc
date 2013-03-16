@@ -33,6 +33,10 @@ class Index extends \Swiftlet\Controllers\Read
 	{
 		$userId = $this->app->getSingleton('session')->get('id');
 
+		$args = $this->app->getArgs();
+
+		$page = !empty($args[0]) ? (int) $args[0] : 1;
+
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		$select = '
@@ -53,7 +57,6 @@ class Index extends \Swiftlet\Controllers\Read
       INNER JOIN       feeds ON feeds.id =       items.feed_id
 			GROUP BY items.id
       ORDER BY DATE(items.posted_at) DESC, AVG(users_items.score) DESC
-			LIMIT 100
 			';
 
 		if ( $userId ) {
@@ -70,13 +73,13 @@ class Index extends \Swiftlet\Controllers\Read
 					users_items.user_id = :user_id AND
 					( users_items.read != 1 OR users_items.read IS NULL )
 				';
-
-			$sth = $dbh->prepare($select);
-
-			$sth->bindParam('user_id', $userId);
-		} else {
-			$sth = $dbh->prepare($select);
 		}
+
+		$select .= ' LIMIT ' . ( ( $page - 1 ) * self::ITEMS_PER_PAGE ) . ', ' . ( $page * self::ITEMS_PER_PAGE );
+
+		$sth = $dbh->prepare($select);
+
+		$sth->bindParam('user_id', $userId);
 
 		$sth->execute();
 

@@ -4,6 +4,10 @@ namespace Swiftlet\Controllers;
 
 class Read extends \Swiftlet\Controller
 {
+	const
+		ITEMS_PER_PAGE = 5
+		;
+
 	/**
 	 * Default action
 	 */
