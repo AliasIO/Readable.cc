@@ -106,7 +106,7 @@ class Auth extends \Swiftlet\Model
 				UTC_TIMESTAMP(),
 				UTC_TIMESTAMP(),
 				:activation_code,
-				DATE_ADD(UTC_TIMESTAMP(), 1 DAY)
+				DATE_ADD(UTC_TIMESTAMP(), INTERVAL 1 DAY)
 			)
 			;');
 

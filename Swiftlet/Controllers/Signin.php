@@ -48,7 +48,7 @@ class Signin extends \Swiftlet\Controller
 
 				header('Location: ' . $this->app->getRootPath() . 'personal');
 			} catch ( \Exception $e ) {
-				$error = 'An unknown error ocurred.';
+				$error = 'An unknown error ocurred.x';
 
 				switch ( $e->getCode() ) {
 					case $auth::EMAIL_INVALID:

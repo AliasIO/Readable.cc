@@ -38,7 +38,7 @@ class Signup extends \Swiftlet\Controller
 						$error = 'An unknown error occured. Please try again.';
 					}
 				} catch ( \Exception $e ) {
-					$error = 'An unknown error ocurred.';
+					$error = 'An unknown error ocurred.'.$e->getMessage();;
 
 					switch ( $e->getCode() ) {
 						case $auth::EMAIL_INVALID:
