@@ -1,7 +1,7 @@
 			<div class="modal modal-signin">
 				<h4>Not signed in</h4>
 
-				<p>You're missing out. Please <a href="<?php echo $this->app->getRootPath() ?>signin">sign in</a> or <a href="<?php echo $this->app->getRootPath() ?>signup">create an account</a>.</p>
+				<p>You're missing out. Please <a href="/signin">sign in</a> or <a href="/signup">create an account</a>.</p>
 			</div>
 
 			<div class="modal modal-welcome">
@@ -12,7 +12,7 @@
 				</p>
 
 				<p>
-					<a href="<?php echo $this->app->getRootPath() ?>signup">Create an account</a> to manage your own subscriptions (RSS and Atom feeds.)
+					<a href="/signup">Create an account</a> to manage your own subscriptions (RSS and Atom feeds.)
 				</p>
 
 				<p>
@@ -29,7 +29,7 @@
 			<a href="https://github.com/ElbertF/readable.cc/issues">Feedback</a>
 		</p>
 
-		<script src="<?php echo $this->app->getRootPath() ?>views/lib/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/views/lib/bootstrap/js/bootstrap.min.js"></script>
 
 		<script type="text/javascript">
 			var _gaq = _gaq || [];

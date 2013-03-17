@@ -19,7 +19,7 @@ class Helper extends \Swiftlet\Model
 				exit(json_encode(array('message' => 'You need to be logged in')));
 			}
 
-			header('Location: ' . $this->app->getRootPath() . 'signin');
+			header('Location: /signin');
 
 			exit;
 		}

@@ -4,11 +4,11 @@
 	<h4>There is nothing here&hellip; Yet.</h4>
 
 	<p>
-		Head over to the <a href="<?php echo $this->app->getRootPath() ?>subscriptions">Subscriptions</a> page, add some feeds and check back shortly!
+		Head over to the <a href="/subscriptions">Subscriptions</a> page, add some feeds and check back shortly!
 	</p>
 
 	<p>
-		You may also subscribe to feeds from the <a href="<?php echo $this->app->getRootPath() ?>">Popular</a> page.
+		You may also subscribe to feeds from the <a href="/">Popular</a> page.
 	</p>
 </div>
 

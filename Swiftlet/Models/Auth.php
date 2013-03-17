@@ -86,7 +86,7 @@ class Auth extends \Swiftlet\Model
 
 		$hash = $this->generateHash($password);
 
-		$activationCode = uniqid(mt_rand(), true);
+		$activationCode = sha1(uniqid(mt_rand(), true));
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
@@ -120,8 +120,8 @@ class Auth extends \Swiftlet\Model
 			$message =
 				"Hi,\n\n" .
 				"Thanks for creating an account at " . $this->app->getConfig('siteName') . "!\n\n" .
-				"Please verify your email address by visiting the page at the following URL:\n\n:" .
-				"\t" . $this->app->getConfig('websiteUrl') . "signin/verify/" . $activationCode . "\n\n" .
+				"Please verify your email address by visiting the page at the following URL:\n\n" .
+				"  " . $this->app->getConfig('websiteUrl') . "/signin/verify/" . $activationCode . "\n\n" .
 				"If you do not respond to this email within 24 hours your account will automatically be disabled."
 				;
 

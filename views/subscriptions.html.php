@@ -36,7 +36,7 @@
 
 <h3>Add a subscription</h3>
 
-<form id="form-subscriptions-subscribe" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="form-subscriptions form-horizontal well">
+<form id="form-subscriptions-subscribe" method="post" action="/subscriptions" class="form-subscriptions form-horizontal well">
 	<input type="hidden" name="form" value="subscribe">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
@@ -59,7 +59,7 @@
 
 <h3>Import & export</h3>
 
-<form id="form-subscriptions-import" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="form-horizontal well" enctype="multipart/form-data">
+<form id="form-subscriptions-import" method="post" action="/subscriptions" class="form-horizontal well" enctype="multipart/form-data">
 	<input type="hidden" name="form" value="import">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
