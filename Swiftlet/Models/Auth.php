@@ -6,10 +6,11 @@ class Auth extends \Swiftlet\Model
 {
 	const
 		USER_NOT_FOUND     = 1,
-		PASSWORD_EMPTY     = 2,
-		PASSWORD_INCORRECT = 3,
-		EMAIL_IN_USE       = 4,
-		EMAIL_INVALID      = 5
+		USER_NOT_ENABLED   = 2,
+		PASSWORD_EMPTY     = 3,
+		PASSWORD_INCORRECT = 4,
+		EMAIL_IN_USE       = 5,
+		EMAIL_INVALID      = 6
 		;
 
 	protected
@@ -53,6 +54,10 @@ class Auth extends \Swiftlet\Model
 			throw new \Exception('Password incorrect', self::PASSWORD_INCORRECT);
 		}
 
+		if ( !$user->enabled && time() < strtotime($user->created_at) - 24 * 60 * 60 ) {
+			throw new \Exception('Account not enabled', self::USER_NOT_ENABLED);
+		}
+
 		return $user;
 	}
 
@@ -81,6 +86,8 @@ class Auth extends \Swiftlet\Model
 
 		$hash = $this->generateHash($password);
 
+		$activationCode = uniqid(mt_rand(), true);
+
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		$sth = $dbh->prepare('
@@ -89,20 +96,39 @@ class Auth extends \Swiftlet\Model
 				password,
 				created_at,
 				updated_at,
-				last_active_at
+				last_active_at,
+				activation_code,
+				activation_code_expires_at
 			) VALUES (
 				:email,
 				:password,
 				UTC_TIMESTAMP(),
 				UTC_TIMESTAMP(),
-				UTC_TIMESTAMP()
+				UTC_TIMESTAMP(),
+				:activation_code,
+				DATE_ADD(UTC_TIMESTAMP(), 1 DAY)
 			)
 			;');
 
-		$sth->bindParam(':email',    $email);
-		$sth->bindParam(':password', $hash);
+		$sth->bindParam(':email',           $email);
+		$sth->bindParam(':password',        $hash);
+		$sth->bindParam(':activation_code', $activationCode);
 
-		return $sth->execute();
+		$result = $sth->execute();
+
+		if ( $result ) {
+			$message =
+				"Hi,\n\n" .
+				"Thanks for creating an account at " . $this->app->getConfig('siteName') . "!\n\n" .
+				"Please verify your email address by visiting the page at the following URL:\n\n:" .
+				"\t" . $this->app->getConfig('websiteUrl') . "signin/verify/" . $activationCode . "\n\n" .
+				"If you do not respond to this email within 24 hours your account will automatically be disabled."
+				;
+
+			$this->app->getSingleton('helper')->mail($email, 'Please activate your Readable.cc account', $message);
+
+			return true;
+		}
 	}
 
 	/**
@@ -148,7 +174,9 @@ class Auth extends \Swiftlet\Model
 				id,
 				email,
 				password,
-				timezone
+				timezone,
+				created_at,
+				enabled
 			FROM users
 			WHERE
 				id    = :id OR

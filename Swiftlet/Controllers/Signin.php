@@ -59,6 +59,7 @@ class Signin extends \Swiftlet\Controller
 						break;
 					case $auth::USER_NOT_FOUND:
 					case $auth::PASSWORD_INCORRECT:
+					case $auth::USER_NOT_ENABLED:
 						$error = 'The provided email address or password is incorrect, please try again.';
 
 						$this->view->set('error-email',    true);
@@ -70,5 +71,46 @@ class Signin extends \Swiftlet\Controller
 				$this->view->set('error', $error);
 			}
 		}
+	}
+
+	/**
+	 * Email verification
+	 */
+	public function verify()
+	{
+		$success = false;
+		$error   = false;
+
+		$args = $this->app->getArgs();
+
+		if ( !empty($args[0]) ) {
+			$activationCode = $args[0];
+
+			$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+			$sth = $dbh->prepare('
+				UPDATE users SET
+					enabled = 1
+				WHERE
+					activation_code            = :activation_code AND
+					activation_code_expires_at > UTC_TIMESTAMP()
+				LIMIT 1
+				;');
+
+			$sth->bindParam('activation_code', $activationCode);
+
+			$sth->execute();
+
+			if ( $sth->rowCount() ) {
+				$success = 'Thank you, your email address has been verified!';
+			} else {
+				$error = 'The verfication code is invalid, expired or has already been used. Please use the "Forgot password" link if you need to recover your account.';
+			}
+		} else {
+			$error = 'No verification code.';
+		}
+
+		$this->view->set('success', $success);
+		$this->view->set('error',   $error);
 	}
 }

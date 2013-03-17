@@ -107,14 +107,19 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`users` (
   `email` VARCHAR(255) NULL DEFAULT NULL ,
   `password` VARCHAR(255) NULL DEFAULT NULL ,
   `timezone` INT(11) NULL DEFAULT 0 ,
+  `enabled` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 ,
   `created_at` DATETIME NULL ,
   `updated_at` DATETIME NULL ,
   `last_active_at` DATETIME NULL ,
   `last_learned_at` VARCHAR(45) NULL ,
+  `activation_code` VARCHAR(255) NULL ,
+  `activation_code_expires_at` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `email` (`email` ASC) ,
   INDEX `last_active_at` (`last_active_at` ASC) ,
-  INDEX `last_learned_at` (`last_learned_at` ASC) )
+  INDEX `last_learned_at` (`last_learned_at` ASC) ,
+  UNIQUE INDEX `activation_code` (`activation_code` ASC) ,
+  INDEX `enabled` (`enabled` ASC) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8;

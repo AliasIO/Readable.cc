@@ -26,4 +26,21 @@ class Helper extends \Swiftlet\Model
 
 		return $userId;
 	}
+
+	/**
+	 * Send an email
+	 *
+	 * @param bool $ajax
+	 * @return int
+	 */
+	public function sendMail($to, $subject, $message)
+	{
+		$headers = implode("\r\n", array(
+			'Content-type: text/plain; charset=UTF-8',
+			'From: '     . $this->app->getConfig('emailFrom'),
+			'Reply-To: ' . $this->app->getConfig('emailFrom')
+			));
+
+		return mail($to, $subject, $message, $headers);
+	}
 }
