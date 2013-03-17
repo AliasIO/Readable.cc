@@ -42,20 +42,20 @@ class Index extends \Swiftlet\Controllers\Read
 
 		$select = '
       SELECT
-				feeds.id    AS feed_id,
-				feeds.title AS feed_title,
-				feeds.link  AS feed_link,
+				feeds.id         AS feed_id,
+				feeds.title      AS feed_title,
+				feeds.link       AS feed_link,
 				items.id,
 				items.url,
 				items.title,
 				items.contents,
 				items.posted_at,
-				0                      AS feed_subscribed,
-				0                      AS vote,
-				AVG(users_items.score) AS score
-			FROM       users_items
-			INNER JOIN       items ON items.id = users_items.item_id
-      INNER JOIN       feeds ON feeds.id =       items.feed_id
+				0                AS feed_subscribed,
+				0                AS vote,
+				COALESCE(AVG(users_items.score), 0) AS score
+			FROM             items
+      INNER JOIN       feeds ON       feeds.id      = items.feed_id
+			LEFT  JOIN users_items ON users_items.item_id = items.id
 			GROUP BY items.id
       ORDER BY DATE(items.posted_at) DESC, AVG(users_items.score) DESC
 			';
@@ -67,12 +67,11 @@ class Index extends \Swiftlet\Controllers\Read
 					COALESCE(users_items.vote, 0),
 					IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
 				FROM ( ' . $select . ' ) AS main
-				LEFT JOIN users_items ON users_items.item_id = main.id
-				LEFT JOIN items       ON       items.id      = users_items.item_id
-				LEFT JOIN users_feeds ON users_feeds.feed_id = items.feed_id
+				LEFT  JOIN items       ON       items.id      =  main.id
+				LEFT  JOIN users_items ON users_items.item_id =  main.id      AND users_items.user_id = :user_id
+				INNER JOIN users_feeds ON users_feeds.feed_id = items.feed_id
 				WHERE
-					users_items.user_id = :user_id AND
-					( users_items.read != 1 OR users_items.read IS NULL )
+					users_items.read != 1 OR users_items.read IS NULL
 				';
 		}
 

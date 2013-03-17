@@ -41,7 +41,7 @@ class Personal extends \Swiftlet\Controllers\Read
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
-		$sth = $dbh->prepare('
+		$sth = $dbh->prepare($sql='
       SELECT
 				feeds.id    AS feed_id,
 				feeds.title AS feed_title,
@@ -51,14 +51,13 @@ class Personal extends \Swiftlet\Controllers\Read
 				items.title,
 				items.contents,
 				items.posted_at,
-				users_items.vote,
-				users_items.score,
+				COALESCE(users_items.vote,  0) AS vote,
+				COALESCE(users_items.score, 0) AS score,
 				1 AS feed_subscribed
-			FROM       users_items
-			INNER JOIN       items ON items.id = users_items.item_id
-      INNER JOIN       feeds ON feeds.id =       items.feed_id
+			FROM             items
+      INNER JOIN       feeds ON feeds.id            = items.feed_id
+			LEFT  JOIN users_items ON users_items.item_id = items.id      AND users_items.user_id = ?
 			WHERE
-				users_items.user_id = ? AND
 				( users_items.read != 1 OR users_items.read IS NULL )
 				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
       ORDER BY DATE(items.posted_at) DESC, users_items.score DESC

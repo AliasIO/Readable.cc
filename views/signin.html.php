@@ -4,6 +4,12 @@
 	<h1><?php echo $this->get('pageTitle') ?></h1>
 </div>
 
+<?php if ( $this->get('success') ): ?>
+<div class="alert alert-success">
+	<?php echo $this->get('success'); ?>
+</div>
+<?php endif ?>
+
 <?php if ( $this->get('error') ): ?>
 <div class="alert alert-error">
 	<?php echo $this->get('error'); ?>

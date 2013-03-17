@@ -125,7 +125,7 @@ class Auth extends \Swiftlet\Model
 				"If you do not respond to this email within 24 hours your account will automatically be disabled."
 				;
 
-			$this->app->getSingleton('helper')->sendMail($email, 'Please activate your Readable.cc account', $message);
+			$this->app->getSingleton('helper')->sendMail($email, 'Please verify your email address', $message);
 
 			return true;
 		}
