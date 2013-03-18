@@ -67,9 +67,8 @@ class Index extends \Swiftlet\Controllers\Read
 					COALESCE(users_items.vote, 0),
 					IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
 				FROM ( ' . $select . ' ) AS main
-				LEFT  JOIN items       ON       items.id      =  main.id
-				LEFT  JOIN users_items ON users_items.item_id =  main.id      AND users_items.user_id = :user_id
-				INNER JOIN users_feeds ON users_feeds.feed_id = items.feed_id
+				LEFT JOIN users_items ON users_items.item_id = main.id      AND users_items.user_id = :user_id
+				LEFT JOIN users_feeds ON users_feeds.feed_id = main.feed_id AND users_feeds.user_id = :user_id
 				WHERE
 					users_items.read != 1 OR users_items.read IS NULL
 				';
