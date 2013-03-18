@@ -19,7 +19,6 @@
 		<script src="/views/js/readable.js"></script>
 
 		<script>
-			readable.rootPath  = '/';
 			readable.view      = '<?php echo $this->name ?>';
 			readable.sessionId = '<?php echo $this->app->getSingleton('session')->getId() ?>';
 			readable.signedIn  = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;

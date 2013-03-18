@@ -1,7 +1,8 @@
 var readable = (function($) {
 	var app = {
-		rootPath: '',
-		page: '',
+		view: '',
+		sessionId: '',
+		signedIn: false,
 
 		log: function(message) {
 			if ( typeof window.console !== 'undefined' && typeof console.log !== 'undefined' ) {
@@ -111,7 +112,13 @@ var readable = (function($) {
 
 				$(document).ajaxError(function(e, xhr) {
 					if ( xhr.status === 403 ) {
-						app.notSignedIn();
+						if ( !app.signedIn ) {
+							app.notSignedIn();
+						} else {
+							if ( confirm('Your session has expired. Sign back in?') ) {
+								location = '/signin';
+							}
+						}
 					}
 				});
 
@@ -278,7 +285,7 @@ var readable = (function($) {
 				}
 
 				$.ajax({
-					url: app.rootPath + app.view + '/vote',
+					url: '/' + app.view + '/vote',
 					method: 'post',
 					data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
 				}).fail(function() {
@@ -294,7 +301,7 @@ var readable = (function($) {
 			markAsRead: function(itemId, read) {
 				if ( app.signedIn ) {
 					$.ajax({
-						url: app.rootPath + app.view + '/read',
+						url: '/' + app.view + '/read',
 						method: 'post',
 						data: { item_id: itemId, read: read, sessionId: app.sessionId }
 					}).fail(function() {
@@ -319,7 +326,7 @@ var readable = (function($) {
 				}
 
 				$.ajax({
-					url: app.rootPath + app.view + '/subscribe',
+					url: '/' + app.view + '/subscribe',
 					method: 'post',
 					data: { feed_id: feedId, action: action, sessionId: app.sessionId }
 				}).fail(function(data) {
@@ -344,7 +351,7 @@ var readable = (function($) {
 					app.items.lastRequestedPage = app.items.page + 1;
 
 					$.ajax({
-						url: app.rootPath + app.view + '/items',
+						url: '/' + app.view + '/items',
 						data: { page: app.items.page + 1, excludes: excludes.join(' ') },
 						context: $('#items')
 					}).done(function(data) {
@@ -371,7 +378,7 @@ var readable = (function($) {
 						$(this).closest('li').fadeOut();
 
 						$.ajax({
-							url: app.rootPath + 'subscriptions/unsubscribe',
+							url: '/subscriptions/unsubscribe',
 							method: 'post',
 							data: { id: $(this).data('feed-id'), sessionId: app.sessionId }
 						});
