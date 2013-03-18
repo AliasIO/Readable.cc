@@ -203,7 +203,7 @@ var readable = (function($) {
 				app.navBar.pin(instant);
 
 				$('html,body')
-					.animate({ scrollTop: el.offset().top - app.items.cutOff + 1 }, instant ? 0 : 300, function() {
+					.animate({ scrollTop: el.offset().top - app.items.cutOff + 5 }, instant ? 0 : 300, function() {
 						app.items.highlightActive(instant);
 
 						app.navBar.init();
