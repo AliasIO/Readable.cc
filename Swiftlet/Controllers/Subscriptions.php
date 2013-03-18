@@ -77,7 +77,7 @@ class Subscriptions extends \Swiftlet\Controller
 			$feed = $this->app->getModel('feed');
 
 			try {
-				$feed->fetch($url);
+				$feed->fetch($url)->save();
 			} catch ( \Exception $e ) {
 				switch ( $e->getCode() ) {
 					case $feed::FEED_INVALID:
@@ -90,14 +90,6 @@ class Subscriptions extends \Swiftlet\Controller
 
 						break;
 				}
-			}
-
-			if ( !$error ) {
-				$url   = $feed->getUrl();
-				$title = $feed->getTitle();
-				$link  = $feed->getLink();
-
-				$this->saveFeed($url, $title, $link);
 			}
 		}
 
