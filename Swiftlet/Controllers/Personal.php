@@ -55,7 +55,7 @@ class Personal extends \Swiftlet\Controllers\Read
 				COALESCE(users_items.score, 0) AS score,
 				1 AS feed_subscribed
 			FROM             items
-      FROM       users_feeds ON       items.feed_id = users_feeds.item_d
+      INNER JOIN users_feeds ON       items.feed_id = users_feeds.id
       INNER JOIN       feeds ON       feeds.id      = items.feed_id
 			LEFT  JOIN users_items ON users_items.item_id = items.id
 			WHERE
