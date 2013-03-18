@@ -95,9 +95,11 @@ var readable = (function($) {
 		items: {
 			activeItemId: null,
 			activeItem: null,
+			cutOff: 0,
 			previousItem: null,
 			nextItem: null,
 			page: 1,
+			lastRequestedPage: 0,
 
 			init: function() {
 				var
@@ -116,6 +118,14 @@ var readable = (function($) {
 				// Add space to allow the last item to be scrolled to the top of the page
 				$(window).resize(function() {
 					$('body').css({ paddingBottom: $(window).height() - 200 });
+
+					$('#items').css({ paddingTop: $('#items').position().top });
+
+					app.items.cutOff = ( $(window).height() - $('#items').position().top ) / 3;
+
+					$('#items').css({ paddingTop: app.items.cutOff - $('#items').position().top });
+
+					$('#items-read-line').css({ top: app.items.cutOff });
 				}).resize();
 
 				// Highlight visible item on scroll
@@ -193,7 +203,7 @@ var readable = (function($) {
 				app.navBar.pin(instant);
 
 				$('html,body')
-					.animate({ scrollTop: el.offset().top - parseInt($('body').css('padding-top')) }, instant ? 0 : 300, function() {
+					.animate({ scrollTop: el.offset().top - app.items.cutOff + 1 }, instant ? 0 : 300, function() {
 						app.items.highlightActive(instant);
 
 						app.navBar.init();
@@ -202,17 +212,16 @@ var readable = (function($) {
 
 			highlightActive: function(instant) {
 				var
-					cutOff = parseInt($('body').css('padding-top')) + 90,
 					offset = $(document).scrollTop()
 					;
 
-				$('#items article').each(function() {
+				$('#items article').each(function(i) {
 					var
 						top    = $(this).position().top - offset,
-						bottom = top + $(this).outerHeight()
+						bottom = top + $(this).outerHeight(true)
 						;
 
-					if ( top <= cutOff && bottom >= cutOff ) {
+					if ( top <= app.items.cutOff && bottom >= app.items.cutOff ) {
 						if ( app.items.activeItemId !== $(this).data('item-id') ) {
 							if ( app.items.activeItem ) {
 								app.items.activeItem
@@ -233,14 +242,14 @@ var readable = (function($) {
 								;
 
 							app.items.activeItemId = $(this).data('item-id');
-
 							app.items.activeItem   = $(this);
-							app.items.previousItem = $(this).prev();
-							app.items.nextItem     = $(this).next();
 
 							// Hide floating alerts
 							$('.alert-float').click();
 						}
+
+						app.items.previousItem = $(this).prev();
+						app.items.nextItem     = $(this).next();
 
 						return false;
 					}
@@ -323,7 +332,7 @@ var readable = (function($) {
 			},
 
 			infiniteScroll: function(e) {
-				if ( $(document).scrollTop() + $(window).height() > $(document).height() / 1.2 ) {
+				if ( app.items.page + 1 > app.items.lastRequestedPage && $(document).scrollTop() + $(window).height() > $(document).height() / 1.2 ) {
 					$(document).unbind('scroll', app.items.infiniteScroll);
 
 					var excludes = [];
@@ -332,20 +341,24 @@ var readable = (function($) {
 						excludes.push($(this).data('item-id'));
 					});
 
+					app.items.lastRequestedPage = app.items.page;
+
 					$.ajax({
 						url: app.rootPath + app.view + '/items',
 						data: { page: app.items.page + 1, excludes: excludes.join(' ') },
 						context: $('#items')
 					}).done(function(data) {
-						$(this).append(data);
+						if ( data ) {
+							$(this).append(data);
 
-						$('article.inactive').css({ opacity: .3 });
+							$('article.inactive').css({ opacity: .3 });
 
-						app.items.highlightActive(true);
+							app.items.highlightActive(true);
 
-						app.items.page ++;
+							app.items.page ++;
 
-						$(document).bind('scroll', app.items.infiniteScroll);
+							$(document).bind('scroll', app.items.infiniteScroll);
+						}
 					});
 				}
 			}

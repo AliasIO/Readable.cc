@@ -1,6 +1,6 @@
 body {
 	overflow-y: scroll;
-	padding-top: 15%;
+	padding-top: 80px;
 }
 
 a {
@@ -73,6 +73,21 @@ blockquote p {
 	cursor: default;
 }
 
+#items-read-line {
+	color: #ccc;
+	line-height: 50px;
+	margin: 0 -30px;
+	position: fixed;
+	top: 0;
+}
+
+	#items-read-line:before {
+		content: '\25B7';
+	}
+
+#items {
+}
+
 #items.loading {
 	background: url('../images/loading.gif') center bottom no-repeat;
 	height: 200px;
@@ -81,6 +96,10 @@ blockquote p {
 article {
 	margin-bottom: 52px;
 }
+
+	article h1 {
+		margin-top: 0;
+	}
 
 	article .item-toggle {
 		display: none;

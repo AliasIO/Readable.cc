@@ -87,7 +87,7 @@ class Personal extends \Swiftlet\Controllers\Read
 
 		$this->view->set('items', $items);
 
-		if ( !$items ) {
+		if ( !$items && $this->app->getAction() == 'index' ) {
 			$this->view->name = 'personal-empty';
 		}
 	}
