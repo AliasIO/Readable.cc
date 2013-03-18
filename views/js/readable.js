@@ -341,7 +341,7 @@ var readable = (function($) {
 						excludes.push($(this).data('item-id'));
 					});
 
-					app.items.lastRequestedPage = app.items.page;
+					app.items.lastRequestedPage = app.items.page + 1;
 
 					$.ajax({
 						url: app.rootPath + app.view + '/items',
