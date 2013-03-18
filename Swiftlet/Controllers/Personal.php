@@ -55,9 +55,11 @@ class Personal extends \Swiftlet\Controllers\Read
 				COALESCE(users_items.score, 0) AS score,
 				1 AS feed_subscribed
 			FROM             items
-      INNER JOIN       feeds ON feeds.id            = items.feed_id
-			LEFT  JOIN users_items ON users_items.item_id = items.id      AND users_items.user_id = ?
+      FROM       users_feeds ON       items.feed_id = users_feeds.item_d
+      INNER JOIN       feeds ON       feeds.id      = items.feed_id
+			LEFT  JOIN users_items ON users_items.item_id = items.id
 			WHERE
+				users_feeds.user_id = ? AND
 				( users_items.read != 1 OR users_items.read IS NULL )
 				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
       ORDER BY DATE(items.posted_at) DESC, users_items.score DESC
