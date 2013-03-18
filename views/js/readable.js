@@ -192,7 +192,7 @@ var readable = (function($) {
 
 				app.navBar.pin(instant);
 
-				$('html')
+				$('html,body')
 					.animate({ scrollTop: el.offset().top - parseInt($('body').css('padding-top')) }, instant ? 0 : 300, function() {
 						app.items.highlightActive(instant);
 
