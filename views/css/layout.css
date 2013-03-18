@@ -31,6 +31,9 @@ blockquote p {
 	margin-bottom: inherit;
 }
 
+.navbar {
+}
+
 .navbar a {
 	border-bottom: none;
 }
@@ -141,6 +144,7 @@ article {
 			color: #999;
 			display: inline-block;
 			font-size: small;
+			margin-right: 10px;
 		}
 
 		article.active .article-buttons label:hover {

@@ -33,13 +33,14 @@
 					<ul class="nav">
 						<li class="<?php echo $this->name == 'index'    ? 'active' : '' ?>"><a href="/"><i class="icon-fire"></i><span> Popular</span></a></li>
 						<li class="<?php echo $this->name == 'personal' ? 'active' : '' ?>"><a href="/personal"><i class="icon-star"></i><span> Personal</span></a></li>
+						<li class="<?php echo $this->name == 'saved'    ? 'active' : '' ?>"><a href="/saved"><i class="icon-inbox"></i><span> Saved</span></a></li>
 					</ul>
 
 					<ul class="nav pull-right">
 						<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
 						<li class="<?php echo $this->name == 'subsriptions' ? 'active' : '' ?>"><a href="/subscriptions"><i class="icon-align-justify"></i><span> Subscriptions</span></a></li>
 						<li class="<?php echo $this->name == 'account'      ? 'active' : '' ?>"><a href="/account"><i class="icon-user"></i><span> Account</span></a></li>
-						<li class="<?php echo $this->name == 'signout'      ? 'active' : '' ?>"><a href="/signout"><iclass="icon-off"></i><span> Sign out</span></a></li>
+						<li class="<?php echo $this->name == 'signout'      ? 'active' : '' ?>"><a href="/signout"><i class="icon-off"></i><span> Sign out</span></a></li>
 						<?php else: ?>
 						<li class="<?php echo $this->name == 'signup'       ? 'active' : '' ?>"><a href="/signup"><i class="icon-user"></i><span> Create account</span></a></li>
 						<li class="<?php echo $this->name == 'signin'       ? 'active' : '' ?>"><a href="/signin"><i class="icon-hand-right"></i><span> Sign in</span></a></li>

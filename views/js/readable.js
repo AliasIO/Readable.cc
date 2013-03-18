@@ -197,6 +197,12 @@ var readable = (function($) {
 					app.items.markAsRead($(this).data('item-id'), $(this).is(':checked') ? 0 : 1);
 				});
 
+				$('#items').on('change', 'article.active .save', function(e) {
+					$(this).blur();
+
+					app.items.save($(this).data('item-id'), $(this).is(':checked') ? 1 : 0);
+				});
+
 				$('article.inactive').css({ opacity: .3 });
 
 				app.items.highlightActive(true);
@@ -306,6 +312,18 @@ var readable = (function($) {
 						data: { item_id: itemId, read: read, sessionId: app.sessionId }
 					}).fail(function() {
 						$('article .keep-unread[data-item-id=' + itemId + ']').prop('checked', read);
+					});
+				}
+			},
+
+			save: function(itemId, save) {
+				if ( app.signedIn ) {
+					$.ajax({
+						url: '/' + app.view + '/save',
+						method: 'post',
+						data: { item_id: itemId, save: save, sessionId: app.sessionId }
+					}).fail(function() {
+						$('article .save[data-item-id=' + itemId + ']').prop('checked', save);
 					});
 				}
 			},

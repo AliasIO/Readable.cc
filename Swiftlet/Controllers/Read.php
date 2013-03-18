@@ -117,6 +117,55 @@ class Read extends \Swiftlet\Controller
 	}
 
 	/**
+	 * Save item
+	 */
+	public function save()
+	{
+		header('Content-type: application/json');
+
+		$userId = $this->app->getSingleton('helper')->ensureValidUser(true);
+
+		$itemId = isset($_POST['item_id']) ? (int) $_POST['item_id'] : null;
+		$save   = isset($_POST['save'])    ? (int) $_POST['save']    : null;
+
+		if ( !$itemId || ( $save != 0 && $save != 1 ) ) {
+			header('HTTP/1.0 400 Bad Request');
+
+			exit(json_encode(array('message' => 'Invalid arguments')));
+		}
+
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+      INSERT IGNORE INTO users_items (
+        user_id,
+        item_id,
+        saved
+      ) VALUES (
+				:user_id,
+				:item_id,
+				:saved
+      )
+      ON DUPLICATE KEY UPDATE
+        saved = :saved
+			;');
+
+		$sth->bindParam('user_id', $userId);
+		$sth->bindParam('item_id', $itemId);
+		$sth->bindParam('saved',   $save);
+
+		try {
+			$sth->execute();
+		} catch ( \Exception $e ) {
+			header('HTTP/1.0 500 Server Error');
+
+			exit(json_encode(array('message' => 'Something went wrong, please try again.')));
+		}
+
+		exit(json_encode(array()));
+	}
+
+	/**
 	 * Subscribe to feed
 	 */
 	public function subscribe()
@@ -196,8 +245,6 @@ class Read extends \Swiftlet\Controller
 		$purifier = new \HTMLPurifier($config);
 
 		$html = $purifier->purify($html);
-
-		$html = preg_replace('/<table>/', '<table class="table table-bordered table-striped table-hover">', $html);
 	}
 
 	/**

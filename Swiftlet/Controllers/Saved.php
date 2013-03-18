@@ -2,10 +2,10 @@
 
 namespace Swiftlet\Controllers;
 
-class Personal extends \Swiftlet\Controllers\Read
+class Saved extends \Swiftlet\Controllers\Read
 {
 	protected
-		$title = 'Personal'
+		$title = 'Saved'
 		;
 
 	/**
@@ -37,7 +37,7 @@ class Personal extends \Swiftlet\Controllers\Read
 	{
 		$userId = $this->app->getSingleton('session')->get('id');
 
-		$excludes = !empty($_GET['excludes']) ? explode(' ', $_GET['excludes']) : array();
+		$page = !empty($_GET['page']) ? (int) $_GET['page'] : 1;
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
@@ -51,29 +51,22 @@ class Personal extends \Swiftlet\Controllers\Read
 				items.title,
 				items.contents,
 				items.posted_at,
-				COALESCE(users_items.vote,  0) AS vote,
-				COALESCE(users_items.score, 0) AS score,
-				COALESCE(users_items.saved, 0) AS saved,
-				1 AS feed_subscribed
-			FROM             items
-      INNER JOIN users_feeds ON       items.feed_id = users_feeds.id
+				users_items.saved,
+				users_items.vote,
+				users_items.score,
+				IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
+			FROM       users_items
+			INNER JOIN       items ON       items.id      = users_items.item_id
       INNER JOIN       feeds ON       feeds.id      = items.feed_id
-			LEFT  JOIN users_items ON users_items.item_id = items.id
+      LEFT  JOIN users_feeds ON users_feeds.feed_id = feeds.id
 			WHERE
-				users_feeds.user_id = ? AND
-				( users_items.read != 1 OR users_items.read IS NULL )
-				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
-      ORDER BY DATE(items.posted_at) DESC, users_items.score DESC
-			LIMIT 10
+				users_items.user_id = :user_id AND
+				users_items.saved   = 1
+      ORDER BY DATE(items.posted_at) DESC
+			LIMIT ' . ( ( $page - 1 ) * self::ITEMS_PER_PAGE ) . ', ' . ( $page * self::ITEMS_PER_PAGE ) . '
 			;');
 
-		$i = 1;
-
-		$sth->bindParam($i ++, $userId);
-
-		foreach( $excludes as $key => $itemId ) {
-			$sth->bindParam($i ++, $excludes[$key]);
-		}
+		$sth->bindParam('user_id', $userId);
 
 		$sth->execute();
 
@@ -89,7 +82,7 @@ class Personal extends \Swiftlet\Controllers\Read
 		$this->view->set('items', $items);
 
 		if ( !$items && $this->app->getAction() == 'index' ) {
-			$this->view->name = 'personal-empty';
+			$this->view->name = 'saved-empty';
 		}
 	}
 }

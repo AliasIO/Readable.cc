@@ -33,10 +33,7 @@ class Index extends \Swiftlet\Controllers\Read
 	{
 		$userId = $this->app->getSingleton('session')->get('id');
 
-		$args = $this->app->getArgs();
-
-		$page     = !empty($_GET['page'])     ? (int) $_GET['page']             : 1;
-		$excludes = !empty($_GET['excludes']) ? explode(' ', $_GET['excludes']) : array();
+		$page = !empty($_GET['page']) ? (int) $_GET['page'] : 1;
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
@@ -52,6 +49,7 @@ class Index extends \Swiftlet\Controllers\Read
 				items.posted_at,
 				0                AS feed_subscribed,
 				0                AS vote,
+				0                AS saved,
 				COALESCE(AVG(users_items.score), 0) AS score
 			FROM             items
       INNER JOIN       feeds ON       feeds.id      = items.feed_id
@@ -64,7 +62,8 @@ class Index extends \Swiftlet\Controllers\Read
 			$select = '
 				SELECT
 					main.*,
-					COALESCE(users_items.vote, 0),
+					COALESCE(users_items.vote,  0)   AS vote,
+					COALESCE(users_items.saved, 0)   AS saved,
 					IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
 				FROM ( ' . $select . ' ) AS main
 				LEFT JOIN users_items ON users_items.item_id = main.id      AND users_items.user_id = :user_id

@@ -39,6 +39,11 @@
 				<input class="keep-unread" type="checkbox" id="unread-<?php echo $item->id ?>" data-item-id="<?php echo $item->id ?>" value="1">
 				Keep unread
 			</label>
+
+			<label for="save-<?php echo $item->id ?>">
+				<input class="save" type="checkbox" id="save-<?php echo $item->id ?>" data-item-id="<?php echo $item->id ?>" value="1"<?php echo $item->saved ? ' checked="checked"' : '' ?>>
+				Save
+			</label>
 			<?php endif ?>
 		</p>
 	</div>
