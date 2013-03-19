@@ -46,7 +46,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="icon-user icon-white"></i> Create account</button>
+				<button class="btn btn-primary" type="submit"><i class="entypo add-user"></i> Create account</button>
 			</div>
 		</div>
 	</fieldset>

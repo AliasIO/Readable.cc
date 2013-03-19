@@ -12,6 +12,7 @@
 		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
 
 		<link href="/views/lib/bootstrap/css/readable.css" rel="stylesheet">
+		<link href="/views/lib/entypo/entypo.css" rel="stylesheet">
 		<link href="/views/css/layout.css" rel="stylesheet">
 
 		<script src="/views/lib/jquery-1.9.1.min.js"></script>
@@ -32,21 +33,21 @@
 
 					<ul class="nav pull-right">
 						<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
-						<li class="<?php echo $this->name == 'personal' ? 'active' : '' ?>"><a href="/personal"><i class="icon-star"></i><span> Personal</span></a></li>
-						<li class="<?php echo $this->name == 'saved'    ? 'active' : '' ?>"><a href="/saved"><i class="icon-inbox"></i><span> Saved</span></a></li>
+						<li class="<?php echo $this->name == 'personal' ? 'active' : '' ?>"><a href="/personal"><i class="entypo user"></i><span> Personal</span></a></li>
+						<li class="<?php echo $this->name == 'saved'    ? 'active' : '' ?>"><a href="/saved"><i class="entypo install"></i><span> Saved</span></a></li>
 
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $this->app->getSingleton('session')->get('email') ?> <i class="icon-chevron-down"></i></a>
 
 							<ul class="dropdown-menu">
-								<li class="<?php echo $this->name == 'account'      ? 'active' : '' ?>"><a href="/account"><i class="icon-user"></i><span> Account</span></a></li>
-								<li class="<?php echo $this->name == 'subsriptions' ? 'active' : '' ?>"><a href="/subscriptions"><i class="icon-align-justify"></i><span> Subscriptions</span></a></li>
-								<li class="<?php echo $this->name == 'signout'      ? 'active' : '' ?>"><a href="/signout"><i class="icon-off"></i><span> Sign out</span></a></li>
+								<li class="<?php echo $this->name == 'account'      ? 'active' : '' ?>"><a href="/account"><i class="entypo user"></i><span> Account</span></a></li>
+								<li class="<?php echo $this->name == 'subsriptions' ? 'active' : '' ?>"><a href="/subscriptions"><i class="entypo rss"></i><span> Subscriptions</span></a></li>
+								<li class="<?php echo $this->name == 'signout'      ? 'active' : '' ?>"><a href="/signout"><i class="entypo logout"></i><span> Sign out</span></a></li>
 							</ul>
 						</li>
 						<?php else: ?>
-						<li class="<?php echo $this->name == 'signup'       ? 'active' : '' ?>"><a href="/signup"><i class="icon-user"></i><span> Create account</span></a></li>
-						<li class="<?php echo $this->name == 'signin'       ? 'active' : '' ?>"><a href="/signin"><i class="icon-hand-right"></i><span> Sign in</span></a></li>
+						<li class="<?php echo $this->name == 'signup'       ? 'active' : '' ?>"><a href="/signup"><i class="entypo add-user"></i><span> Create account</span></a></li>
+						<li class="<?php echo $this->name == 'signin'       ? 'active' : '' ?>"><a href="/signin"><i class="entypo login"></i><span> Sign in</span></a></li>
 						<?php endif ?>
 					</ul>
 				</div>

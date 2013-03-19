@@ -70,7 +70,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="icon-user icon-white"></i> Update account</button>
+				<button class="btn btn-primary" type="submit"><i class="entypo user"></i> Update account</button>
 			</div>
 		</div>
 	</fieldset>

@@ -26,7 +26,7 @@
 		<small>
 			<a href="<?php echo $feed->url ?>"><?php echo parse_url($feed->url, PHP_URL_HOST) ?></a>
 			<a class="unsubscribe" href="javascript: void(0);" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
-				<i class="icon-minus-sign"></i> Unsubscribe
+				<i class="entypo squared-minus"></i> Unsubscribe
 			</a>
 		</small>
 	</li>
@@ -51,7 +51,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="icon-align-justify icon-white"></i> Add feed</button>
+				<button class="btn btn-primary" type="submit"><i class="entypo rss"></i> Add feed</button>
 			</div>
 		</div>
 	</fieldset>
@@ -74,7 +74,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="icon-align-justify icon-white"></i> Import feeds</button>
+				<button class="btn btn-primary" type="submit"><i class="entypo rss"></i> Import feeds</button>
 			</div>
 		</div>
 	</fieldset>

@@ -224,7 +224,7 @@ var readable = (function($) {
 					offset = $(document).scrollTop()
 					;
 
-				$('#items article').each(function(i) {
+				$($('#items article').get().reverse()).each(function() {
 					var
 						top    = $(this).position().top - offset,
 						bottom = top + $(this).outerHeight(true)
@@ -279,11 +279,11 @@ var readable = (function($) {
 					buttonActive     = vote == 1 ? buttonUp : ( vote == -1 ? buttonDown : null )
 					;
 
-				buttonUp  .removeClass('btn-inverse voted').find('i').removeClass('icon-white');
-				buttonDown.removeClass('btn-inverse voted').find('i').removeClass('icon-white');
+				buttonUp  .removeClass('btn-inverse voted');
+				buttonDown.removeClass('btn-inverse voted');
 
 				if ( buttonActive ) {
-					buttonActive.addClass('btn-inverse voted').find('i').addClass('icon-white');
+					buttonActive.addClass('btn-inverse voted');
 				}
 
 				$.ajax({
@@ -291,11 +291,11 @@ var readable = (function($) {
 					method: 'post',
 					data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
 				}).fail(function() {
-					buttonUp  .removeClass('btn-inverse voted').find('i').removeClass('icon-white');
-					buttonDown.removeClass('btn-inverse voted').find('i').removeClass('icon-white');
+					buttonUp  .removeClass('btn-inverse voted');
+					buttonDown.removeClass('btn-inverse voted');
 
 					if ( buttonLastActive ) {
-						buttonLastActive.addClass('btn-inverse voted').find('i').addClass('icon-white');
+						buttonLastActive.addClass('btn-inverse voted');
 					}
 				});
 			},
@@ -316,9 +316,9 @@ var readable = (function($) {
 				var button = $('article .item-save[data-item-id=' + itemId + ']');
 
 				if ( save ) {
-					button.addClass('btn-inverse saved').html('<i class="icon-inbox icon-white"></i> Saved');
+					button.addClass('btn-inverse saved').html('<i class="entypo install"></i> Saved');
 				} else {
-					button.removeClass('btn-inverse saved').html('<i class="icon-inbox"></i> Save');
+					button.removeClass('btn-inverse saved').html('<i class="entypo install"></i> Save');
 				}
 
 				if ( app.signedIn ) {
@@ -328,9 +328,9 @@ var readable = (function($) {
 						data: { item_id: itemId, save: save, sessionId: app.sessionId }
 					}).fail(function() {
 						if ( save ) {
-							button.removeClass('btn-inverse saved').html('<i class="icon-inbox"></i> Save');
+							button.removeClass('btn-inverse saved').html('<i class="entypo install"></i> Save');
 						} else {
-							button.addClass('btn-inverse saved').html('<i class="icon-inbox icon-white"></i> Saved');
+							button.addClass('btn-inverse saved').html('<i class="entypo install"></i> Saved');
 						}
 					});
 				}
@@ -346,9 +346,9 @@ var readable = (function($) {
 				el = $('article .subscription[data-feed-id=' + feedId + ']');
 
 				if ( action === 'subscribe' ) {
-					el.removeClass('subscribe').addClass('unsubscribe').html('<i class="icon-minus-sign"></i> Unsubscribe');
+					el.removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-plus"></i> Unsubscribe');
 				} else {
-					el.removeClass('unsubscribe').addClass('subscribe').html('<i class="icon-plus-sign"></i> Subscribe');
+					el.removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-minus"></i> Subscribe');
 				}
 
 				$.ajax({
@@ -357,9 +357,9 @@ var readable = (function($) {
 					data: { feed_id: feedId, action: action, sessionId: app.sessionId }
 				}).fail(function(data) {
 					if ( action === 'unsubscribe' ) {
-						el.removeClass('subscribe').addClass('unsubscribe').html('<i class="icon-minus-sign"></i> Unsubscribe');
+						el.removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-minus"></i> Unsubscribe');
 					} else {
-						el.removeClass('unsubscribe').addClass('subscribe').html('<i class="icon-plus-sign"></i> Subscribe');
+						el.removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-plus"></i> Subscribe');
 					}
 				});
 			},

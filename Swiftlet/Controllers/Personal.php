@@ -41,7 +41,7 @@ class Personal extends \Swiftlet\Controllers\Read
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
-		$sth = $dbh->prepare($sql='
+		$sth = $dbh->prepare('
       SELECT
 				feeds.id    AS feed_id,
 				feeds.title AS feed_title,
@@ -56,7 +56,7 @@ class Personal extends \Swiftlet\Controllers\Read
 				COALESCE(users_items.saved, 0) AS saved,
 				1 AS feed_subscribed
 			FROM             items
-      INNER JOIN users_feeds ON       items.feed_id = users_feeds.id
+      INNER JOIN users_feeds ON users_feeds.feed_id = items.feed_id
       INNER JOIN       feeds ON       feeds.id      = items.feed_id
 			LEFT  JOIN users_items ON users_items.item_id = items.id
 			WHERE

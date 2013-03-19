@@ -50,10 +50,6 @@ blockquote p {
 	margin-bottom: 26px;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-	margin-top: 3px;
-}
-
 .modal {
 	display: none;
 }
@@ -65,7 +61,7 @@ blockquote p {
 .alert.alert-float {
 	position: fixed;
 	top: 100px;
-	z-index: 9999;
+	z-index: 999;
 	width: auto;
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
      -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
@@ -124,10 +120,6 @@ article {
 		font-size: small;
 	}
 
-	article .item-date i {
-		margin-top: 2px;
-	}
-
 	article .article-buttons {
 		overflow: hidden;
 		margin-top: 20px;
@@ -142,8 +134,6 @@ article {
 		}
 
 		article .article-buttons button:last-child {
-			float: right;
-			margin-right: 0;
 		}
 
 		article .article-buttons label {
