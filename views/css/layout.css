@@ -72,8 +72,25 @@ blockquote p {
 	cursor: default;
 }
 
+#contents {
+	position: relative;
+}
+
+#page-head {
+	font-style: italic;
+	text-align: center;
+	position: absolute;
+	width: 100%;
+}
+
+	#page-head h1 {
+		font-size: 60px;
+	}
+
 #items-read-line {
 	color: #ccc;
+	font-family: EntypoRegular;
+	font-size: 2em;
 	line-height: 50px;
 	margin: 0 -30px;
 	position: fixed;
@@ -81,7 +98,7 @@ blockquote p {
 }
 
 	#items-read-line:before {
-		content: '\25B7';
+		content: '\E766';
 	}
 
 #items {

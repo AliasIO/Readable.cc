@@ -128,9 +128,9 @@ var readable = (function($) {
 
 					$('#items').css({ paddingTop: $('#items').position().top });
 
-					app.items.cutOff = ( $(window).height() - $('#items').position().top ) / 3;
+					app.items.cutOff = ( $(window).height() - $('#items').position().top  ) / 3;
 
-					$('#items').css({ paddingTop: app.items.cutOff - $('#items').position().top });
+					$('#items').css({ paddingTop: app.items.cutOff - $('#items').position().top - $('#contents').position().top  });
 
 					$('#items-read-line').css({ top: app.items.cutOff });
 				}).resize();
@@ -212,7 +212,7 @@ var readable = (function($) {
 				app.navBar.pin(instant);
 
 				$('html,body')
-					.animate({ scrollTop: el.offset().top - app.items.cutOff + 5 }, instant ? 0 : 300, function() {
+					.animate({ scrollTop: el.offset().top - app.items.cutOff }, instant ? 0 : 300, function() {
 						app.items.highlightActive(instant);
 
 						app.navBar.init();
@@ -221,7 +221,7 @@ var readable = (function($) {
 
 			highlightActive: function(instant) {
 				var
-					offset = $(document).scrollTop()
+					offset = $(document).scrollTop() - $('#contents').position().top;
 					;
 
 				$($('#items article').get().reverse()).each(function() {
@@ -346,9 +346,9 @@ var readable = (function($) {
 				el = $('article .subscription[data-feed-id=' + feedId + ']');
 
 				if ( action === 'subscribe' ) {
-					el.removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-plus"></i> Unsubscribe');
+					el.removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-minus"></i> Unsubscribe');
 				} else {
-					el.removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-minus"></i> Subscribe');
+					el.removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-plus"></i> Subscribe');
 				}
 
 				$.ajax({

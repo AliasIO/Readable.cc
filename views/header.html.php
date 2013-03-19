@@ -37,7 +37,7 @@
 						<li class="<?php echo $this->name == 'saved'    ? 'active' : '' ?>"><a href="/saved"><i class="entypo install"></i><span> Saved</span></a></li>
 
 						<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $this->app->getSingleton('session')->get('email') ?> <i class="icon-chevron-down"></i></a>
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $this->app->getSingleton('session')->get('email') ?> <i class="entypo chevron-down"></i></a>
 
 							<ul class="dropdown-menu">
 								<li class="<?php echo $this->name == 'account'      ? 'active' : '' ?>"><a href="/account"><i class="entypo user"></i><span> Account</span></a></li>
