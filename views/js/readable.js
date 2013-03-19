@@ -191,16 +191,12 @@ var readable = (function($) {
 					app.items.subscribe(feedId, action);
 				});
 
-				$('#items').on('change', 'article.active .keep-unread', function(e) {
+				$('#items').on('click', 'article.active .item-save', function(e) {
+					e.preventDefault();
+
 					$(this).blur();
 
-					app.items.markAsRead($(this).data('item-id'), $(this).is(':checked') ? 0 : 1);
-				});
-
-				$('#items').on('change', 'article.active .save', function(e) {
-					$(this).blur();
-
-					app.items.save($(this).data('item-id'), $(this).is(':checked') ? 1 : 0);
+					app.items.save($(this).data('item-id'), $(this).hasClass('saved') ? 0 : 1);
 				});
 
 				$('article.inactive').css({ opacity: .3 });
@@ -234,7 +230,7 @@ var readable = (function($) {
 						bottom = top + $(this).outerHeight(true)
 						;
 
-					if ( top <= app.items.cutOff && bottom >= app.items.cutOff ) {
+					if ( top <= app.items.cutOff + 5 && bottom >= app.items.cutOff ) {
 						if ( app.items.activeItemId !== $(this).data('item-id') ) {
 							if ( app.items.activeItem ) {
 								app.items.activeItem
@@ -244,7 +240,7 @@ var readable = (function($) {
 									.addClass('inactive')
 									;
 
-								app.items.markAsRead(app.items.activeItemId, app.items.activeItem.find('.keep-unread').is(':checked') ? 0 : 1);
+								app.items.markAsRead(app.items.activeItemId);
 							}
 
 							$(this)
@@ -304,12 +300,12 @@ var readable = (function($) {
 				});
 			},
 
-			markAsRead: function(itemId, read) {
+			markAsRead: function(itemId) {
 				if ( app.signedIn ) {
 					$.ajax({
 						url: '/' + app.view + '/read',
 						method: 'post',
-						data: { item_id: itemId, read: read, sessionId: app.sessionId }
+						data: { item_id: itemId, sessionId: app.sessionId }
 					}).fail(function() {
 						$('article .keep-unread[data-item-id=' + itemId + ']').prop('checked', read);
 					});
@@ -317,13 +313,25 @@ var readable = (function($) {
 			},
 
 			save: function(itemId, save) {
+				var button = $('article .item-save[data-item-id=' + itemId + ']');
+
+				if ( save ) {
+					button.addClass('btn-inverse saved').html('<i class="icon-inbox icon-white"></i> Saved');
+				} else {
+					button.removeClass('btn-inverse saved').html('<i class="icon-inbox"></i> Save');
+				}
+
 				if ( app.signedIn ) {
 					$.ajax({
 						url: '/' + app.view + '/save',
 						method: 'post',
 						data: { item_id: itemId, save: save, sessionId: app.sessionId }
 					}).fail(function() {
-						$('article .save[data-item-id=' + itemId + ']').prop('checked', save);
+						if ( save ) {
+							button.removeClass('btn-inverse saved').html('<i class="icon-inbox"></i> Save');
+						} else {
+							button.addClass('btn-inverse saved').html('<i class="icon-inbox icon-white"></i> Saved');
+						}
 					});
 				}
 			},

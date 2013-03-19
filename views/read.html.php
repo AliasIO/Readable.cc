@@ -34,17 +34,10 @@
 				Boring
 			</button>
 
-			<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
-			<label for="unread-<?php echo $item->id ?>">
-				<input class="keep-unread" type="checkbox" id="unread-<?php echo $item->id ?>" data-item-id="<?php echo $item->id ?>" value="1">
-				Keep unread
-			</label>
-
-			<label for="save-<?php echo $item->id ?>">
-				<input class="save" type="checkbox" id="save-<?php echo $item->id ?>" data-item-id="<?php echo $item->id ?>" value="1"<?php echo $item->saved ? ' checked="checked"' : '' ?>>
-				Save
-			</label>
-			<?php endif ?>
+			<button class="btn btn-small item-save<?php echo $item->saved ? ' btn-inverse save' : '' ?>" data-item-id="<?php echo $item->id ?>">
+				<i class="icon-inbox<?php echo $item->saved ? ' icon-white' : '' ?>"></i>
+				Save<?php echo $item->saved ? 'd' : '' ?>
+			</button>
 		</p>
 	</div>
 </article>

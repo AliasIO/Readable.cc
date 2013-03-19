@@ -129,6 +129,7 @@ article {
 	}
 
 	article .article-buttons {
+		overflow: hidden;
 		margin-top: 20px;
 	}
 
@@ -138,6 +139,11 @@ article {
 
 		article .article-buttons button {
 			margin-right: 10px;
+		}
+
+		article .article-buttons button:last-child {
+			float: right;
+			margin-right: 0;
 		}
 
 		article .article-buttons label {
