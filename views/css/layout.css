@@ -90,8 +90,7 @@ blockquote p {
 }
 
 	#page-head h1 {
-		font-size: 60px;
-		line-height: 80px;
+		font-weight: normal;
 	}
 
 #items-read-line {
