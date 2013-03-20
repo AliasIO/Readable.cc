@@ -21,14 +21,11 @@
 }
 
 .entypo {
-	display: inline-block;
 	font-family: 'EntypoRegular';
-	font-size: 2em;
+	font-size: 1.4em;
 	font-style: normal;
 	font-weight: normal;
 	line-height: 0;
-	vertical-align: middle;
-	margin-top: -2px;
 }
 
 .entypo-social {
