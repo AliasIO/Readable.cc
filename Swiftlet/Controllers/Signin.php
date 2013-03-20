@@ -46,7 +46,7 @@ class Signin extends \Swiftlet\Controller
 
 				$sth->execute();
 
-				header('Location: /personal');
+				header('Location: /reading');
 			} catch ( \Exception $e ) {
 				$error = 'An unknown error ocurred.';
 

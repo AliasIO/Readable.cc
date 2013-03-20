@@ -78,7 +78,7 @@
 			<xs:element name="title" type="atom:textType" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="updated" type="atom:dateTimeType" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="entry" type="atom:entryType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="http://www.w3.org/1999/xhtml" minOccurs="0"/>
 		</xs:choice>
 		<xs:attributeGroup ref="atom:commonAttributes"/>
 	</xs:complexType>
@@ -101,7 +101,7 @@
 			<xs:element name="summary" type="atom:textType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="title" type="atom:textType" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="updated" type="atom:dateTimeType" minOccurs="1" maxOccurs="1"/>
-			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="http://www.w3.org/1999/xhtml" minOccurs="0"/>
 		</xs:choice>
 		<xs:attributeGroup ref="atom:commonAttributes"/>
 	</xs:complexType>
@@ -212,7 +212,7 @@
 			<xs:element name="subtitle" type="atom:textType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="title" type="atom:textType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="updated" type="atom:dateTimeType" minOccurs="0" maxOccurs="1"/>
-			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="http://www.w3.org/1999/xhtml" minOccurs="0"/>
 		</xs:choice>
 		<xs:attributeGroup ref="atom:commonAttributes"/>
 	</xs:complexType>

@@ -95,8 +95,8 @@ class Feed extends \Swiftlet\Model
 
 				break;
 			case 'atom':
-				$this->title = (string) $this->xml->channel->title;
-				$this->link  = (string) $this->xml->channel->link;
+				$this->title = (string) $this->xml->title;
+				$this->link  = (string) $this->xml->link;
 
 				break;
 			case 'rss-rdf':
@@ -248,6 +248,11 @@ class Feed extends \Swiftlet\Model
 
 				break;
 			case 'atom':
+				foreach ( $this->xml->entry as $xml ) {
+					$item = $this->app->getModel('feedItem')->init($this, $xml);
+
+					$this->items[] = $item;
+				}
 
 				break;
 			case 'rss-rdf':

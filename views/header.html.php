@@ -33,8 +33,8 @@
 
 					<ul class="nav pull-right">
 						<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
-						<li class="<?php echo $this->name == 'personal' ? 'active' : '' ?>"><a href="/reading"><i class="entypo rss"></i><span> My Reading</span></a></li>
-						<li class="<?php echo $this->name == 'saved'    ? 'active' : '' ?>"><a href="/saved"><i class="entypo install"></i><span> Saved</span></a></li>
+						<li class="<?php echo $this->name == 'reading' ? 'active' : '' ?>"><a href="/reading"><i class="entypo rss"></i><span> My Reading</span></a></li>
+						<li class="<?php echo $this->name == 'saved'   ? 'active' : '' ?>"><a href="/saved"><i class="entypo install"></i><span> Saved</span></a></li>
 
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $this->app->getSingleton('session')->get('email') ?> <i class="entypo chevron-down"></i></a>
