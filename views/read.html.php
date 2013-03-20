@@ -44,7 +44,7 @@
 				Boring
 			</button>
 
-			<button class="btn btn-small item-save<?php echo $item->saved ? ' btn-inverse save' : '' ?>" data-item-id="<?php echo $item->id ?>">
+			<button class="btn btn-small item-save<?php echo $item->saved ? ' btn-inverse saved' : '' ?>" data-item-id="<?php echo $item->id ?>">
 				<i class="entypo install"></i>
 				Save<?php echo $item->saved ? 'd' : '' ?>
 			</button>
