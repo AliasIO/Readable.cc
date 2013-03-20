@@ -8,7 +8,8 @@ class Feed extends \Swiftlet\Model
 		FEED_INVALID = 1,
 		SERVER_ERROR = 2,
 		XSD_RSS      = 'rss-2.0.xsd',
-		XSD_ATOM     = 'atom.xsd'
+		XSD_ATOM     = 'atom.xsd',
+		XSD_RDF      = 'rdf.xsd'
 		;
 
 	public
@@ -93,6 +94,16 @@ class Feed extends \Swiftlet\Model
 				$this->link  = (string) $this->xml->channel->link;
 
 				break;
+			case 'atom':
+				$this->title = (string) $this->xml->channel->title;
+				$this->link  = (string) $this->xml->channel->link;
+
+				break;
+			case 'rss-rdf':
+				$this->title = (string) $this->xml->channel->title;
+				$this->link  = (string) $this->xml->channel->link;
+
+				break;
 		}
 
 		// Set last fetched date
@@ -144,7 +155,29 @@ class Feed extends \Swiftlet\Model
 
 		$dom->loadXml($xml);
 
-		return $dom->schemaValidate(self::XSD_RSS) ? 'rss' : ( $dom->schemaValidate(self::XSD_ATOM) ? 'atom' : '' );
+		if ( $dom->schemaValidate(self::XSD_RSS) ) {
+			return 'rss';
+		}
+
+		if ( $dom->schemaValidate(self::XSD_ATOM) ) {
+			return 'atom';
+		}
+
+		try {
+			$simpleXml = new \SimpleXMLElement($xml);
+
+			if ( $simpleXml->getName() == 'RDF' && $simpleXml->channel && $simpleXml->channel->title && $simpleXml->channel->link && $simpleXml->item ) {
+				if ( $simpleXml->item[0]->title && $simpleXml->item[0]->link ) {
+					$content = $simpleXml->item[0]->children('http://purl.org/rss/1.0/modules/content/');
+					$dc      = $simpleXml->item[0]->children('http://purl.org/dc/elements/1.1/');
+
+					if ( $content->encoded && $dc->date ) {
+						return 'rss-rdf';
+					}
+				}
+			}
+		} catch ( \Exception $e ) {
+		}
 	}
 
 	/**
@@ -212,6 +245,19 @@ class Feed extends \Swiftlet\Model
 
 					$this->items[] = $item;
 				}
+
+				break;
+			case 'atom':
+
+				break;
+			case 'rss-rdf':
+				foreach ( $this->xml->item as $xml ) {
+					$item = $this->app->getModel('feedItem')->init($this, $xml);
+
+					$this->items[] = $item;
+				}
+
+				break;
 		}
 
 		return $this->items;

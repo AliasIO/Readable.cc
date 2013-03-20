@@ -97,7 +97,7 @@ blockquote p {
 	color: #ccc;
 	font-family: EntypoRegular;
 	font-size: 2em;
-	line-height: 50px;
+	line-height: 26px;
 	margin: 0 -30px;
 	position: fixed;
 	top: 0;
@@ -106,6 +106,13 @@ blockquote p {
 	#items-read-line:before {
 		content: '\E766';
 	}
+
+#items-footer {
+	color: #999;
+	font-style: italic;
+	margin-top: 100px;
+	text-align: center;
+}
 
 #items {
 }
@@ -190,16 +197,9 @@ article {
 	article img {
 		background: #fff;
 		border: 1px solid #fff;
-		/*
-		border-radius: 3px;
-		*/
 		margin: 2px 0;
 		max-height: 100px;
 		max-width: 932px;
-		/*
-		padding: 3px;
-		*/
-    transition: all .5s ease-in-out;
 	}
 
 	article p img, article h1 img, article h2 img, article h3 img, article h4 img, article h5 img, article h6 img {

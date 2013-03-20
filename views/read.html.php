@@ -1,12 +1,20 @@
+<?php if ( !$this->get('items') ): ?>
+<div id="items-footer">
+	<p>
+		<i class="entypo chevron-small-left"></i> No more unread articles <i class="entypo chevron-small-right"></i>
+	</p>
+</div>
+<?php endif ?>
+
 <?php foreach ( $this->get('items') as $item ): ?>
 <article data-item-id="<?php echo $item->id ?>" class="inactive<?php echo $item->score < 0 ? ' collapsed' : '' ?>">
-	<h1><a href="<?php echo $item->url ?>"><?php echo $item->title ?></a></h1>
+	<h1><a href="<?php echo $item->url ?>"><?php echo $this->htmlDecode(strip_tags($item->title)) ?></a></h1>
 
 	<div class="item-wrap">
 		<p class="item-date">
 			<em>
 				<i class="entypo book"></i>
-				Posted by <a href="<?php echo $item->feed_link ?>"><?php echo $item->feed_title ?></a>
+				Posted by <a href="<?php echo $item->feed_link ?>"><?php echo $this->htmlDecode(strip_tags($item->feed_title)) ?></a>
 				on <?php echo date('F j, Y', $item->posted_at) ?>
 				<!--(score: <?php echo number_format($item->score) ?>)-->
 				&mdash; <a href="javascript: void(0);" class="subscription <?php echo $item->feed_subscribed ? 'unscubscribe' : 'subscribe' ?>" data-feed-id="<?php echo $item->feed_id ?>">
@@ -19,7 +27,9 @@
 			</em>
 		</p>
 
-		<?php echo $this->htmlDecode($item->contents) ?>
+		<div class="item-contents">
+			<?php echo $this->htmlDecode($this->htmlDecode($item->contents)) ?>
+		</div>
 
 		<div style="clear: both;"></div>
 

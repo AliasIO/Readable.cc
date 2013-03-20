@@ -135,6 +135,21 @@ class FeedItem extends \Swiftlet\Model
 				$data->title    = (string) $this->xml->title;
 				$data->contents = (string) $this->xml->description;
 				$data->postedAt = date('Y-m-d H:i', strtotime((string) $this->xml->pubDate));
+
+				break;
+			case 'atom':
+
+				break;
+			case 'rss-rdf':
+				$content = $this->xml->children('http://purl.org/rss/1.0/modules/content/');
+				$dc      = $this->xml->children('http://purl.org/dc/elements/1.1/');
+
+				$data->url      = (string) $this->xml->link;
+				$data->title    = (string) $this->xml->title;
+				$data->contents = (string) $content->encoded;
+				$data->postedAt = date('Y-m-d H:i', strtotime((string) $dc->date));
+
+				break;
 		}
 
 		return $data;

@@ -33,16 +33,16 @@
 
 					<ul class="nav pull-right">
 						<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
-						<li class="<?php echo $this->name == 'personal' ? 'active' : '' ?>"><a href="/personal"><i class="entypo user"></i><span> Personal</span></a></li>
+						<li class="<?php echo $this->name == 'personal' ? 'active' : '' ?>"><a href="/reading"><i class="entypo rss"></i><span> My Reading</span></a></li>
 						<li class="<?php echo $this->name == 'saved'    ? 'active' : '' ?>"><a href="/saved"><i class="entypo install"></i><span> Saved</span></a></li>
 
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $this->app->getSingleton('session')->get('email') ?> <i class="entypo chevron-down"></i></a>
 
 							<ul class="dropdown-menu">
-								<li class="<?php echo $this->name == 'account'      ? 'active' : '' ?>"><a href="/account"><i class="entypo user"></i><span> Account</span></a></li>
-								<li class="<?php echo $this->name == 'subsriptions' ? 'active' : '' ?>"><a href="/subscriptions"><i class="entypo rss"></i><span> Subscriptions</span></a></li>
-								<li class="<?php echo $this->name == 'signout'      ? 'active' : '' ?>"><a href="/signout"><i class="entypo logout"></i><span> Sign out</span></a></li>
+								<li><a href="/account"><i class="entypo user"></i><span> Account</span></a></li>
+								<li><a href="/subscriptions"><i class="entypo rss"></i><span> Subscriptions</span></a></li>
+								<li><a href="/signout"><i class="entypo logout"></i><span> Sign out</span></a></li>
 							</ul>
 						</li>
 						<?php else: ?>

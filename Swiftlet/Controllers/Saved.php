@@ -80,9 +80,5 @@ class Saved extends \Swiftlet\Controllers\Read
 		}
 
 		$this->view->set('items', $items);
-
-		if ( !$items && $this->app->getAction() == 'index' ) {
-			$this->view->name = 'saved-empty';
-		}
 	}
 }

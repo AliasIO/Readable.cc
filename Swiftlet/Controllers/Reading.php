@@ -2,10 +2,10 @@
 
 namespace Swiftlet\Controllers;
 
-class Personal extends \Swiftlet\Controllers\Read
+class Reading extends \Swiftlet\Controllers\Read
 {
 	protected
-		$title = 'Personal'
+		$title = 'My Reading'
 		;
 
 	/**
@@ -87,9 +87,5 @@ class Personal extends \Swiftlet\Controllers\Read
 		}
 
 		$this->view->set('items', $items);
-
-		if ( !$items && $this->app->getAction() == 'index' ) {
-			$this->view->name = 'personal-empty';
-		}
 	}
 }

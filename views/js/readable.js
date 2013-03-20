@@ -32,12 +32,6 @@ var readable = (function($) {
 				$('.alert-float').outerWidth($('#contents').width());
 			}).resize();
 
-			/*
-			if ( !app.signedIn && app.view == 'index' ) {
-				app.notice($('.modal-welcome').html(), true);
-			}
-			*/
-
 			app.navBar.init();
 		},
 
@@ -109,8 +103,8 @@ var readable = (function($) {
 					scrolled = false
 					;
 
-				Mousetrap.bind('j', function() { app.items.scrollTo(app.items.nextItem,     true); });
-				Mousetrap.bind('k', function() { app.items.scrollTo(app.items.previousItem, true); });
+				Mousetrap.bind('j', function() { app.items.scrollTo(app.items.nextItem    .find('.item-contents'), true); });
+				Mousetrap.bind('k', function() { app.items.scrollTo(app.items.previousItem.find('.item-contents'), true); });
 
 				$(document).ajaxError(function(e, xhr) {
 					if ( xhr.status === 403 ) {
@@ -128,7 +122,7 @@ var readable = (function($) {
 				$(window).resize(function() {
 					$('body').css({ paddingBottom: $(window).height() - 200 });
 
-					app.items.cutOff = ( $(window).height() - $('#contents').position().top ) / 3;
+					app.items.cutOff = ( $(window).height() - $('#contents').position().top ) / 2;
 
 					$('#page-head-wrap').css({ height: app.items.cutOff - $('#contents').position().top });
 
@@ -157,7 +151,7 @@ var readable = (function($) {
 					$(this).find('.item-wrap').stop().slideDown(300, function() {
 						$(self).removeClass('collapsed');
 
-						app.items.scrollTo($(self));
+						app.items.scrollTo(self.find('.item-contents'));
 					});
 				});
 
@@ -165,7 +159,7 @@ var readable = (function($) {
 				$('#items').on('click', 'article.inactive', function(e) {
 					e.preventDefault();
 
-					app.items.scrollTo($(this));
+					app.items.scrollTo($(this).find('.item-contents'));
 				});
 
 				// Register votes
@@ -365,6 +359,12 @@ var readable = (function($) {
 			},
 
 			infiniteScroll: function(e) {
+				if ( $('#items-footer').length ) {
+					$(document).unbind('scroll', app.items.infiniteScroll);
+
+					return;
+				}
+
 				if ( app.items.page + 1 > app.items.lastRequestedPage && $(document).scrollTop() + $(window).height() > $(document).height() / 1.2 ) {
 					$(document).unbind('scroll', app.items.infiniteScroll);
 

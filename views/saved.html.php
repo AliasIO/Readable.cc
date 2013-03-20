@@ -3,6 +3,10 @@
 <div id="page-head-wrap">
 	<div id="page-head">
 		<h1>Saved</h1>
+
+		<p>
+			Click &lsquo;save&rsquo; on articles you wish to read later.
+		</p>
 	</div>
 </div>
 
