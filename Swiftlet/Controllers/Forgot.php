@@ -28,8 +28,9 @@ class Forgot extends \Swiftlet\Controller
 
 				$sth = $dbh->prepare('
 					UPDATE users SET
-						activation_code = :activation_code,
-						updated_at      = UTC_TIMESTAMP()
+						activation_code            = :activation_code,
+						activation_code_expires_at = DATE_ADD(UTC_TIMESTAMP(), INTERVAL 1 DAY),
+						updated_at                 = UTC_TIMESTAMP()
 					WHERE
 						activation_code_expires_at < UTC_TIMESTAMP() AND
 						email = :email
@@ -120,7 +121,7 @@ class Forgot extends \Swiftlet\Controller
 
 			$result = $sth->fetch(\PDO::FETCH_OBJ);
 
-			if ( $userId = $result->id ) {
+			if ( $result && $userId = $result->id ) {
 				$password = substr(sha1(uniqid(mt_rand(), true)), 0, 12);
 
 				$message =
