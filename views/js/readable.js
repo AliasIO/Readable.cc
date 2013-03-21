@@ -296,12 +296,18 @@ var readable = (function($) {
 
 			markAsRead: function(itemId) {
 				if ( app.signedIn ) {
+					var el = $('article[data-item-id=' + itemId + ']');
+
+					if ( el.hasClass('read') ) {
+						return;
+					}
+
+					el.addClass('read');
+
 					$.ajax({
 						url: '/' + app.view + '/read',
 						method: 'post',
 						data: { item_id: itemId, sessionId: app.sessionId }
-					}).fail(function() {
-						$('article .keep-unread[data-item-id=' + itemId + ']').prop('checked', read);
 					});
 				}
 			},

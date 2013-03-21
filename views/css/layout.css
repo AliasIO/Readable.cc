@@ -150,6 +150,10 @@ article {
 		font-size: small;
 	}
 
+		article .item-date .entypo {
+			font-size: 1.7em;
+		}
+
 	article .article-buttons {
 		overflow: hidden;
 		margin-top: 20px;
