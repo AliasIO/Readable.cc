@@ -106,7 +106,8 @@ class Forgot extends \Swiftlet\Controller
 
 			$sth = $dbh->prepare('
 				SELECT
-			 		id
+					id,
+					email
 				FROM users
 				WHERE
 					enabled         = 1                AND
@@ -121,7 +122,7 @@ class Forgot extends \Swiftlet\Controller
 
 			$result = $sth->fetch(\PDO::FETCH_OBJ);
 
-			if ( $result && $userId = $result->id ) {
+			if ( $result && $userId = $result->id && $email = $result->email ) {
 				$password = substr(sha1(uniqid(mt_rand(), true)), 0, 12);
 
 				$message =
@@ -134,7 +135,7 @@ class Forgot extends \Swiftlet\Controller
 
 				$this->app->getSingleton('auth')->setPassword($userId, $password);
 
-				$this->app->getSingleton('helper')->sendMail($email, 'Password reset request', $message);
+				$this->app->getSingleton('helper')->sendMail($email, 'Your new password', $message);
 			} else {
 				$error = 'The verfication code is invalid or has expired.';
 			}
