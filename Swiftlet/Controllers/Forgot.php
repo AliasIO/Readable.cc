@@ -125,17 +125,26 @@ class Forgot extends \Swiftlet\Controller
 			if ( $result && $userId = $result->id && $email = $result->email ) {
 				$password = substr(sha1(uniqid(mt_rand(), true)), 0, 12);
 
-				$message =
-					"Hi,\n\n" .
-					"Your password " . $this->app->getConfig('siteName') . " has been reset.\n\n" .
-					"You may now log in with your email address and the following password:\n\n" .
-					"  " . $password . "\n\n" .
-					"Please change this password in your account settings."
-					;
+				$auth = $this->app->getSingleton('auth');
 
-				$this->app->getSingleton('auth')->setPassword($userId, $password);
+				$result = $auth->register($email, $password);
 
-				$this->app->getSingleton('helper')->sendMail($email, 'Your new password', $message);
+				if ( $result ) {
+					$message =
+						"Hi,\n\n" .
+						"Your password " . $this->app->getConfig('siteName') . " has been reset.\n\n" .
+						"You may now log in with your email address and the following password:\n\n" .
+						"  " . $password . "\n\n" .
+						"  " . $this->app->getConfig('websiteUrl') . "/signin" . "\n\n" .
+						"Please change this password in your account settings."
+						;
+
+					$this->app->getSingleton('helper')->sendMail($email, 'Your new password', $message);
+
+					$success = 'An email has been sent with a new password.';
+				} else {
+					$error = 'Sorry, something went wrong.';
+				}
 			} else {
 				$error = 'The verfication code is invalid or has expired.';
 			}
