@@ -17,6 +17,7 @@ class Cron extends \Swiftlet\Controller
 			INNER JOIN users_feeds ON       users.id      = users_feeds.user_id
 			INNER JOIN feeds       ON users_feeds.feed_id =       feeds.id
 			WHERE
+			  	users.enabled                 = 1                                                                                       AND -- Fetch feed for enabled users
 			  	users.last_active_at          > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY)                                              AND -- Fetch feed for active users
 			  ( feeds.last_fetch_attempted_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 12 HOUR) OR  feeds.last_fetch_attempted_at IS NULL ) AND -- Fetch feeds twice a day
 				( feeds.last_fetched_at         > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 90 DAY)  OR  feeds.last_fetched_at         IS NULL )     -- Give up on feeds after three months of failed attempts
@@ -52,6 +53,7 @@ class Cron extends \Swiftlet\Controller
 				users.id
 			FROM users
 			WHERE
+			  	enabled         = 1                                                                      AND -- Learn only for enabled users
 				( last_learned_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY) OR last_learned_at IS NULL ) AND -- Learn once a day at most
 			    last_active_at  > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY)                                  -- Learn only for recently active users
 			LIMIT 1000

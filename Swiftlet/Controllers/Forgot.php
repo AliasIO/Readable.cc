@@ -87,4 +87,61 @@ class Forgot extends \Swiftlet\Controller
 			$this->view->set('error',   $error);
 		}
 	}
+
+	/**
+	 * Password reset verification
+	 */
+	public function verify()
+	{
+		$success = false;
+		$error   = false;
+
+		$args = $this->app->getArgs();
+
+		if ( !empty($args[0]) ) {
+			$activationCode = $args[0];
+
+			$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+			$sth = $dbh->prepare('
+				SELECT
+			 		id
+				FROM users
+				WHERE
+					enabled         = 1                AND
+					activation_code = :activation_code AND
+					activation_code_expires_at > UTC_TIMESTAMP()
+				LIMIT 1
+				;');
+
+			$sth->bindParam('activation_code', $activationCode);
+
+			$sth->execute();
+
+			$result = $sth->fetch(\PDO::FETCH_OBJ);
+
+			if ( $userId = $result->id ) {
+				$password = substr(sha1(uniqid(mt_rand(), true)), 0, 12);
+
+				$message =
+					"Hi,\n\n" .
+					"Your password " . $this->app->getConfig('siteName') . " has been reset.\n\n" .
+					"You may now log in with your email address and the following password:\n\n" .
+					"  " . $password . "\n\n" .
+					"Please change this password in your account settings."
+					;
+
+				$this->app->getSingleton('auth')->setPassword($userId, $password);
+
+				$this->app->getSingleton('helper')->sendMail($email, 'Password reset request', $message);
+			} else {
+				$error = 'The verfication code is invalid or has expired.';
+			}
+		} else {
+			$error = 'No verification code.';
+		}
+
+		$this->view->set('success', $success);
+		$this->view->set('error',   $error);
+	}
 }
