@@ -54,9 +54,9 @@ class Subscriptions extends \Swiftlet\Controller
 
 		$sth->execute();
 
-		$result = $sth->fetchAll(\PDO::FETCH_OBJ);
+		$feeds = $sth->fetchAll(\PDO::FETCH_OBJ);
 
-		$this->view->set('feeds', $result);
+		$this->view->set('feeds', $feeds);
 	}
 
 	/**
@@ -64,6 +64,8 @@ class Subscriptions extends \Swiftlet\Controller
 	 */
 	protected function subscribe()
 	{
+		$this->app->getSingleton('helper')->ensureValidUser();
+
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		$success = false;
@@ -103,11 +105,14 @@ class Subscriptions extends \Swiftlet\Controller
 			$this->view->set('success', 'The feed has been added.');
 		}
 	}
+
 	/**
 	 * Add a new feed
 	 */
 	protected function import()
 	{
+		$this->app->getSingleton('helper')->ensureValidUser();
+
 		$success = false;
 		$error   = false;
 
@@ -119,14 +124,12 @@ class Subscriptions extends \Swiftlet\Controller
 				// Validate OPML
 				libxml_use_internal_errors(true);
 
-				$dom = new \DOMDocument();
-
-				$dom->load($file);
-
-				if ( !$dom->schemaValidate(self::XSD_OPML) ) {
-					$error = 'The OPML file appears to be invalid.';
-				} else {
+				try {
 					$xml = new \SimpleXMLElement(file_get_contents($file));
+
+					if ( !$xml->body->outline ) {
+						throw new \Exception('Invalid OPML');
+					}
 
 					$feeds = array();
 
@@ -136,11 +139,17 @@ class Subscriptions extends \Swiftlet\Controller
 							$title = $xml->attributes()->title;
 							$link  = $xml->attributes()->htmlUrl;
 
+							if ( !$url || !$title || !$link ) {
+								throw new \Exception('Invalid OPML');
+							}
+
 							$feed = $this->app->getModel('feed')->dummy($title, $url, $link);
 
 							$feed->save();
 						}
 					}
+				} catch ( \Exception $e ) {
+					$error = 'The OPML file appears to be invalid.';
 				}
 			} else {
 				switch ( $_FILES['file']['error'] ) {
@@ -171,6 +180,60 @@ class Subscriptions extends \Swiftlet\Controller
 		} else {
 			$this->view->set('success', 'Subscriptions have been added successfully.');
 		}
+	}
+
+	/**
+	 * Export feeds to OPML
+	 */
+	public function export()
+	{
+		header('Content-type: application/xml');
+		header('Content-Disposition: attachment; filename="feeds.opml.xml"');
+
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+			SELECT
+				feeds.url,
+				feeds.title,
+				feeds.link
+			FROM      users_feeds
+			LEFT JOIN feeds ON users_feeds.feed_id = feeds.id
+			WHERE
+				users_feeds.user_id = :user_id
+			ORDER BY users_feeds.id DESC
+			LIMIT 1000
+			;');
+
+		$sth->bindParam('user_id', $userId);
+
+		$sth->execute();
+
+		$feeds = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+		$opml = new \SimpleXMLElement('<opml></opml>');
+
+		$opml->addAttribute('version', '1.0');
+
+		$opml->addChild('head', $this->app->getConfig('websiteName'));
+
+		$body = $opml->addChild('body');
+
+		$outlines = $body->addChild('outline');
+
+		$outlines->addAttribute('title', 'My Reading');
+
+		foreach ( $feeds as $feed ) {
+			$outline = $outlines->addChild('outline');
+
+			$outline->addAttribute('title',   $feed->title);
+			$outline->addAttribute('xmlUrl',  $feed->url);
+			$outline->addAttribute('htmlUrl', $feed->link);
+		}
+
+		exit($opml->saveXML());
 	}
 
 	/**

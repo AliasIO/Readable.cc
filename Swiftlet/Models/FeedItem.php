@@ -138,7 +138,7 @@ class FeedItem extends \Swiftlet\Model
 
 				break;
 			case 'atom':
-				$data->url      = (string) $this->xml->link;
+				$data->url      = (string) $this->xml->link->attributes()->href;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = (string) $this->xml->content;
 				$data->postedAt = date('Y-m-d H:i', strtotime((string) $this->xml->published));

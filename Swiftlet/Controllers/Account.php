@@ -9,11 +9,13 @@ class Account extends \Swiftlet\Controller
 		;
 
 	/**
-	 * Default action
+	 * Constructor
+	 * @param object $app
+	 * @param object $view
 	 */
-	public function index()
+	public function __construct(\Swiftlet\Interfaces\App $app, \Swiftlet\Interfaces\View $view)
 	{
-		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+		parent::__construct($app, $view);
 
 		$this->view->set('timeZones', array(
 			'-720' => '(GMT -12:00) Eniwetok, Kwajalein',
@@ -47,7 +49,15 @@ class Account extends \Swiftlet\Controller
 			'600'  => '(GMT +10:00) Eastern Australia, Guam, Vladivostok',
 			'660'  => '(GMT +11:00) Magadan, Solomon Islands, New Caledonia',
 			'720'  => '(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka'
-			));
+		));
+	}
+
+	/**
+	 * Default action
+	 */
+	public function index()
+	{
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
 
 		$session = $this->app->getSingleton('session');
 
@@ -129,6 +139,124 @@ class Account extends \Swiftlet\Controller
 
 			$this->view->set('email',    $email);
 			$this->view->set('timezone', $timeZone);
+		}
+	}
+
+	/**
+	 * Reset account
+	 */
+	public function reset()
+	{
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+
+		$session = $this->app->getSingleton('session');
+
+		if ( !empty($_POST) ) {
+			$success = false;
+			$error   = false;
+
+			$password = isset($_POST['password']) ? $_POST['password'] : '';
+
+			try {
+				$auth = $this->app->getSingleton('auth');
+
+				$auth->authenticate($session->get('email'), $password);
+
+				$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+				$sth = $dbh->prepare('
+					DELETE
+						users_feeds,
+						users_items,
+						users_words
+					FROM users_feeds, users_items, users_words
+					WHERE
+						users_feeds.user_id = :user_id OR
+						users_items.user_id = :user_id OR
+						users_words.user_id = :user_id
+					;');
+
+				$sth->bindParam('user_id', $userId);
+
+				$sth->execute();
+
+				$success = 'Your account has been reset.';
+			} catch ( \Exception $e ) {
+				switch ( $e->getCode() ) {
+					case $auth::PASSWORD_INCORRECT:
+						$error = 'Password incorrect, please try again';
+
+						$this->view->set('error-password-reset', true);
+
+						break;
+					default:
+						$error = 'An unknown error ocurred.' . $e->getMessage();
+				}
+			}
+
+			if ( $success ) {
+				$this->view->set('success', $success);
+			} else {
+				$this->view->set('error', $error);
+			}
+		}
+	}
+
+	/**
+	 * Delete account
+	 */
+	public function delete()
+	{
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+
+		$session = $this->app->getSingleton('session');
+
+		if ( !empty($_POST) ) {
+			$success = false;
+			$error   = false;
+
+			$password = isset($_POST['password']) ? $_POST['password'] : '';
+
+			try {
+				$auth = $this->app->getSingleton('auth');
+
+				$auth->authenticate($session->get('email'), $password);
+
+				$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+				$sth = $dbh->prepare('
+					DELETE
+					FROM users
+					WHERE
+						id = :user_id
+					LIMIT 1
+					;');
+
+				$sth->bindParam('user_id', $userId);
+
+				$sth->execute();
+
+				$success = 'Your account has been deleted.';
+
+				$this->app->getSingleton('session')->clear();
+			} catch ( \Exception $e ) {
+				switch ( $e->getCode() ) {
+					case $auth::PASSWORD_INCORRECT:
+						$error = 'Password incorrect, please try again';
+
+						$this->view->set('error-password-delete', true);
+
+						break;
+					default:
+						$error = 'An unknown error ocurred.' . $e->getMessage();
+				}
+			}
+
+			if ( $success ) {
+				$this->view->set('success', $success);
+			} else {
+				$this->view->set('error', $error);
+			}
 		}
 	}
 }

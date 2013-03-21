@@ -6,10 +6,7 @@ class Feed extends \Swiftlet\Model
 {
 	const
 		FEED_INVALID = 1,
-		SERVER_ERROR = 2,
-		XSD_RSS      = 'rss-2.0.xsd',
-		XSD_ATOM     = 'atom.xsd',
-		XSD_RDF      = 'rdf.xsd'
+		SERVER_ERROR = 2
 		;
 
 	public
@@ -96,7 +93,7 @@ class Feed extends \Swiftlet\Model
 				break;
 			case 'atom':
 				$this->title = (string) $this->xml->title;
-				$this->link  = (string) $this->xml->link;
+				$this->link  = (string) $this->xml->link->attributes()->href;
 
 				break;
 			case 'rss-rdf':
@@ -151,20 +148,24 @@ class Feed extends \Swiftlet\Model
 	{
 		libxml_use_internal_errors(true);
 
-		$dom = new \DOMDocument();
-
-		$dom->loadXml($xml);
-
-		if ( $dom->schemaValidate(self::XSD_RSS) ) {
-			return 'rss';
-		}
-
-		if ( $dom->schemaValidate(self::XSD_ATOM) ) {
-			return 'atom';
-		}
-
 		try {
 			$simpleXml = new \SimpleXMLElement($xml);
+
+			if ( $simpleXml->getName() == 'rss' && $simpleXml->channel && $simpleXml->channel->title && $simpleXml->channel->link && $simpleXml->channel->item ) {
+				$item = $simpleXml->channel->item[0];
+
+				if ( $item->title && $item->link && $item->description && $item->pubDate ) {
+					return 'rss';
+				}
+			}
+
+			if ( $simpleXml->getName() == 'feed' && $simpleXml->title && $simpleXml->link && $simpleXml->entry ) {
+				$item = $simpleXml->entry[0];
+
+				if ( $item->title && $item->link->attributes()->href && $item->content && $item->published ) {
+					return 'atom';
+				}
+			}
 
 			if ( $simpleXml->getName() == 'RDF' && $simpleXml->channel && $simpleXml->channel->title && $simpleXml->channel->link && $simpleXml->item ) {
 				if ( $simpleXml->item[0]->title && $simpleXml->item[0]->link ) {

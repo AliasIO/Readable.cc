@@ -34,7 +34,11 @@
 </ul>
 <?php endif ?>
 
-<h3>Add a subscription</h3>
+<h3>Subscribe to feed</h3>
+
+<p>
+	Specify a URL to a <a href="https://en.wikipedia.org/wiki/RSS">RSS</a> or <a href="https://en.wikipedia.org/wiki/Atom_%28standard%29">Atom</a> feed to subscribe.
+</p>
 
 <form id="form-subscriptions-subscribe" method="post" action="/subscriptions" class="form-subscriptions form-horizontal well">
 	<input type="hidden" name="form" value="subscribe">
@@ -51,13 +55,16 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="entypo rss"></i> Add feed</button>
+				<button class="btn btn-primary" type="submit"><i class="entypo rss"></i> Subscribe to feed</button>
 			</div>
 		</div>
 	</fieldset>
 </form>
 
-<h3>Import & export</h3>
+<h3>Import & export feeds</h3>
+
+<p>
+</p>
 
 <form id="form-subscriptions-import" method="post" action="/subscriptions" class="form-horizontal well" enctype="multipart/form-data">
 	<input type="hidden" name="form" value="import">
@@ -75,6 +82,14 @@
 		<div class="control-group">
 			<div class="controls">
 				<button class="btn btn-primary" type="submit"><i class="entypo rss"></i> Import feeds</button>
+			</div>
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<div class="control-group">
+			<div class="controls">
+				<a class="btn btn-primary" href="/subscriptions/export"><i class="entypo rss"></i> Export feeds</a>
 			</div>
 		</div>
 	</fieldset>
