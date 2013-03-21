@@ -127,7 +127,7 @@ class Forgot extends \Swiftlet\Controller
 
 				$auth = $this->app->getSingleton('auth');
 
-				$result = $auth->register($email, $password);
+				$result = $auth->setPassword($userId, $password);
 
 				if ( $result ) {
 					$message =
