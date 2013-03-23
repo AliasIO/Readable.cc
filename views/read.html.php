@@ -17,7 +17,7 @@
 	<p class="item-date">
 		<em>
 			<i class="entypo book"></i>
-			By <strong><a href="/feed/read/<?php echo $item->feed_id ?>"><?php echo $item->feed_title ?></a></strong>
+			By <strong><a href="/feed/view/<?php echo $item->feed_id ?>"><?php echo $item->feed_title ?></a></strong>
 			<?php echo $item->posted_at ? 'on ' . date('F j, Y', $item->posted_at) : '' ?>
 			<span class="feed-options">
 				<!--(score: <?php echo number_format($item->score) ?>)-->

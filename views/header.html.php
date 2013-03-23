@@ -20,9 +20,10 @@
 		<script src="/views/js/readable.js"></script>
 
 		<script>
-			readable.view      = '<?php echo $this->name ?>';
-			readable.sessionId = '<?php echo $this->app->getSingleton('session')->getId() ?>';
-			readable.signedIn  = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
+			readable.view       = '<?php echo $this->name ?>';
+			readable.args       = '<?php echo implode('/', $this->app->getArgs()) ?>';
+			readable.sessionId  = '<?php echo $this->app->getSingleton('session')->getId() ?>';
+			readable.signedIn   = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
 		</script>
 	</head>
 	<body>

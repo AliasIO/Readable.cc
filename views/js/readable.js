@@ -1,6 +1,7 @@
 var readable = (function($) {
 	var app = {
 		view: '',
+		args: '',
 		sessionId: '',
 		signedIn: false,
 
@@ -21,8 +22,6 @@ var readable = (function($) {
 
 				if ( $(this).hasClass('alert-float') ) {
 					$(this).stop().fadeOut(200);
-
-					//$('article.active').animate({ opacity: 1 }, 200);
 				} else {
 					$(this).stop().hide();
 				}
@@ -208,8 +207,6 @@ var readable = (function($) {
 					app.items.save($(this).data('item-id'), $(this).hasClass('saved') ? 0 : 1);
 				});
 
-				//$('article.inactive').css({ opacity: .3 });
-
 				app.items.findActive(true);
 
 				return app.items;
@@ -264,7 +261,6 @@ var readable = (function($) {
 					if ( top <= app.items.pageTop + 5 && bottom >= app.items.pageTop ) {
 						if ( app.items.activeItemId !== $(this).data('item-id') ) {
 							if ( app.items.activeItem ) {
-
 								app.items.activeItem
 									.stop()
 									.animate({ opacity: .3 }, instant ? 0 : 200)
@@ -324,7 +320,7 @@ var readable = (function($) {
 				}
 
 				$.ajax({
-					url: '/' + app.view + '/vote',
+					url: '/' + app.view + '/vote/' + app.args,
 					method: 'post',
 					data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
 				}).fail(function() {
@@ -350,7 +346,7 @@ var readable = (function($) {
 					el.addClass('read');
 
 					$.ajax({
-						url: '/' + app.view + '/read',
+						url: '/' + app.view + '/read/' + app.args,
 						method: 'post',
 						data: { item_id: itemId, sessionId: app.sessionId }
 					});
@@ -376,7 +372,7 @@ var readable = (function($) {
 
 				if ( app.signedIn ) {
 					$.ajax({
-						url: '/' + app.view + '/save',
+						url: '/' + app.view + '/save/' + app.args,
 						method: 'post',
 						data: { item_id: itemId, save: save, sessionId: app.sessionId }
 					}).fail(function() {
@@ -407,7 +403,7 @@ var readable = (function($) {
 				}
 
 				$.ajax({
-					url: '/' + app.view + '/subscribe',
+					url: '/' + app.view + '/subscribe/' + app.args,
 					method: 'post',
 					data: { feed_id: feedId, action: action, sessionId: app.sessionId }
 				}).fail(function(data) {
@@ -440,15 +436,13 @@ var readable = (function($) {
 					app.items.lastRequestedPage = app.items.page + 1;
 
 					$.ajax({
-						url: '/' + app.view + '/items',
+						url: '/' + app.view + '/items/' + app.args,
 						data: { page: app.items.page + 1, excludes: excludes.join(' ') },
 						context: $('#items')
 					}).done(function(data) {
 						if ( data ) {
 							$(this).append(data);
 
-							//$('article.inactive').css({ opacity: .3 });
-							//
 							app.items.activeItemId = null;
 
 							app.items.findActive(true);
