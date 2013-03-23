@@ -219,6 +219,21 @@ class Read extends \Swiftlet\Controller
 	}
 
 	/**
+	 * Prepare feed items for display
+	 *
+	 * @param array $items
+	 */
+	protected function prepare(&$items)
+	{
+		foreach ( $items as $item ) {
+			$this->purify($item->contents);
+			$this->localize($item->posted_at);
+
+			$item->title = $this->view->htmlDecode(strip_tags($item->title));
+		}
+	}
+
+	/**
 	 * Sanitise HTML
 	 *
 	 * @param string $html

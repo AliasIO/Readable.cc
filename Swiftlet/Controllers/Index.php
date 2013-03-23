@@ -101,10 +101,7 @@ class Index extends \Swiftlet\Controllers\Read
 
 		$items = $result;
 
-		foreach ( $items as $item ) {
-			$this->purify($item->contents);
-			$this->localize($item->posted_at);
-		}
+		$this->prepare($items);
 
 		$this->view->set('items', $items);
 	}

@@ -5,8 +5,10 @@ namespace Swiftlet\Models;
 class Feed extends \Swiftlet\Model
 {
 	const
-		FEED_INVALID = 1,
-		SERVER_ERROR = 2
+		FEED_INVALID      = 1,
+		SERVER_ERROR      = 2,
+		NAMESPACE_CONTENT = 'http://purl.org/rss/1.0/modules/content/',
+		NAMESPACE_DC      = 'http://purl.org/dc/elements/1.1/'
 		;
 
 	public
@@ -86,7 +88,9 @@ class Feed extends \Swiftlet\Model
 
 		// Get feed details
 		switch ( $this->type ) {
-			case 'rss':
+			case 'rss1':
+			case 'rss1-rdf':
+			case 'rss2':
 				$this->title = (string) $this->xml->channel->title;
 				$this->link  = (string) $this->xml->channel->link;
 
@@ -94,11 +98,6 @@ class Feed extends \Swiftlet\Model
 			case 'atom':
 				$this->title = (string) $this->xml->title;
 				$this->link  = (string) $this->xml->link->attributes()->href;
-
-				break;
-			case 'rss-rdf':
-				$this->title = (string) $this->xml->channel->title;
-				$this->link  = (string) $this->xml->channel->link;
 
 				break;
 		}
@@ -154,9 +153,19 @@ class Feed extends \Swiftlet\Model
 			if ( $simpleXml->getName() == 'rss' && $simpleXml->channel && $simpleXml->channel->title && $simpleXml->channel->link && $simpleXml->channel->item ) {
 				$item = $simpleXml->channel->item[0];
 
-				if ( $item->title && $item->link && $item->description && $item->pubDate ) {
-					return 'rss';
+				if ( $item->title && $item->link ) {
+					if ( $item->description && $item->pubDate ) {
+						return 'rss2';
+					}
+
+					$content = $item->children(self::NAMESPACE_CONTENT);
+					$dc      = $item->children(self::NAMESPACE_DC);
+
+					if ( $content->encoded && ( $item->pubDate || $dc->date ) ) {
+						return 'rss1';
+					}
 				}
+
 			}
 
 			if ( $simpleXml->getName() == 'feed' && $simpleXml->title && $simpleXml->link && $simpleXml->entry ) {
@@ -168,12 +177,14 @@ class Feed extends \Swiftlet\Model
 			}
 
 			if ( $simpleXml->getName() == 'RDF' && $simpleXml->channel && $simpleXml->channel->title && $simpleXml->channel->link && $simpleXml->item ) {
-				if ( $simpleXml->item[0]->title && $simpleXml->item[0]->link ) {
-					$content = $simpleXml->item[0]->children('http://purl.org/rss/1.0/modules/content/');
-					$dc      = $simpleXml->item[0]->children('http://purl.org/dc/elements/1.1/');
+				$item = $simpleXml->item[0];
 
-					if ( $content->encoded && $dc->date ) {
-						return 'rss-rdf';
+				if ( $item->title && $item->link ) {
+					$content = $item->children(self::NAMESPACE_CONTENT);
+					$dc      = $item->children(self::NAMESPACE_DC);
+
+					if ( $content->encoded && ( $item->pubDate || $dc->date ) ) {
+						return 'rss1-rdf';
 					}
 				}
 			}
@@ -240,7 +251,8 @@ class Feed extends \Swiftlet\Model
 		}
 
 		switch ( $this->type ) {
-			case 'rss':
+			case 'rss1':
+			case 'rss2':
 				foreach ( $this->xml->channel->item as $xml ) {
 					$item = $this->app->getModel('feedItem')->init($this, $xml);
 
@@ -256,7 +268,7 @@ class Feed extends \Swiftlet\Model
 				}
 
 				break;
-			case 'rss-rdf':
+			case 'rss1-rdf':
 				foreach ( $this->xml->item as $xml ) {
 					$item = $this->app->getModel('feedItem')->init($this, $xml);
 

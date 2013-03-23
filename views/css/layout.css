@@ -258,13 +258,16 @@ fieldset:last-child {
 	#subscriptions li {
 	}
 
-	#subscriptions li .unsubscribe {
-		color: #9c0001;
+	#subscriptions li span {
 		visibility: hidden;
 	}
 
-	#subscriptions li:hover .unsubscribe {
+	#subscriptions li:hover span {
 		visibility: visible;
+	}
+
+	#subscriptions li .unsubscribe {
+		color: #9c0001;
 	}
 
 #account-words {

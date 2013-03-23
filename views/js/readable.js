@@ -340,7 +340,7 @@ var readable = (function($) {
 			},
 
 			markAsRead: function(itemId) {
-				if ( app.signedIn ) {
+				if ( app.signedIn && itemId ) {
 					var el = $('article[data-item-id=' + itemId + ']');
 
 					if ( el.hasClass('read') ) {
@@ -360,6 +360,12 @@ var readable = (function($) {
 			},
 
 			save: function(itemId, save) {
+				if ( !app.signedIn ) {
+					app.notSignedIn();
+
+					return;
+				}
+
 				var button = $('article .item-save[data-item-id=' + itemId + ']');
 
 				if ( save ) {

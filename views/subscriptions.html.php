@@ -22,13 +22,15 @@
 <ul id="subscriptions">
 	<?php foreach ( $feeds as $feed ): ?>
 	<li>
-		<strong><a href="<?php echo $feed->link ?>"><?php echo $feed->title ?></a></strong> &mdash;
-		<small>
-			<a href="<?php echo $feed->url ?>"><?php echo parse_url($feed->url, PHP_URL_HOST) ?></a>
-			<a class="unsubscribe" href="javascript: void(0);" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
-				<i class="entypo squared-minus"></i> Unsubscribe
-			</a>
-		</small>
+		<strong><a href="/feed/read/<?php echo $feed->id ?>"><?php echo $feed->title ?></a></strong>
+		<span>
+		<a href="<?php echo $feed->link ?>" title="Visit the website at <?php echo parse_url($feed->link, PHP_URL_HOST) ?>"><i class="entypo link"></i></a>
+		<a href="<?php echo $feed->url  ?>" title="View the feed at <?php echo parse_url($feed->url,  PHP_URL_HOST) ?>"><i class="entypo rss"></i></a>
+		&nbsp;
+		<a class="unsubscribe" href="javascript: void(0);" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
+			<i class="entypo squared-minus"></i> Unsubscribe
+		</a>
+		</span>
 	</li>
 	<?php endforeach ?>
 </ul>
@@ -38,6 +40,7 @@
 
 <p>
 	Specify a URL to a <a href="https://en.wikipedia.org/wiki/RSS">RSS</a> or <a href="https://en.wikipedia.org/wiki/Atom_%28standard%29">Atom</a> feed to subscribe.
+	Alternatively you can just use a website's URL and we'll try to find a feed automatically.
 </p>
 
 <form id="form-subscriptions-subscribe" method="post" action="/subscriptions" class="form-subscriptions form-horizontal well">
@@ -64,6 +67,7 @@
 <h3>Import & export feeds</h3>
 
 <p>
+	It may take several hours for imported feeds to appear in &lsquo;<a href="/reading">My Reading</a>&rsquo;.
 </p>
 
 <form id="form-subscriptions-import" method="post" action="/subscriptions" class="form-horizontal well" enctype="multipart/form-data">

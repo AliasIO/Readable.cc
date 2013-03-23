@@ -129,8 +129,11 @@ class FeedItem extends \Swiftlet\Model
 	{
 		$data = new \stdClass;
 
+		$content = $this->xml->children(Feed::NAMESPACE_CONTENT);
+		$dc      = $this->xml->children(Feed::NAMESPACE_DC);
+
 		switch ( $this->feed->getType() ) {
-			case 'rss':
+			case 'rss2':
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = (string) $this->xml->description;
@@ -144,14 +147,18 @@ class FeedItem extends \Swiftlet\Model
 				$data->postedAt = date('Y-m-d H:i', strtotime((string) $this->xml->published));
 
 				break;
-			case 'rss-rdf':
-				$content = $this->xml->children('http://purl.org/rss/1.0/modules/content/');
-				$dc      = $this->xml->children('http://purl.org/dc/elements/1.1/');
-
+			case 'rss1':
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = (string) $content->encoded;
-				$data->postedAt = date('Y-m-d H:i', strtotime((string) $dc->date));
+				$data->postedAt = date('Y-m-d H:i', strtotime((string) $this->xml->pubDate ? $this->xml->pubDate : $dc->date));
+
+				break;
+			case 'rss-rdf':
+				$data->url      = (string) $this->xml->link;
+				$data->title    = (string) $this->xml->title;
+				$data->contents = (string) $content->encoded;
+				$data->postedAt = date('Y-m-d H:i', strtotime((string) $this->xml->pubDate ? $this->xml->pubDate : $dc->date));
 
 				break;
 		}

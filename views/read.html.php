@@ -1,4 +1,6 @@
-<?php if ( !$this->get('items') ): ?>
+<?php $items = $this->get('items', false) ?>
+
+<?php if ( !$items ): ?>
 <div id="items-footer">
 	<p>
 		<i class="entypo chevron-small-left"></i> No more unread articles <i class="entypo chevron-small-right"></i>
@@ -6,16 +8,16 @@
 </div>
 <?php endif ?>
 
-<?php foreach ( $this->get('items') as $item ): ?>
+<?php foreach ( $items as $item ): ?>
 <article data-item-id="<?php echo $item->id ?>" data-item-score="<?php echo $item->score ?>" class="inactive collapsed <?php echo $item->score < 0 ? ' boring' : '' ?>">
 	<h1<?php echo $item->score < 0 ? ' title="You may find this article uninteresting (based on articles you voted on)"' : '' ?>>
-		<a href="<?php echo $item->url ?>"><?php echo $this->htmlDecode(strip_tags($item->title)) ?></a>
+		<a href="<?php echo $item->url ?>"><?php echo $item->title ?></a>
 	</h1>
 
 	<p class="item-date">
 		<em>
 			<i class="entypo book"></i>
-			By <strong><a href="/feed/read/<?php echo $item->feed_id ?>"><?php echo $this->htmlDecode(strip_tags($item->feed_title)) ?></a></strong>
+			By <strong><a href="/feed/read/<?php echo $item->feed_id ?>"><?php echo $item->feed_title ?></a></strong>
 			on <?php echo date('F j, Y', $item->posted_at) ?>
 			<span class="feed-options">
 				<!--(score: <?php echo number_format($item->score) ?>)-->
@@ -32,7 +34,7 @@
 
 	<div class="item-wrap">
 		<div class="item-contents">
-			<?php echo $this->htmlDecode($this->htmlDecode($item->contents)) ?>
+			<?php echo $item->contents ?>
 		</div>
 
 		<div style="clear: both;"></div>
