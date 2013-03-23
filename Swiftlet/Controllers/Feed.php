@@ -11,7 +11,7 @@ class Feed extends \Swiftlet\Controllers\Read
 	/**
 	 * Default action
 	 */
-	public function index()
+	public function read()
 	{
 		$this->getItems();
 	}

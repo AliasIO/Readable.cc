@@ -33,6 +33,8 @@ var readable = (function($) {
 			}).resize();
 
 			app.navBar.init();
+
+			return app;
 		},
 
 		// Display alert
@@ -48,10 +50,14 @@ var readable = (function($) {
 				.appendTo('#contents')
 				.fadeIn(instant ? 0 : 200)
 				;
+
+			return app;
 		},
 
 		notSignedIn: function() {
 			app.notice($('.modal-signin').html());
+
+			return app;
 		},
 
 		navBar: {
@@ -62,6 +68,8 @@ var readable = (function($) {
 			init: function() {
 				$(document).bind('scroll', app.navBar.scroll);
 				$(document).bind('scroll', app.items.infiniteScroll);
+
+				return app.navBar;
 			},
 
 			scroll: function() {
@@ -76,16 +84,18 @@ var readable = (function($) {
 				$('.navbar').css({ top: Math.min(0, Math.max(direction === 'up' ? parseInt($('.navbar').css('top')) : - $('.navbar').outerHeight(), app.navBar.anchor - $(document).scrollTop())) });
 
 				app.navBar.scrollTop = $(document).scrollTop();
+
+				return app.navBar;
 			},
 
 			pin: function(instant) {
 				app.navBar.direction = 'up';
-				app.navBar.anchor    = $(document).scrollTop();
-				app.navBar.scrollTop = $(document).scrollTop();
 
 				$(document).unbind('scroll', app.navBar.scroll);
 
-				$('.navbar').animate({ top: 0 }, instant ? 0 : 300);
+				$('.navbar').stop().animate({ top: 0 }, instant ? 0 : 300);
+
+				return app.navBar;
 			}
 		},
 
@@ -103,8 +113,9 @@ var readable = (function($) {
 					scrolled = false
 					;
 
-				Mousetrap.bind('j', function() { app.items.scrollTo(app.items.nextItem    , true); });
-				Mousetrap.bind('k', function() { app.items.scrollTo(app.items.previousItem, true); });
+				Mousetrap.bind('j',    function() { app.items.scrollTo(app.items.nextItem    , true); });
+				Mousetrap.bind('k',    function() { app.items.scrollTo(app.items.previousItem, true); });
+				Mousetrap.bind('home', function() { app.navBar.pin(true).init(); });
 
 				Mousetrap.bind('o', function() {
 					if ( app.items.activeItem ) {
@@ -200,6 +211,8 @@ var readable = (function($) {
 				//$('article.inactive').css({ opacity: .3 });
 
 				app.items.findActive(true);
+
+				return app.items;
 			},
 
 			expand: function(el, instant) {
@@ -216,6 +229,8 @@ var readable = (function($) {
 					.stop()
 					.slideDown(instant ? 0 : 300)
 					;
+
+				return app.items;
 			},
 
 			scrollTo: function(el, instant) {
@@ -231,6 +246,8 @@ var readable = (function($) {
 
 						app.navBar.init();
 					});
+
+				return app.items;
 			},
 
 			findActive: function(instant) {
@@ -281,6 +298,8 @@ var readable = (function($) {
 						return false;
 					}
 				});
+
+				return app.items;
 			},
 
 			vote: function(itemId, vote) {
@@ -316,6 +335,8 @@ var readable = (function($) {
 						buttonLastActive.addClass('btn-inverse voted');
 					}
 				});
+
+				return app.items;
 			},
 
 			markAsRead: function(itemId) {
@@ -334,6 +355,8 @@ var readable = (function($) {
 						data: { item_id: itemId, sessionId: app.sessionId }
 					});
 				}
+
+				return app.items;
 			},
 
 			save: function(itemId, save) {
@@ -358,6 +381,8 @@ var readable = (function($) {
 						}
 					});
 				}
+
+				return app.items;
 			},
 
 			subscribe: function(feedId, action) {
@@ -386,6 +411,8 @@ var readable = (function($) {
 						el.removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-plus"></i> Subscribe');
 					}
 				});
+
+				return app.items;
 			},
 
 			infiniteScroll: function(e) {
@@ -426,6 +453,8 @@ var readable = (function($) {
 						}
 					});
 				}
+
+				return app.items;
 			}
 		},
 
@@ -442,6 +471,8 @@ var readable = (function($) {
 						});
 					}
 				});
+
+				return app.subscriptions;
 			}
 		}
 	}
