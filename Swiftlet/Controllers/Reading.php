@@ -60,8 +60,9 @@ class Reading extends \Swiftlet\Controllers\Read
       INNER JOIN       feeds ON       feeds.id      = items.feed_id
 			LEFT  JOIN users_items ON users_items.item_id = items.id
 			WHERE
-				users_feeds.user_id = ? AND
-				( users_items.read != 1 OR users_items.read IS NULL )
+				  users_feeds.user_id  = ?                                  AND
+				( users_items.user_id  = ? OR users_items.user_id IS NULL ) AND
+				( users_items.read    != 1 OR users_items.read    IS NULL )
 				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
       ORDER BY DATE(items.posted_at) DESC, users_items.score DESC
 			LIMIT 10
@@ -69,6 +70,7 @@ class Reading extends \Swiftlet\Controllers\Read
 
 		$i = 1;
 
+		$sth->bindParam($i ++, $userId);
 		$sth->bindParam($i ++, $userId);
 
 		foreach( $excludes as $key => $itemId ) {
