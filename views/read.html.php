@@ -18,7 +18,7 @@
 		<em>
 			<i class="entypo book"></i>
 			By <strong><a href="/feed/read/<?php echo $item->feed_id ?>"><?php echo $item->feed_title ?></a></strong>
-			on <?php echo date('F j, Y', $item->posted_at) ?>
+			<?php echo $item->posted_at ? 'on ' . date('F j, Y', $item->posted_at) : '' ?>
 			<span class="feed-options">
 				<!--(score: <?php echo number_format($item->score) ?>)-->
 				&mdash; <a href="javascript: void(0);" class="subscription <?php echo $item->feed_subscribed ? 'unscubscribe' : 'subscribe' ?>" data-feed-id="<?php echo $item->feed_id ?>">

@@ -137,28 +137,24 @@ class FeedItem extends \Swiftlet\Model
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = (string) $this->xml->description;
-				$data->postedAt = date('Y-m-d H:i', strtotime((string) $this->xml->pubDate));
+				$data->postedAt = date('Y-m-d H:i', $this->xml->pubDate ? strtotime((string) $this->xml->pubDate) : time());
 
 				break;
 			case 'atom':
 				$data->url      = (string) $this->xml->link->attributes()->href;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = (string) $this->xml->content;
-				$data->postedAt = date('Y-m-d H:i', strtotime((string) $this->xml->published));
+				$data->postedAt = date('Y-m-d H:i', $this->xml->published ? strtotime((string) $this->xml->published) : time());
 
 				break;
 			case 'rss1':
-				$data->url      = (string) $this->xml->link;
-				$data->title    = (string) $this->xml->title;
-				$data->contents = (string) $content->encoded;
-				$data->postedAt = date('Y-m-d H:i', strtotime((string) $this->xml->pubDate ? $this->xml->pubDate : $dc->date));
-
-				break;
 			case 'rss-rdf':
+				$date = $this->xml->pubDate ? $this->xml->pubDate : ( $dc->date ? $dc->date : false );
+
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = (string) $content->encoded;
-				$data->postedAt = date('Y-m-d H:i', strtotime((string) $this->xml->pubDate ? $this->xml->pubDate : $dc->date));
+				$data->postedAt = date('Y-m-d H:i', $date ? strtotime((string) $date) : time());
 
 				break;
 		}

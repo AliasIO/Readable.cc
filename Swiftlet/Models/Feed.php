@@ -154,14 +154,13 @@ class Feed extends \Swiftlet\Model
 				$item = $simpleXml->channel->item[0];
 
 				if ( $item->title && $item->link ) {
-					if ( $item->description && $item->pubDate ) {
+					if ( $item->description ) {
 						return 'rss2';
 					}
 
 					$content = $item->children(self::NAMESPACE_CONTENT);
-					$dc      = $item->children(self::NAMESPACE_DC);
 
-					if ( $content->encoded && ( $item->pubDate || $dc->date ) ) {
+					if ( $content->encoded ) {
 						return 'rss1';
 					}
 				}
@@ -181,9 +180,8 @@ class Feed extends \Swiftlet\Model
 
 				if ( $item->title && $item->link ) {
 					$content = $item->children(self::NAMESPACE_CONTENT);
-					$dc      = $item->children(self::NAMESPACE_DC);
 
-					if ( $content->encoded && ( $item->pubDate || $dc->date ) ) {
+					if ( $content->encoded ) {
 						return 'rss1-rdf';
 					}
 				}
