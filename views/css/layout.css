@@ -118,12 +118,12 @@ blockquote p {
 #items {
 }
 
-#items.loading {
-	background: url('../images/loading.gif') center bottom no-repeat;
-	height: 200px;
-}
+	#items .placeholder {
+		border-top: 1px solid #e9e9e9;
+	}
 
 article {
+	border-top: 1px solid transparent;
 	margin-bottom: 52px;
 }
 

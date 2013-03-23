@@ -1,5 +1,7 @@
 var readable = (function($) {
 	var app = {
+		duration: 300,
+		excludes: [],
 		view: '',
 		args: '',
 		sessionId: '',
@@ -21,7 +23,7 @@ var readable = (function($) {
 				}
 
 				if ( $(this).hasClass('alert-float') ) {
-					$(this).stop().fadeOut(200);
+					$(this).stop().fadeOut(app.duration);
 				} else {
 					$(this).stop().hide();
 				}
@@ -38,8 +40,6 @@ var readable = (function($) {
 
 		// Display alert
 		notice: function(message, instant) {
-			//$('article').stop().animate({ opacity: .3 }, instant ? 0 : 200);
-
 			$('.alert').hide();
 
 			$('<div class="alert alert-float">' + message + '</div>')
@@ -47,7 +47,7 @@ var readable = (function($) {
 				.hide()
 				.outerWidth($('#contents').width())
 				.appendTo('#contents')
-				.fadeIn(instant ? 0 : 200)
+				.fadeIn(instant ? 0 : app.duration)
 				;
 
 			return app;
@@ -92,7 +92,7 @@ var readable = (function($) {
 
 				$(document).unbind('scroll', app.navBar.scroll);
 
-				$('.navbar').stop().animate({ top: 0 }, instant ? 0 : 300);
+				$('.navbar').stop().animate({ top: 0 }, instant ? 0 : app.duration);
 
 				return app.navBar;
 			}
@@ -143,8 +143,6 @@ var readable = (function($) {
 					$('body').css({ paddingBottom: $(window).height() - 200 });
 
 					app.items.pageTop = ( $(window).height() - app.items.pageTop ) / 3;
-
-					//$('#page-head-wrap').css({ height: app.items.pageTop - $('#contents').position().top });
 
 					$('#items-read-line').css({ top: app.items.pageTop });
 				}).resize();
@@ -207,7 +205,36 @@ var readable = (function($) {
 					app.items.save($(this).data('item-id'), $(this).hasClass('saved') ? 0 : 1);
 				});
 
+				app.items.itemsAdded();
+
+				return app.items;
+			},
+
+			itemsAdded: function() {
+				var i = 0;
+
+				$($('#items article').get().reverse()).each(function() {
+					if ( $.inArray($(this).data('item-id'), app.excludes) === -1 ) {
+						app.excludes.push($(this).data('item-id'));
+					}
+
+					// Keep only the last 50 articles in the DOM
+					if ( i ++ < 50 ) {
+						return true;
+					}
+
+					var placeHolder = $('<div>');
+
+					placeHolder.addClass('placeholder').height($(this).outerHeight(true) - 1);
+
+					$(this).replaceWith(placeHolder);
+				});
+
+				app.items.activeItemId = null;
+
 				app.items.findActive(true);
+
+				app.items.page ++;
 
 				return app.items;
 			},
@@ -215,16 +242,16 @@ var readable = (function($) {
 			expand: function(el, instant) {
 				$('article:not([data-item-id=' + el.data('item-id') + '])')
 					.stop()
-					.animate({ opacity: .3 }, instant ? 0 : 300)
+					.animate({ opacity: .3 }, instant ? 0 : app.duration)
 					;
 
 				el
 					.removeClass('collapsed')
 					.addClass('expanded')
-					.animate({ opacity: 1 }, instant ? 0 : 300)
+					.animate({ opacity: 1 }, instant ? 0 : app.duration)
 					.find('.item-wrap')
 					.stop()
-					.slideDown(instant ? 0 : 300)
+					.slideDown(instant ? 0 : app.duration)
 					;
 
 				return app.items;
@@ -238,7 +265,7 @@ var readable = (function($) {
 				app.navBar.pin(instant);
 
 				$('html,body')
-					.animate({ scrollTop: el.offset().top - app.items.pageTop }, instant ? 0 : 300, function() {
+					.animate({ scrollTop: el.offset().top - app.items.pageTop }, instant ? 0 : app.duration, function() {
 						app.items.findActive(instant);
 
 						app.navBar.init();
@@ -249,7 +276,7 @@ var readable = (function($) {
 
 			findActive: function(instant) {
 				var
-					offset = $(document).scrollTop() - $('#contents').position().top;
+					offset = $(document).scrollTop() - $('#contents').position().top
 					;
 
 				$($('#items article').get().reverse()).each(function() {
@@ -263,7 +290,7 @@ var readable = (function($) {
 							if ( app.items.activeItem ) {
 								app.items.activeItem
 									.stop()
-									.animate({ opacity: .3 }, instant ? 0 : 200)
+									.animate({ opacity: .3 }, instant ? 0 : app.duration)
 									.removeClass('active')
 									.addClass('inactive')
 									;
@@ -277,11 +304,11 @@ var readable = (function($) {
 							$(this).removeClass('inactive').addClass('active');
 
 							if ( $(this).hasClass('collapsed') ) {
-								$('article').stop().animate({ opacity: 1 }, instant ? 0 : 200);
+								$('article').stop().animate({ opacity: 1 }, instant ? 0 : app.duration);
 							} else {
-								$(this).stop().animate({ opacity: 1 }, instant ? 0 : 200);
+								$(this).stop().animate({ opacity: 1 }, instant ? 0 : app.duration);
 
-								$('article:not([data-item-id=' + app.items.activeItemId + '])').stop().animate({ opacity: .3 }, instant ? 0 : 200);
+								$('article:not([data-item-id=' + app.items.activeItemId + '])').stop().animate({ opacity: .3 }, instant ? 0 : app.duration);
 							}
 
 							// Hide floating alerts
@@ -424,30 +451,20 @@ var readable = (function($) {
 					return;
 				}
 
-				if ( app.items.page + 1 > app.items.lastRequestedPage && $(document).scrollTop() + $(window).height() > $(document).height() / 1.5 ) {
+				if ( app.items.page + 1 > app.items.lastRequestedPage && $(document).scrollTop() > $(document).height() - ( $(window).height() * 2 ) ) {
 					$(document).unbind('scroll', app.items.infiniteScroll);
-
-					var excludes = [];
-
-					$('article').each(function() {
-						excludes.push($(this).data('item-id'));
-					});
 
 					app.items.lastRequestedPage = app.items.page + 1;
 
 					$.ajax({
 						url: '/' + app.view + '/items/' + app.args,
-						data: { page: app.items.page + 1, excludes: excludes.join(' ') },
+						data: { page: app.items.page + 1, excludes: app.excludes.join(' ') },
 						context: $('#items')
 					}).done(function(data) {
 						if ( data ) {
 							$(this).append(data);
 
-							app.items.activeItemId = null;
-
-							app.items.findActive(true);
-
-							app.items.page ++;
+							app.items.itemsAdded();
 
 							$(document).bind('scroll', app.items.infiniteScroll);
 						}
