@@ -76,6 +76,22 @@
 	</fieldset>
 </form>
 
+<?php if ( $words = $this->get('words') ): ?>
+<h2>Word cloud</h2>
+
+<p>
+	Based on articles you have voted on these are words we believe you find interesting (black) or boring (grey).
+</p>
+
+<div id="account-words" class="well">
+	<?php foreach ( $words as $word ): ?>
+	<span class="<?php echo $word->score > 0 ? 'interesting' : 'boring' ?>" style="font-size: <?php echo abs($word->score * .5) + 10 ?>px;" title="<?php echo $word->word ?> (<?php echo $word->score > 0 ? 'interesting' : 'boring' ?>)">
+		<?php echo $word->word ?>
+	</span>
+	<?php endforeach ?>
+</div>
+<?php endif ?>
+
 <h2>Reset</h2>
 
 <p>

@@ -22,7 +22,7 @@ var readable = (function($) {
 				if ( $(this).hasClass('alert-float') ) {
 					$(this).stop().fadeOut(200);
 
-					$('article.active').animate({ opacity: 1 }, 200);
+					//$('article.active').animate({ opacity: 1 }, 200);
 				} else {
 					$(this).stop().hide();
 				}
@@ -37,7 +37,7 @@ var readable = (function($) {
 
 		// Display alert
 		notice: function(message, instant) {
-			$('article.active').stop().animate({ opacity: .3 }, instant ? 0 : 200);
+			//$('article').stop().animate({ opacity: .3 }, instant ? 0 : 200);
 
 			$('.alert').hide();
 
@@ -92,7 +92,7 @@ var readable = (function($) {
 		items: {
 			activeItemId: null,
 			activeItem: null,
-			cutOff: 0,
+			pageTop: 0,
 			previousItem: null,
 			nextItem: null,
 			page: 1,
@@ -103,8 +103,14 @@ var readable = (function($) {
 					scrolled = false
 					;
 
-				Mousetrap.bind('j', function() { app.items.scrollTo(app.items.nextItem    .find('.item-contents'), true); });
-				Mousetrap.bind('k', function() { app.items.scrollTo(app.items.previousItem.find('.item-contents'), true); });
+				Mousetrap.bind('j', function() { app.items.scrollTo(app.items.nextItem    , true); });
+				Mousetrap.bind('k', function() { app.items.scrollTo(app.items.previousItem, true); });
+
+				Mousetrap.bind('o', function() {
+					if ( app.items.activeItem ) {
+						app.items.activeItem.click();
+					}
+				});
 
 				$(document).ajaxError(function(e, xhr) {
 					if ( xhr.status === 403 ) {
@@ -118,15 +124,19 @@ var readable = (function($) {
 					}
 				});
 
+				app.items.pageTop = $('#contents').position().top;
+
+				app.items.nextItem = $('#items article').first();
+
 				// Add space to allow the last item to be scrolled to the top of the page
 				$(window).resize(function() {
 					$('body').css({ paddingBottom: $(window).height() - 200 });
 
-					app.items.cutOff = ( $(window).height() - $('#contents').position().top ) / 2;
+					app.items.pageTop = ( $(window).height() - app.items.pageTop ) / 3;
 
-					$('#page-head-wrap').css({ height: app.items.cutOff - $('#contents').position().top });
+					//$('#page-head-wrap').css({ height: app.items.pageTop - $('#contents').position().top });
 
-					$('#items-read-line').css({ top: app.items.cutOff });
+					$('#items-read-line').css({ top: app.items.pageTop });
 				}).resize();
 
 				// Highlight visible item on scroll
@@ -138,7 +148,7 @@ var readable = (function($) {
 					if ( scrolled ) {
 						scrolled = false;
 
-						app.items.highlightActive();
+						app.items.findActive();
 					}
 				}, 200);
 
@@ -146,20 +156,14 @@ var readable = (function($) {
 				$('#items').on('click', 'article.collapsed', function(e) {
 					e.preventDefault();
 
-					var self = $(this);
-
-					$(this).find('.item-wrap').stop().slideDown(300, function() {
-						$(self).removeClass('collapsed');
-
-						app.items.scrollTo(self.find('.item-contents'));
-					});
+					app.items.expand($(this));
 				});
 
 				// Scroll to inactive item when clicked
 				$('#items').on('click', 'article.inactive', function(e) {
 					e.preventDefault();
 
-					app.items.scrollTo($(this).find('.item-contents'));
+					app.items.scrollTo($(this));
 				});
 
 				// Register votes
@@ -193,9 +197,25 @@ var readable = (function($) {
 					app.items.save($(this).data('item-id'), $(this).hasClass('saved') ? 0 : 1);
 				});
 
-				$('article.inactive').css({ opacity: .3 });
+				//$('article.inactive').css({ opacity: .3 });
 
-				app.items.highlightActive(true);
+				app.items.findActive(true);
+			},
+
+			expand: function(el, instant) {
+				$('article:not([data-item-id=' + el.data('item-id') + '])')
+					.stop()
+					.animate({ opacity: .3 }, instant ? 0 : 300)
+					;
+
+				el
+					.removeClass('collapsed')
+					.addClass('expanded')
+					.animate({ opacity: 1 }, instant ? 0 : 300)
+					.find('.item-wrap')
+					.stop()
+					.slideDown(instant ? 0 : 300)
+					;
 			},
 
 			scrollTo: function(el, instant) {
@@ -206,14 +226,14 @@ var readable = (function($) {
 				app.navBar.pin(instant);
 
 				$('html,body')
-					.animate({ scrollTop: el.offset().top - app.items.cutOff }, instant ? 0 : 300, function() {
-						app.items.highlightActive(instant);
+					.animate({ scrollTop: el.offset().top - app.items.pageTop }, instant ? 0 : 300, function() {
+						app.items.findActive(instant);
 
 						app.navBar.init();
 					});
 			},
 
-			highlightActive: function(instant) {
+			findActive: function(instant) {
 				var
 					offset = $(document).scrollTop() - $('#contents').position().top;
 					;
@@ -224,9 +244,10 @@ var readable = (function($) {
 						bottom = top + $(this).outerHeight(true)
 						;
 
-					if ( top <= app.items.cutOff + 5 && bottom >= app.items.cutOff ) {
+					if ( top <= app.items.pageTop + 5 && bottom >= app.items.pageTop ) {
 						if ( app.items.activeItemId !== $(this).data('item-id') ) {
 							if ( app.items.activeItem ) {
+
 								app.items.activeItem
 									.stop()
 									.animate({ opacity: .3 }, instant ? 0 : 200)
@@ -237,15 +258,18 @@ var readable = (function($) {
 								app.items.markAsRead(app.items.activeItemId);
 							}
 
-							$(this)
-								.stop()
-								.animate({ opacity: 1 }, instant ? 0 : 200)
-								.removeClass('inactive')
-								.addClass('active')
-								;
-
 							app.items.activeItemId = $(this).data('item-id');
 							app.items.activeItem   = $(this);
+
+							$(this).removeClass('inactive').addClass('active');
+
+							if ( $(this).hasClass('collapsed') ) {
+								$('article').stop().animate({ opacity: 1 }, instant ? 0 : 200);
+							} else {
+								$(this).stop().animate({ opacity: 1 }, instant ? 0 : 200);
+
+								$('article:not([data-item-id=' + app.items.activeItemId + '])').stop().animate({ opacity: .3 }, instant ? 0 : 200);
+							}
 
 							// Hide floating alerts
 							$('.alert-float').click();
@@ -371,7 +395,7 @@ var readable = (function($) {
 					return;
 				}
 
-				if ( app.items.page + 1 > app.items.lastRequestedPage && $(document).scrollTop() + $(window).height() > $(document).height() / 1.2 ) {
+				if ( app.items.page + 1 > app.items.lastRequestedPage && $(document).scrollTop() + $(window).height() > $(document).height() / 1.5 ) {
 					$(document).unbind('scroll', app.items.infiniteScroll);
 
 					var excludes = [];
@@ -390,9 +414,11 @@ var readable = (function($) {
 						if ( data ) {
 							$(this).append(data);
 
-							$('article.inactive').css({ opacity: .3 });
+							//$('article.inactive').css({ opacity: .3 });
+							//
+							app.items.activeItemId = null;
 
-							app.items.highlightActive(true);
+							app.items.findActive(true);
 
 							app.items.page ++;
 

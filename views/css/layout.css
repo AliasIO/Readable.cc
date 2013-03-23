@@ -85,6 +85,7 @@ blockquote p {
 #page-head {
 	display: table-cell;
 	font-style: italic;
+	height: 300px;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -97,7 +98,7 @@ blockquote p {
 	color: #ccc;
 	font-family: EntypoRegular;
 	font-size: 2em;
-	line-height: 26px;
+	line-height: 50px;
 	margin: 0 -30px;
 	position: fixed;
 	top: 0;
@@ -130,6 +131,14 @@ article {
 		margin-top: 0;
 	}
 
+	article.boring h1 {
+		color: #999;
+	}
+
+	article.inactive.boring h1 {
+		text-decoration: line-through;
+	}
+
 	article .item-toggle {
 		display: none;
 	}
@@ -138,17 +147,27 @@ article {
 		cursor: pointer;
 	}
 
+	/*
 	article.inactive.collapsed h1 {
 		text-decoration: line-through;
 	}
+	*/
 
-	article.collapsed .item-wrap {
+	article .item-wrap {
 		display: none;
 	}
 
 	article .item-date {
 		font-size: small;
 	}
+
+		article .item-date .feed-options {
+			display: none;
+		}
+
+		article .item-date:hover .feed-options {
+			display: inherit;
+		}
 
 		article .item-date .entypo {
 			font-size: 1.7em;
@@ -211,9 +230,9 @@ article {
 		margin: 20px 0;
 	}
 
-	article .item-wrap > p:nth-child(2) img {
+	article .item-contents > p:first-child img {
 		float: left;
-		margin: 0 20px 10px 0;
+		margin: 5px 20px 10px 0;
 		max-height: 250px;
 		max-width: 300px;
 	}
@@ -246,6 +265,37 @@ fieldset:last-child {
 
 	#subscriptions li:hover .unsubscribe {
 		visibility: visible;
+	}
+
+#account-words {
+	cursor: default;
+	line-height: 2em;
+	text-align: justify;
+	text-transform: uppercase;
+}
+
+	#account-words span {
+		border: 1px solid #fefefe;
+		display: inline-block;
+		padding: 2px 5px;
+		margin: 3px 0;
+		vertical-align: middle;
+		-webkit-border-radius: 3px;
+			 -moz-border-radius: 3px;
+						border-radius: 3px;
+	}
+
+	#account-words .interesting {
+	}
+
+	#account-words .boring {
+		color: #ccc;
+	}
+
+	#account-words span:hover {
+		background: #fff;
+		border: 1px solid #ececec;
+		color: inherit;
 	}
 
 #feedback {

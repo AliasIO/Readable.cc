@@ -7,15 +7,15 @@
 <?php endif ?>
 
 <?php foreach ( $this->get('items') as $item ): ?>
-<article data-item-id="<?php echo $item->id ?>" class="inactive<?php echo $item->score < 0 ? ' collapsed' : '' ?>">
+<article data-item-id="<?php echo $item->id ?>" class="inactive collapsed <?php echo $item->score < 0 ? ' boring' : '' ?>">
 	<h1><a href="<?php echo $item->url ?>"><?php echo $this->htmlDecode(strip_tags($item->title)) ?></a></h1>
 
-	<div class="item-wrap">
-		<p class="item-date">
-			<em>
-				<i class="entypo book"></i>
-				Posted by <a href="<?php echo $item->feed_link ?>"><?php echo $this->htmlDecode(strip_tags($item->feed_title)) ?></a>
-				on <?php echo date('F j, Y', $item->posted_at) ?>
+	<p class="item-date">
+		<em>
+			<i class="entypo book"></i>
+			By <strong><a href="<?php echo $item->feed_link ?>"><?php echo $this->htmlDecode(strip_tags($item->feed_title)) ?></a></strong>
+			on <?php echo date('F j, Y', $item->posted_at) ?>
+			<span class="feed-options">
 				<!--(score: <?php echo number_format($item->score) ?>)-->
 				&mdash; <a href="javascript: void(0);" class="subscription <?php echo $item->feed_subscribed ? 'unscubscribe' : 'subscribe' ?>" data-feed-id="<?php echo $item->feed_id ?>">
 					<?php if ( $item->feed_subscribed ): ?>
@@ -24,9 +24,11 @@
 					<i class="entypo squared-plus"></i> Subscribe
 					<?php endif ?>
 				</a>
-			</em>
-		</p>
+			<span>
+		</em>
+	</p>
 
+	<div class="item-wrap">
 		<div class="item-contents">
 			<?php echo $this->htmlDecode($this->htmlDecode($item->contents)) ?>
 		</div>

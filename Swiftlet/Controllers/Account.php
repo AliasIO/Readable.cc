@@ -5,7 +5,8 @@ namespace Swiftlet\Controllers;
 class Account extends \Swiftlet\Controller
 {
 	protected
-		$title = 'Account'
+		$title = 'Account',
+		$userId
 		;
 
 	/**
@@ -16,6 +17,69 @@ class Account extends \Swiftlet\Controller
 	public function __construct(\Swiftlet\Interfaces\App $app, \Swiftlet\Interfaces\View $view)
 	{
 		parent::__construct($app, $view);
+
+		$this->userId = $this->app->getSingleton('helper')->ensureValidUser();
+
+		$session = $this->app->getSingleton('session');
+
+		$this->view->set('email',    $session->get('email'));
+		$this->view->set('timezone', $session->get('timezone'));
+
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+			SELECT
+				main.word,
+				@row := @row - 1 AS score
+			FROM (
+				SELECT
+					words.word
+				FROM      users_words
+				LEFT JOIN words       ON users_words.word_id = words.id
+				WHERE
+					user_id = :user_id
+				ORDER BY users_words.score DESC
+				LIMIT 50
+      ) AS main, (
+        SELECT @row := 51
+      ) AS rownum
+			;');
+
+		$sth->bindParam(':user_id', $this->userId);
+
+		$sth->execute();
+
+		$interesting = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+		$sth = $dbh->prepare('
+			SELECT
+				main.word,
+				@row := @row + 1 AS score
+			FROM (
+				SELECT
+					words.word
+				FROM      users_words
+				LEFT JOIN words       ON users_words.word_id = words.id
+				WHERE
+					user_id = :user_id
+				ORDER BY users_words.score ASC
+				LIMIT 30
+      ) AS main, (
+        SELECT @row := -30
+      ) AS rownum
+			;');
+
+		$sth->bindParam(':user_id', $this->userId);
+
+		$sth->execute();
+
+		$boring = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+		$words = array_merge($interesting, $boring);
+
+    usort($words, array($this, 'sortWords'));
+
+		$this->view->set('words', $words);
 
 		$this->view->set('timeZones', array(
 			'-720' => '(GMT -12:00) Eniwetok, Kwajalein',
@@ -57,12 +121,7 @@ class Account extends \Swiftlet\Controller
 	 */
 	public function index()
 	{
-		$userId = $this->app->getSingleton('helper')->ensureValidUser();
-
 		$session = $this->app->getSingleton('session');
-
-		$this->view->set('email',    $session->get('email'));
-		$this->view->set('timezone', $session->get('timezone'));
 
 		$email           = isset($_POST['email'])            ? $_POST['email']            : '';
 		$password        = isset($_POST['password'])         ? $_POST['password']         : '';
@@ -86,7 +145,7 @@ class Account extends \Swiftlet\Controller
 						$this->view->set('error-password',        true);
 						$this->view->set('error-password-repeat', true);
 					} else {
-						$auth->setPassword($userId, $password);
+						$auth->setPassword($this->userId, $password);
 					}
 				}
 
@@ -107,7 +166,7 @@ class Account extends \Swiftlet\Controller
 						LIMIT 1
 						;');
 
-					$sth->bindParam(':id',       $userId);
+					$sth->bindParam(':id',       $this->userId);
 					$sth->bindParam(':email',    $email);
 					$sth->bindParam(':timezone', $timeZone);
 
@@ -147,8 +206,6 @@ class Account extends \Swiftlet\Controller
 	 */
 	public function reset()
 	{
-		$userId = $this->app->getSingleton('helper')->ensureValidUser();
-
 		$session = $this->app->getSingleton('session');
 
 		if ( !empty($_POST) ) {
@@ -176,7 +233,7 @@ class Account extends \Swiftlet\Controller
 						users_words.user_id = :user_id
 					;');
 
-				$sth->bindParam('user_id', $userId);
+				$sth->bindParam('user_id', $this->userId);
 
 				$sth->execute();
 
@@ -207,7 +264,7 @@ class Account extends \Swiftlet\Controller
 	 */
 	public function delete()
 	{
-		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+		$this->userId = $this->app->getSingleton('helper')->ensureValidUser();
 
 		$session = $this->app->getSingleton('session');
 
@@ -232,7 +289,7 @@ class Account extends \Swiftlet\Controller
 					LIMIT 1
 					;');
 
-				$sth->bindParam('user_id', $userId);
+				$sth->bindParam('user_id', $this->userId);
 
 				$sth->execute();
 
@@ -258,5 +315,17 @@ class Account extends \Swiftlet\Controller
 				$this->view->set('error', $error);
 			}
 		}
+	}
+
+	/**
+	 * Sort words alphabetically
+	 *
+	 * @param object @a
+	 * @param object @b
+	 * @return int
+	 */
+	protected function sortWords($a, $b)
+	{
+		return $a->word > $b->word ? 1 : ( $a->word < $b->word ? -1 : 0 );
 	}
 }
