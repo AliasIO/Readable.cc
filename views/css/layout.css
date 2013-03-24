@@ -156,7 +156,7 @@ article {
 		cursor: pointer;
 	}
 
-		article.inactive a {
+		article.inactive a, article.collapsed a {
 			border-bottom: none;
 		}
 
