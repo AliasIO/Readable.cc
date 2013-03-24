@@ -176,7 +176,7 @@ article {
 			font-size: 1.7em;
 		}
 
-		article.active .item-date:hover .feed-options {
+		article.active.expanded .item-date:hover .feed-options {
 			display: inherit;
 		}
 
@@ -206,7 +206,7 @@ article {
 		text-decoration: none;
 	}
 
-	article.active h1 a:hover:after {
+	article.active.expanded h1 a:hover:after {
 		content: ' \2192'
 	}
 
