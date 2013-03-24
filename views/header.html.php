@@ -8,7 +8,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<meta name="description" content="The readable feed reader. Content automagically filtered to suit your interest.">
+		<meta name="description" content="The readable feed reader. Content automagically filtered to suit your interests.">
 		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
 
 		<link href="/views/lib/bootstrap/css/readable.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 		<header class="navbar navbar-fixed-top">
 			<nav class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="/"><i class="entypo home"></i><span> Readable.cc<span></a>
+					<a class="brand" href="/"><i class="entypo home"></i><span> Readable.cc</span></a>
 
 					<ul class="nav pull-right">
 						<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
@@ -38,7 +38,7 @@
 						<li class="saved   <?php echo $this->name == 'saved'   ? 'active' : '' ?>"><a href="/saved"  ><i class="entypo install"></i><span> Saved</span></a></li>
 
 						<li class="email dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="entypo tools"></i><span><?php echo $this->app->getSingleton('session')->get('email') ?> <i class="entypo chevron-down"></span></i></a>
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="entypo tools"></i><span><?php echo $this->app->getSingleton('session')->get('email') ?> <i class="entypo chevron-down"></i></span></a>
 
 							<ul class="dropdown-menu">
 								<li class="account"      ><a href="/account"      ><i class="entypo user"  ></i><span> Account</span></a></li>

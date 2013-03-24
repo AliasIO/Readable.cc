@@ -10,13 +10,13 @@
 
 <?php foreach ( $items as $item ): ?>
 <article
-	data-item-id="<?php    echo $item->id    ?>"
-	data-item-score="<?php echo $item->score ?>"
-	data-item-url="<?php   echo $item->url   ?>"
+	data-item-id="<?php    echo $item->id                     ?>"
+	data-item-score="<?php echo $item->score                  ?>"
+	data-item-url="<?php   echo $this->htmlEncode($item->url) ?>"
 	class="inactive collapsed <?php echo $item->score < 0 ? ' boring' : '' ?>"
 	>
 	<h1<?php echo $item->score < 0 ? ' title="You may find this article uninteresting (based on articles you voted on)"' : '' ?>>
-		<a href="<?php echo $item->url ?>"><?php echo $item->title ?></a>
+		<a href="<?php echo $this->htmlEncode($item->url) ?>"><?php echo $item->title ?></a>
 	</h1>
 
 	<p class="item-date">
@@ -33,7 +33,7 @@
 					<i class="entypo squared-plus"></i> Subscribe
 					<?php endif ?>
 				</a>
-			<span>
+			</span>
 		</em>
 	</p>
 
