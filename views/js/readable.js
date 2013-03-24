@@ -60,37 +60,47 @@ var readable = (function($) {
 		},
 
 		navBar: {
-			anchor:    null,
-			scrollTop: null,
-			direction: null,
+			height: 0,
+			anchor: null,
+			previousScrollTop: 0,
 
 			init: function() {
 				$(document).bind('scroll', app.navBar.scroll);
 				$(document).bind('scroll', app.items.infiniteScroll);
 
+				$(document).scroll();
+
+				app.navBar.height = $('.navbar').outerHeight();
+
 				return app.navBar;
 			},
 
 			scroll: function() {
-				direction = $(document).scrollTop() < app.navBar.scrollTop ? 'up' : 'down';
+				var
+					scrollTop   = $(document).scrollTop(),
+					navBarTop   = Math.min(0, Math.max(parseInt($('.navbar').css('top')) - ( scrollTop - app.navBar.previousScrollTop ), - app.navBar.height));
+					;
 
-				if ( direction !== app.navBar.direction ) {
-					app.navBar.anchor = $(document).scrollTop() - ( direction === 'up' ? $('.navbar').outerHeight() : 0 );
-
-					app.navBar.direction = direction;
+				if ( navBarTop <= 0 && navBarTop >= - app.navBar.height ) {
+					$('.navbar').css({ top: navBarTop });
 				}
 
-				$('.navbar').css({ top: Math.min(0, Math.max(direction === 'up' ? parseInt($('.navbar').css('top')) : - $('.navbar').outerHeight(), app.navBar.anchor - $(document).scrollTop())) });
+				app.navBar.previousScrollTop = scrollTop;
 
-				app.navBar.scrollTop = $(document).scrollTop();
+				// Read line
+				if ( scrollTop > app.items.pageTop ) {
+					$('#items-read-line:hidden').fadeIn(app.duration);
+				} else {
+					$('#items-read-line:visible').fadeOut(app.duration);
+				}
 
 				return app.navBar;
 			},
 
 			pin: function(instant) {
-				app.navBar.direction = 'up';
-
 				$(document).unbind('scroll', app.navBar.scroll);
+
+				app.navBar.previousScrollTop = $(document).height();
 
 				$('.navbar').stop().animate({ top: 0 }, instant ? 0 : app.duration);
 
@@ -112,14 +122,17 @@ var readable = (function($) {
 					scrolled = false
 					;
 
-				Mousetrap.bind('j',    function() { app.items.scrollTo(app.items.nextItem    , true); });
-				Mousetrap.bind('k',    function() { app.items.scrollTo(app.items.previousItem, true); });
+				Mousetrap.bind(['j', 's', 'space'], function() { app.items.scrollTo(app.items.nextItem,     true); return false; });
+				Mousetrap.bind(['k', 'w'],          function() { app.items.scrollTo(app.items.previousItem, true); return false; });
+
 				Mousetrap.bind('home', function() { app.navBar.pin(true).init(); });
 
-				Mousetrap.bind('o', function() {
+				Mousetrap.bind(['o', 'enter'], function() {
 					if ( app.items.activeItem ) {
 						app.items.activeItem.click();
 					}
+
+					return false;
 				});
 
 				$(document).ajaxError(function(e, xhr) {

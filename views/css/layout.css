@@ -39,6 +39,14 @@ blockquote p {
 	border-bottom: none;
 }
 
+	.navbar .brand .home {
+		display: none;
+	}
+
+	.navbar .email .tools {
+		display: none;
+	}
+
 .container {
 	padding: 0 20px;
 	min-width: 240px;
@@ -96,6 +104,7 @@ blockquote p {
 
 #items-read-line {
 	color: #ccc;
+	display: none;
 	font-family: EntypoRegular;
 	font-size: 2em;
 	line-height: 50px;
@@ -335,16 +344,21 @@ fieldset:last-child {
 		padding-top: 40px;
 	}
 
-	.navbar .brand, .navbar .nav > li > a {
-		padding: 7px 15px;
-	}
-
 	.navbar .brand {
-		font-size: 14px !important;
+		line-height: 2em;
 	}
 
 	.navbar-fixed-top li span {
 		display: none;
+	}
+
+	.navbar-fixed-top li .entypo, .navbar-fixed-top .brand .entypo {
+		font-size: 3em;
+		line-height: .8em;
+	}
+
+	.navbar-fixed-top li.email .entypo {
+		display: inline-block;
 	}
 
 	.navbar-inner {
@@ -365,6 +379,18 @@ fieldset:last-child {
 
 @media all and (max-width: 380px) {
 	.navbar .brand {
+		line-height: inherit;
+	}
+
+	.navbar-fixed-top .brand span {
 		display: none;
+	}
+
+	.navbar-fixed-top .brand .entypo {
+		display: inline-block;
+	}
+
+	.navbar-fixed-top .dropdown li span {
+		display: inherit;
 	}
 }

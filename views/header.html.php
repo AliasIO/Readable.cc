@@ -30,25 +30,25 @@
 		<header class="navbar navbar-fixed-top">
 			<nav class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="/">Readable.cc</a>
+					<a class="brand" href="/"><i class="entypo home"></i><span> Readable.cc<span></a>
 
 					<ul class="nav pull-right">
 						<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
-						<li class="<?php echo $this->name == 'reading' ? 'active' : '' ?>"><a href="/reading"><i class="entypo rss"></i><span> My Reading</span></a></li>
-						<li class="<?php echo $this->name == 'saved'   ? 'active' : '' ?>"><a href="/saved"><i class="entypo install"></i><span> Saved</span></a></li>
+						<li class="reading <?php echo $this->name == 'reading' ? 'active' : '' ?>"><a href="/reading"><i class="entypo rss"    ></i><span> My Reading</span></a></li>
+						<li class="saved   <?php echo $this->name == 'saved'   ? 'active' : '' ?>"><a href="/saved"  ><i class="entypo install"></i><span> Saved</span></a></li>
 
-						<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $this->app->getSingleton('session')->get('email') ?> <i class="entypo chevron-down"></i></a>
+						<li class="email dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="entypo tools"></i><span><?php echo $this->app->getSingleton('session')->get('email') ?> <i class="entypo chevron-down"></span></i></a>
 
 							<ul class="dropdown-menu">
-								<li><a href="/account"><i class="entypo user"></i><span> Account</span></a></li>
-								<li><a href="/subscriptions"><i class="entypo rss"></i><span> Subscriptions</span></a></li>
-								<li><a href="/signout"><i class="entypo logout"></i><span> Sign out</span></a></li>
+								<li class="account"      ><a href="/account"      ><i class="entypo user"  ></i><span> Account</span></a></li>
+								<li class="subscriptions"><a href="/subscriptions"><i class="entypo rss"   ></i><span> Subscriptions</span></a></li>
+								<li class="signout"      ><a href="/signout"      ><i class="entypo logout"></i><span> Sign out</span></a></li>
 							</ul>
 						</li>
 						<?php else: ?>
-						<li class="<?php echo $this->name == 'signup'       ? 'active' : '' ?>"><a href="/signup"><i class="entypo add-user"></i><span> Create account</span></a></li>
-						<li class="<?php echo $this->name == 'signin'       ? 'active' : '' ?>"><a href="/signin"><i class="entypo login"></i><span> Sign in</span></a></li>
+						<li class="signup <?php echo $this->name == 'signup' ? 'active' : '' ?>"><a href="/signup"><i class="entypo add-user"></i><span> Create account</span></a></li>
+						<li class="signin <?php echo $this->name == 'signin' ? 'active' : '' ?>"><a href="/signin"><i class="entypo login"   ></i><span> Sign in</span></a></li>
 						<?php endif ?>
 					</ul>
 				</div>
