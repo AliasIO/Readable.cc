@@ -3,4 +3,4 @@ parser/config.yml
 tags
 HTMLPurifier/DefinitionCache/Serializer/HTML/
 *.bak
-sessions/*
+sessions/*.php
