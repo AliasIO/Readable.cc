@@ -28,6 +28,17 @@ class Helper extends \Swiftlet\Model
 	}
 
 	/**
+	 * Apply local time-zone offset to UTC date-time
+	 *
+	 * @param string $dateTime
+	 * @return int
+	 */
+	public function localize(&$dateTime)
+	{
+		$dateTime = strtotime($dateTime) + $this->app->getSingleton('session')->get('timezone');
+	}
+
+	/**
 	 * Send an email
 	 *
 	 * @param bool $ajax

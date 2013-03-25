@@ -227,7 +227,8 @@ class Read extends \Swiftlet\Controller
 	{
 		foreach ( $items as $item ) {
 			$this->purify($item->contents);
-			$this->localize($item->posted_at);
+
+			$this->app->getSingleton('helper')->localize($item->posted_at);
 
 			$item->title = $this->view->htmlDecode(strip_tags($item->title));
 		}
@@ -258,16 +259,5 @@ class Read extends \Swiftlet\Controller
 		$purifier = new \HTMLPurifier($config);
 
 		$html = $purifier->purify($html);
-	}
-
-	/**
-	 * Apply local time-zone offset to UTC date-time
-	 *
-	 * @param string $dateTime
-	 * @return int
-	 */
-	protected function localize(&$dateTime)
-	{
-		$dateTime = strtotime($dateTime) + $this->app->getSingleton('session')->get('timezone');
 	}
 }

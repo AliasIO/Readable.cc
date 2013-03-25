@@ -41,7 +41,8 @@ class Subscriptions extends \Swiftlet\Controller
 				feeds.id,
 				feeds.url,
 				feeds.title,
-				feeds.link
+				feeds.link,
+				feeds.last_fetched_at
 			FROM      users_feeds
 			LEFT JOIN feeds ON users_feeds.feed_id = feeds.id
 			WHERE
@@ -55,6 +56,10 @@ class Subscriptions extends \Swiftlet\Controller
 		$sth->execute();
 
 		$feeds = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+		foreach ( $feeds as $feed ) {
+			$this->app->getSingleton('helper')->localize($feed->last_fetched_at);
+		}
 
 		$this->view->set('feeds', $feeds);
 	}

@@ -24,12 +24,16 @@
 	<li>
 		<strong><a href="/feed/view/<?php echo $feed->id ?>"><?php echo $feed->title ?></a></strong>
 		<span>
-		<a href="<?php echo $feed->link ?>" title="Visit the website at <?php echo parse_url($feed->link, PHP_URL_HOST) ?>"><i class="entypo link"></i></a>
-		<a href="<?php echo $feed->url  ?>" title="View the feed at <?php echo parse_url($feed->url,  PHP_URL_HOST) ?>"><i class="entypo rss"></i></a>
-		&nbsp;
-		<a class="unsubscribe" href="javascript: void(0);" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
-			<i class="entypo squared-minus"></i> Unsubscribe
-		</a>
+			<a href="<?php echo $feed->link ?>" title="Visit the website at <?php echo parse_url($feed->link, PHP_URL_HOST) ?>"><i class="entypo link"></i></a>
+			<a href="<?php echo $feed->url  ?>" title="View the feed at <?php echo parse_url($feed->url,  PHP_URL_HOST) ?>"><i class="entypo rss"></i></a>
+			<small>
+				&nbsp;
+				Last fetched on <?php echo $feed->last_fetched_at ? date('F j, Y', $feed->last_fetched_at) : '(never)' ?>
+				&nbsp;
+				<a class="unsubscribe" href="javascript: void(0);" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
+					<i class="entypo squared-minus"></i> Unsubscribe
+				</a>
+			</small>
 		</span>
 	</li>
 	<?php endforeach ?>
