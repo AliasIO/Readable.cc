@@ -267,6 +267,13 @@ var readable = (function($) {
 					.slideDown(instant ? 0 : app.duration)
 					;
 
+				// Remove small images, mainly tracking pixels and smiley faces
+				el.find('img').each(function() {
+					if ( $(this).width() < 20 || $(this).height() < 20 ) {
+						$(this).remove();
+					}
+				});
+
 				return app.items;
 			},
 

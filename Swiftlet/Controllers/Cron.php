@@ -69,6 +69,26 @@ class Cron extends \Swiftlet\Controller
 			$this->app->getSingleton('learn')->learn($user->id);
 		}
 
+		// Prune sessions
+		if ( $handle = opendir('sessions') ) {
+			while ( ( $file = readdir($handle) ) !== FALSE ) {
+				if ( is_file('sessions/' . $file) ) {
+					$parts = explode('_', $file);
+
+					$expiry = array_shift($parts);
+
+					if ( $expiry < time() ) {
+						try {
+							unlink('sessions/' . $file);
+						} catch ( \Exception $e ) {
+						}
+					}
+				}
+			}
+
+			closedir($handle);
+		}
+
 		exit('Done.');
 	}
 }

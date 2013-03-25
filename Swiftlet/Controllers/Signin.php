@@ -46,10 +46,19 @@ class Signin extends \Swiftlet\Controller
 
 				$sth->execute();
 
-				header('Location: /reading');
-			} catch ( \Exception $e ) {
-				$error = 'An unknown error ocurred.';
+				// Session cookie and file
+				$expiry = time() + ( 60 * 60 * 24 * 30 );
 
+				$sessionHash = $expiry . '_' . sha1(uniqid(mt_rand(), true));
+
+				setcookie('session', $sessionHash, $expiry, '/');
+
+				file_put_contents('sessions/' . $sessionHash . '.php', "<?php header('HTTP/1.0 403 Forbidden'); exit ?>\n" . $user->id);
+
+				header('Location: /reading');
+
+				exit;
+			} catch ( \Exception $e ) {
 				switch ( $e->getCode() ) {
 					case $auth::EMAIL_INVALID:
 						$error = 'Please provide a valid email address.';
@@ -66,6 +75,8 @@ class Signin extends \Swiftlet\Controller
 						$this->view->set('error-password', true);
 
 						break;
+					default:
+						throw new \Exception($e->getMessage());
 				}
 
 				$this->view->set('error', $error);
