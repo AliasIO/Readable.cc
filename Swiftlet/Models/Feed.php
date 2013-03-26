@@ -96,8 +96,14 @@ class Feed extends \Swiftlet\Model
 
 				break;
 			case 'atom':
+				foreach ( $this->xml->link as $link ) {
+					if ( $link->attributes()->rel == 'alternate' ) {
+						break;
+					}
+				}
+
 				$this->title = (string) $this->xml->title;
-				$this->link  = (string) $this->xml->link->attributes()->href;
+				$this->link  = (string) $link->attributes()->href;
 
 				break;
 		}

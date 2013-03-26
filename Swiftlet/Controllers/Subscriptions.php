@@ -47,8 +47,8 @@ class Subscriptions extends \Swiftlet\Controller
 			LEFT JOIN feeds ON users_feeds.feed_id = feeds.id
 			WHERE
 				users_feeds.user_id = :user_id
-			ORDER BY users_feeds.id DESC
-			LIMIT 1000
+			ORDER BY feeds.title
+			LIMIT 10000
 			;');
 
 		$sth->bindParam('user_id', $userId);
