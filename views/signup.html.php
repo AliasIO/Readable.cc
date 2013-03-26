@@ -16,6 +16,10 @@
 </div>
 <?php endif ?>
 
+<p>
+	Sign up to manage your own <a href="https://en.wikipedia.org/wiki/Web_feed">feeds</a> and vote on articles. Articles we believe you'll find interesting are promoted to the top of your reading list.
+</p>
+
 <form method="post" action="/signup" class="form-signin form-horizontal well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 

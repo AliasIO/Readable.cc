@@ -112,6 +112,16 @@ class Subscriptions extends \Swiftlet\Controller
 	}
 
 	/**
+	 * Welcome message
+	 */
+	public function welcome()
+	{
+		$this->view->set('success', 'Welcome! Your account has been created and you have been signed in.');
+
+		$this->index();
+	}
+
+	/**
 	 * Add a new feed
 	 */
 	protected function import()

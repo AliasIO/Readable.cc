@@ -28,7 +28,7 @@
 			<a href="<?php echo $feed->url  ?>" title="View the feed at <?php echo parse_url($feed->url,  PHP_URL_HOST) ?>"><i class="entypo rss"></i></a>
 			<small>
 				&nbsp;
-				Last fetched on <?php echo $feed->last_fetched_at ? date('F j, Y', $feed->last_fetched_at) : '(never)' ?>
+				<?php echo $feed->last_fetched_at ? 'Last fetched on ' . date('F j, Y', $feed->last_fetched_at) : 'Never successfully fetched' ?>
 				&nbsp;
 				<a class="unsubscribe" href="javascript: void(0);" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
 					<i class="entypo squared-minus"></i> Unsubscribe
