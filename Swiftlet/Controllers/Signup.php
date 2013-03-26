@@ -30,10 +30,16 @@ class Signup extends \Swiftlet\Controller
 				try {
 					$auth = $this->app->getSingleton('auth');
 
-					$result = $auth->register($email, $password);
+					$user = $auth->register($email, $password);
 
-					if ( $result ) {
-						$success = 'Your account has been created. You may now sign in.';
+					if ( $user ) {
+						$session->set('id',       $user->id);
+						$session->set('email',    $user->email);
+						$session->set('timezone', $user->timezone);
+
+						header('Location: /reading');
+
+						exit;
 					} else {
 						$error = 'An unknown error occured. Please try again.';
 					}

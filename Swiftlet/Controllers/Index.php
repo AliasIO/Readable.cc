@@ -58,7 +58,9 @@ class Index extends \Swiftlet\Controllers\Read
 				FROM             items
 				INNER JOIN       feeds ON       feeds.id      = items.feed_id
 				LEFT  JOIN users_items ON users_items.item_id = items.id
-				' . ( $excludes ? 'WHERE items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
+				WHERE
+					LENGTH(items.contents) > 1000
+					' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
 				GROUP BY items.id
 				ORDER BY DATE(items.posted_at) DESC, AVG(users_items.score) DESC
 				) AS items

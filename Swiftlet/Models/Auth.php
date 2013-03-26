@@ -127,7 +127,7 @@ class Auth extends \Swiftlet\Model
 
 			$this->app->getSingleton('helper')->sendMail($email, 'Please verify your email address', $message);
 
-			return true;
+			return $this->getUser($email);
 		}
 	}
 
