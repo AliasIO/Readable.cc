@@ -20,6 +20,7 @@
 		<script src="/views/js/readable.js"></script>
 
 		<script>
+			readable.email      = '<?php echo $this->app->getConfig('emailFrom') ?>';
 			readable.view       = '<?php echo $this->name ?>';
 			readable.args       = '<?php echo implode('/', $this->app->getArgs()) ?>';
 			readable.sessionId  = '<?php echo $this->app->getSingleton('session')->getId() ?>';

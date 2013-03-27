@@ -1,3 +1,9 @@
+			<div id="footer">
+				<p>
+					<a class="email" href="mailto:honeypot@alias.io">honeypot@alias.io</a>
+				</p>
+			</div>
+
 			<div class="modal modal-signin">
 				<h4>Not signed in</h4>
 

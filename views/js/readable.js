@@ -2,6 +2,7 @@ var readable = (function($) {
 	var app = {
 		duration: 300,
 		excludes: [],
+		email: '',
 		view: '',
 		args: '',
 		sessionId: '',
@@ -16,6 +17,8 @@ var readable = (function($) {
 		},
 
 		init: function() {
+			$('#footer .email').text(app.email).attr('href', 'mailto:' + app.email);
+
 			// Hide alerts on click
 			$(document).on('click', '.alert', function() {
 				if ( $(this).hasClass('alert-sticky') ) {

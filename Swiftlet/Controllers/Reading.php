@@ -64,6 +64,7 @@ class Reading extends \Swiftlet\Controllers\Read
 				( users_items.user_id  = ? OR users_items.user_id IS NULL ) AND
 				( users_items.read    != 1 OR users_items.read    IS NULL )
 				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
+			GROUP BY items.id
       ORDER BY DATE(items.posted_at) DESC, users_items.score DESC
 			LIMIT 10
 			;');

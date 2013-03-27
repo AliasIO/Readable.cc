@@ -338,6 +338,16 @@ fieldset:last-child {
 		color: inherit;
 	}
 
+#footer {
+	color: #999;
+	font-size: small;
+	text-align: right;
+}
+
+	#footer a:hover {
+		color: #333;
+	}
+
 #feedback {
 	border: 2px solid #fff;
 	line-height: 30px;
