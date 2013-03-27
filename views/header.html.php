@@ -8,7 +8,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<meta name="description" content="The readable feed reader. Content automagically filtered to suit your interests.">
+		<meta name="description" content="The readable feed reader. Promotes interesting articles to the top of your personalised reading list.">
 		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
 
 		<link href="/views/lib/bootstrap/css/readable.css" rel="stylesheet">
@@ -20,11 +20,11 @@
 		<script src="/views/js/readable.js"></script>
 
 		<script>
-			readable.email      = '<?php echo $this->app->getConfig('emailFrom') ?>';
-			readable.view       = '<?php echo $this->name ?>';
-			readable.args       = '<?php echo implode('/', $this->app->getArgs()) ?>';
-			readable.sessionId  = '<?php echo $this->app->getSingleton('session')->getId() ?>';
-			readable.signedIn   = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
+			readable.email     = '<?php echo $this->app->getConfig('emailFrom') ?>';
+			readable.view      = '<?php echo $this->name ?>';
+			readable.args      = '<?php echo implode('/', $this->app->getArgs()) ?>';
+			readable.sessionId = '<?php echo $this->app->getSingleton('session')->getId() ?>';
+			readable.signedIn  = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
 		</script>
 	</head>
 	<body>

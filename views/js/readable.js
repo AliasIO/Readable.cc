@@ -17,7 +17,7 @@ var readable = (function($) {
 		},
 
 		init: function() {
-			$('#footer .email').text(app.email).attr('href', 'mailto:' + app.email);
+			$('.contact-email').text(app.email).attr('href', 'mailto:' + app.email);
 
 			// Hide alerts on click
 			$(document).on('click', '.alert', function() {
@@ -234,8 +234,8 @@ var readable = (function($) {
 						app.excludes.push($(this).data('item-id'));
 					}
 
-					// Keep only the last 50 articles in the DOM
-					if ( i ++ < 50 ) {
+					// Keep only the last 200 articles in the DOM
+					if ( i ++ < 200 ) {
 						return true;
 					}
 

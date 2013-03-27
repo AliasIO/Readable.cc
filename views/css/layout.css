@@ -164,7 +164,7 @@ blockquote p {
 #items-footer {
 	color: #999;
 	font-style: italic;
-	margin-top: 100px;
+	margin: 100px 0;
 	text-align: center;
 }
 

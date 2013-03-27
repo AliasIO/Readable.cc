@@ -16,6 +16,10 @@
 </div>
 <?php endif ?>
 
+<p>
+	If you have trouble accessing your account please send an email to <a class="contact-email" href="<?php echo $this->app->getConfig('emailHoneyPot') ?>"><?php echo $this->app->getConfig('emailHoneyPot') ?></a> for assistance.
+</p>
+
 <form method="post" action="/forgot" class="form-signin form-horizontal well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 

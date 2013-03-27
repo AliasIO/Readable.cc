@@ -1,6 +1,6 @@
 			<div id="footer">
 				<p>
-					<a class="email" href="mailto:honeypot@alias.io">honeypot@alias.io</a>
+				<a class="contact-email" href="mailto:<?php echo $this->app->getConfig('emailHoneyPot') ?>"><?php echo $this->app->getConfig('emailHoneyPot') ?></a>
 				</p>
 			</div>
 

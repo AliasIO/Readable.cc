@@ -5,7 +5,7 @@
 		<h1>Popular Reading</h1>
 
 		<p>
-			Navigate to next and previous articles with <code>j</code> and <code>k</code>.
+			Navigate to next and previous articles with <code>j</code> and <code>k</code> (<a href="/shortcuts">more</a>).
 		</p>
 	</div>
 </div>
