@@ -267,7 +267,8 @@ article {
 		margin: 20px 0;
 	}
 
-	article .item-contents > p:first-child img {
+	article .item-contents > p:first-child > img:first-child,
+	article .item-contents > p:first-child > a:first-child > img:first-child {
 		float: left;
 		margin: 5px 20px 10px 0;
 		max-height: 250px;
