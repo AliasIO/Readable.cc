@@ -246,6 +246,13 @@ var readable = (function($) {
 					$(this).replaceWith(placeHolder);
 				});
 
+				// Left align first image if not preceded by text
+				$('p:first-child a:first-child img:first-child, p:first-child img:first-child, img:first-child').each(function() {
+					if ( $(this).parent().html().match('^<img ') ) {
+						$(this).addClass('feature');
+					}
+				});
+
 				app.items.activeItemId = null;
 
 				app.items.findActive(true);
