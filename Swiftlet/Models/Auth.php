@@ -54,7 +54,7 @@ class Auth extends \Swiftlet\Model
 			throw new \Exception('Password incorrect', self::PASSWORD_INCORRECT);
 		}
 
-		if ( !$user->enabled && time() < strtotime($user->created_at) - 24 * 60 * 60 ) {
+		if ( !$user->enabled && time() > strtotime($user->created_at) + 24 * 60 * 60 ) {
 			throw new \Exception('Account not enabled', self::USER_NOT_ENABLED);
 		}
 
