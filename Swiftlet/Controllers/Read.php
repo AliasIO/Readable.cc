@@ -253,8 +253,10 @@ class Read extends \Swiftlet\Controller
 		$config->set('AutoFormat.AutoParagraph', true);
 		$config->set('AutoFormat.RemoveEmpty', true);
 		$config->set('AutoFormat.RemoveEmpty.RemoveNbsp', true);
-		$config->set('HTML.SafeObject', true);
-		$config->set('Output.FlashCompat', true);
+		//$config->set('HTML.SafeObject', true);
+		//$config->set('Output.FlashCompat', true);
+		$config->set('HTML.SafeIframe', true);
+		$config->set('URI.SafeIframeRegexp', '%^http://(www.youtube(?:-nocookie)?.com/embed/|player.vimeo.com/video/)%'); //allow YouTube and Vimeo
 
 		$purifier = new \HTMLPurifier($config);
 
