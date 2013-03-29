@@ -5,10 +5,11 @@ namespace Swiftlet\Models;
 class Feed extends \Swiftlet\Model
 {
 	const
-		FEED_INVALID      = 1,
-		SERVER_ERROR      = 2,
-		NAMESPACE_CONTENT = 'http://purl.org/rss/1.0/modules/content/',
-		NAMESPACE_DC      = 'http://purl.org/dc/elements/1.1/'
+		FEED_INVALID = 1,
+		SERVER_ERROR = 2,
+		NS_CONTENT   = 'http://purl.org/rss/1.0/modules/content/',
+		NS_DC        = 'http://purl.org/dc/elements/1.1/',
+		NS_XML       = 'http://www.w3.org/XML/1998/namespace'
 		;
 
 	public
@@ -22,6 +23,7 @@ class Feed extends \Swiftlet\Model
 		$type,
 		$title,
 		$link,
+		$language,
 		$items = array(),
 		$dummy = false
 		;
@@ -91,8 +93,15 @@ class Feed extends \Swiftlet\Model
 			case 'rss1':
 			case 'rss1-rdf':
 			case 'rss2':
-				$this->title = (string) $this->xml->channel->title;
-				$this->link  = (string) $this->xml->channel->link;
+				$language = $this->xml->channel->language;
+
+				if ( !$language ) {
+					$language = $this->xml->channel->children(Feed::NS_DC)->language;
+				}
+
+				$this->title    = (string) $this->xml->channel->title;
+				$this->link     = (string) $this->xml->channel->link;
+				$this->language = (string) $language;
 
 				break;
 			case 'atom':
@@ -102,8 +111,9 @@ class Feed extends \Swiftlet\Model
 					}
 				}
 
-				$this->title = (string) $this->xml->title;
-				$this->link  = (string) $link->attributes()->href;
+				$this->title    = (string) $this->xml->title;
+				$this->link     = (string) $link->attributes()->href;
+				$this->language = (string) $this->xml->attributes(self::NS_XML)->lang;
 
 				break;
 		}
@@ -164,7 +174,7 @@ class Feed extends \Swiftlet\Model
 						return 'rss2';
 					}
 
-					$content = $item->children(self::NAMESPACE_CONTENT);
+					$content = $item->children(self::NS_CONTENT);
 
 					if ( $content->encoded ) {
 						return 'rss1';
@@ -185,7 +195,7 @@ class Feed extends \Swiftlet\Model
 				$item = $simpleXml->item[0];
 
 				if ( $item->title && $item->link ) {
-					$content = $item->children(self::NAMESPACE_CONTENT);
+					$content = $item->children(self::NS_CONTENT);
 
 					if ( $content->encoded ) {
 						return 'rss1-rdf';
@@ -402,6 +412,16 @@ class Feed extends \Swiftlet\Model
 	public function getUrl()
 	{
 		return $this->url;
+	}
+
+	/**
+	 * Get feed language
+	 *
+	 * return string
+	 */
+	public function getLanguage()
+	{
+		return $this->language;
 	}
 
 	/**

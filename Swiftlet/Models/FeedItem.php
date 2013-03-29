@@ -34,6 +34,7 @@ class FeedItem extends \Swiftlet\Model
 				url,
 				title,
 				contents,
+				language,
 				posted_at,
 				feed_id,
 				created_at
@@ -41,6 +42,7 @@ class FeedItem extends \Swiftlet\Model
 				:url,
 				:title,
 				:contents,
+				:language,
 				:posted_at,
 				:feed_id,
 				UTC_TIMESTAMP()
@@ -52,6 +54,7 @@ class FeedItem extends \Swiftlet\Model
 		$sth->bindParam('title',     $data->title);
 		$sth->bindParam('url',       $data->url);
 		$sth->bindParam('contents',  $data->contents);
+		$sth->bindParam('language',  $data->language);
 		$sth->bindParam('posted_at', $data->postedAt);
 		$sth->bindParam('feed_id',   $this->feed->id);
 
@@ -129,8 +132,8 @@ class FeedItem extends \Swiftlet\Model
 	{
 		$data = new \stdClass;
 
-		$content = $this->xml->children(Feed::NAMESPACE_CONTENT);
-		$dc      = $this->xml->children(Feed::NAMESPACE_DC);
+		$nsContent = $this->xml->children(Feed::NS_CONTENT);
+		$nsDc      = $this->xml->children(Feed::NS_DC);
 
 		switch ( $this->feed->getType() ) {
 			case 'rss2':
@@ -138,6 +141,7 @@ class FeedItem extends \Swiftlet\Model
 				$data->title    = (string) $this->xml->title;
 				$data->contents = (string) $this->xml->description;
 				$data->postedAt = date('Y-m-d H:i', $this->xml->pubDate ? strtotime((string) $this->xml->pubDate) : time());
+				$data->language = $this->feed->getLanguage();
 
 				break;
 			case 'atom':
@@ -147,20 +151,28 @@ class FeedItem extends \Swiftlet\Model
 					}
 				}
 
+				$language = (string) $this->xml->content->attributes(Feed::NS_XML)->lang;
+
+				if ( !$language ) {
+					$language = $this->feed->getLanguage();
+				}
+
 				$data->url      = (string) $link->attributes()->href;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = (string) $this->xml->content;
 				$data->postedAt = date('Y-m-d H:i', $this->xml->published ? strtotime((string) $this->xml->published) : time());
+				$data->language = $language;
 
 				break;
 			case 'rss1':
 			case 'rss-rdf':
-				$date = $this->xml->pubDate ? $this->xml->pubDate : ( $dc->date ? $dc->date : false );
+				$date = $this->xml->pubDate ? $this->xml->pubDate : ( $nsDc->date ? $nsDc->date : false );
 
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
-				$data->contents = (string) $content->encoded;
+				$data->contents = (string) $nsContent->encoded;
 				$data->postedAt = date('Y-m-d H:i', $date ? strtotime((string) $date) : time());
+				$data->language = $this->feed->getLanguage();
 
 				break;
 		}
