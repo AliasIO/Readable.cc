@@ -26,7 +26,14 @@
 			<?php echo $item->posted_at ? 'on ' . date('F j, Y', $item->posted_at) : '' ?>
 			<span class="feed-options">
 				<!--(score: <?php echo number_format($item->score) ?>)-->
-				&mdash; <a href="javascript: void(0);" class="subscription <?php echo $item->feed_subscribed ? 'unscubscribe' : 'subscribe' ?>" data-feed-id="<?php echo $item->feed_id ?>" title="Subscriptions appear in &lsquo;My Reading&rsquo;">
+				&mdash;
+				<?php if ( $this->name == 'index' ): ?>
+				<a href="/report/article/<?php echo $item->id ?>" class="report" data-feed-id="<?php echo $item->feed_id ?>" title="Report inappropriate content">
+					<i class="entypo flag"></i> Report
+				</a>
+				&nbsp;
+				<?php endif ?>
+				<a href="javascript: void(0);" class="subscription <?php echo $item->feed_subscribed ? 'unscubscribe' : 'subscribe' ?>" data-feed-id="<?php echo $item->feed_id ?>" title="Subscriptions appear in &lsquo;My Reading&rsquo;">
 					<?php if ( $item->feed_subscribed ): ?>
 					<i class="entypo squared-minus"></i> Unsubscribe
 					<?php else: ?>

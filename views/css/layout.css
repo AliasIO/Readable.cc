@@ -232,7 +232,7 @@ article {
 			font-size: 1.7em;
 		}
 
-		article.active.expanded .item-date:hover .feed-options {
+		article.active.expanded:hover .item-date .feed-options {
 			display: inherit;
 		}
 
