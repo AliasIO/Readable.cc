@@ -285,7 +285,13 @@ var readable = (function($) {
 				// Remove small images, mainly tracking pixels and smiley faces
 				el.find('img').each(function() {
 					if ( $(this).width() < 20 || $(this).height() < 20 ) {
+						var parent = $(this).parent();
+
 						$(this).remove();
+
+						if ( parent.html() == '' ) {
+							parent.remove();
+						}
 					}
 				});
 
