@@ -76,6 +76,7 @@
 	</fieldset>
 </form>
 
+<?php /*
 <?php if ( $words = $this->get('words') ): ?>
 <h2>Word cloud</h2>
 
@@ -91,6 +92,7 @@
 	<?php endforeach ?>
 </div>
 <?php endif ?>
+*/ ?>
 
 <h2>Reset</h2>
 

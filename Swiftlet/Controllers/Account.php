@@ -25,6 +25,7 @@ class Account extends \Swiftlet\Controller
 		$this->view->set('email',    $session->get('email'));
 		$this->view->set('timezone', $session->get('timezone'));
 
+		/*
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		$sth = $dbh->prepare('
@@ -77,9 +78,10 @@ class Account extends \Swiftlet\Controller
 
 		$words = array_merge($interesting, $boring);
 
-    usort($words, array($this, 'sortWords'));
+		usort($words, array($this, 'sortWords'));
 
 		$this->view->set('words', $words);
+		*/
 
 		$this->view->set('timeZones', array(
 			'-720' => '(GMT -12:00) Eniwetok, Kwajalein',
