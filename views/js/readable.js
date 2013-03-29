@@ -248,7 +248,6 @@ var readable = (function($) {
 
 				// Left align first image if not preceded by text
 				$('p:first-child a:first-child img:first-child, p:first-child img:first-child, img:first-child').each(function() {
-					console.log('_'+$(this).parent().parent().html()+'_');
 					if ( $(this).parent().html().match(/^\s*<img /) && $(this).parent().parent().html().match(/^\s*<(p|a)/) ) {
 						$(this).addClass('feature');
 					}
@@ -277,6 +276,11 @@ var readable = (function($) {
 					.stop()
 					.slideDown(instant ? 0 : app.duration)
 					;
+
+				// Firefox doesn't load hidden iframes
+				el.find('iframe').each(function() {
+					$(this).attr('src', $(this).attr('src'));
+				});
 
 				// Remove small images, mainly tracking pixels and smiley faces
 				el.find('img').each(function() {

@@ -2,6 +2,6 @@ config/pdo.php
 parser/config.yml
 tags
 HTMLPurifier/DefinitionCache/Serializer/HTML/
-HTMLPurifier/DefinitionCache/Serializer/URL/
+HTMLPurifier/DefinitionCache/Serializer/URI/
 *.bak
 sessions/*.php

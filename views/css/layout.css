@@ -65,6 +65,14 @@ code {
 	font-style: normal;
 }
 
+iframe {
+	border: none;
+	display: block;
+	height: 315px;
+	margin: 0 auto;
+	width: 560px;
+}
+
 blockquote {
 	font-style: italic;
 }
