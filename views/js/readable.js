@@ -277,8 +277,6 @@ var readable = (function($) {
 			},
 
 			expand: function(el, instant) {
-				app.trackEvent('app.items', 'expand');
-
 				$('article:not([data-item-id=' + el.data('item-id') + '])')
 					.stop()
 					.animate({ opacity: .3 }, instant ? 0 : app.duration)
@@ -422,8 +420,6 @@ var readable = (function($) {
 			},
 
 			markAsRead: function(itemId) {
-				app.trackEvent('app.items', 'markAsRead');
-
 				if ( app.signedIn && itemId ) {
 					var el = $('article[data-item-id=' + itemId + ']');
 
