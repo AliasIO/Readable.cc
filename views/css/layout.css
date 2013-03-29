@@ -56,8 +56,12 @@ a:hover {
 	text-decoration: none;
 }
 
+img {
+	color: #999;
+}
+
 p {
-	margin: 0 0 20px;
+	margin: 0 0 13px;
 }
 
 code {
