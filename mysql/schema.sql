@@ -19,10 +19,12 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`feeds` (
   `created_at` DATETIME NOT NULL ,
   `last_fetched_at` DATETIME NULL DEFAULT NULL ,
   `last_fetch_attempted_at` DATETIME NULL DEFAULT NULL ,
+  `hidden` TINYINT(1) UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `url` (`url` ASC) ,
   INDEX `last_fetched_at` (`last_fetched_at` ASC) ,
-  INDEX `last_fetch_attempted_at` (`last_fetch_attempted_at` ASC) )
+  INDEX `last_fetch_attempted_at` (`last_fetch_attempted_at` ASC) ,
+  INDEX `hidden` (`hidden` ASC) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8;
@@ -41,10 +43,12 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`items` (
   `posted_at` DATETIME NOT NULL ,
   `feed_id` INT(11) UNSIGNED NULL DEFAULT NULL ,
   `created_at` DATETIME NULL ,
+  `hidden` TINYINT(1) UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `url` (`url` ASC) ,
   INDEX `posted_at` (`posted_at` ASC) ,
   INDEX `feed_id` (`feed_id` ASC) ,
+  INDEX `hidden` (`hidden` ASC) ,
   CONSTRAINT `items_feed_id`
     FOREIGN KEY (`feed_id` )
     REFERENCES `readable_cc`.`feeds` (`id` )

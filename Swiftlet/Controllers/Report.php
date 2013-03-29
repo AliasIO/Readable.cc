@@ -62,9 +62,10 @@ class Report extends \Swiftlet\Controller
 		} else {
 			if ( !empty($_POST) ) {
 				$message =
-					"Inappropriate content has been reported at the following URL:\n\n" .
+					"Inappropriate content has been reported:\n\n" .
+					"\tItem ID" . $item->id . "\n" .
 					"\t" . $item->url . "\n\n" .
-					"Feed:\n\n" .
+					"\tFeed ID" . $item->feed_id . "\n" .
 					"\t" . $item->feed_title . "\n" .
 					"\t" . $this->app->getConfig('websiteUrl') . "/feed/view/" . $item->feed_id . "\n\n" .
 					"Reason:\n\n" .
