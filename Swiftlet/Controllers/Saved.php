@@ -61,14 +61,20 @@ class Saved extends \Swiftlet\Controllers\Read
       INNER JOIN       feeds ON       feeds.id      = items.feed_id
       LEFT  JOIN users_feeds ON users_feeds.feed_id = feeds.id
 			WHERE
-				users_items.user_id = :user_id AND
+				users_items.user_id = ? AND
 				users_items.saved   = 1
 				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
       ORDER BY DATE(items.posted_at) DESC
 			LIMIT ' . ( ( $page - 1 ) * self::ITEMS_PER_PAGE ) . ', ' . ( $page * self::ITEMS_PER_PAGE ) . '
 			;');
 
-		$sth->bindParam('user_id', $userId);
+		$i = 1;
+
+		$sth->bindParam($i ++, $userId);
+
+		foreach( $excludes as $key => $itemId ) {
+			$sth->bindParam($i ++, $excludes[$key]);
+		}
 
 		$sth->execute();
 
