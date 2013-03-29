@@ -16,6 +16,18 @@ var readable = (function($) {
 			}
 		},
 
+		trackEvent: function(category, action, label, value) {
+			if ( typeof _gaq !== 'undefined' ) {
+				_gaq.push([ '_trackEvent', category, action, label ? label : null, value ? value : null ]);
+			}
+		},
+
+		trackPageView: function(url) {
+			if ( typeof _gaq !== 'undefined' ) {
+				_gaq.push([ '_trackPageview', url ]);
+			}
+		},
+
 		init: function() {
 			$('.contact-email').text(app.email).attr('href', 'mailto:' + app.email);
 
@@ -227,6 +239,8 @@ var readable = (function($) {
 			},
 
 			itemsAdded: function() {
+				app.trackPageView(app.view + '/page/' + app.items.page);
+
 				var i = 0;
 
 				$($('#items article').get().reverse()).each(function() {
@@ -263,6 +277,8 @@ var readable = (function($) {
 			},
 
 			expand: function(el, instant) {
+				app.trackEvent('app.items', 'expand');
+
 				$('article:not([data-item-id=' + el.data('item-id') + '])')
 					.stop()
 					.animate({ opacity: .3 }, instant ? 0 : app.duration)
@@ -367,6 +383,8 @@ var readable = (function($) {
 			},
 
 			vote: function(itemId, vote) {
+				app.trackEvent('app.items', 'vote', vote);
+
 				if ( !app.signedIn ) {
 					app.notSignedIn();
 
@@ -404,6 +422,8 @@ var readable = (function($) {
 			},
 
 			markAsRead: function(itemId) {
+				app.trackEvent('app.items', 'markAsRead');
+
 				if ( app.signedIn && itemId ) {
 					var el = $('article[data-item-id=' + itemId + ']');
 
@@ -424,6 +444,8 @@ var readable = (function($) {
 			},
 
 			save: function(itemId, save) {
+				app.trackEvent('app.items', 'save');
+
 				if ( !app.signedIn ) {
 					app.notSignedIn();
 
@@ -456,6 +478,8 @@ var readable = (function($) {
 			},
 
 			subscribe: function(feedId, action) {
+				app.trackEvent('app.items', 'subscribe', action);
+
 				if ( !app.signedIn ) {
 					app.notSignedIn();
 
