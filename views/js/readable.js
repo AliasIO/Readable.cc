@@ -125,8 +125,8 @@ var readable = (function($) {
 					scrolled = false
 					;
 
-				Mousetrap.bind(['j', 's', 'space'], function() { app.items.nextItem.click();     app.items.scrollTo(app.items.nextItem,     true); return false; });
-				Mousetrap.bind(['k', 'w'],          function() { app.items.previousItem.click(); app.items.scrollTo(app.items.previousItem, true); return false; });
+				Mousetrap.bind(['j', 's', 'space'], function() { app.items.expand(app.items.nextItem,     true); app.items.scrollTo(app.items.nextItem,     true); return false; });
+				Mousetrap.bind(['k', 'w'],          function() { app.items.expand(app.items.previousItem, true); app.items.scrollTo(app.items.previousItem, true); return false; });
 
 				Mousetrap.bind('home', function() { app.navBar.pin(true).init(); });
 
