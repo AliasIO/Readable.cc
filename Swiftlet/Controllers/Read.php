@@ -247,6 +247,8 @@ class Read extends \Swiftlet\Controller
 		// Remove FeedBurner cruft
 		$html = preg_replace('/(<div class="feedflare.+?<\/div>|<img[^>]+?(feedsportal|feedburner)\.com[^>]+?>)/s', '', $html);
 
+		$html = preg_replace('/<(\/)?div[^>]*>/', '<$1p>', $html);
+
 		$config = \HTMLPurifier_Config::createDefault();
 
 		$config->set('HTML.Allowed', 'h1,h2,h3,h4,h5,h6,a[href],p,ul,ol,li,blockquote,em,i,strong,b,img[src],pre,code,table,thead,tbody,tfoot,tr,th,td,br,iframe[src|frameborder]');
