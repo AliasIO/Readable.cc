@@ -37,7 +37,8 @@ class Saved extends \Swiftlet\Controllers\Read
 	{
 		$userId = $this->app->getSingleton('session')->get('id');
 
-		$page = !empty($_GET['page']) ? (int) $_GET['page'] : 1;
+		$excludes = !empty($_GET['excludes']) ? explode(' ', $_GET['excludes']) : array();
+		$page     = !empty($_GET['page']) ? (int) $_GET['page'] : 1;
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
@@ -62,6 +63,7 @@ class Saved extends \Swiftlet\Controllers\Read
 			WHERE
 				users_items.user_id = :user_id AND
 				users_items.saved   = 1
+				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
       ORDER BY DATE(items.posted_at) DESC
 			LIMIT ' . ( ( $page - 1 ) * self::ITEMS_PER_PAGE ) . ', ' . ( $page * self::ITEMS_PER_PAGE ) . '
 			;');
