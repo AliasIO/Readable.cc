@@ -68,7 +68,7 @@ class Index extends \Swiftlet\Controllers\Read
 				ORDER BY DATE(items.posted_at) DESC, AVG(users_items.score) DESC
 				) AS items
 			WHERE
-				score > 0
+				score >= 0
 			';
 
 		if ( $userId ) {
