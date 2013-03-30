@@ -1,10 +1,11 @@
 var readable = (function($) {
 	var app = {
-		duration: 300,
+		duration: { fade: 300, scroll: 300 },
 		excludes: [],
 		email: '',
 		controller: '',
 		args: '',
+		mobile: false,
 		sessionId: '',
 		signedIn: false,
 
@@ -38,7 +39,7 @@ var readable = (function($) {
 				}
 
 				if ( $(this).hasClass('alert-float') ) {
-					$(this).stop().fadeOut(app.duration);
+					$(this).stop().fadeOut(app.duration.fade);
 				} else {
 					$(this).stop().hide();
 				}
@@ -46,6 +47,10 @@ var readable = (function($) {
 
 			$(window).resize(function() {
 				$('.alert-float').outerWidth($('#contents').width());
+
+				app.mobile = $(document).width() < 850;
+
+				app.duration.fade = app.mobile ? 0 : 300;
 			}).resize();
 
 			app.navBar.init();
@@ -62,7 +67,7 @@ var readable = (function($) {
 				.hide()
 				.outerWidth($('#contents').width())
 				.appendTo('#contents')
-				.fadeIn(instant ? 0 : app.duration)
+				.fadeIn(instant ? 0 : app.duration.fade)
 				;
 
 			return app;
@@ -104,9 +109,9 @@ var readable = (function($) {
 
 				// Read line
 				if ( scrollTop > app.items.pageTop ) {
-					$('#items-read-line:hidden').fadeIn(app.duration);
+					$('#items-read-line:hidden').fadeIn(app.duration.fade);
 				} else {
-					$('#items-read-line:visible').fadeOut(app.duration);
+					$('#items-read-line:visible').fadeOut(app.duration.fade);
 				}
 
 				return app.navBar;
@@ -117,7 +122,7 @@ var readable = (function($) {
 
 				app.navBar.previousScrollTop = $(document).height();
 
-				$('.navbar').stop().animate({ top: 0 }, instant ? 0 : app.duration);
+				$('.navbar').stop().animate({ top: 0 }, instant ? 0 : app.duration.scroll);
 
 				return app.navBar;
 			}
@@ -279,16 +284,16 @@ var readable = (function($) {
 			expand: function(el, instant) {
 				$('article:not([data-item-id=' + el.data('item-id') + '])')
 					.stop()
-					.animate({ opacity: .3 }, instant ? 0 : app.duration)
+					.animate({ opacity: .3 }, instant ? 0 : app.duration.fade)
 					;
 
 				el
 					.removeClass('collapsed')
 					.addClass('expanded')
-					.animate({ opacity: 1 }, instant ? 0 : app.duration)
+					.animate({ opacity: 1 }, instant ? 0 : app.duration.fade)
 					.find('.item-wrap')
 					.stop()
-					.slideDown(instant ? 0 : app.duration)
+					.slideDown(instant ? 0 : app.duration.scroll)
 					;
 
 				// Firefox doesn't load hidden iframes
@@ -320,7 +325,7 @@ var readable = (function($) {
 				app.navBar.pin(instant);
 
 				$('html,body')
-					.animate({ scrollTop: el.offset().top - app.items.pageTop }, instant ? 0 : app.duration, function() {
+					.animate({ scrollTop: el.offset().top - app.items.pageTop }, instant ? 0 : app.duration.scroll, function() {
 						app.items.findActive(instant);
 
 						app.navBar.init();
@@ -345,7 +350,7 @@ var readable = (function($) {
 							if ( app.items.activeItem ) {
 								app.items.activeItem
 									.stop()
-									.animate({ opacity: .3 }, instant ? 0 : app.duration)
+									.animate({ opacity: .3 }, instant ? 0 : app.duration.fade)
 									.removeClass('active')
 									.addClass('inactive')
 									;
@@ -359,11 +364,11 @@ var readable = (function($) {
 							$(this).removeClass('inactive').addClass('active');
 
 							if ( $(this).hasClass('collapsed') ) {
-								$('article').stop().animate({ opacity: 1 }, instant ? 0 : app.duration);
+								$('article').stop().animate({ opacity: 1 }, instant ? 0 : app.duration.fade);
 							} else {
-								$(this).stop().animate({ opacity: 1 }, instant ? 0 : app.duration);
+								$(this).stop().animate({ opacity: 1 }, instant ? 0 : app.duration.fade);
 
-								$('article:not([data-item-id=' + app.items.activeItemId + '])').stop().animate({ opacity: .3 }, instant ? 0 : app.duration);
+								$('article:not([data-item-id=' + app.items.activeItemId + '])').stop().animate({ opacity: .3 }, instant ? 0 : app.duration.fade);
 							}
 
 							// Hide floating alerts

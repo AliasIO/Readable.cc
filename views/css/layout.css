@@ -395,11 +395,31 @@ fieldset:last-child {
 
 @media all and (max-width: 850px) {
 	body {
-		padding-top: 40px;
+		font-size: 20px !important;
 	}
 
-	.navbar .brand {
-		line-height: 2em;
+	h1, h2, h3, h4, h5, h6 {
+		margin: 6px 0;
+	}
+
+	h1, h2, h3 {
+		line-height: 40px;
+	}
+
+	h1 {
+		font-size: 30px;
+	}
+
+	h2 {
+		font-size: 26px;
+	}
+
+	h3 {
+		font-size: 22px;
+	}
+
+	h4, h5, h6 {
+		font-size: 20px;
 	}
 
 	.navbar-fixed-top li span {
@@ -407,16 +427,11 @@ fieldset:last-child {
 	}
 
 	.navbar-fixed-top li .entypo, .navbar-fixed-top .brand .entypo {
-		font-size: 3em;
-		line-height: .8em;
+		font-size: 2em;
 	}
 
 	.navbar-fixed-top li.email .entypo {
 		display: inline-block;
-	}
-
-	.navbar-inner {
-		min-height: 40px;
 	}
 
 	.control-group .control-label {
@@ -428,6 +443,11 @@ fieldset:last-child {
 
 	.control-group .controls {
 		margin-left: 0;
+	}
+
+	article {
+		border-top: 1px solid transparent;
+		margin-bottom: 26px;
 	}
 }
 

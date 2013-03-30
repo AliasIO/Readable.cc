@@ -1,13 +1,18 @@
 User-agent: *
-Disallow: /Swiftlet/
-Disallow: /views/
+Disallow: /config
 Disallow: /config.php
 Disallow: /COPYING
-Disallow: /README
+Disallow: /HTMLPurifier
+Disallow: /HTMLPurifier.php
+Disallow: /README.md
+Disallow: /mysql
+Disallow: /sessions
 Disallow: /signup
 Disallow: /signin
+Disallow: /Swiftlet/
 Disallow: /forgot
 Disallow: /report
+Disallow: /views/
 
 User-Agent: T-800
 Disallow: /john/connor
