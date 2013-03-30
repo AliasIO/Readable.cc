@@ -65,6 +65,14 @@ p {
 	margin: 0 0 13px;
 }
 
+ul, ol {
+	clear: both;
+}
+
+pre {
+	clear: both;
+}
+
 code {
 	color: inherit;
 	font-style: normal;
@@ -83,6 +91,7 @@ iframe[src] {
 }
 
 blockquote {
+	clear: both;
 	font-style: italic;
 }
 
