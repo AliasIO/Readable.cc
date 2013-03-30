@@ -292,7 +292,7 @@ article {
 
 	article img.feature, article img.feature:hover {
 		float: left;
-		margin: 5px 20px 10px 0;
+		margin: 0 13px 13px 0;
 		max-height: 250px;
 		max-width: 300px !important;
 	}
