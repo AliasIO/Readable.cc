@@ -137,9 +137,11 @@ class FeedItem extends \Swiftlet\Model
 
 		switch ( $this->feed->getType() ) {
 			case 'rss2':
+				$contents = $nsContent->encoded ? $nsContent->encoded : $this->xml->description;
+
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
-				$data->contents = (string) $this->xml->description;
+				$data->contents = (string) $contents;
 				$data->postedAt = date('Y-m-d H:i', $this->xml->pubDate ? strtotime((string) $this->xml->pubDate) : time());
 				$data->language = $this->feed->getLanguage();
 
