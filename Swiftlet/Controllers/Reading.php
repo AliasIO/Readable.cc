@@ -58,11 +58,10 @@ class Reading extends \Swiftlet\Controllers\Read
 			FROM             items
       INNER JOIN users_feeds ON users_feeds.feed_id = items.feed_id
       INNER JOIN       feeds ON       feeds.id      = items.feed_id
-			LEFT  JOIN users_items ON users_items.item_id = items.id
+			LEFT  JOIN users_items ON users_items.item_id = items.id      AND users_items.user_id = ?
 			WHERE
-				  users_feeds.user_id  = ?                                  AND
-				( users_items.user_id  = ? OR users_items.user_id IS NULL ) AND
-				( users_items.read    != 1 OR users_items.read    IS NULL )
+				  users_feeds.user_id = ?                               AND
+				( users_items.read    = 0 OR users_items.read IS NULL )
 				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
       ORDER BY DATE(items.posted_at) DESC, users_items.score DESC
 			LIMIT 10

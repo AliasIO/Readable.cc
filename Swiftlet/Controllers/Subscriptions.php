@@ -43,8 +43,8 @@ class Subscriptions extends \Swiftlet\Controller
 				feeds.title,
 				feeds.link,
 				feeds.last_fetched_at
-			FROM      users_feeds
-			LEFT JOIN feeds ON users_feeds.feed_id = feeds.id
+			FROM       users_feeds
+			INNER JOIN feeds       ON users_feeds.feed_id = feeds.id
 			WHERE
 				users_feeds.user_id = :user_id
 			ORDER BY feeds.title
