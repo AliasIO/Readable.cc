@@ -76,6 +76,7 @@ iframe {
 
 iframe[src] {
 	border: none;
+	clear: both;
 	display: block;
 	height: 315px;
 	width: 560px;
@@ -279,20 +280,21 @@ article {
 	}
 
 	article p img, article h1 img, article h2 img, article h3 img, article h4 img, article h5 img, article h6 img {
+		clear: both;
 		display: block;
 		margin: 20px 0;
-	}
-
-	article img.feature {
-		float: left;
-		margin: 5px 20px 10px 0;
-		max-height: 250px;
-		max-width: 300px !important;
 	}
 
 	article img:hover {
 		max-height: 1000px;
 		max-width: 80%;
+	}
+
+	article img.feature, article img.feature:hover {
+		float: left;
+		margin: 5px 20px 10px 0;
+		max-height: 250px;
+		max-width: 300px !important;
 	}
 
 fieldset {
