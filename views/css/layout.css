@@ -65,33 +65,12 @@ p {
 	margin: 0 0 13px;
 }
 
-ul, ol {
-	clear: both;
-}
-
-pre {
-	clear: both;
-}
-
 code {
 	color: inherit;
 	font-style: normal;
 }
 
-iframe {
-	display: none;
-}
-
-iframe[src] {
-	border: none;
-	clear: both;
-	display: block;
-	height: 315px;
-	width: 560px;
-}
-
 blockquote {
-	clear: both;
 	font-style: italic;
 }
 
@@ -205,6 +184,30 @@ article {
 	border-top: 1px solid transparent;
 	margin-bottom: 52px;
 }
+
+	article iframe {
+		display: none;
+	}
+
+	article iframe[src] {
+		border: none;
+		clear: both;
+		display: block;
+		height: 315px;
+		width: 560px;
+	}
+
+	article ul, articel ol {
+		clear: both;
+	}
+
+	article pre {
+		clear: both;
+	}
+
+	article blockquote {
+		clear: both;
+	}
 
 	article h1 {
 		margin-top: 0;
