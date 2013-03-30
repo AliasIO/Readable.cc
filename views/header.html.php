@@ -20,11 +20,11 @@
 		<script src="/views/js/readable.js"></script>
 
 		<script>
-			readable.email     = '<?php echo $this->app->getConfig('emailFrom') ?>';
-			readable.view      = '<?php echo $this->name ?>';
-			readable.args      = '<?php echo implode('/', $this->app->getArgs()) ?>';
-			readable.sessionId = '<?php echo $this->app->getSingleton('session')->getId() ?>';
-			readable.signedIn  = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
+			readable.email      = '<?php echo $this->app->getConfig('emailFrom') ?>';
+			readable.controller = '<?php echo $this->get('controller') ?>';
+			readable.args       = '<?php echo implode('/', $this->app->getArgs()) ?>';
+			readable.sessionId  = '<?php echo $this->app->getSingleton('session')->getId() ?>';
+			readable.signedIn   = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
 		</script>
 	</head>
 	<body>

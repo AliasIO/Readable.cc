@@ -3,7 +3,7 @@ var readable = (function($) {
 		duration: 300,
 		excludes: [],
 		email: '',
-		view: '',
+		controller: '',
 		args: '',
 		sessionId: '',
 		signedIn: false,
@@ -239,7 +239,7 @@ var readable = (function($) {
 			},
 
 			itemsAdded: function() {
-				app.trackPageView(app.view + '/page/' + app.items.page);
+				app.trackPageView(app.controller + '/page/' + app.items.page);
 
 				var i = 0;
 
@@ -404,7 +404,7 @@ var readable = (function($) {
 				}
 
 				$.ajax({
-					url: '/' + app.view + '/vote/' + app.args,
+					url: '/' + app.controller + '/vote/' + app.args,
 					method: 'post',
 					data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
 				}).fail(function() {
@@ -430,7 +430,7 @@ var readable = (function($) {
 					el.addClass('read');
 
 					$.ajax({
-						url: '/' + app.view + '/read/' + app.args,
+						url: '/' + app.controller + '/read/' + app.args,
 						method: 'post',
 						data: { item_id: itemId, sessionId: app.sessionId }
 					});
@@ -458,7 +458,7 @@ var readable = (function($) {
 
 				if ( app.signedIn ) {
 					$.ajax({
-						url: '/' + app.view + '/save/' + app.args,
+						url: '/' + app.controller + '/save/' + app.args,
 						method: 'post',
 						data: { item_id: itemId, save: save, sessionId: app.sessionId }
 					}).fail(function() {
@@ -491,7 +491,7 @@ var readable = (function($) {
 				}
 
 				$.ajax({
-					url: '/' + app.view + '/subscribe/' + app.args,
+					url: '/' + app.controller + '/subscribe/' + app.args,
 					method: 'post',
 					data: { feed_id: feedId, action: action, sessionId: app.sessionId }
 				}).fail(function(data) {
@@ -518,7 +518,7 @@ var readable = (function($) {
 					app.items.lastRequestedPage = app.items.page + 1;
 
 					$.ajax({
-						url: '/' + app.view + '/items/' + app.args,
+						url: '/' + app.controller + '/items/' + app.args,
 						data: { page: app.items.page + 1, excludes: app.excludes.join(' ') },
 						context: $('#items')
 					}).done(function(data) {

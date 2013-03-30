@@ -9,6 +9,18 @@ class Read extends \Swiftlet\Controller
 		;
 
 	/**
+	 * Constructor
+	 * @param object $app
+	 * @param object $view
+	 */
+	public function __construct(\Swiftlet\Interfaces\App $app, \Swiftlet\Interfaces\View $view)
+	{
+		parent::__construct($app, $view);
+
+		$this->view->set('controller', strtolower(preg_replace('/^Swiftlet\\\Controllers\\\/', '', get_class($this))));
+	}
+
+	/**
 	 * Default action
 	 */
 	public function index()
