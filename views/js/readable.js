@@ -29,7 +29,7 @@ var readable = (function($) {
 		},
 
 		init: function() {
-			$('.contact-email').text(app.email).attr('href', 'mailto:' + app.email);
+			$('.contact-email').text(app.email.replace(' ', '@')).attr('href', 'mailto:' + app.email.replace(' ', '@'));
 
 			// Hide alerts on click
 			$(document).on('click', '.alert', function() {
