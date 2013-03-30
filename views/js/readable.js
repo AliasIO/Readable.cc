@@ -266,7 +266,7 @@ var readable = (function($) {
 				});
 
 				// Left align first image if not preceded by text
-				$('p:first-child a:first-child img:first-child, p:first-child img:first-child').each(function() {
+				$('p:first-child > a:first-child > img:first-child, p:first-child > img:first-child').each(function() {
 					if ( $(this).parent().html().match(/^\s*<img /) && $(this).parent().parent().html().match(/^\s*<(p|a)/) ) {
 						$(this).addClass('feature');
 					}
