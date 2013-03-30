@@ -59,7 +59,7 @@ class Saved extends \Swiftlet\Controllers\Read
 			FROM       users_items
 			INNER JOIN       items ON       items.id      = users_items.item_id
       INNER JOIN       feeds ON       feeds.id      = items.feed_id
-      LEFT  JOIN users_feeds ON users_feeds.feed_id = feeds.id
+      LEFT  JOIN users_feeds ON users_feeds.feed_id = feeds.id            AND users_feed.user_id = ?
 			WHERE
 				users_items.user_id = ? AND
 				users_items.saved   = 1
@@ -70,6 +70,7 @@ class Saved extends \Swiftlet\Controllers\Read
 
 		$i = 1;
 
+		$sth->bindParam($i ++, $userId);
 		$sth->bindParam($i ++, $userId);
 
 		foreach( $excludes as $key => $itemId ) {
