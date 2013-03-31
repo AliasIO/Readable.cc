@@ -30,4 +30,12 @@
 	If you have any questions or suggestions, head over to the &lsquo;<a href="/contact">Contact</a>&rsquo; page.
 </p>
 
+<div class="divider"></div>
+
+<h4>Attributions</h4>
+
+<p>
+	<small>Entypo pictograms by Daniel Bruce — <a href="http://www.entypo.com">www.entypo.com</a></small>
+</p>
+
 <?php require 'footer.html.php' ?>
