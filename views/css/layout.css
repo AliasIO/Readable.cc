@@ -142,8 +142,7 @@ blockquote p {
 }
 
 .divider {
-  border-bottom: 1px solid #e5e5e5;
-	margin-bottom: 26px;
+	margin: 52px 0 26px 0;
 }
 
 .modal {
@@ -233,6 +232,7 @@ article {
 		clear: both;
 		display: block;
 		height: 315px;
+		margin-bottom: 13px;
 		width: 560px;
 	}
 
@@ -240,10 +240,15 @@ article {
 		clear: both;
 	}
 
+	article li {
+		margin-bottom: 13px;
+	}
+
 	article pre {
 		clear: both;
 	}
 
+	margin-bottom: 13px;
 	article blockquote {
 		clear: both;
 	}
@@ -457,19 +462,21 @@ fieldset:last-child {
 	}
 
 	h1, h2, h3 {
-		line-height: 40px;
 	}
 
 	h1 {
 		font-size: 30px;
+		line-height: 40px;
 	}
 
 	h2 {
 		font-size: 26px;
+		line-height: 30px;
 	}
 
 	h3 {
 		font-size: 22px;
+		line-height: 25px;
 	}
 
 	h4, h5, h6 {

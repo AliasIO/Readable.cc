@@ -1,6 +1,7 @@
 			<div id="footer">
 				<p>
-				<a class="contact-email" href="mailto:<?php echo $this->app->getConfig('emailHoneyPot') ?>"><?php echo $this->app->getConfig('emailHoneyPot') ?></a>
+					<a href="/about">About</a> &nbsp;-&nbsp;
+					<a href="/contact">Contact</a>
 				</p>
 			</div>
 
@@ -32,7 +33,7 @@
 		</div> <!-- /container -->
 
 		<p id="feedback">
-			<a href="https://github.com/ElbertF/readable.cc/issues">Feedback</a>
+			<a href="/contact">Feedback</a>
 		</p>
 
 		<script src="/views/lib/bootstrap/js/bootstrap.min.js"></script>

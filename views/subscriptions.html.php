@@ -38,6 +38,8 @@
 	</li>
 	<?php endforeach ?>
 </ul>
+
+<div class="divider"></div>
 <?php endif ?>
 
 <h3>Subscribe to feed</h3>
@@ -67,6 +69,8 @@
 		</div>
 	</fieldset>
 </form>
+
+<div class="divider"></div>
 
 <h3>Import & export feeds</h3>
 

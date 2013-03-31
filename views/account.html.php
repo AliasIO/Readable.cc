@@ -94,6 +94,8 @@
 <?php endif ?>
 */ ?>
 
+<div class="divider"></div>
+
 <h2>Reset</h2>
 
 <p>
@@ -120,6 +122,8 @@
 		</div>
 	</fieldset>
 </form>
+
+<div class="divider"></div>
 
 <h2>Delete</h2>
 
