@@ -331,7 +331,7 @@ article {
 		border: 1px solid #fff;
 		display: inline-block;
 		vertical-align: bottom;
-		margin: 2px 0;
+		padding: 0 10px 5px 0;
 		max-height: 100px;
 		max-width: 932px;
 	}
@@ -346,6 +346,7 @@ article {
 		margin: 0 13px 13px 0;
 		max-height: 250px;
 		max-width: 300px !important;
+		padding: 0;
 	}
 
 fieldset {
