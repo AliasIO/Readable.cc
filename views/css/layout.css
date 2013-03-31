@@ -330,7 +330,7 @@ article {
 		background: #fff;
 		border: 1px solid #fff;
 		display: inline-block;
-		text-align: bottom;
+		vertical-align: bottom;
 		margin: 0 13px 13px 0;
 		max-height: 100px;
 		max-width: 932px;
