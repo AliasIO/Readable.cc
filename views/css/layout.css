@@ -223,6 +223,21 @@ article {
 	margin-bottom: 52px;
 }
 
+	article ul,
+	articel ol,
+	article blockquote,
+	article table,
+	article pre,
+	article img,
+	article h1,
+	article h2,
+	article h3,
+	article h4,
+	article h5,
+	article h6 {
+		clear: both;
+	}
+
 	article iframe {
 		display: none;
 	}
@@ -236,21 +251,8 @@ article {
 		width: 560px;
 	}
 
-	article ul, articel ol {
-		clear: both;
-	}
-
 	article li {
 		margin-bottom: 13px;
-	}
-
-	article pre {
-		clear: both;
-	}
-
-	margin-bottom: 13px;
-	article blockquote {
-		clear: both;
 	}
 
 	article h1 {
@@ -263,10 +265,6 @@ article {
 
 	article.inactive.boring h1 {
 		text-decoration: line-through;
-	}
-
-	article .item-toggle {
-		display: none;
 	}
 
 	article.inactive {
@@ -331,15 +329,10 @@ article {
 	article img {
 		background: #fff;
 		border: 1px solid #fff;
+		display: block;
 		margin: 2px 0;
 		max-height: 100px;
 		max-width: 932px;
-	}
-
-	article p img, article h1 img, article h2 img, article h3 img, article h4 img, article h5 img, article h6 img {
-		clear: both;
-		display: block;
-		margin: 20px 0;
 	}
 
 	article img:hover {
