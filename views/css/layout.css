@@ -1,3 +1,4 @@
+/*
 @font-face {
     font-family: 'Lora';
     src: url('../lib/lora/Lora-Regular-webfont.eot');
@@ -19,6 +20,7 @@
     font-weight: normal;
     font-style: italic;
 }
+*/
 
 @font-face {
     font-family: 'Lora';
@@ -42,9 +44,41 @@
     font-style: italic;
 }
 
+
+@font-face {
+    font-family: 'Poly';
+    src: url('../lib/poly/Poly-Italic-webfont.eot');
+    src: url('../lib/poly/Poly-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../lib/poly/Poly-Italic-webfont.woff') format('woff'),
+         url('../lib/poly/Poly-Italic-webfont.ttf') format('truetype'),
+         url('../lib/poly/Poly-Italic-webfont.svg#PolyItalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'Poly';
+    src: url('../lib/poly/Poly-Regular-webfont.eot');
+    src: url('../lib/poly/Poly-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../lib/poly/Poly-Regular-webfont.woff') format('woff'),
+         url('../lib/poly/Poly-Regular-webfont.ttf') format('truetype'),
+         url('../lib/poly/Poly-Regular-webfont.svg#PolyRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body {
+  font-family: Poly, Georgia, "Times New Roman", Times, serif;
+	font-size: 20px;
+	line-height: 26px;
 	overflow-y: scroll;
 	padding-top: 80px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Lora, Georgia, "Times New Roman", Times, serif;
 }
 
 a {
@@ -58,11 +92,15 @@ a:hover {
 
 img {
 	color: #999;
-	font-size: small;
+	font-size: 75%;
 }
 
 p {
 	margin: 0 0 13px;
+}
+
+strong {
+	letter-spacing: -1px;
 }
 
 code {
@@ -148,6 +186,7 @@ blockquote p {
 }
 
 	#page-head h1 {
+		font-family: Poly;
 		font-weight: normal;
 	}
 
@@ -238,7 +277,8 @@ article {
 	}
 
 	article .item-date {
-		font-size: small;
+		font-size: 80%;
+		margin-bottom: 20px;
 	}
 
 		article .item-date .feed-options {
@@ -255,7 +295,7 @@ article {
 
 	article .article-buttons {
 		overflow: hidden;
-		margin-top: 20px;
+		margin-top: 25px;
 	}
 
 		article.inactive .article-buttons {
@@ -370,7 +410,7 @@ fieldset:last-child {
 
 #footer {
 	color: #999;
-	font-size: small;
+	font-size: 75%;
 	text-align: right;
 }
 
@@ -381,7 +421,7 @@ fieldset:last-child {
 #feedback {
 	border: 2px solid #fff;
 	line-height: 30px;
-	font-size: small;
+	font-size: 75%;
 	position: fixed;
 	text-align: center;
 	bottom: 0;

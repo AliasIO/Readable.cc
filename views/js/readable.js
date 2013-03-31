@@ -50,7 +50,7 @@ var readable = (function($) {
 
 				app.mobile = $(document).width() < 850;
 
-				app.duration.fade = app.mobile ? 0 : 300;
+				app.duration = app.mobile ? { fade: 0, scroll: 0 } : { fade: 300, scroll: 300 };
 			}).resize();
 
 			app.navBar.init();
@@ -456,9 +456,9 @@ var readable = (function($) {
 				var button = $('article .item-save[data-item-id=' + itemId + ']');
 
 				if ( save ) {
-					button.addClass('btn-inverse saved').html('<i class="entypo install"></i> Saved');
+					button.addClass('btn-inverse saved').html('<i class="entypo install"></i>&nbsp;Saved');
 				} else {
-					button.removeClass('btn-inverse saved').html('<i class="entypo install"></i> Save');
+					button.removeClass('btn-inverse saved').html('<i class="entypo install"></i>&nbsp;Save');
 				}
 
 				if ( app.signedIn ) {
@@ -468,9 +468,9 @@ var readable = (function($) {
 						data: { item_id: itemId, save: save, sessionId: app.sessionId }
 					}).fail(function() {
 						if ( save ) {
-							button.removeClass('btn-inverse saved').html('<i class="entypo install"></i> Save');
+							button.removeClass('btn-inverse saved').html('<i class="entypo install"></i>&nbsp;Save');
 						} else {
-							button.addClass('btn-inverse saved').html('<i class="entypo install"></i> Saved');
+							button.addClass('btn-inverse saved').html('<i class="entypo install"></i>&nbsp;Saved');
 						}
 					});
 				}
@@ -490,9 +490,9 @@ var readable = (function($) {
 				el = $('article .subscription[data-feed-id=' + feedId + ']');
 
 				if ( action === 'subscribe' ) {
-					el.removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-minus"></i> Unsubscribe');
+					el.removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-minus"></i>&nbsp;Unsubscribe');
 				} else {
-					el.removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-plus"></i> Subscribe');
+					el.removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-plus"></i>&nbsp;Subscribe');
 				}
 
 				$.ajax({
@@ -501,9 +501,9 @@ var readable = (function($) {
 					data: { feed_id: feedId, action: action, sessionId: app.sessionId }
 				}).fail(function(data) {
 					if ( action === 'unsubscribe' ) {
-						el.removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-minus"></i> Unsubscribe');
+						el.removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-minus"></i>&nbsp;Unsubscribe');
 					} else {
-						el.removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-plus"></i> Subscribe');
+						el.removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-plus"></i>&nbsp;Subscribe');
 					}
 				});
 

@@ -220,9 +220,6 @@ textarea {
 
 body {
   margin: 0;
-  font-family: "Lora", Georgia, "Times New Roman", Times, serif;
-  font-size: 17px;
-  line-height: 26px;
   color: #333333;
   background-color: #fff;
 }
@@ -811,7 +808,7 @@ h4 small {
 ul,
 ol {
   padding: 0;
-  margin: 0 0 13px 25px;
+  margin: 0 0 13px 35px;
 }
 
 ul ul,
@@ -1064,7 +1061,7 @@ input,
 button,
 select,
 textarea {
-  font-family: "Lora", Georgia, "Times New Roman", Times, serif;
+  font-family: inherit;
 }
 
 label {
@@ -3281,7 +3278,7 @@ button.close {
 
 .btn-small {
   padding: 2px 10px;
-  font-size: 14.45px;
+  font-size: 16px;
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
           border-radius: 3px;
@@ -4355,6 +4352,7 @@ input[type="submit"].btn.btn-mini {
 }
 
 .navbar-inner {
+	font-size: 18px;
   min-height: 60px;
   padding-right: 20px;
   padding-left: 20px;

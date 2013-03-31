@@ -25,19 +25,18 @@
 			By <strong><a href="/feed/view/<?php echo $item->feed_id ?>" title="<?php echo parse_url($item->feed_link,  PHP_URL_HOST) ?>"><?php echo $item->feed_title ?></a></strong>
 			<?php echo $item->posted_at ? 'on ' . date('F j, Y', $item->posted_at) : '' ?>
 			<span class="feed-options">
-				<!--(score: <?php echo number_format($item->score) ?>)-->
 				&mdash;
 				<?php if ( $this->get('controller') == 'index' ): ?>
 				<a href="/report/article/<?php echo $item->id ?>" class="report" data-feed-id="<?php echo $item->feed_id ?>" title="Report inappropriate content">
-					<i class="entypo flag"></i> Report
+					<i class="entypo flag"></i>Report
 				</a>
 				&nbsp;
 				<?php endif ?>
 				<a href="javascript: void(0);" class="subscription <?php echo $item->feed_subscribed ? 'unscubscribe' : 'subscribe' ?>" data-feed-id="<?php echo $item->feed_id ?>" title="Subscriptions appear in &lsquo;My Reading&rsquo;">
 					<?php if ( $item->feed_subscribed ): ?>
-					<i class="entypo squared-minus"></i> Unsubscribe
+					<i class="entypo squared-minus"></i>&nbsp;Unsubscribe
 					<?php else: ?>
-					<i class="entypo squared-plus"></i> Subscribe
+					<i class="entypo squared-plus"></i>&nbsp;Subscribe
 					<?php endif ?>
 				</a>
 			</span>
@@ -53,18 +52,15 @@
 
 		<p class="article-buttons">
 			<button class="btn btn-small item-vote<?php echo $item->vote == 1 ? ' btn-inverse voted' : '' ?>" data-item-id="<?php echo $item->id ?>" data-vote="1"  title="Promote articles like these in &lsquo;My Reading&rsquo;">
-				<i class="entypo thumbs-up"></i>
-				Interesting
+				<i class="entypo thumbs-up"></i>&nbsp;Interesting
 			</button>
 
 			<button class="btn btn-small item-vote<?php echo $item->vote == -1 ? ' btn-inverse voted' : '' ?>" data-item-id="<?php echo $item->id ?>" data-vote="-1" title="Demote articles like these in &lsquo;My Reading&rsquo;">
-				<i class="entypo thumbs-down"></i>
-				Boring
+				<i class="entypo thumbs-down"></i>&nbsp;Boring
 			</button>
 
 			<button class="btn btn-small item-save<?php echo $item->saved ? ' btn-inverse saved' : '' ?>" data-item-id="<?php echo $item->id ?>" title="Save this article to read later">
-				<i class="entypo install"></i>
-				Save<?php echo $item->saved ? 'd' : '' ?>
+				<i class="entypo install"></i>&nbsp;Save<?php echo $item->saved ? 'd' : '' ?>
 			</button>
 		</p>
 	</div>
