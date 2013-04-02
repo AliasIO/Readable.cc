@@ -259,8 +259,8 @@ class Read extends \Swiftlet\Controller
 		// Remove FeedBurner cruft
 		$html = preg_replace('/(<div class="feedflare.+?<\/div>|<img[^>]+?(feedsportal|feedburner)\.com[^>]+?>)/s', '', $html);
 
-		// Covert div sections to paragraphs
-		$html = preg_replace('/<(\/)?div[^>]*>/', '<$1p>', $html);
+		// Covert various block level sections to paragraphs
+		$html = preg_replace('/<(\/)?(center|div|figure|figcaption|section)[^>]*>/', '<$1p>', $html);
 
 		// Linebreaks to newline
 		$html = preg_replace('/<br ?\/?>/', "\n\n", $html);
