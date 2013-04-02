@@ -274,7 +274,7 @@ var readable = (function($) {
 
 				// Don't align paragraphs with images next to feature image
 				$('article img').each(function() {
-					$(this).closest('p').css({ clearance: 'both' });
+					$(this).closest('p').attr({ style: 'clear: both;' });
 				});
 
 				app.items.activeItemId = null;
