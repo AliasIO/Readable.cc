@@ -142,8 +142,31 @@ var readable = (function($) {
 					scrolled = false
 					;
 
-				Mousetrap.bind(['j', 's', 'space'], function() { app.items.expand(app.items.nextItem,     true); app.items.scrollTo(app.items.nextItem,     true); return false; });
-				Mousetrap.bind(['k', 'w'],          function() { app.items.expand(app.items.previousItem, true); app.items.scrollTo(app.items.previousItem, true); return false; });
+				Mousetrap.bind(['j', 's', 'space'], function() {
+					var next = app.items.activeItem ? app.items.activeItem.next('article') : $('#items article').first();
+
+					if ( !next[0] ) {
+						return;
+					}
+
+					app.items.expand(  next, true);
+					app.items.scrollTo(next, true);
+
+					return false;
+				});
+
+				Mousetrap.bind(['k', 'w'], function() {
+					var previous = app.items.activeItem ? app.items.activeItem.prev('article') : $('#items article').first();
+
+					if ( !previous[0] ) {
+						return;
+					}
+
+					app.items.expand(  previous, true);
+					app.items.scrollTo(previous, true);
+
+					return false;
+				});
 
 				Mousetrap.bind('home', function() { app.navBar.pin(true).init(); });
 
@@ -168,8 +191,6 @@ var readable = (function($) {
 				});
 
 				app.items.pageTop = $('#contents').position().top;
-
-				app.items.nextItem = $('#items article').first();
 
 				// Add space to allow the last item to be scrolled to the top of the page
 				$(window).resize(function() {
@@ -376,12 +397,13 @@ var readable = (function($) {
 								$('article:not([data-item-id=' + app.items.activeItemId + '])').stop().animate({ opacity: .3 }, instant ? 0 : app.duration.fade);
 							}
 
+							if ( $(this).is(':last-child') ) {
+								app.items.loadMore();
+							}
+
 							// Hide floating alerts
 							$('.alert-float').click();
 						}
-
-						app.items.previousItem = $(this).prev();
-						app.items.nextItem     = $(this).next();
 
 						return false;
 					}
@@ -522,25 +544,35 @@ var readable = (function($) {
 					return;
 				}
 
-				if ( app.items.page + 1 > app.items.lastRequestedPage && $(document).scrollTop() > $(document).height() - ( $(window).height() * 2 ) ) {
-					$(document).unbind('scroll', app.items.infiniteScroll);
-
-					app.items.lastRequestedPage = app.items.page + 1;
-
-					$.ajax({
-						url: '/' + app.controller + '/items/' + app.args,
-						data: { page: app.items.page + 1, excludes: app.excludes.join(' ') },
-						context: $('#items')
-					}).done(function(data) {
-						if ( data ) {
-							$(this).append(data);
-
-							app.items.itemsAdded();
-
-							$(document).bind('scroll', app.items.infiniteScroll);
-						}
-					});
+				if ( $(document).scrollTop() > $(document).height() - ( $(window).height() * 2 ) ) {
+					app.items.loadMore();
 				}
+
+				return app.items;
+			},
+
+			loadMore: function() {
+				if ( app.items.page + 1 <= app.items.lastRequestedPage ) {
+					return;
+				}
+
+				$(document).unbind('scroll', app.items.infiniteScroll);
+
+				app.items.lastRequestedPage = app.items.page + 1;
+
+				$.ajax({
+					url: '/' + app.controller + '/items/' + app.args,
+					data: { page: app.items.page + 1, excludes: app.excludes.join(' ') },
+					context: $('#items')
+				}).done(function(data) {
+					if ( data ) {
+						$(this).append(data);
+
+						app.items.itemsAdded();
+
+						$(document).bind('scroll', app.items.infiniteScroll);
+					}
+				});
 
 				return app.items;
 			}

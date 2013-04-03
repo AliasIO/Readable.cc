@@ -734,23 +734,12 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 13px 0;
+  margin: 26px 0 13px 0;
   font-family: inherit;
   font-weight: bold;
   line-height: 1.2em;
   color: inherit;
   text-rendering: optimizelegibility;
-}
-
-h1 small,
-h2 small,
-h3 small,
-h4 small,
-h5 small,
-h6 small {
-  font-weight: normal;
-  line-height: 1;
-  color: #999999;
 }
 
 h1 {
@@ -4356,7 +4345,6 @@ input[type="submit"].btn.btn-mini {
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff6f6f6', endColorstr='#fff6f6f6', GradientType=0);
   *zoom: 1;
 }
 
@@ -6132,15 +6120,6 @@ div.subnav .nav > .active > a:hover {
 
 div.subnav-fixed {
   top: 61px;
-}
-
-.hero-unit h1,
-.hero-unit h2,
-.hero-unit h3,
-.hero-unit h4,
-.hero-unit h5,
-.hero-unit h6 {
-  margin: 13px 0;
 }
 
 .pull-right {
