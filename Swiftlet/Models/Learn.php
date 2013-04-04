@@ -9,7 +9,7 @@ class Learn extends \Swiftlet\Model
 	 *
 	 * @param int $userId
 	 */
-	public function learn($userId)
+	public function user($userId)
 	{
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
@@ -57,6 +57,16 @@ class Learn extends \Swiftlet\Model
 		$sth->bindParam('user_id', $userId);
 
 		$sth->execute();
+	}
+
+	/**
+	 * TODO
+	 *
+	 * @param array $itemIds
+	 */
+	public function items($itemIds)
+	{
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		// Rank items
 		$sth = $dbh->prepare('
@@ -66,20 +76,22 @@ class Learn extends \Swiftlet\Model
 				score
 				)
 			SELECT
-				:user_id,
+				users_feeds.user_id,
 				items.id,
 				COALESCE(SUM(users_words.score), 0)
 			FROM       users_feeds
 			INNER JOIN       items ON items.feed_id       = users_feeds.feed_id
 			LEFT  JOIN users_items ON users_items.item_id =       items.id
 			LEFT  JOIN items_words ON items_words.item_id =       items.id
-			LEFT  JOIN users_words ON users_words.word_id = items_words.word_id AND users_words.user_id = :user_id
-			GROUP BY items.id
+			LEFT  JOIN users_words ON users_words.word_id = items_words.word_id
+			WHERE
+				items.id IN ( ' . implode(', ', $itemIds) . ' )
+			GROUP BY users_feeds.user_id, items.id
 			ORDER BY created_at DESC
-			LIMIT 1000
+			LIMIT 1000000
 			ON DUPLICATE KEY UPDATE
 				score = VALUES(score)
-			;');
+				;');
 
 		$sth->bindParam('user_id', $userId);
 

@@ -124,6 +124,16 @@ class FeedItem extends \Swiftlet\Model
 	}
 
 	/**
+	 * Get item ID
+	 *
+	 * @return mixed
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	/**
 	 * Get item data
 	 *
 	 * @return object
