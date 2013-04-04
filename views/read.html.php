@@ -6,7 +6,8 @@
 		<i class="entypo chevron-small-left"></i> No more unread articles <i class="entypo chevron-small-right"></i>
 	</p>
 </div>
-<?php endif ?>
+
+<?php else: ?>
 
 <?php foreach ( $items as $item ): ?>
 <article
@@ -66,3 +67,6 @@
 	</div>
 </article>
 <?php endforeach ?>
+
+<div class="loading"></div>
+<?php endif ?>

@@ -190,6 +190,12 @@ blockquote p {
 #items {
 }
 
+	#items .loading {
+		background: url('../images/loading.gif') center center no-repeat;
+		margin-bottom: 52px;
+		height: 64px;
+	}
+
 	#items .placeholder {
 		border-top: 1px solid #e9e9e9;
 	}

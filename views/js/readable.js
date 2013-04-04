@@ -361,9 +361,7 @@ var readable = (function($) {
 			},
 
 			findActive: function(instant) {
-				var
-					offset = $(document).scrollTop() - $('#contents').position().top
-					;
+				var offset = $(document).scrollTop() - $('#contents').position().top;
 
 				$($('#items article').get().reverse()).each(function() {
 					var
@@ -380,8 +378,6 @@ var readable = (function($) {
 									.removeClass('active')
 									.addClass('inactive')
 									;
-
-								app.items.markAsRead(app.items.activeItemId);
 							}
 
 							app.items.activeItemId = $(this).data('item-id');
@@ -396,6 +392,8 @@ var readable = (function($) {
 
 								$('article:not([data-item-id=' + app.items.activeItemId + '])').stop().animate({ opacity: .3 }, instant ? 0 : app.duration.fade);
 							}
+
+							app.items.markAsRead(app.items.activeItemId);
 
 							if ( $(this).is(':last-child') ) {
 								app.items.loadMore();
@@ -565,6 +563,8 @@ var readable = (function($) {
 					data: { page: app.items.page + 1, excludes: app.excludes.join(' ') },
 					context: $('#items')
 				}).done(function(data) {
+					$('#items .loading').remove();
+
 					if ( data ) {
 						$(this).append(data);
 
