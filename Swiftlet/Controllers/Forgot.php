@@ -107,10 +107,11 @@ class Forgot extends \Swiftlet\Controller
 			$sth = $dbh->prepare('
 				SELECT
 					id,
-					email
+					email,
+					enabled
 				FROM users
 				WHERE
-					activation_code = :activation_code AND
+					activation_code            = :activation_code AND
 					activation_code_expires_at > UTC_TIMESTAMP()
 				LIMIT 1
 				;');
@@ -122,6 +123,8 @@ class Forgot extends \Swiftlet\Controller
 			$result = $sth->fetch(\PDO::FETCH_OBJ);
 
 			if ( $result && ( $userId = $result->id ) && ( $email = $result->email ) ) {
+				$enabled = $result->enabled;
+
 				$password = substr(sha1(uniqid(mt_rand(), true)), 0, 12);
 
 				$auth = $this->app->getSingleton('auth');
@@ -129,6 +132,21 @@ class Forgot extends \Swiftlet\Controller
 				$result = $auth->setPassword($userId, $password);
 
 				if ( $result ) {
+					if ( !$enabled ) {
+						$sth = $dbh->prepare('
+							UPDATE users SET
+								enabled = 1
+							WHERE
+								id = :id
+							LIMIT 1
+							;');
+
+						$sth->bindParam(':id',       $id);
+						$sth->bindParam(':password', $hash);
+
+						$sth->execute();
+					}
+
 					$message =
 						"Hi,\n\n" .
 						"Your password " . $this->app->getConfig('siteName') . " has been reset.\n\n" .
