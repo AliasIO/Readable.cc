@@ -141,8 +141,7 @@ class Forgot extends \Swiftlet\Controller
 							LIMIT 1
 							;');
 
-						$sth->bindParam(':id',       $id);
-						$sth->bindParam(':password', $hash);
+						$sth->bindParam(':id', $id);
 
 						$sth->execute();
 					}
