@@ -157,7 +157,7 @@ class Forgot extends \Swiftlet\Controller
 
 					$this->app->getSingleton('helper')->sendMail($email, 'Your new password', $message);
 
-					$success = 'An email has been sent with a new password.';
+					$success = 'Thank you. You should receive another email with your new password.';
 				} else {
 					$error = 'Sorry, something went wrong.';
 				}

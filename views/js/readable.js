@@ -286,18 +286,6 @@ var readable = (function($) {
 					$(this).replaceWith(placeHolder);
 				});
 
-				// Left align first image if not preceded by text
-				$('article p:first-child > a:first-child > img:first-child, article p:first-child > img:first-child').each(function() {
-					if ( $(this).parent().html().match(/^\s*<img /) && $(this).parent().parent().html().match(/^\s*<(p|a)/) ) {
-						$(this).addClass('feature');
-					}
-				});
-
-				// Don't align paragraphs with images next to feature image
-				$('article img:not(.feature)').each(function() {
-					$(this).closest('p').css({ clear: 'both' });
-				});
-
 				app.items.activeItemId = null;
 
 				app.items.findActive(true);
@@ -322,23 +310,64 @@ var readable = (function($) {
 					.slideDown(instant ? 0 : app.duration.scroll)
 					;
 
-				// Firefox doesn't load hidden iframes
-				el.find('iframe').each(function() {
-					$(this).attr('src', $(this).attr('src'));
-				});
+				if ( !el.hasClass('processed') ) {
+					// Firefox doesn't load hidden iframes
+					el.find('iframe').each(function() {
+						$(this).attr('src', $(this).attr('src'));
+					});
 
-				// Remove small images, mainly tracking pixels and smiley faces
-				el.find('img').each(function() {
-					if ( $(this).width() <= 50 || $(this).height() <= 50 ) {
-						var parent = $(this).parent();
+					// Remove small images, mainly tracking pixels and smiley faces
+					el.find('img').each(function() {
+						if ( $(this).width() <= 50 || $(this).height() <= 50 ) {
+							var parent = $(this).parent();
 
-						$(this).remove();
+							$(this).remove();
 
-						if ( parent.html() == '' ) {
-							parent.remove();
+							if ( parent.html() == '' ) {
+								parent.remove();
+							}
 						}
-					}
-				});
+					});
+
+					// Images at start of paragraph
+					el.find('img').each(function() {
+						if ( !$(this).closest('p').text().trim().length ) {
+							$(this).closest('p').addClass('no-text');
+						}
+					});
+
+					el.find('p > img:first-child, p > a:first-child > img:first-child').each(function() {
+						if ( $(this).closest('p').text().trim().length && $(this).closest('p').html().match(/^\s*(<a [^>]+>\s*)?<img /) ) {
+							$(this).addClass('image-left');
+						}
+					});
+
+					// Images at end of paragraph or alone in paragraph
+					el.find('p > img:last-child, p > a:last-child > img:last-child').each(function() {
+						if ( $(this).closest('p').text().trim().length && $(this).closest('p').html().match(/<img [^>]+>(\s*<\/a>)?\s*$/) ) {
+							$(this).addClass('image-right');
+						}
+					});
+
+					// Feature first image not preceded by text
+					el.find('p:not(:last-child):first-child > a:first-child > img:first-child:not(.image-alone), p:not(:last-child):first-child > img:first-child:not(.image-alone)').each(function() {
+						if ( $(this).closest('p').html().match(/^\s*(<a [^>]+>\s*)?<img /) ) {
+							$(this).addClass('feature');
+						}
+					});
+
+					// Don't align paragraphs with images next to feature image
+					el.find('img:not(.feature)').each(function() {
+						$(this).closest('p').css({ clear: 'both' });
+					});
+
+					// Clean up line breaks
+					el.find('br:only-child').each(function() {
+						$(this).closest('p').remove();
+					});
+
+					el.addClass('processed')
+				}
 
 				return app.items;
 			},
@@ -553,6 +582,8 @@ var readable = (function($) {
 				if ( app.items.page + 1 <= app.items.lastRequestedPage ) {
 					return;
 				}
+
+				$('#items').append('<div class="loading"></div>');
 
 				$(document).unbind('scroll', app.items.infiniteScroll);
 

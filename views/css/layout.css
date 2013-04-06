@@ -333,6 +333,25 @@ article {
 		padding: 0;
 	}
 
+	article img.image-left {
+		float: left;
+		margin: 0 13px 13px 0;
+		padding: 0;
+	}
+
+	article img.image-right {
+		display: block;
+		margin: 13px 0 0 0;
+	}
+
+	article p.no-text {
+		text-align: left;
+	}
+
+		article p.no-text img {
+			vertical-align: top;
+		}
+
 fieldset {
   border-bottom: 1px solid #e5e5e5;
 	margin: 26px;

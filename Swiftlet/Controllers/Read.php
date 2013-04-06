@@ -262,12 +262,12 @@ class Read extends \Swiftlet\Controller
 		// Covert various block level sections to paragraphs
 		$html = preg_replace('/<(\/)?(center|div|figure|figcaption|section)[^>]*>/', '<$1p>', $html);
 
-		// Linebreaks to newline
-		$html = preg_replace('/<br ?\/?>/', "\n\n", $html);
+		// Multiple linebreaks to newline
+		$html = preg_replace('/(\s*<br ?\/?>\s*){2,}/s', "\n\n", $html);
 
 		$config = \HTMLPurifier_Config::createDefault();
 
-		$config->set('HTML.Allowed', 'h1,h2,h3,h4,h5,h6,a[href],p,ul,ol,li,blockquote,em,i,strong,b,img[src],pre,code,table,thead,tbody,tfoot,tr,th,td,iframe[src|frameborder]');
+		$config->set('HTML.Allowed', 'h1,h2,h3,h4,h5,h6,a[href],p,ul,ol,li,blockquote,em,i,strong,b,img[src],pre,code,table,thead,tbody,tfoot,tr,th,td,iframe[src|frameborder],br');
 		$config->set('AutoFormat.AutoParagraph', true);
 		$config->set('AutoFormat.RemoveEmpty', true);
 		$config->set('AutoFormat.RemoveEmpty.RemoveNbsp', true);
@@ -278,7 +278,10 @@ class Read extends \Swiftlet\Controller
 
 		$html = $purifier->purify($html);
 
-		// Trim br elements
-		$html = preg_replace('/<br ?\/?>/', '<$1p>', $html);
+		$html = preg_replace('/>\s*<br ?\/?>/s', ">\n\n", $html);
+		$html = preg_replace('/<br ?\/?>\s*</s', "\n\n<", $html);
+
+		// AutoParagraph a second time after elements have been cleaned up
+		$html = $purifier->purify($html);
 	}
 }

@@ -67,6 +67,4 @@
 	</div>
 </article>
 <?php endforeach ?>
-
-<div class="loading"></div>
 <?php endif ?>
