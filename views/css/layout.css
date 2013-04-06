@@ -86,13 +86,14 @@ code {
 
 blockquote {
 	font-style: italic;
+	margin-bottom: 13px;
 }
 
 blockquote p {
 	font-size: inherit;
 	font-weight: inherit;
 	line-height: inherit;
-	margin-bottom: inherit;
+	margin-bottom: 13px;
 }
 
 .navbar {
@@ -306,6 +307,12 @@ article {
 	article p {
 		text-align: justify;
 	}
+
+		article p.caption {
+			font-size: 80%;
+			font-style: italic;
+			text-align: left;
+		}
 
 	article h1 a, article h1 a:hover, article h1 a:active, article h1 a:focus {
 		border-bottom: none;

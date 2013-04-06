@@ -259,6 +259,9 @@ class Read extends \Swiftlet\Controller
 		// Remove FeedBurner cruft
 		$html = preg_replace('/(<div class="feedflare.+?<\/div>|<img[^>]+?(feedsportal|feedburner)\.com[^>]+?>)/s', '', $html);
 
+		// Captions
+		$html = preg_replace('/<(figcaption|div class="caption(-(byline|text))?")[^>]*>/', '<p class="caption">', $html);
+
 		// Covert various block level sections to paragraphs
 		$html = preg_replace('/<(\/)?(center|div|figure|figcaption|section)[^>]*>/', '<$1p>', $html);
 
@@ -267,10 +270,11 @@ class Read extends \Swiftlet\Controller
 
 		$config = \HTMLPurifier_Config::createDefault();
 
-		$config->set('HTML.Allowed', 'h1,h2,h3,h4,h5,h6,a[href],p,ul,ol,li,blockquote,em,i,strong,b,img[src],pre,code,table,thead,tbody,tfoot,tr,th,td,iframe[src|frameborder],br');
+		$config->set('HTML.Allowed', 'h1,h2,h3,h4,h5,h6,a[href],p[class],ul,ol,li,blockquote,em,i,strong,b,img[src],pre,code,table,thead,tbody,tfoot,tr,th,td,iframe[src|frameborder],br,small');
 		$config->set('AutoFormat.AutoParagraph', true);
 		$config->set('AutoFormat.RemoveEmpty', true);
 		$config->set('AutoFormat.RemoveEmpty.RemoveNbsp', true);
+		$config->set('Attr.AllowedClasses', array('caption'));
 		$config->set('HTML.SafeIframe', true);
 		$config->set('URI.SafeIframeRegexp', '%^http://(www.youtube(?:-nocookie)?.com/embed/|player.vimeo.com/video/)%'); //allow YouTube and Vimeo
 

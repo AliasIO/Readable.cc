@@ -93,7 +93,7 @@ class Subscriptions extends \Swiftlet\Controller
 						break;
 					case $feed::SERVER_ERROR:
 					default:
-						$error = 'Failed to fetch the feed at the specified URL, please try again.'.$e->getMessage();
+						$error = 'Failed to fetch the feed at the specified URL, please try again.';
 
 						break;
 				}
