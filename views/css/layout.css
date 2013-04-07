@@ -285,7 +285,7 @@ article {
 		}
 
 		article.active.expanded:hover .item-date .feed-options {
-			display: inherit;
+			display: inline;
 		}
 
 	article .article-buttons {
