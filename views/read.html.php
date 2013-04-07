@@ -21,35 +21,31 @@
 	</h1>
 
 	<p class="item-date">
-		<em>
-			<i class="entypo book"></i>
-			By <strong><a href="/feed/view/<?php echo $item->feed_id ?>" title="<?php echo parse_url($item->feed_link,  PHP_URL_HOST) ?>"><?php echo $item->feed_title ?></a></strong>
-			<?php echo $item->posted_at ? 'on ' . date('F j, Y', $item->posted_at) : '' ?>
-			<span class="feed-options">
-				&mdash;
-				<?php if ( $this->get('controller') == 'index' ): ?>
-				<a href="/report/article/<?php echo $item->id ?>" class="report" data-feed-id="<?php echo $item->feed_id ?>" title="Report inappropriate content">
-					<i class="entypo flag"></i>Report
-				</a>
-				&nbsp;
+		<i class="entypo book"></i>
+		By <strong><a href="/feed/view/<?php echo $item->feed_id ?>" title="<?php echo parse_url($item->feed_link,  PHP_URL_HOST) ?>"><?php echo $item->feed_title ?></a></strong>
+		<?php echo $item->posted_at ? 'on ' . date('F j, Y', $item->posted_at) : '' ?>
+		<span class="feed-options">
+			&mdash;
+			<?php if ( $this->get('controller') == 'index' ): ?>
+			<a href="/report/article/<?php echo $item->id ?>" class="report" data-feed-id="<?php echo $item->feed_id ?>" title="Report inappropriate content">
+				<i class="entypo flag"></i>Report
+			</a>
+			&nbsp;
+			<?php endif ?>
+			<a href="javascript: void(0);" class="subscription <?php echo $item->feed_subscribed ? 'unscubscribe' : 'subscribe' ?>" data-feed-id="<?php echo $item->feed_id ?>" title="Subscriptions appear in &lsquo;My Reading&rsquo;">
+				<?php if ( $item->feed_subscribed ): ?>
+				<i class="entypo squared-minus"></i>&nbsp;Unsubscribe
+				<?php else: ?>
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe
 				<?php endif ?>
-				<a href="javascript: void(0);" class="subscription <?php echo $item->feed_subscribed ? 'unscubscribe' : 'subscribe' ?>" data-feed-id="<?php echo $item->feed_id ?>" title="Subscriptions appear in &lsquo;My Reading&rsquo;">
-					<?php if ( $item->feed_subscribed ): ?>
-					<i class="entypo squared-minus"></i>&nbsp;Unsubscribe
-					<?php else: ?>
-					<i class="entypo squared-plus"></i>&nbsp;Subscribe
-					<?php endif ?>
-				</a>
-			</span>
-		</em>
+			</a>
+		</span>
 	</p>
 
 	<div class="item-wrap">
 		<div class="item-contents">
 			<?php echo $item->contents ?>
 		</div>
-
-		<div style="clear: both;"></div>
 
 		<p class="article-buttons">
 			<button class="btn btn-small item-vote<?php echo $item->vote == 1 ? ' btn-inverse voted' : '' ?>" data-item-id="<?php echo $item->id ?>" data-vote="1"  title="Promote articles like these in &lsquo;My Reading&rsquo;">

@@ -268,6 +268,7 @@ article {
 
 	article .item-date {
 		font-size: 80%;
+		font-style: italic;
 		margin-bottom: 20px;
 	}
 
@@ -288,6 +289,7 @@ article {
 		}
 
 	article .article-buttons {
+		clear: both;
 		overflow: hidden;
 		margin-top: 25px;
 	}
