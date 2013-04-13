@@ -54,4 +54,14 @@ class Helper extends \Swiftlet\Model
 
 		return mail($to, $subject, $message, $headers);
 	}
+
+	/**
+	 * Set controller name on view
+	 *
+	 * @param object $controller
+	 */
+	public function viewSetControllerName($controller, $view)
+	{
+		$view->set('controller', strtolower(preg_replace('/^Swiftlet\\\Controllers\\\/', '', get_class($controller))));
+	}
 }

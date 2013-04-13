@@ -107,8 +107,4 @@
 	</fieldset>
 </form>
 
-<script>
-	readable.subscriptions.init();
-</script>
-
 <?php require 'footer.html.php' ?>

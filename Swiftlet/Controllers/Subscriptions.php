@@ -18,6 +18,8 @@ class Subscriptions extends \Swiftlet\Controller
 	 */
 	public function index()
 	{
+		$this->app->getSingleton('helper')->viewSetControllerName($this, $this->view);
+
 		$userId = $this->app->getSingleton('helper')->ensureValidUser();
 
 		if ( !empty($_POST['form']) ) {

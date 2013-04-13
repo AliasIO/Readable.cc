@@ -36,7 +36,18 @@
 			<a href="/contact">Feedback</a>
 		</p>
 
+		<script src="/views/lib/jquery-1.9.1.min.js"></script>
 		<script src="/views/lib/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/views/lib/mousetrap.min.js"></script>
+		<script src="/views/js/readable.js"></script>
+
+		<script>
+			readable.email      = '<?php echo str_replace('@', ' ', $this->app->getConfig('emailFrom')) ?>';
+			readable.controller = '<?php echo $this->get('controller') ?>';
+			readable.args       = '<?php echo implode('/', $this->app->getArgs()) ?>';
+			readable.sessionId  = '<?php echo $this->app->getSingleton('session')->getId() ?>';
+			readable.signedIn   = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
+		</script>
 
 		<script type="text/javascript">
 			var _gaq = _gaq || [];

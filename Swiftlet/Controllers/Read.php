@@ -17,7 +17,7 @@ class Read extends \Swiftlet\Controller
 	{
 		parent::__construct($app, $view);
 
-		$this->view->set('controller', strtolower(preg_replace('/^Swiftlet\\\Controllers\\\/', '', get_class($this))));
+		$this->app->getSingleton('helper')->viewSetControllerName($this, $this->view);
 	}
 
 	/**

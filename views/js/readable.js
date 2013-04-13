@@ -55,6 +55,19 @@ var readable = (function($) {
 
 			app.navBar.init();
 
+			switch ( app.controller ) {
+				case 'index':
+				case 'reading':
+				case 'feed':
+					app.items.init();
+
+					break;
+				case 'subscriptions':
+					app.subscriptions.init();
+
+					break;
+			}
+
 			return app;
 		},
 
@@ -611,6 +624,7 @@ var readable = (function($) {
 
 		subscriptions: {
 			init: function() {
+				alert('x');
 				$('#subscriptions .unsubscribe').click(function() {
 					if ( confirm('Are you sure you wish to unsubscribe from ' + $(this).data('feed-name') + '?') ) {
 						$(this).closest('li').fadeOut();
