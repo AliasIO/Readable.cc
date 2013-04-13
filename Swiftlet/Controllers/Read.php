@@ -282,10 +282,17 @@ class Read extends \Swiftlet\Controller
 
 		$html = $purifier->purify($html);
 
-		$html = preg_replace('/>\s*<br ?\/?>/s', ">\n\n", $html);
+		// First and last child line breaks to newlines
+		$html = preg_replace('/(<[^\/]+>)\s*<br ?\/?>/s', "$1\n\n", $html);
 		$html = preg_replace('/<br ?\/?>\s*</s', "\n\n<", $html);
+
+		// Ensure lost inline elements are wrapped in paragraphs
+		$html = preg_replace('/(em|strong|i|b|small)>\s*</s', "$1>\n\n<", $html);
 
 		// AutoParagraph a second time after elements have been cleaned up
 		$html = $purifier->purify($html);
+
+		// Remove empty paragraph elements
+		$html = preg_replace('/\s*<p><\/p>\s*/', "", $html);
 	}
 }

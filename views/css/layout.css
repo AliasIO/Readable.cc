@@ -354,10 +354,15 @@ article {
 
 	article img.feature {
 		float: left;
-		margin: 0 13px 13px 0;
+		margin: 0 13px 13px 0 !important;
 		max-height: 300px;
 		max-width: 50%;
 		padding: 0;
+	}
+
+	article img {
+		display: block;
+		margin: 13px 0;
 	}
 
 	article img.image-left {
@@ -367,7 +372,6 @@ article {
 	}
 
 	article img.image-right {
-		display: block;
 		margin: 13px 0 0 0;
 	}
 
@@ -376,6 +380,8 @@ article {
 	}
 
 		article p.no-text img {
+			display: inline-block;
+			margin: 0;
 			vertical-align: top;
 		}
 
