@@ -228,6 +228,26 @@ var readable = (function($) {
 					}
 				}, 200);
 
+				if ( $('#page-head span').length > 1 ) {
+					$('#page-head span').css({ display: 'block' });
+
+					$('#page-head span:not(:first-child)').css({ opacity: 0 });
+
+					setInterval(function() {
+						$('#page-head span:first-child')
+							.stop()
+							.css({ zIndex: 0 })
+							.appendTo($('#page-head p'))
+							.animate({ opacity: 0 }, 'slow', function() {
+								$('#page-head span:first-child')
+									.stop()
+									.css({ opacity: 0, top: 10, zIndex: 1 })
+									.animate({ opacity: 1, top: 0 }, 'slow')
+									;
+							})
+					}, 6000);
+				}
+
 				// Expand collapsed item when clicked
 				$('#items').on('click', 'article.collapsed', function(e) {
 					e.preventDefault();

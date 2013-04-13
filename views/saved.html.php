@@ -5,7 +5,7 @@
 		<h1>Saved</h1>
 
 		<p>
-			Click &lsquo;save&rsquo; on articles you wish to read later.
+			<span>Click &lsquo;save&rsquo; on articles you wish to read later.</span>
 		</p>
 	</div>
 </div>
@@ -22,10 +22,6 @@
 <div id="items">
 	<?php require 'read.html.php' ?>
 </div>
-
-<script>
-	readable.items.init();
-</script>
 <?php endif ?>
 
 <?php require 'footer.html.php' ?>

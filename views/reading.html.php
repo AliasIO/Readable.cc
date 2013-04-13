@@ -4,7 +4,11 @@
 	<div id="page-head">
 		<h1>My Reading</h1>
 
-		<p><a href="/subscriptions">Subscribe</a> to feeds and vote on articles for personalised reading.</p>
+		<p>
+			<span><a href="/subscriptions">Subscribe</a> to feeds and vote on articles for personalised reading.</span>
+			<span>Click ‘save’ on articles you wish to <a href="/saved">read later</a>.</span>
+			<span>Vote on articles for personalised reading.</span>
+		</p>
 	</div>
 </div>
 

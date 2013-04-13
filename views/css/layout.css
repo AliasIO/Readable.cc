@@ -166,6 +166,24 @@ blockquote p {
 		font-weight: normal;
 	}
 
+	#page-head p {
+		height: 40px;
+		margin-bottom: 0;
+		overflow: hidden;
+		position: relative;
+	}
+
+	#page-head span {
+		display: none;
+		line-height: 30px;
+		position: absolute;
+		width: 100%;
+	}
+
+	#page-head span:first-child {
+		display: block;
+	}
+
 #items-read-line {
 	color: #ccc;
 	display: none;

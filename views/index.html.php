@@ -5,7 +5,8 @@
 		<h1>Popular Reading</h1>
 
 		<p>
-			Navigate to next and previous articles with <code>j</code> and <code>k</code> (<a href="/shortcuts">more</a>).
+			<span>Navigate to next and previous articles with <code>j</code> and <code>k</code> (<a href="/shortcuts">more</a>).</span>
+			<span><a href="/signup">Sign up</a> to subscribe to RSS feeds and vote on articles for personalised reading.</span>
 		</p>
 	</div>
 </div>
