@@ -257,13 +257,16 @@ class Read extends \Swiftlet\Controller
 		require_once 'HTMLPurifier/Bootstrap.php';
 
 		// Remove FeedBurner cruft
-		$html = preg_replace('/(<div class="feedflare.+?<\/div>|<img[^>]+?(feedsportal|feedburner)\.com[^>]+?>)/s', '', $html);
+		$html = preg_replace('/(<div class="feedflare.+?<\/div>|<img[^>]+?(feedsportal|feedburner)\.com[^>]+?>)/is', '', $html);
 
 		// Captions
-		$html = preg_replace('/<(figcaption|div class="caption(-(byline|text))?")[^>]*>/', '<p class="caption">', $html);
+		$html = preg_replace('/<(figcaption|div class="caption(-(byline|text))?")[^>]*>/i', '<p class="caption">', $html);
 
 		// Covert various block level sections to paragraphs
-		$html = preg_replace('/<(\/)?(center|div|figure|figcaption|section)[^>]*>/', '<$1p>', $html);
+		$html = preg_replace('/<(\/)?(center|div|figure|figcaption|section)[^>]*>/i', '<$1p>', $html);
+
+		// Prevent autoParagraph from removing block level elements
+		$html = preg_replace('/(<\/?(h1|h2|h3|h4|h5|h6|ul|ol|blockquote|pre)[^>]*>)/i', "\n$1\n", $html);
 
 		// Multiple linebreaks to newline
 		$html = preg_replace('/(\s*<br ?\/?>\s*){2,}/s', "\n\n", $html);
@@ -283,16 +286,16 @@ class Read extends \Swiftlet\Controller
 		$html = $purifier->purify($html);
 
 		// First and last child line breaks to newlines
-		$html = preg_replace('/(<[^\/]+>)\s*<br ?\/?>/s', "$1\n\n", $html);
-		$html = preg_replace('/<br ?\/?>\s*</s', "\n\n<", $html);
+		$html = preg_replace('/(<[^\/]+>)\s*<br ?\/?>/is', "$1\n\n", $html);
+		$html = preg_replace('/<br ?\/?>\s*</is', "\n\n<", $html);
 
 		// Ensure lost inline elements are wrapped in paragraphs
-		$html = preg_replace('/(em|strong|i|b|small)>\s*</s', "$1>\n\n<", $html);
+		$html = preg_replace('/(em|strong|i|b|small)>\s*</is', "$1>\n\n<", $html);
 
 		// AutoParagraph a second time after elements have been cleaned up
 		$html = $purifier->purify($html);
 
 		// Remove empty paragraph elements
-		$html = preg_replace('/\s*<p><\/p>\s*/', "", $html);
+		$html = preg_replace('/\s*<p><\/p>\is*/', "", $html);
 	}
 }
