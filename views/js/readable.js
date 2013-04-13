@@ -58,6 +58,7 @@ var readable = (function($) {
 			switch ( app.controller ) {
 				case 'index':
 				case 'reading':
+				case 'saved':
 				case 'feed':
 					app.items.init();
 
