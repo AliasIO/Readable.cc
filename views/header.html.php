@@ -8,7 +8,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<meta name="description" content="The readable feed reader. Promotes interesting articles to the top of your personalised reading list.">
+		<meta name="description" content="<?php echo $this->get('pageDescription') ? $this->get('pageDescription') : 'The readable feed reader. Promotes interesting articles to the top of your personalised reading list.' ?>">
 		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
 
 		<link href="/views/lib/bootstrap/css/readable.css" rel="stylesheet">

@@ -22,7 +22,7 @@
 
 	<p class="item-date">
 		<i class="entypo book"></i>
-		By <strong><a href="/feed/view/<?php echo $item->feed_id ?>" title="<?php echo parse_url($item->feed_link,  PHP_URL_HOST) ?>"><?php echo $item->feed_title ?></a></strong>
+		By <strong><a href="/feed/view/<?php echo $item->feed_id ?>" title="<?php echo parse_url($item->feed_link, PHP_URL_HOST) ?>"><?php echo $item->feed_title ?></a></strong>
 		<?php echo $item->posted_at ? 'on ' . date('F j, Y', $item->posted_at) : '' ?>
 		<span class="feed-options">
 			&mdash;
@@ -60,6 +60,12 @@
 				<i class="entypo install"></i>&nbsp;Save<?php echo $item->saved ? 'd' : '' ?>
 			</button>
 		</p>
+
+		<?php if ( $item->score < 0 ): ?>
+		<p class="alert">
+			Based on content you voted on this article has automatically been marked as &lsquo;Boring&rsquo;. If we got it wrong, press &lsquo;Interesting&rsquo; to help us understand your interests better.
+		</p>
+		<?php endif ?>
 	</div>
 </article>
 <?php endforeach ?>

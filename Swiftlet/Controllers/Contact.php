@@ -13,5 +13,6 @@ class Contact extends \Swiftlet\Controller
 	 */
 	public function index()
 	{
+		$this->view->set('pageDescription', 'Get in touch with Readable.cc, the readable RSS reader.');
 	}
 }

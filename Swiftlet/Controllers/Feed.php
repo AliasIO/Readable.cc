@@ -66,9 +66,10 @@ class Feed extends \Swiftlet\Controllers\Read
 
 			$this->view->name = 'error404';
 		} else {
-			$this->view->set('pageTitle', $feed->title);
-			$this->view->set('title',     $feed->title);
-			$this->view->set('link',      $feed->link);
+			$this->view->set('pageTitle',       $feed->title);
+			$this->view->set('pageDescription', 'News from ' . $feed->title . ' at ' . parse_url($feed->link, PHP_URL_HOST) . '.');
+			$this->view->set('title',           $feed->title);
+			$this->view->set('link',            $feed->link);
 
 			$select = '
 				SELECT

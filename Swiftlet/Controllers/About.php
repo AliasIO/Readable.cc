@@ -13,5 +13,6 @@ class About extends \Swiftlet\Controller
 	 */
 	public function index()
 	{
+		$this->view->set('pageDescription', 'Learn more about Readable.cc, the readable RSS reader.');
 	}
 }
