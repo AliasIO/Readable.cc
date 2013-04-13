@@ -72,6 +72,6 @@ class Helper extends \Swiftlet\Model
 	 */
 	public function getFeedLink($id, $title)
 	{
-		return '/feed/view/' . $id . '/' . trim(preg_replace('/--+/', '-', preg_replace('/[^a-z0-9]/', '-', strtolower($title))), '-');
+		return '/feed/view/' . $id . '/' . trim(preg_replace('/--+/', '-', preg_replace('/[^a-z0-9]/', '-', strtolower( html_entity_decode($title, ENT_QUOTES, 'UTF-8')))), '-');
 	}
 }
