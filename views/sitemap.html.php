@@ -3,7 +3,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 	<?php foreach ( $this->get('feeds') as $feed ): ?>
 	<url>
-		<loc><?php echo $this->app->getConfig('websiteUrl') ?>/feed/view/<?php echo $feed->id ?></loc>
+		<loc><?php echo $this->app->getConfig('websiteUrl') . $this->app->getSingleton('helper')->getFeedLink($feed->id, $feed->title) ?></loc>
 	</url>
 	<?php endforeach ?>
 </urlset>

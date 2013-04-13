@@ -19,7 +19,8 @@ class Sitemap extends \Swiftlet\Controllers\Read
 
 		$sth = $dbh->prepare('
 			SELECT
-				id
+				id,
+				title
 			FROM feeds
 			;');
 
