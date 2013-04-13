@@ -24,7 +24,7 @@
 		<i class="entypo book"></i>
 		By
 		<strong>
-			<a href="/feed/view/<?php echo $item->feed_id ?>/<?php echo $this->app->getSingleton('helper')->stringToUrl($item->feed_title) ?>" title="<?php echo parse_url($item->feed_link, PHP_URL_HOST) ?>">
+			<a href="<?php echo $this->app->getSingleton('helper')->getFeedLink($item->feed_id, $item->feed_title) ?>" title="<?php echo parse_url($item->feed_link, PHP_URL_HOST) ?>">
 				<?php echo $item->feed_title ?>
 			</a>
 		</strong>

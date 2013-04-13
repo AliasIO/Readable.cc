@@ -66,12 +66,12 @@ class Helper extends \Swiftlet\Model
 	}
 
 	/**
-	 * Format a string as a URL segment
+	 * Generate direct link to feed
 	 *
 	 * @param object $controller
 	 */
-	public function stringToUrl($string)
+	public function getFeedLink($id, $title)
 	{
-		return trim(preg_replace('/--+/', '-', preg_replace('/[^a-z0-9]/', '-', strtolower($string))), '-');
+		return '/feed/view/' . $id . '/' . trim(preg_replace('/--+/', '-', preg_replace('/[^a-z0-9]/', '-', strtolower($title))), '-');
 	}
 }
