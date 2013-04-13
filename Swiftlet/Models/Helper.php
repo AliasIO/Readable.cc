@@ -64,4 +64,14 @@ class Helper extends \Swiftlet\Model
 	{
 		$view->set('controller', strtolower(preg_replace('/^Swiftlet\\\Controllers\\\/', '', get_class($controller))));
 	}
+
+	/**
+	 * Format a string as a URL segment
+	 *
+	 * @param object $controller
+	 */
+	public function stringToUrl($string)
+	{
+		return trim(preg_replace('/--+/', '-', preg_replace('/[^a-z0-9]/', '-', strtolower($string))), '-');
+	}
 }
