@@ -96,35 +96,6 @@
 
 <div class="divider"></div>
 
-<h2>Reset</h2>
-
-<p>
-	Start over. Delete your subscriptions, votes, saved articles and records of read articles. You will still be able to sign in.
-	You can <a href="/subscriptions/export">export your subscriptions</a>.
-</p>
-
-<form method="post" action="/account/reset" class="form-signin form-horizontal well">
-	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
-
-	<fieldset>
-		<div class="control-group <?php echo $this->get('error-password-reset') ? 'error' : '' ?>">
-			<label class="control-label" for="password">Password</label>
-
-			<div class="controls">
-				<input id="password" name="password" class="input-xlarge" type="password" autocomplete="off">
-			</div>
-		</div>
-
-		<div class="control-group <?php echo $this->get('error-email') ? 'error' : '' ?>">
-			<div class="controls">
-				<button class="btn btn-danger" type="submit"><i class="entypo user"></i> Reset account</button>
-			</div>
-		</div>
-	</fieldset>
-</form>
-
-<div class="divider"></div>
-
 <h2>Delete</h2>
 
 <p>

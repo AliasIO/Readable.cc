@@ -5,14 +5,15 @@ Disallow: /COPYING
 Disallow: /HTMLPurifier
 Disallow: /HTMLPurifier.php
 Disallow: /README.md
+Disallow: /report
 Disallow: /mysql
 Disallow: /sessions
 Disallow: /signup
 Disallow: /signin
-Disallow: /Swiftlet/
+Disallow: /Swiftlet
 Disallow: /forgot
 Disallow: /report
-Disallow: /views/
+Disallow: /views
 
 User-Agent: T-800
 Disallow: /john/connor

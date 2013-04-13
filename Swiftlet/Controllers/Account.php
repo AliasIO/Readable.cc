@@ -25,64 +25,6 @@ class Account extends \Swiftlet\Controller
 		$this->view->set('email',    $session->get('email'));
 		$this->view->set('timezone', $session->get('timezone'));
 
-		/*
-		$dbh = $this->app->getSingleton('pdo')->getHandle();
-
-		$sth = $dbh->prepare('
-			SELECT
-				main.word,
-				@row := @row - 1 AS score
-			FROM (
-				SELECT
-					words.word
-				FROM      users_words
-				LEFT JOIN words       ON users_words.word_id = words.id
-				WHERE
-					user_id = :user_id
-				ORDER BY users_words.score DESC
-				LIMIT 50
-      ) AS main, (
-        SELECT @row := 51
-      ) AS rownum
-			;');
-
-		$sth->bindParam(':user_id', $this->userId);
-
-		$sth->execute();
-
-		$interesting = $sth->fetchAll(\PDO::FETCH_OBJ);
-
-		$sth = $dbh->prepare('
-			SELECT
-				main.word,
-				@row := @row + 1 AS score
-			FROM (
-				SELECT
-					words.word
-				FROM      users_words
-				LEFT JOIN words       ON users_words.word_id = words.id
-				WHERE
-					user_id = :user_id
-				ORDER BY users_words.score ASC
-				LIMIT 30
-      ) AS main, (
-        SELECT @row := -30
-      ) AS rownum
-			;');
-
-		$sth->bindParam(':user_id', $this->userId);
-
-		$sth->execute();
-
-		$boring = $sth->fetchAll(\PDO::FETCH_OBJ);
-
-		$words = array_merge($interesting, $boring);
-
-		usort($words, array($this, 'sortWords'));
-
-		$this->view->set('words', $words);
-		*/
-
 		$this->view->set('timeZones', array(
 			'-720' => '(GMT -12:00) Eniwetok, Kwajalein',
 			'-660' => '(GMT -11:00) Midway Island, Samoa',
@@ -200,64 +142,6 @@ class Account extends \Swiftlet\Controller
 
 			$this->view->set('email',    $email);
 			$this->view->set('timezone', $timeZone);
-		}
-	}
-
-	/**
-	 * Reset account
-	 */
-	public function reset()
-	{
-		$session = $this->app->getSingleton('session');
-
-		if ( !empty($_POST) ) {
-			$success = false;
-			$error   = false;
-
-			$password = isset($_POST['password']) ? $_POST['password'] : '';
-
-			try {
-				$auth = $this->app->getSingleton('auth');
-
-				$auth->authenticate($session->get('email'), $password);
-
-				$dbh = $this->app->getSingleton('pdo')->getHandle();
-
-				$sth = $dbh->prepare('
-					DELETE
-						users_feeds,
-						users_items,
-						users_words
-					FROM users_feeds, users_items, users_words
-					WHERE
-						users_feeds.user_id = :user_id OR
-						users_items.user_id = :user_id OR
-						users_words.user_id = :user_id
-					;');
-
-				$sth->bindParam('user_id', $this->userId);
-
-				$sth->execute();
-
-				$success = 'Your account has been reset.';
-			} catch ( \Exception $e ) {
-				switch ( $e->getCode() ) {
-					case $auth::PASSWORD_INCORRECT:
-						$error = 'Password incorrect, please try again';
-
-						$this->view->set('error-password-reset', true);
-
-						break;
-					default:
-						$error = 'An unknown error ocurred.' . $e->getMessage();
-				}
-			}
-
-			if ( $success ) {
-				$this->view->set('success', $success);
-			} else {
-				$this->view->set('error', $error);
-			}
 		}
 	}
 
