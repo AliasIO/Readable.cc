@@ -235,7 +235,8 @@ class Feed extends \Swiftlet\Model
 			CURLOPT_FOLLOWLOCATION => true,
 			CURLOPT_MAXREDIRS      => 3,
 			CURLOPT_TIMEOUT        => $this->timeout,
-			CURLOPT_USERAGENT      => 'http://readable.cc'
+			CURLOPT_USERAGENT      => 'http://readable.cc',
+			CURLOPT_HTTPHEADER     => array('Accept: application/rss+xml,application/atom+xml,application/xml,text/html;q=0.9,*/*;q=0.8')
 			));
 
 		$result = curl_exec($ch);
