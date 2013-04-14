@@ -9,7 +9,8 @@ class Feed extends \Swiftlet\Model
 		SERVER_ERROR = 2,
 		NS_CONTENT   = 'http://purl.org/rss/1.0/modules/content/',
 		NS_DC        = 'http://purl.org/dc/elements/1.1/',
-		NS_XML       = 'http://www.w3.org/XML/1998/namespace'
+		NS_XML       = 'http://www.w3.org/XML/1998/namespace',
+		NS_ATOM10    = 'http://www.w3.org/2005/Atom'
 		;
 
 	public
@@ -99,6 +100,10 @@ class Feed extends \Swiftlet\Model
 					$language = $this->xml->channel->children(Feed::NS_DC)->language;
 				}
 
+				$nsAtom10 = $this->xml->channel->children(self::NS_ATOM10);
+
+				$title = $this->xml->channel->title ? $this->xml->channel->title : ( $nsAtom10->link->attributes()->href ? $nsAtom10->link->attributes()->href : false );
+
 				$this->title    = (string) $this->xml->channel->title;
 				$this->link     = (string) $this->xml->channel->link;
 				$this->language = (string) $language;
@@ -166,21 +171,25 @@ class Feed extends \Swiftlet\Model
 		try {
 			$simpleXml = new \SimpleXMLElement($xml);
 
-			if ( $simpleXml->getName() == 'rss' && $simpleXml->channel && $simpleXml->channel->title && $simpleXml->channel->link && $simpleXml->channel->item ) {
-				$item = $simpleXml->channel->item[0];
+			if ( $simpleXml->getName() == 'rss' && $simpleXml->channel && $simpleXml->channel->title && $simpleXml->channel->item ) {
+				$nsAtom10 = $simpleXml->channel->children(self::NS_ATOM10);
 
-				if ( $item->title && $item->link ) {
-					if ( $item->description ) {
+				if ( $simpleXml->channel->link || $nsAtom10->link->attributes()->href ) {
+					$item = $simpleXml->channel->item[0];
+
+					if ( $item->title && $item->link ) {
+						if ( $item->description ) {
+							return 'rss2';
+						}
+
+						$content = $item->children(self::NS_CONTENT);
+
+						if ( $content->encoded ) {
+							return 'rss1';
+						}
+
 						return 'rss2';
 					}
-
-					$content = $item->children(self::NS_CONTENT);
-
-					if ( $content->encoded ) {
-						return 'rss1';
-					}
-
-					return 'rss2';
 				}
 			}
 
