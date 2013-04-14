@@ -186,7 +186,7 @@ class Feed extends \Swiftlet\Model
 			if ( $simpleXml->getName() == 'feed' && $simpleXml->title && $simpleXml->link && $simpleXml->entry ) {
 				$item = $simpleXml->entry[0];
 
-				if ( $item->title && $item->link->attributes()->href && $item->content && $item->published ) {
+				if ( $item->title && $item->link->attributes()->href && $item->content ) {
 					return 'atom';
 				}
 			}

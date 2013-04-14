@@ -163,6 +163,8 @@ class FeedItem extends \Swiftlet\Model
 					}
 				}
 
+				$date = $this->xml->published ? $this->xml->published : ( $this->xml->updated ? $this->xml->updated : false );
+
 				$language = (string) $this->xml->content->attributes(Feed::NS_XML)->lang;
 
 				if ( !$language ) {
@@ -172,7 +174,7 @@ class FeedItem extends \Swiftlet\Model
 				$data->url      = (string) $link->attributes()->href;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = (string) $this->xml->content;
-				$data->postedAt = date('Y-m-d H:i', $this->xml->published ? strtotime((string) $this->xml->published) : time());
+				$data->postedAt = date('Y-m-d H:i', $date ? strtotime((string) $date) : time());
 				$data->language = $language;
 
 				break;
