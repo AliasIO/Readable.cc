@@ -147,11 +147,11 @@ class FeedItem extends \Swiftlet\Model
 
 		switch ( $this->feed->getType() ) {
 			case 'rss2':
-				$contents = $nsContent->encoded ? $nsContent->encoded : $this->xml->description;
+				$contents = $nsContent->encoded ? $nsContent->encoded : ( $this->xml->description ? $this->xml->description : false );
 
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
-				$data->contents = (string) $contents;
+				$data->contents = $contents ? (string) $contents : '';
 				$data->postedAt = date('Y-m-d H:i', $this->xml->pubDate ? strtotime((string) $this->xml->pubDate) : time());
 				$data->language = $this->feed->getLanguage();
 
@@ -182,11 +182,13 @@ class FeedItem extends \Swiftlet\Model
 				break;
 			case 'rss1':
 			case 'rss-rdf':
+				$contents = $nsContent->encoded ? $nsContent->encoded : false;
+
 				$date = $this->xml->pubDate ? $this->xml->pubDate : ( $nsDc->date ? $nsDc->date : false );
 
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
-				$data->contents = (string) $nsContent->encoded;
+				$data->contents = $contents ? (string) $nsContent->encoded : '';
 				$data->postedAt = date('Y-m-d H:i', $date ? strtotime((string) $date) : time());
 				$data->language = $this->feed->getLanguage();
 

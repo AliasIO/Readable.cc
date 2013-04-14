@@ -179,8 +179,9 @@ class Feed extends \Swiftlet\Model
 					if ( $content->encoded ) {
 						return 'rss1';
 					}
-				}
 
+					return 'rss2';
+				}
 			}
 
 			if ( $simpleXml->getName() == 'feed' && $simpleXml->title && $simpleXml->link && $simpleXml->entry ) {
