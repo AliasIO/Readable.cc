@@ -40,7 +40,7 @@ class Feed extends \Swiftlet\Model
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		$sth = $dbh->prepare('
-			UPDATE feeds SET
+			UPDATE LOW_PRIORITY feeds SET
 				last_fetch_attempted_at = UTC_TIMESTAMP()
 			WHERE
 				url = :url
@@ -120,7 +120,7 @@ class Feed extends \Swiftlet\Model
 
 		// Set last fetched date
 		$sth = $dbh->prepare('
-			UPDATE feeds SET
+			UPDATE LOW_PRIORITY feeds SET
 				last_fetched_at = UTC_TIMESTAMP()
 			WHERE
 				url = :url
@@ -306,7 +306,7 @@ class Feed extends \Swiftlet\Model
 
 		// Add the feed
 		$sth = $dbh->prepare('
-			INSERT IGNORE INTO feeds (
+			INSERT LOW_PRIORITY IGNORE INTO feeds (
 				url,
 				title,
 				link,
@@ -356,7 +356,7 @@ class Feed extends \Swiftlet\Model
 		// Cross reference feed and user
 		if ( $this->id ) {
 			$sth = $dbh->prepare('
-				INSERT IGNORE INTO users_feeds (
+				INSERT LOW_PRIORITY IGNORE INTO users_feeds (
 					user_id,
 					feed_id
 				) VALUES (

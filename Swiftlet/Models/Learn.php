@@ -37,7 +37,7 @@ class Learn extends \Swiftlet\Model
 
 		if ( $userIds ) {
 			$sth = $dbh->prepare('
-				UPDATE users SET
+				UPDATE LOW_PRIORITY users SET
 					last_learned_at = UTC_TIMESTAMP()
 				WHERE
 					users.id IN ( ' . implode(', ', $userIds) . ' )
@@ -49,7 +49,7 @@ class Learn extends \Swiftlet\Model
 			// Rank words
 			foreach ( $userIds as $userId ) {
 				$sth = $dbh->prepare('
-					REPLACE INTO users_words (
+					REPLACE LOW_PRIORITY INTO users_words (
 						user_id,
 						word_id,
 						score
@@ -90,7 +90,7 @@ class Learn extends \Swiftlet\Model
 		// Rank items
 		if ( $itemIds ) {
 			$sth = $dbh->prepare('
-				INSERT INTO users_items (
+				INSERT LOW_PRIORITY INTO users_items (
 					user_id,
 					item_id,
 					score
