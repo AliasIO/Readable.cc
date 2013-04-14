@@ -238,7 +238,7 @@ class Read extends \Swiftlet\Controller
 	protected function prepare(&$items)
 	{
 		foreach ( $items as $item ) {
-			$this->purify($item->contents);
+			$this->purify($item->contents, 'http://' . parse_url($item->feed_link, PHP_URL_HOST) . '/');
 
 			$this->app->getSingleton('helper')->localize($item->posted_at);
 
@@ -252,7 +252,7 @@ class Read extends \Swiftlet\Controller
 	 * @param string $html
 	 * @return string
 	 */
-	protected function purify(&$html)
+	protected function purify(&$html, $baseUrl = '')
 	{
 		require_once 'HTMLPurifier/Bootstrap.php';
 
@@ -297,5 +297,13 @@ class Read extends \Swiftlet\Controller
 
 		// Remove empty paragraph elements
 		$html = preg_replace('/\s*<p><\/p>\is*/', "", $html);
+
+		preg_match_all('/(href|src)=("|\')([^"\']+)\2/', $html, $matches);
+
+		foreach ( $matches[3] as $url ) {
+			if ( !preg_match('/^http/', $url) ) {
+				$html = str_replace($url, $baseUrl . ltrim($url, '/'), $html);
+			}
+		}
 	}
 }

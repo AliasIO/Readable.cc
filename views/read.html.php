@@ -11,9 +11,10 @@
 
 <?php foreach ( $items as $item ): ?>
 <article
-	data-item-id="<?php    echo $item->id                     ?>"
-	data-item-score="<?php echo $item->score                  ?>"
-	data-item-url="<?php   echo $this->htmlEncode($item->url) ?>"
+	data-item-id="<?php echo $item->id ?>"
+	data-item-score="<?php echo $item->score ?>"
+	data-item-url="<?php echo $this->htmlEncode($item->url) ?>"
+	data-feed-host="<?php echo parse_url($item->feed_link, PHP_URL_HOST) ?>"
 	class="inactive collapsed <?php echo $item->score < 0 ? ' boring' : '' ?>"
 	>
 	<h1<?php echo $item->score < 0 ? ' title="You may find this article uninteresting (based on articles you voted on)"' : '' ?>>
