@@ -31,7 +31,7 @@ class Cron extends \Swiftlet\Controller
 
 		$results = $sth->fetchAll(\PDO::FETCH_OBJ);
 
-		echo 'Fetching ' . count($results) . ' feeds&hellip;<br>';
+		echo 'Fetching ' . count($results) . " feeds&hellip;<br>\n";
 
 		foreach ( $results as $result ) {
 			$feed = $this->app->getModel('feed');
@@ -39,7 +39,7 @@ class Cron extends \Swiftlet\Controller
 			try {
 				$feed->fetch($result->url, false);
 			} catch ( \Exception $e ) {
-				echo $result->url . ': (' . $e->getCode() . ') ' . $e->getMessage() . '<br>';
+				echo $result->url . ': (' . $e->getCode() . ') ' . $e->getMessage() . "<br>\n";
 
 				continue;
 			}
@@ -58,7 +58,7 @@ class Cron extends \Swiftlet\Controller
 		// Learning
 		$result = $this->app->getSingleton('learn')->learn($itemIds);
 
-		echo 'Learned for ' . $result[0] . ' items and ' . $result[1] . ' users<br>';
+		echo 'Learned for ' . $result[0] . ' items and ' . $result[1] . " users<br>\n";
 
 		// Prune sessions
 		if ( $handle = opendir('sessions') ) {
@@ -80,6 +80,6 @@ class Cron extends \Swiftlet\Controller
 			closedir($handle);
 		}
 
-		exit('Done.');
+		exit("Done.\n");
 	}
 }
