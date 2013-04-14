@@ -5,7 +5,10 @@
 		<h1><?php echo $this->get('title') ?></h1>
 
 		<p>
-			<a href="<?php echo $this->get('link') ?>"><?php echo parse_url($this->get('link'), PHP_URL_HOST) ?></a>
+			<span>Articles from <a href="<?php echo $this->get('link') ?>"><?php echo parse_url($this->get('link'), PHP_URL_HOST) ?></a></span>
+			<?php if ( !$this->app->getSingleton('session')->get('id') ): ?>
+			<span><a href="/signup">Sign up</a> to subscribe to RSS feeds and vote on articles for personalised reading.</span>
+			<?php endif ?>
 		</p>
 	</div>
 </div>
