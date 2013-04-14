@@ -87,6 +87,16 @@ class Subscriptions extends \Swiftlet\Controller
 
 			try {
 				$feed->fetch($url)->save();
+
+				$itemIds = array();
+
+				foreach ( $feed->getItems() as $item ) {
+					if ( $item->getId() ) {
+						$itemIds[] = $item->getId();
+					}
+				}
+
+				$this->app->getsingleton('learn')->learn($itemIds);
 			} catch ( \Exception $e ) {
 				switch ( $e->getCode() ) {
 					case $feed::FEED_INVALID:

@@ -60,17 +60,22 @@ class Learn extends \Swiftlet\Model
 						main.vote * ( @row := @row + 1 ) AS score
 					FROM (
 						SELECT
-							words.id              AS word_id,
-							users_items.user_id   AS user_id,
+							items_words.word_id,
+							users_items.user_id,
 							SUM(users_items.vote) AS vote
-						FROM      words
-						LEFT JOIN items_words ON       words.id      = items_words.word_id
-						LEFT JOIN items       ON items_words.item_id =       items.id
-						LEFT JOIN users_items ON       items.id      = users_items.item_id
-						WHERE
-							users_items.user_id = :user_id
-						GROUP BY words.id
-						ORDER BY count DESC
+						FROM (
+							SELECT
+								users_items.item_id,
+								users_items.user_id,
+								users_items.vote
+							FROM      items
+							INNER JOIN users_items ON users_items.item_id = items.id AND users_items.user_id = :user_id
+							ORDER BY items.id DESC
+							LIMIT 5000
+						) AS users_items
+						INNER JOIN items_words ON items_words.item_id = users_items.item_id
+						GROUP BY items_words.word_id
+						ORDER BY SUM(items_words.`count`) DESC
 					) AS main, (
 						SELECT @row := 0
 					) AS rownum
@@ -91,21 +96,27 @@ class Learn extends \Swiftlet\Model
 					score
 					)
 				SELECT
-					users_feeds.user_id,
-					items.id,
-					COALESCE(SUM(users_words.score), 0)
-				FROM       users_feeds
-				INNER JOIN       users ON users.id            = users_feeds.user_id
-				INNER JOIN       items ON items.feed_id       = users_feeds.feed_id
-				LEFT  JOIN users_items ON users_items.item_id =       items.id
-				LEFT  JOIN items_words ON items_words.item_id =       items.id
-				LEFT  JOIN users_words ON users_words.word_id = items_words.word_id
-				WHERE
-						items.id              IN ( ' . implode(', ', $itemIds) . ' )      AND -- Learn only for new items
-						users.enabled         = 1                                         AND -- Learn only for enabled users
-						users.last_active_at  > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY)     -- Learn only for recently active users
-				GROUP BY users_feeds.user_id, items.id
-				LIMIT 1000000
+					user_id,
+					item_id,
+					SUM(score) AS score
+				FROM (
+					SELECT
+						users_feeds.user_id,
+						items.id AS item_id,
+						users_words.score * CAST(items_words.count AS SIGNED) AS score
+					FROM       users_feeds
+					INNER JOIN       users ON users.id            = users_feeds.user_id
+					INNER JOIN       items ON items.feed_id       = users_feeds.feed_id
+					LEFT  JOIN users_items ON users_items.item_id =       items.id
+					LEFT  JOIN items_words ON items_words.item_id =       items.id
+					LEFT  JOIN users_words ON users_words.word_id = items_words.word_id AND users_words.user_id = users.id
+					WHERE
+							items.id             IN ( ' . implode(', ', $itemIds) . ' )      AND -- Learn only for new items
+							users.enabled        = 1                                         AND -- Learn only for enabled users
+							users.last_active_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY)     -- Learn only for recently active users
+					LIMIT 1000000
+					) AS main
+				GROUP BY user_id, item_id
 				ON DUPLICATE KEY UPDATE
 					score = VALUES(score)
 				;');

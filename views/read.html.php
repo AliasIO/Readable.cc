@@ -24,11 +24,7 @@
 	<p class="item-date">
 		<i class="entypo book"></i>
 		By
-		<strong>
-			<a href="<?php echo $this->app->getSingleton('helper')->getFeedLink($item->feed_id, $item->feed_title) ?>" title="<?php echo parse_url($item->feed_link, PHP_URL_HOST) ?>">
-				<?php echo $item->feed_title ?>
-			</a>
-		</strong>
+		<strong><a href="<?php echo $this->app->getSingleton('helper')->getFeedLink($item->feed_id, $item->feed_title) ?>" title="<?php echo parse_url($item->feed_link, PHP_URL_HOST) ?>"><?php echo $item->feed_title ?></a></strong>
 		<?php echo $item->posted_at ? 'on ' . date('F j, Y', $item->posted_at) : '' ?>
 		<span class="feed-options">
 			&mdash;
