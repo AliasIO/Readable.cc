@@ -163,9 +163,11 @@ class FeedItem extends \Swiftlet\Model
 					}
 				}
 
+				$contents = $this->xml->content ? $this->xml->content : ( $this->xml->summary ? $this->xml->summary : false );
+
 				$date = $this->xml->published ? $this->xml->published : ( $this->xml->updated ? $this->xml->updated : false );
 
-				$language = (string) $this->xml->content->attributes(Feed::NS_XML)->lang;
+				$language = $this->xml->content ? (string) $this->xml->content->attributes(Feed::NS_XML)->lang : '';
 
 				if ( !$language ) {
 					$language = $this->feed->getLanguage();
@@ -173,7 +175,7 @@ class FeedItem extends \Swiftlet\Model
 
 				$data->url      = (string) $link->attributes()->href;
 				$data->title    = (string) $this->xml->title;
-				$data->contents = (string) $this->xml->content;
+				$data->contents = $contents ? (string) $contents : '';
 				$data->postedAt = date('Y-m-d H:i', $date ? strtotime((string) $date) : time());
 				$data->language = $language;
 
