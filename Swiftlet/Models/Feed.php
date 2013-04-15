@@ -207,7 +207,7 @@ class Feed extends \Swiftlet\Model
 				if ( $item->title && $item->link ) {
 					$content = $item->children(self::NS_CONTENT);
 
-					if ( $content->encoded ) {
+					if ( $item->description || $content->encoded ) {
 						return 'rss1-rdf';
 					}
 				}

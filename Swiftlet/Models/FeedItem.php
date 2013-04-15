@@ -189,14 +189,14 @@ class FeedItem extends \Swiftlet\Model
 
 				break;
 			case 'rss1':
-			case 'rss-rdf':
-				$contents = $nsContent->encoded ? $nsContent->encoded : false;
+			case 'rss1-rdf':
+				$contents = $nsContent->encoded ? $nsContent->encoded : ( $this->xml->description ? $this->xml->description : false );
 
 				$date = $this->xml->pubDate ? $this->xml->pubDate : ( $nsDc->date ? $nsDc->date : false );
 
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
-				$data->contents = $contents ? (string) $nsContent->encoded : '';
+				$data->contents = $contents ? (string) $contents : '';
 				$data->postedAt = date('Y-m-d H:i', $date ? strtotime((string) $date) : time());
 				$data->language = $this->feed->getLanguage();
 
