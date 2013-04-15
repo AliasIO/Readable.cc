@@ -51,6 +51,10 @@ class FeedItem extends \Swiftlet\Model
 
 		$data = $this->getData();
 
+		if ( !$data ) {
+			return;
+		}
+
 		$sth->bindParam('title',     $data->title);
 		$sth->bindParam('url',       $data->url);
 		$sth->bindParam('contents',  $data->contents);
@@ -161,6 +165,10 @@ class FeedItem extends \Swiftlet\Model
 					if ( $link->attributes()->rel == 'alternate' ) {
 						break;
 					}
+				}
+
+				if ( !$link ) {
+					break;
 				}
 
 				$contents = $this->xml->content ? $this->xml->content : ( $this->xml->summary ? $this->xml->summary : false );
