@@ -47,6 +47,7 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`items` (
   `language` VARCHAR(255) NULL ,
   `short` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 ,
   `english` TINYINT(1) UNSIGNED NOT NULL ,
+  `score` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `url` (`url` ASC) ,
   INDEX `posted_at` (`posted_at` ASC) ,

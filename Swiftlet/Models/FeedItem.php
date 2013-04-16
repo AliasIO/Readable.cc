@@ -45,6 +45,7 @@ class FeedItem extends \Swiftlet\Model
 				:title,
 				:contents,
 				:language,
+				:english,
 				:posted_at,
 				:feed_id,
 				:short,
