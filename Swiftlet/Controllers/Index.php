@@ -62,7 +62,7 @@ class Index extends \Swiftlet\Controllers\Read
 					feeds.hidden           = 0        AND
 					items.hidden           = 0        AND
 					items.language         LIKE "en%" AND
-					LENGTH(items.contents) > 1000
+					items.short            = 0
 					' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
 				GROUP BY items.id
 				ORDER BY DATE(items.posted_at) DESC, AVG(users_items.score) DESC

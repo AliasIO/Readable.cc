@@ -37,6 +37,7 @@ class FeedItem extends \Swiftlet\Model
 				language,
 				posted_at,
 				feed_id,
+				short,
 				created_at
 			) VALUES (
 				:url,
@@ -45,6 +46,7 @@ class FeedItem extends \Swiftlet\Model
 				:language,
 				:posted_at,
 				:feed_id,
+				:short,
 				UTC_TIMESTAMP()
 			)
 			;');
@@ -61,6 +63,7 @@ class FeedItem extends \Swiftlet\Model
 		$sth->bindParam('language',  $data->language);
 		$sth->bindParam('posted_at', $data->postedAt);
 		$sth->bindParam('feed_id',   $this->feed->id);
+		$sth->bindParam('short',     $data->short);
 
 		$sth->execute();
 
@@ -202,6 +205,8 @@ class FeedItem extends \Swiftlet\Model
 
 				break;
 		}
+
+		$data->short = strlen($data->contents) < 1000 ? 1 : 0;
 
 		return $data;
 	}

@@ -45,12 +45,14 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`items` (
   `created_at` DATETIME NULL ,
   `hidden` TINYINT(1) UNSIGNED NULL ,
   `language` VARCHAR(255) NULL ,
+  `short` TINYINT(1) UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `url` (`url` ASC) ,
   INDEX `posted_at` (`posted_at` ASC) ,
   INDEX `feed_id` (`feed_id` ASC) ,
   INDEX `hidden` (`hidden` ASC) ,
   INDEX `language` (`language` ASC) ,
+  INDEX `short` (`short` ASC) ,
   CONSTRAINT `items_feed_id`
     FOREIGN KEY (`feed_id` )
     REFERENCES `readable_cc`.`feeds` (`id` )
