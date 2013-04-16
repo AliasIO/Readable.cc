@@ -40,35 +40,28 @@ class Index extends \Swiftlet\Controllers\Read
 
 		$select = '
 			SELECT
-				*
-			FROM (
-				SELECT
-					feeds.id         AS feed_id,
-					feeds.title      AS feed_title,
-					feeds.link       AS feed_link,
-					items.id,
-					items.url,
-					items.title,
-					items.contents,
-					items.posted_at,
-					0                AS feed_subscribed,
-					0                AS vote,
-					0                AS saved,
-					COALESCE(AVG(users_items.score), 0) AS score
-				FROM             items
-				INNER JOIN       feeds ON       feeds.id      = items.feed_id
-				LEFT  JOIN users_items ON users_items.item_id = items.id
-				WHERE
-					feeds.hidden           = 0 AND
-					items.hidden           = 0 AND
-					items.english          = 1 AND
-					items.short            = 0
-					' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
-				GROUP BY items.id
-				ORDER BY DATE(items.posted_at) DESC, AVG(users_items.score) DESC
-				) AS items
+				feeds.id         AS feed_id,
+				feeds.title      AS feed_title,
+				feeds.link       AS feed_link,
+				items.id,
+				items.url,
+				items.title,
+				items.contents,
+				items.posted_at,
+				items.score      AS score,
+				0                AS feed_subscribed,
+				0                AS vote,
+				0                AS saved
+			FROM       items
+			INNER JOIN feeds ON feeds.id = items.feed_id
 			WHERE
-				score > 0
+				feeds.hidden  = 0 AND
+				items.hidden  = 0 AND
+				items.english = 1 AND
+				items.short   = 0 AND
+				items.score   > 0
+				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
+			ORDER BY DATE(items.posted_at) DESC, items.score DESC
 			';
 
 		if ( $userId ) {
