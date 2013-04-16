@@ -70,6 +70,7 @@ class Cron extends \Swiftlet\Controller
 					FROM users_items
 					WHERE
 						users_items.item_id IN ( ' . implode(', ', $itemIds) . ' )
+					GROUP BY users_items.item_id
 					) AS main ON main.item_id = items.id
 				SET
 					items.score = main.score
