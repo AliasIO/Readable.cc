@@ -35,6 +35,7 @@ class FeedItem extends \Swiftlet\Model
 				title,
 				contents,
 				language,
+				english,
 				posted_at,
 				feed_id,
 				short,
@@ -61,6 +62,7 @@ class FeedItem extends \Swiftlet\Model
 		$sth->bindParam('url',       $data->url);
 		$sth->bindParam('contents',  $data->contents);
 		$sth->bindParam('language',  $data->language);
+		$sth->bindParam('english',   $data->english);
 		$sth->bindParam('posted_at', $data->postedAt);
 		$sth->bindParam('feed_id',   $this->feed->id);
 		$sth->bindParam('short',     $data->short);
@@ -207,6 +209,8 @@ class FeedItem extends \Swiftlet\Model
 		}
 
 		$data->short = strlen($data->contents) < 1000 ? 1 : 0;
+
+		$data->english = substr(strtolower($data->language), 0, 2) == 'en';
 
 		return $data;
 	}

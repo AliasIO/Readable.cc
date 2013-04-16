@@ -45,7 +45,8 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`items` (
   `created_at` DATETIME NULL ,
   `hidden` TINYINT(1) UNSIGNED NULL ,
   `language` VARCHAR(255) NULL ,
-  `short` TINYINT(1) UNSIGNED NULL ,
+  `short` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 ,
+  `english` TINYINT(1) UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `url` (`url` ASC) ,
   INDEX `posted_at` (`posted_at` ASC) ,
@@ -53,6 +54,7 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`items` (
   INDEX `hidden` (`hidden` ASC) ,
   INDEX `language` (`language` ASC) ,
   INDEX `short` (`short` ASC) ,
+  INDEX `english` (`english` ASC) ,
   CONSTRAINT `items_feed_id`
     FOREIGN KEY (`feed_id` )
     REFERENCES `readable_cc`.`feeds` (`id` )

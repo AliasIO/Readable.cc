@@ -59,9 +59,9 @@ class Index extends \Swiftlet\Controllers\Read
 				INNER JOIN       feeds ON       feeds.id      = items.feed_id
 				LEFT  JOIN users_items ON users_items.item_id = items.id
 				WHERE
-					feeds.hidden           = 0        AND
-					items.hidden           = 0        AND
-					items.language         LIKE "en%" AND
+					feeds.hidden           = 0 AND
+					items.hidden           = 0 AND
+					items.english          = 1 AND
 					items.short            = 0
 					' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
 				GROUP BY items.id
