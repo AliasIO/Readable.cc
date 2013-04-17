@@ -121,8 +121,6 @@ class Learn extends \Swiftlet\Model
 					score = VALUES(score)
 				;');
 
-			$sth->bindParam('user_id', $userId);
-
 			$sth->execute();
 		}
 
