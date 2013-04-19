@@ -69,9 +69,9 @@ class Learn extends \Swiftlet\Model
 								users_items.user_id,
 								users_items.vote
 							FROM      items
-							INNER JOIN users_items ON users_items.item_id = items.id AND users_items.user_id = :user_id
+							INNER JOIN users_items ON users_items.item_id = items.id AND users_items.vote != 0 AND users_items.user_id = :user_id
 							ORDER BY items.id DESC
-							LIMIT 5000
+							LIMIT 1000
 						) AS users_items
 						INNER JOIN items_words ON items_words.item_id = users_items.item_id
 						GROUP BY items_words.word_id
