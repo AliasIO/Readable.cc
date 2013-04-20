@@ -12,4 +12,12 @@
 	<a class="contact-email" href="mailto:<?php echo $this->app->getConfig('emailHoneyPot') ?>"><?php echo $this->app->getConfig('emailHoneyPot') ?></a>
 </p>
 
+<p>
+	<br>Follow Readable.cc on Twitter:
+</p>
+
+<p>
+	<a href="https://twitter.com/<?php echo $this->app->getConfig('twitterHandle') ?>">@<?php echo $this->app->getConfig('twitterHandle') ?></a>
+</p>
+
 <?php require 'footer.html.php' ?>

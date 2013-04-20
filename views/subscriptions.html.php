@@ -19,25 +19,128 @@
 <?php if ( $feeds = $this->get('feeds') ): ?>
 <h3>Subscriptions</h3>
 
-<ul id="subscriptions">
-	<?php foreach ( $feeds as $feed ): ?>
-	<li>
-		<a href="<?php echo $this->app->getSingleton('helper')->getFeedLink($feed->id, $feed->title) ?>"><?php echo $feed->title ?></a>
-		<span>
-			<a href="<?php echo $feed->link ?>" title="Visit the website at <?php echo parse_url($feed->link, PHP_URL_HOST) ?>"><i class="entypo link"></i></a>
-			<a href="<?php echo $feed->url  ?>" title="View the feed at <?php echo parse_url($feed->url,  PHP_URL_HOST) ?>"><i class="entypo rss"></i></a>
-			<small>
-				&nbsp;
-				<?php echo $feed->last_fetched_at ? 'Last fetched on ' . date('F j, Y', $feed->last_fetched_at) : 'Never successfully fetched' ?>
-				&nbsp;
-				<a class="unsubscribe" href="javascript: void(0);" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
-					<i class="entypo squared-minus"></i> Unsubscribe
-				</a>
-			</small>
-		</span>
-	</li>
-	<?php endforeach ?>
-</ul>
+<table id="subscriptions" class="table table-bordered table-striped table-hover">
+	<tbody>
+		<?php foreach ( $feeds as $feed ): ?>
+		<tr>
+			<td>
+				<a href="<?php echo $this->app->getSingleton('helper')->getFeedLink($feed->id, $feed->title) ?>"><?php echo $feed->title ?></a>
+				<span>
+					<a href="<?php echo $feed->link ?>" title="Visit the website at <?php echo parse_url($feed->link, PHP_URL_HOST) ?>"><i class="entypo link"></i></a>
+					<a href="<?php echo $feed->url  ?>" title="View the feed at <?php echo parse_url($feed->url,  PHP_URL_HOST) ?>"><i class="entypo rss"></i></a>
+					<small>
+						&nbsp;
+						<em><?php echo $feed->last_fetched_at ? 'Last fetched on ' . date('F j, Y', $feed->last_fetched_at) : 'Never successfully fetched' ?></em>
+						&nbsp;
+					</small>
+				</span>
+			</td>
+			<td>
+				<button class="btn btn-small unsubscribe" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
+					<i class="entypo squared-minus"></i>&nbsp;Unsubscribe
+				</button>
+			</td>
+		</tr>
+		<?php endforeach ?>
+	</tbody>
+</table>
+
+<div class="divider"></div>
+<?php else: ?>
+<h3>Get started</h3>
+
+<p>
+	Add a few subscriptions to get started. Articles appear in &lsquo;<a href="/reading">My Reading</a>&rsquo;.
+</p>
+
+<table id="suggestions" class="table table-bordered table-striped table-hover">
+	<tbody>
+		<tr>
+			<th>World News</th>
+			<td><a href="https://www.nytimes.com/">The New York Times</a></td>
+			<td><button class="subscribe btn btn-small" data-url="http://rss.nytimes.com/services/xml/rss/nyt/GlobalHome.xml">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+		<tr>
+			<th><br></th>
+			<td><a href="http://boston.com/">Boston.com</a></td>
+			<td><button class="subscribe btn btn-small" data-url="http://feeds.boston.com/boston/topstories">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+		<tr>
+			<th>Technology</th>
+			<td><a href="https://www.techdirt.com/">Techdirt</a></td>
+			<td><button class="subscribe btn btn-small" data-url="http://feeds.feedburner.com/techdirt/feed">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+		<tr>
+			<th><br></th>
+			<td><a href="http://thenextweb.com/">The Next Web</a></td>
+			<td><button class="subscribe btn btn-small" data-url="http://feeds2.feedburner.com/thenextwebtopstories">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+		<tr>
+			<th>Science</th>
+			<td><a href="http://arstechnica.com/science/">Ars Technica - Scientific Method</a></td>
+			<td><button class="subscribe btn btn-small" data-url="http://feeds.arstechnica.com/arstechnica/science?format=xml">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+		<tr>
+			<th><br></th>
+			<td><a href="http://www.nasa.gov">NASA Breaking News</a></td>
+			<td><button class="subscribe btn btn-small" data-url="http://www.nasa.gov/rss/breaking_news.rss">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+		<tr>
+			<th>Comics</th>
+			<td><a href="https://xkcd.com/">xkcd</a></td>
+			<td><button class="subscribe btn btn-small" data-url="https://xkcd.com/rss.xml">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+		<tr>
+			<th><br></th>
+			<td><a href="http://pbfcomics.com/">The Perry Bible Fellowship</a></td>
+			<td><button class="subscribe btn btn-small" data-url="http://pbfcomics.com/feed/feed.xml">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+		<tr>
+			<th>Sports</th>
+			<td><a href="http://sports.yahoo.com/">Yahoo! Sports</a></td>
+			<td><button class="subscribe btn btn-small" data-url="http://news.yahoo.com/rss/sports">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+		<tr>
+			<th><br></th>
+			<td><a href="http://espn.go.com/">ESPN</a></td>
+			<td><button class="subscribe btn btn-small" data-url="http://sports.espn.go.com/espn/rss/news">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+		<tr>
+			<th>Entertainment</th>
+			<td><a href="http://www.bbc.com/news/entertainment_and_arts/">BBC News - Entertainment &amp; Arts</a></td>
+			<td><button class="subscribe btn btn-small" data-url="http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+		<tr>
+			<th><br></th>
+			<td><a href="https://www.google.com/news/section?topic=e">Google News - Entertainment</a></td>
+			<td><button class="subscribe btn btn-small" data-url="https://www.google.com/news?pz=1&cf=all&ned=au&hl=en&topic=e&output=rss">
+				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 <div class="divider"></div>
 <?php endif ?>
@@ -64,7 +167,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="entypo rss"></i> Subscribe to feed</button>
+				<button class="btn btn-primary" type="submit"><i class="entypo rss"></i> Subscribe</button><div class="loading"></div><span class="message"></span>
 			</div>
 		</div>
 	</fieldset>

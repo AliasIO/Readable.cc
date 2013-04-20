@@ -196,35 +196,9 @@ class Read extends \Swiftlet\Controller
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		if ( $action == 'subscribe' ) {
-			$sth = $dbh->prepare('
-				INSERT IGNORE INTO users_feeds (
-					user_id,
-					feed_id
-				) VALUES (
-					:user_id,
-					:feed_id
-				)
-				;');
+			$this->app->getSingleton('subscription')->subscribe($feedId);
 		} else {
-			$sth = $dbh->prepare('
-				DELETE
-				FROM users_feeds
-				WHERE
-					user_id = :user_id AND
-					feed_id = :feed_id
-				LIMIT 1
-				;');
-		}
-
-		$sth->bindParam('user_id', $userId);
-		$sth->bindParam('feed_id', $feedId);
-
-		try {
-			$sth->execute();
-		} catch ( \Exception $e ) {
-			header('HTTP/1.0 500 Server Error');
-
-			exit(json_encode(array('message' => 'Something went wrong, please try again.')));
+			$this->app->getSingleton('subscription')->unsubscribe($feedId);
 		}
 
 		exit(json_encode(array()));

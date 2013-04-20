@@ -69,34 +69,23 @@ class Subscriptions extends \Swiftlet\Controller
 	/**
 	 * Add a new feed
 	 */
-	protected function subscribe()
+	public function subscribe()
 	{
-		$this->app->getSingleton('helper')->ensureValidUser();
+		header('Content-type: application/json');
 
-		$dbh = $this->app->getSingleton('pdo')->getHandle();
+		$this->app->getSingleton('helper')->ensureValidUser();
 
 		$success = false;
 		$error   = false;
 
-		$url = !empty($_POST['url']) ? $_POST['url'] : '';
+		$id  = !empty($_POST['id'])  ? (int) $_POST['id']  : null;
+		$url = !empty($_POST['url']) ?       $_POST['url'] : null;
 
-		if ( !$url ) {
+		if ( !$id && !$url ) {
 			$error = 'Please provide a URL.';
 		} else {
-			$feed = $this->app->getModel('feed');
-
 			try {
-				$feed->fetch($url)->save();
-
-				$itemIds = array();
-
-				foreach ( $feed->getItems() as $item ) {
-					if ( $item->getId() ) {
-						$itemIds[] = $item->getId();
-					}
-				}
-
-				$this->app->getsingleton('learn')->learn($itemIds);
+				$id = $this->app->getSingleton('subscription')->subscribe($id, $url);
 			} catch ( \Exception $e ) {
 				switch ( $e->getCode() ) {
 					case $feed::FEED_INVALID:
@@ -105,7 +94,7 @@ class Subscriptions extends \Swiftlet\Controller
 						break;
 					case $feed::SERVER_ERROR:
 					default:
-						$error = 'Failed to fetch the feed at the specified URL, please try again.'.$e->getMessage();
+						$error = 'Failed to fetch the feed at the specified URL, please try again.';
 
 						break;
 				}
@@ -113,14 +102,29 @@ class Subscriptions extends \Swiftlet\Controller
 		}
 
 		if ( $error ) {
-			$this->view->set('error', $error);
+			header('HTTP/1.0 503 Service Unavailable');
 
-			$this->view->set('url',  $url);
-
-			$this->view->set('error-url', true);
+			exit(json_encode(array('message' => $error)));
 		} else {
-			$this->view->set('success', 'The feed has been added.');
+			exit(json_encode(array('feed_id' => $id)));
 		}
+	}
+
+	/**
+	 * Delete feeds
+	 */
+	public function unsubscribe()
+	{
+		header('Content-type: application/json');
+
+		$this->app->getSingleton('helper')->ensureValidUser(true);
+
+		$id  = !empty($_POST['id'])  ? (int) $_POST['id']  : null;
+		$url = !empty($_POST['url']) ?       $_POST['url'] : null;
+
+		$this->app->getSingleton('subscription')->unsubscribe($id, $url);
+
+		exit(json_encode(array()));
 	}
 
 	/**
@@ -261,35 +265,5 @@ class Subscriptions extends \Swiftlet\Controller
 		}
 
 		exit($opml->saveXML());
-	}
-
-	/**
-	 * Delete feeds
-	 */
-	public function unsubscribe()
-	{
-		$userId = $this->app->getSingleton('helper')->ensureValidUser(true);
-
-		if ( !empty($_POST['id']) ) {
-			$feedId = $_POST['id'];
-
-			$dbh = $this->app->getSingleton('pdo')->getHandle();
-
-			$sth = $dbh->prepare('
-				DELETE
-				FROM users_feeds
-				WHERE
-					user_id = :user_id AND
-					feed_id = :feed_id
-				LIMIT 1
-				;');
-
-			$sth->bindParam('user_id', $userId);
-			$sth->bindParam('feed_id', $feedId);
-
-			$sth->execute();
-		}
-
-		exit;
 	}
 }

@@ -402,21 +402,62 @@ fieldset:last-child {
 }
 
 #subscriptions {
+	font-size: 17px;
 }
 
-	#subscriptions li {
+	#subscriptions td:first-child {
+		width: 100%;
 	}
 
-	#subscriptions li span {
+	#subscriptions td:last-child {
+		text-align: right;
+	}
+
+	#subscriptions td span {
 		visibility: hidden;
 	}
 
-	#subscriptions li:hover span {
+	#subscriptions td:hover span {
 		visibility: visible;
 	}
 
-	#subscriptions li .unsubscribe {
+#suggestions {
+	font-size: 17px;
+}
+
+	#suggestions th, #suggestions td {
+		vertical-align: middle;
+		white-space: nowrap;
+	}
+
+	#suggestions td:nth-child(2) {
+		width: 100%;
+	}
+
+	#suggestions td:last-child {
+		text-align: right;
+	}
+
+#form-subscriptions-subscribe {
+}
+
+	#form-subscriptions-subscribe .message {
+		color: #1c9b47;
+		font-size: 80%;
+		padding-left: 10px;
+	}
+
+	#form-subscriptions-subscribe .message.error {
 		color: #9c0001;
+	}
+
+	#form-subscriptions-subscribe .loading {
+		background: url('../images/loading-small.gif') center center no-repeat;
+		display: none;
+		height: 26px;
+		margin-left: 10px;
+		vertical-align: middle;
+		width: 26px;
 	}
 
 #account-words {

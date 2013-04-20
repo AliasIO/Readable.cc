@@ -100,7 +100,10 @@ var readable = (function($) {
 
 			init: function() {
 				$(document).bind('scroll', app.navBar.scroll);
-				$(document).bind('scroll', app.items.infiniteScroll);
+
+				if ( $('#items').length ) {
+					$(document).bind('scroll', app.items.infiniteScroll);
+				}
 
 				$(document).scroll();
 
@@ -645,16 +648,87 @@ var readable = (function($) {
 
 		subscriptions: {
 			init: function() {
-				$('#subscriptions .unsubscribe').click(function() {
-					if ( confirm('Are you sure you wish to unsubscribe from ' + $(this).data('feed-name') + '?') ) {
-						$(this).closest('li').fadeOut();
+				$('#subscriptions button').click(function() {
+					$(this).blur();
 
-						$.ajax({
-							url: '/subscriptions/unsubscribe',
-							method: 'post',
-							data: { id: $(this).data('feed-id'), sessionId: app.sessionId }
-						});
+					var
+						id     = $(this).data('feed-id'),
+						action = $(this).hasClass('subscribe') ? 'subscribe' : 'unsubscribe'
+						;
+
+					if ( action === 'subscribe' ) {
+						$(this).removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-minus"></i>&nbsp;Unsubscribe');
+					} else {
+						$(this).removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-plus"></i>&nbsp;Subscribe');
 					}
+
+					$.ajax({
+						url: '/subscriptions/' + action,
+						method: 'post',
+						data: { id: id, sessionId: app.sessionId }
+					});
+				});
+
+				$('#suggestions button').click(function() {
+					$(this).blur();
+
+					var
+						url    = $(this).data('url'),
+						action = $(this).hasClass('subscribe') ? 'subscribe' : 'unsubscribe'
+						;
+
+					if ( action === 'subscribe' ) {
+						$(this).removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-minus"></i>&nbsp;Unsubscribe');
+					} else {
+						$(this).removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-plus"></i>&nbsp;Subscribe');
+					}
+
+					$.ajax({
+						url: '/subscriptions/' + action,
+						method: 'post',
+						data: { url: url, sessionId: app.sessionId }
+					});
+				});
+
+				$('#form-subscriptions-subscribe').submit(function(e) {
+					e.preventDefault();
+
+					var
+						input        = $(this).find('input[name  = url]'),
+						controlGroup = input.closest('.control-group'),
+						button       = $(this).find('button'),
+						loading      = $(this).find('.loading'),
+						message      = $(this).find('.message'),
+						url          = input.val()
+						;
+
+					button.attr('disabled', 'disabled').blur();
+					input .attr('disabled', 'disabled');
+
+					message.removeClass('error').hide();
+
+					controlGroup.removeClass('error');
+
+					loading.css({ display: 'inline-block' });
+
+					$.ajax({
+						url: '/subscriptions/subscribe',
+						method: 'post',
+						data: { url: url, sessionId: app.sessionId }
+					}).always(function() {
+						button.removeAttr('disabled');
+						input .removeAttr('disabled');
+
+						loading.css({ display: 'none' });
+					}).done(function(data) {
+						message.html('Subscription added! <a href="/feed/view/' + data.feed_id + '">Click here to view the feed</a>.').show();
+					}).fail(function(xhr) {
+						data = $.parseJSON(xhr.responseText);
+
+						controlGroup.addClass('error');
+
+						message.addClass('error').html(data.message).show();
+					});
 				});
 
 				return app.subscriptions;
