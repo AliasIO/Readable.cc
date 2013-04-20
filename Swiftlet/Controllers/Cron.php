@@ -62,7 +62,7 @@ class Cron extends \Swiftlet\Controller
 
 		if ( $itemIds ) {
 			$sth = $dbh->prepare('
-				UPDATE items
+				UPDATE LOW_PRIORITY items
 				LEFT JOIN (
 					SELECT
 						users_items.item_id,

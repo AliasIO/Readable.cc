@@ -122,7 +122,10 @@ class Auth extends \Swiftlet\Model
 				"Thanks for creating an account at " . $this->app->getConfig('siteName') . "!\n\n" .
 				"Please verify your email address by visiting the page at the following URL:\n\n" .
 				"  " . $this->app->getConfig('websiteUrl') . "/signin/verify/" . $activationCode . "\n\n" .
-				"If you do not respond to this email within 24 hours your account will automatically be disabled."
+				"If you do not respond to this email within 24 hours your account will automatically be disabled.\n\n" .
+				"--\n\n" .
+				"Please reply to this email if you have any questions, suggestions or just want to say hi.\n\n" .
+				"Follow " . $this->app->getConfig('siteName') . " on Twitter: http://twitter.com/ " . $this->app->getConfig('twitterHandle') . "."
 				;
 
 			$this->app->getSingleton('helper')->sendMail($email, 'Please verify your email address', $message);
