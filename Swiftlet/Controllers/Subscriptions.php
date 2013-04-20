@@ -88,13 +88,26 @@ class Subscriptions extends \Swiftlet\Controller
 				$id = $this->app->getSingleton('subscription')->subscribe($id, $url);
 			} catch ( \Exception $e ) {
 				switch ( $e->getCode() ) {
-					case $feed::FEED_INVALID:
-						$error = 'No valid feed found at the specified URL.';
+					case \Swiftlet\Models\Feed::FEED_INVALID:
+						$error = 'The feed appears to be invalid and could not be added.';
 
 						break;
-					case $feed::SERVER_ERROR:
+					case \Swiftlet\Models\Feed::NOT_FOUND:
+						$error = 'No feed found.';
+
+						break;
+					case \Swiftlet\Models\Feed::TIMEOUT:
+						$error = 'The website took too long to respond, please try again.';
+
+						break;
+					case \Swiftlet\Models\Feed::CURL_ERROR:
 					default:
-						$error = 'Failed to fetch the feed at the specified URL, please try again.';
+						$error = 'The feed could not be fetched (' . $e->getMessage() . '.)';
+
+						break;
+					case \Swiftlet\Models\Feed::SERVER_ERROR:
+					default:
+						$error = 'The feed could not be fetched, the website returned an error.';
 
 						break;
 				}

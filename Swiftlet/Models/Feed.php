@@ -7,6 +7,9 @@ class Feed extends \Swiftlet\Model
 	const
 		FEED_INVALID = 1,
 		SERVER_ERROR = 2,
+		NOT_FOUND    = 3,
+		TIMEOUT      = 4,
+		CURL_ERROR   = 5,
 		NS_CONTENT   = 'http://purl.org/rss/1.0/modules/content/',
 		NS_DC        = 'http://purl.org/dc/elements/1.1/',
 		NS_XML       = 'http://www.w3.org/XML/1998/namespace',
@@ -241,14 +244,22 @@ class Feed extends \Swiftlet\Model
 
 		$result = curl_exec($ch);
 
-		if ( curl_errno($ch) !== 0 ) {
-			throw new \Exception(curl_error($ch), self::SERVER_ERROR);
+		if ( curl_errno($ch) !== CURLE_OK ) {
+			if ( curl_errno($ch) == CURLE_OPERATION_TIMEOUTED ) {
+				throw new \Exception(curl_error($ch), self::TIMEOUT);
+			} else {
+				throw new \Exception(curl_error($ch), self::CURL_ERROR);
+			}
 		}
 
 		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 		if ( $httpCode != 200 ) {
-			throw new \Exception('cURL request returned HTTP code ' . $httpCode, self::SERVER_ERROR);
+			if ( $httpCode == 404 ) {
+				throw new \Exception('cURL request returned HTTP code ' . $httpCode, self::NOT_FOUND);
+			} else {
+				throw new \Exception('cURL request returned HTTP code ' . $httpCode, self::SERVER_ERROR);
+			}
 		}
 
 		$response->url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
