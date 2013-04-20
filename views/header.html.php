@@ -11,6 +11,10 @@
 		<meta name="description" content="<?php echo $this->get('pageDescription') ? $this->get('pageDescription') : 'The readable feed reader. Promotes interesting articles to the top of your personalised reading list.' ?>">
 		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
 
+		<?php if ( $this->get('canonicalUrl') ): ?>
+		<link rel="canonical" href="<?php echo $this->get('canonicalUrl') ?>">
+		<?php endif ?>
+
 		<link href="/views/lib/bootstrap/css/readable.css" rel="stylesheet">
 		<link href="/views/lib/entypo/entypo.css" rel="stylesheet">
 		<link href="/views/css/layout.css" rel="stylesheet">
