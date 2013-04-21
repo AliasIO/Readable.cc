@@ -390,6 +390,9 @@ var readable = (function($) {
 					el.find('p:not(:last-child):first-child > a:first-child > img:first-child:not(.image-alone), p:not(:last-child):first-child > img:first-child:not(.image-alone)').each(function() {
 						if ( $(this).closest('p').html().match(/^\s*(<a [^>]+>\s*)?<img /) ) {
 							$(this).addClass('feature');
+
+							// Remove newline directly after feature image
+							$(this).closest('p').find('.feature + br').remove();
 						}
 					});
 
