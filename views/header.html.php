@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title><?php echo $this->get('pageTitle') . ' - ' . $this->htmlEncode($this->app->getConfig('siteName')) ?></title>
+		<title><?php echo ( $this->name == 'index' ? '' : ( $this->get('pageTitle') . ' - ' ) ) . $this->htmlEncode($this->app->getConfig('siteName')) . ( $this->name == 'index' ? ' - ' . $this->get('pageTitle') : '' ) ?></title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
