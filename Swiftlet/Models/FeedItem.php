@@ -173,7 +173,7 @@ class FeedItem extends \Swiftlet\Model
 					}
 				}
 
-				if ( !$link ) {
+				if ( !isset($link) ) {
 					break;
 				}
 
