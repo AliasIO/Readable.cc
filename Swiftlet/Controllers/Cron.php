@@ -60,25 +60,6 @@ class Cron extends \Swiftlet\Controller
 
 		echo 'Learned for ' . $result[0] . ' items and ' . $result[1] . " users<br>\n";
 
-		if ( $itemIds ) {
-			$sth = $dbh->prepare('
-				UPDATE LOW_PRIORITY items
-				LEFT JOIN (
-					SELECT
-						users_items.item_id,
-						AVG(users_items.score) AS score
-					FROM users_items
-					WHERE
-						users_items.item_id IN ( ' . implode(', ', $itemIds) . ' )
-					GROUP BY users_items.item_id
-					) AS main ON main.item_id = items.id
-				SET
-					items.score = main.score
-				WHERE
-					items.short = 0
-				');
-		}
-
 		// Prune sessions
 		if ( $handle = opendir('sessions') ) {
 			while ( ( $file = readdir($handle) ) !== FALSE ) {

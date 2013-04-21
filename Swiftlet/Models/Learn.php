@@ -90,7 +90,7 @@ class Learn extends \Swiftlet\Model
 		// Rank items
 		if ( $itemIds ) {
 			$sth = $dbh->prepare('
-				INSERT INTO users_items (
+				INSERT LOW_PRIORITY INTO users_items (
 					user_id,
 					item_id,
 					score
@@ -122,6 +122,25 @@ class Learn extends \Swiftlet\Model
 				ON DUPLICATE KEY UPDATE
 					score = VALUES(score)
 				;');
+
+			$sth->execute();
+
+			$sth = $dbh->prepare('
+				UPDATE LOW_PRIORITY items
+				LEFT JOIN (
+					SELECT
+						users_items.item_id,
+						AVG(users_items.score) AS score
+					FROM users_items
+					WHERE
+						users_items.item_id IN ( ' . implode(', ', $itemIds) . ' )
+					GROUP BY users_items.item_id
+					) AS main ON main.item_id = items.id
+				SET
+					items.score = main.score
+				WHERE
+					items.short = 0
+				');
 
 			$sth->execute();
 		}

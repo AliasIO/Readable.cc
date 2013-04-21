@@ -405,6 +405,10 @@ fieldset:last-child {
 	font-size: 17px;
 }
 
+	#subscriptions td {
+		vertical-align: middle;
+	}
+
 	#subscriptions td:first-child {
 		width: 100%;
 	}
@@ -425,7 +429,7 @@ fieldset:last-child {
 	font-size: 17px;
 }
 
-	#suggestions th, #suggestions td {
+	#suggestions td {
 		vertical-align: middle;
 		white-space: nowrap;
 	}
