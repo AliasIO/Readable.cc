@@ -18,7 +18,7 @@ class Feed extends \Swiftlet\Model
 
 	public
 		$id,
-		$timeout = 6
+		$timeout = 5
 		;
 
 	protected
