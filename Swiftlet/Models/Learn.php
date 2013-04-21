@@ -90,7 +90,7 @@ class Learn extends \Swiftlet\Model
 		// Rank items
 		if ( $itemIds ) {
 			$sth = $dbh->prepare('
-				INSERT LOW_PRIORITY INTO users_items (
+				INSERT INTO users_items (
 					user_id,
 					item_id,
 					score
@@ -102,7 +102,8 @@ class Learn extends \Swiftlet\Model
 				FROM (
 					SELECT
 						users_feeds.user_id,
-						items.id AS item_id,
+						items.id    AS item_id,
+						items.short AS item_short,
 						users_words.score * CAST(items_words.count AS SIGNED) AS score
 					FROM       users_feeds
 					INNER JOIN       users ON users.id            = users_feeds.user_id
@@ -115,6 +116,8 @@ class Learn extends \Swiftlet\Model
 						users.enabled        = 1                                          AND -- Learn only for enabled users
 						users.last_active_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY)     -- Learn only for active users
 					) AS main
+				WHERE
+					main.item_short = 0
 				GROUP BY user_id, item_id
 				ON DUPLICATE KEY UPDATE
 					score = VALUES(score)
