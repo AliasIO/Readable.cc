@@ -72,10 +72,10 @@ class Cron extends \Swiftlet\Controller
 						users_items.item_id IN ( ' . implode(', ', $itemIds) . ' )
 					GROUP BY users_items.item_id
 					) AS main ON main.item_id = items.id
-				WHERE
-					items.short = 0
 				SET
 					items.score = main.score
+				WHERE
+					items.short = 0
 				');
 		}
 
