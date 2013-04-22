@@ -174,7 +174,7 @@ class FeedItem extends \Swiftlet\Model
 				}
 
 				if ( !isset($link) ) {
-					break;
+					return new \stdClass;
 				}
 
 				$contents = $this->xml->content ? $this->xml->content : ( $this->xml->summary ? $this->xml->summary : false );
@@ -209,11 +209,9 @@ class FeedItem extends \Swiftlet\Model
 				break;
 		}
 
-		if ( $data ) {
-			$data->short = strlen($data->contents) < 1000 ? 1 : 0;
+		$data->short = strlen($data->contents) < 1000 ? 1 : 0;
 
-			$data->english = substr(strtolower($data->language), 0, 2) == 'en';
-		}
+		$data->english = substr(strtolower($data->language), 0, 2) == 'en';
 
 		return $data;
 	}
