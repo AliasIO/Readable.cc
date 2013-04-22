@@ -127,7 +127,7 @@ class Learn extends \Swiftlet\Model
 
 			$sth = $dbh->prepare('
 				UPDATE LOW_PRIORITY items
-				LEFT JOIN (
+				INNER JOIN (
 					SELECT
 						users_items.item_id,
 						AVG(users_items.score) AS score
