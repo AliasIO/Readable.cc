@@ -1,34 +1,14 @@
-			<div id="footer">
+			<footer>
 				<p>
 					<a href="/about">About</a> &nbsp;-&nbsp;
 					<a href="/contact">Contact</a>
 				</p>
-			</div>
+			</footer>
 
 			<div class="modal modal-signin">
 				<h4>Not signed in</h4>
 
 				<p>You're missing out. Please <a href="/signin">sign in</a> or <a href="/signup">create an account</a>.</p>
-			</div>
-
-			<div class="modal modal-welcome">
-				<h4>Hello</h4>
-
-				<p>
-					Readable.cc is a news reader that learns to recognise articles that interests you.
-				</p>
-
-				<p>
-					<a href="/signup">Create an account</a> to manage your own subscriptions (RSS and Atom feeds.)
-				</p>
-
-				<p>
-					Navigate to next and previous articles with <code>j</code> and <code>k</code>.
-				</p>
-
-				<p>
-					<small>Click this window to dismiss.</small>
-				</p>
 			</div>
 		</div> <!-- /container -->
 
@@ -49,7 +29,7 @@
 			readable.signedIn   = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
 		</script>
 
-		<script type="text/javascript">
+		<script>
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-216336-24']);
 			_gaq.push(['_setDomainName', 'readable.cc']);

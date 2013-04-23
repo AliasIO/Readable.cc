@@ -99,9 +99,22 @@ blockquote p {
 .navbar {
 }
 
+.navbar p {
+	display: none;
+}
+
 .navbar a {
 	border-bottom: none;
 }
+
+	.navbar .brand {
+		font-family: inherit;
+		margin: 0 0 0 -20px;
+	}
+
+	.navbar .brand strong {
+		display: none;
+	}
 
 	.navbar .brand .home {
 		display: none;
@@ -495,13 +508,13 @@ fieldset:last-child {
 		color: inherit;
 	}
 
-#footer {
+footer {
 	color: #999;
 	font-size: 75%;
 	text-align: right;
 }
 
-	#footer a:hover {
+	footer a:hover {
 		color: #333;
 	}
 

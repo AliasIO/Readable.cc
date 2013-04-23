@@ -7,12 +7,9 @@ Disallow: /HTMLPurifier.php
 Disallow: /README.md
 Disallow: /report
 Disallow: /mysql
+Disallow: /signout
 Disallow: /sessions
-Disallow: /signup
-Disallow: /signin
 Disallow: /Swiftlet
-Disallow: /forgot
-Disallow: /report
 Disallow: /views
 
 User-Agent: T-800

@@ -8,7 +8,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<meta name="description" content="<?php echo $this->get('pageDescription') ? $this->get('pageDescription') : 'The readable feed reader. Promotes interesting articles to the top of your personalised reading list.' ?>">
+		<meta name="description" content="<?php echo $this->get('pageDescription') ? $this->get('pageDescription') . ' ' : '' ?>Readable.cc is an RSS reader that makes feeds readable. Vote on articles to improve your personal reading list.">
 		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
 
 		<?php if ( $this->get('canonicalUrl') ): ?>
@@ -23,7 +23,11 @@
 		<header class="navbar navbar-fixed-top">
 			<nav class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="/"><i class="entypo home"></i><span> Readable.cc</span></a>
+					<h1 class="brand"><a href="/" title="Readable.cc RSS Reader"><i class="entypo home"></i><span> Readable.cc <strong>RSS Reader</strong></span></a></h1>
+
+					<p>
+						Readable.cc is the best web-based Google Reader alternative. RSS feeds are made readable and interesting content is identified algorithmically.
+					</p>
 
 					<ul class="nav pull-right">
 						<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
