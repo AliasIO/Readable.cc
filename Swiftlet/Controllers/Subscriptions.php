@@ -178,6 +178,10 @@ class Subscriptions extends \Swiftlet\Controller
 					$feeds = array();
 
 					foreach ( $xml->body->outline as $outline ) {
+						if ( !$outline->outline ) {
+							$outline = array($outline);
+						}
+
 						foreach ( $outline as $xml ) {
 							$url   = $xml->attributes()->xmlUrl;
 							$title = $xml->attributes()->title;
