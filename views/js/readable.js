@@ -160,7 +160,7 @@ var readable = (function($) {
 					;
 
 				Mousetrap.bind(['j', 's', 'space'], function() {
-					var next = app.items.activeItem ? app.items.activeItem.next('article') : $('#items article').first();
+					var next = app.items.activeItem ? app.items.activeItem.nextAll('article').first() : $('#items article').first();
 
 					if ( !next[0] ) {
 						return;
@@ -173,7 +173,7 @@ var readable = (function($) {
 				});
 
 				Mousetrap.bind(['k', 'w'], function() {
-					var previous = app.items.activeItem ? app.items.activeItem.prev('article') : $('#items article').first();
+					var previous = app.items.activeItem ? app.items.activeItem.prevAll('article').first() : $('#items article').first();
 
 					if ( !previous[0] ) {
 						return;
@@ -304,12 +304,24 @@ var readable = (function($) {
 			itemsAdded: function() {
 				app.trackPageView(app.controller + '/page/' + app.items.page);
 
-				var i = 0;
+				var
+					i        = 0,
+					lastDate = null
+					;
 
 				$($('#items article').get().reverse()).each(function() {
 					if ( $.inArray($(this).data('item-id'), app.excludes) === -1 ) {
 						app.excludes.push($(this).data('item-id'));
 					}
+
+					// Add separator betweens items of different date
+					if ( lastDate && $(this).data('item-date') !== lastDate ) {
+						if ( !$(this).next('.date-separator').length ) {
+							$(this).after('<p class="date-separator"><span>' + $(this).next('article').data('item-date') + '</span></p>');
+						}
+					}
+
+					lastDate = $(this).data('item-date');
 
 					// Keep only the last 200 articles in the DOM
 					if ( i ++ < 200 ) {

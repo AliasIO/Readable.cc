@@ -14,6 +14,7 @@
 	data-item-id="<?php echo $item->id ?>"
 	data-item-score="<?php echo $item->score ?>"
 	data-item-url="<?php echo $this->htmlEncode($item->url) ?>"
+	data-item-date="<?php echo date('F j, Y', $item->posted_at) ?>"
 	data-feed-host="<?php echo parse_url($item->feed_link, PHP_URL_HOST) ?>"
 	class="inactive collapsed <?php echo $item->score < 0 ? ' boring' : '' ?>"
 	>
