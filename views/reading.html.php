@@ -6,8 +6,9 @@
 
 		<p>
 			<span><a href="/subscriptions">Subscribe</a> to feeds and vote on articles for personalised reading.</span>
-			<span>Click ‘save’ on articles you wish to <a href="/saved">read later</a>.</span>
+			<span>Click &lsquo;save&rsquo; on articles you wish to <a href="/saved">read later</a>.</span>
 			<span>Vote on articles for personalised reading.</span>
+			<span>Press &lsquo;m&rsquo; to mark all items in your reading list read.</span>
 		</p>
 	</div>
 </div>
