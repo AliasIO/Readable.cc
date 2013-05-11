@@ -209,7 +209,7 @@ class FeedItem extends \Swiftlet\Model
 				break;
 		}
 
-		$data->short = strlen($data->contents) < 1000 ? 1 : 0;
+		$data->short = strlen(strip_tags($data->contents)) < 1000 ? 1 : 0;
 
 		$data->english = substr(strtolower($data->language), 0, 2) == 'en';
 
