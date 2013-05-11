@@ -52,7 +52,7 @@ class Feed extends \Swiftlet\Controllers\Read
 			LIMIT 1
 			');
 
-		$sth->bindParam('feed_id', $feedId);
+		$sth->bindParam('feed_id', $feedId, \PDO::PARAM_INT);
 
 		$sth->execute();
 
@@ -72,6 +72,7 @@ class Feed extends \Swiftlet\Controllers\Read
 			$this->view->set('link',            $feed->link);
 			$this->view->set('canonicalUrl',    $this->app->getConfig('websiteUrl') . $this->app->getSingleton('helper')->getFeedLink($feedId, $feed->title));
 
+			/*
 			$select = '
 				SELECT
 					feeds.id         AS feed_id,
@@ -127,6 +128,38 @@ class Feed extends \Swiftlet\Controllers\Read
 				$sth->bindParam($i ++, $userId);
 				$sth->bindParam($i ++, $userId);
 			}
+			*/
+
+			$sth = $dbh->prepare('
+				SELECT
+					feeds.id         AS feed_id,
+					feeds.title      AS feed_title,
+					feeds.link       AS feed_link,
+					items.id,
+					items.url,
+					items.title,
+					items.contents,
+					items.posted_at,
+					0                AS feed_subscribed,
+					0                AS vote,
+					0                AS saved,
+					COALESCE(AVG(users_items.score), 0) AS score
+				FROM             items
+				INNER JOIN       feeds ON       feeds.id      = items.feed_id
+				LEFT  JOIN users_items ON users_items.item_id = items.id
+				WHERE
+					feeds.id = :feed_id
+				GROUP BY items.id
+				ORDER BY DATE(items.posted_at) DESC, AVG(users_items.score) DESC
+				LIMIT :limit_from, :limit_count
+				');
+
+			$limitFrom  = ( $page - 1 ) * self::ITEMS_PER_PAGE;
+			$limitCount = self::ITEMS_PER_PAGE;
+
+			$sth->bindParam('limit_from',  $limitFrom,  \PDO::PARAM_INT);
+			$sth->bindParam('limit_count', $limitCount, \PDO::PARAM_INT);
+			$sth->bindParam('feed_id',     $feedId,     \PDO::PARAM_INT);
 
 			$sth->execute();
 
