@@ -90,37 +90,57 @@ class Read extends \Swiftlet\Controller
 
 		$itemId = isset($_POST['item_id']) ? (int) $_POST['item_id'] : null;
 
-		if ( !$itemId ) {
-			header('HTTP/1.0 400 Bad Request');
+		if ( $_POST['item_id'] == 'all' ) {
+			$dbh = $this->app->getSingleton('pdo')->getHandle();
 
-			exit(json_encode(array('message' => 'Invalid arguments')));
-		}
+			$sth = $dbh->prepare('
+				INSERT IGNORE INTO users_items (
+					user_id,
+					item_id,
+					`read`
+					)
+				SELECT
+					:user_id,
+					items.id,
+					1
+				FROM             items
+				INNER JOIN users_feeds ON users_feeds.feed_id = items.feed_id
+				WHERE
+					users_feeds.user_id = :user_id
+				ON DUPLICATE KEY UPDATE
+					`read` = 1
+				;');
 
-		$dbh = $this->app->getSingleton('pdo')->getHandle();
+			$sth->bindParam('user_id', $userId);
 
-		$sth = $dbh->prepare('
-      INSERT IGNORE INTO users_items (
-        user_id,
-        item_id,
-        `read`
-      ) VALUES (
-				:user_id,
-				:item_id,
-				1
-      )
-      ON DUPLICATE KEY UPDATE
-        `read` = 1
-			;');
-
-		$sth->bindParam('user_id', $userId);
-		$sth->bindParam('item_id', $itemId);
-
-		try {
 			$sth->execute();
-		} catch ( \Exception $e ) {
-			header('HTTP/1.0 500 Server Error');
+		} else {
+			if ( !$itemId ) {
+				header('HTTP/1.0 400 Bad Request');
 
-			exit(json_encode(array('message' => 'Something went wrong, please try again.')));
+				exit(json_encode(array('message' => 'Invalid arguments')));
+			}
+
+			$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+			$sth = $dbh->prepare('
+				INSERT IGNORE INTO users_items (
+					user_id,
+					item_id,
+					`read`
+				) VALUES (
+					:user_id,
+					:item_id,
+					1
+				)
+				ON DUPLICATE KEY UPDATE
+					`read` = 1
+				;');
+
+			$sth->bindParam('user_id', $userId);
+			$sth->bindParam('item_id', $itemId);
+
+			$sth->execute();
 		}
 
 		exit(json_encode(array()));

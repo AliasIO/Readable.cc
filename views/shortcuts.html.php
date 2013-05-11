@@ -28,6 +28,10 @@
 			<td><code>o</code>, <code>Enter</code></td>
 			<td>Expand article (open)</td>
 		</tr>
+		<tr>
+			<td><code>m</code>, <code>Shift-a</code></td>
+			<td>Mark all articles &lsquo;read&rsquo; (in &lsquo;<a href="/reading">My Reading</a>&rsquo;)</td>
+		</tr>
 	</tbody>
 </table>
 

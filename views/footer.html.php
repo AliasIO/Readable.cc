@@ -10,6 +10,19 @@
 
 				<p>You're missing out. Please <a href="/signin">sign in</a> or <a href="/signup">create an account</a>.</p>
 			</div>
+
+			<div class="modal modal-mark-all-read">
+				<h4>Mark all articles &lsquo;read&rsquo;</h4>
+
+				<p>
+					Are you sure you wish to clear your reading list?
+				</p>
+
+				<p>
+					<button id="mark-all-read" class="btn btn-small btn-danger">Clear reading list</button>
+					<button class="btn btn-small alert-cancel">Continue reading</button>
+				</p>
+			</div>
 		</div> <!-- /container -->
 
 		<p id="feedback">

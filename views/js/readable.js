@@ -27,6 +27,13 @@
 		$('.contact-email').text(app.email.replace(' ', '@')).attr('href', 'mailto:' + app.email.replace(' ', '@'));
 
 		// Hide alerts on click
+		$(document).on('click', '.alert .alert-cancel', function(e) {
+			e.stopPropagation();
+
+			$(this).closest('.alert').hide();
+		});
+
+		// Hide alerts on click
 		$(document).on('click', '.alert', function() {
 			if ( $(this).hasClass('alert-sticky') ) {
 				return;
@@ -191,6 +198,16 @@
 				return false;
 			});
 
+			Mousetrap.bind([ 'm', 'A' ], function() {
+				if ( app.controller === 'reading' ) {
+					app.notice($('.modal-mark-all-read').html(), true);
+				}
+			});
+
+			Mousetrap.bind('escape', function() {
+				$('.alert').hide();
+			});
+
 			$(document).ajaxError(function(e, xhr) {
 				if ( xhr.status === 403 ) {
 					if ( !app.signedIn ) {
@@ -290,6 +307,14 @@
 				$(this).blur();
 
 				app.items.save($(this).data('item-id'), $(this).hasClass('saved') ? 0 : 1);
+			});
+
+			$(document).on('click', '#mark-all-read', function(e) {
+				e.stopPropagation();
+
+				$(this).blur();
+
+				app.items.markAllAsRead();
 			});
 
 			app.items.itemsAdded();
@@ -542,6 +567,21 @@
 					url: '/' + app.controller + '/read/' + app.args,
 					method: 'post',
 					data: { item_id: itemId, sessionId: app.sessionId }
+				});
+			}
+
+			return app.items;
+		},
+
+		markAllAsRead: function() {
+			if ( app.signedIn && app.controller === 'reading' ) {
+				$.ajax({
+					url: '/' + app.controller + '/read/' + app.args,
+					method: 'post',
+					data: { item_id: 'all', sessionId: app.sessionId }
+				})
+				.done(function() {
+					location = location;
 				});
 			}
 
