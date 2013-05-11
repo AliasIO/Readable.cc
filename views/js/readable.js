@@ -53,8 +53,6 @@ var readable = (function($) {
 				app.duration = app.mobile ? { fade: 0, scroll: 0 } : { fade: 300, scroll: 300 };
 			}).resize();
 
-			app.navBar.init();
-
 			switch ( app.controller ) {
 				case 'index':
 				case 'reading':
@@ -68,6 +66,8 @@ var readable = (function($) {
 
 					break;
 			}
+
+			app.navBar.init();
 
 			return app;
 		},

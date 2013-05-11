@@ -79,7 +79,7 @@ class Index extends \Swiftlet\Controllers\Read
 				';
 		}
 
-		$select .= ' LIMIT ' . ( ( $page - 1 ) * self::ITEMS_PER_PAGE ) . ', ' . ( $page * self::ITEMS_PER_PAGE );
+		$select .= ' LIMIT ' . ( ( $page - 1 ) * self::ITEMS_PER_PAGE ) . ', ' . self::ITEMS_PER_PAGE;
 
 		$sth = $dbh->prepare($select);
 
