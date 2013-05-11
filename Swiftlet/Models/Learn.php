@@ -81,7 +81,7 @@ class Learn extends \Swiftlet\Model
 					) AS rownum
 					;');
 
-				$sth->bindParam('user_id', $userId);
+				$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 
 				$sth->execute();
 			}

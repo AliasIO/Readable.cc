@@ -110,7 +110,7 @@ class Account extends \Swiftlet\Controller
 						LIMIT 1
 						;');
 
-					$sth->bindParam(':id',       $this->userId);
+					$sth->bindParam(':id',       $this->userId, \PDO::PARAM_INT);
 					$sth->bindParam(':email',    $email);
 					$sth->bindParam(':timezone', $timeZone);
 
@@ -175,7 +175,7 @@ class Account extends \Swiftlet\Controller
 					LIMIT 1
 					;');
 
-				$sth->bindParam('user_id', $this->userId);
+				$sth->bindParam('user_id', $this->userId, \PDO::PARAM_INT);
 
 				$sth->execute();
 

@@ -79,20 +79,26 @@ class Index extends \Swiftlet\Controllers\Read
 				';
 		}
 
-		$select .= ' LIMIT ' . ( ( $page - 1 ) * self::ITEMS_PER_PAGE ) . ', ' . self::ITEMS_PER_PAGE;
+		$select .= ' LIMIT ?, ?';
 
 		$sth = $dbh->prepare($select);
 
 		$i = 1;
 
 		foreach( $excludes as $key => $itemId ) {
-			$sth->bindParam($i ++, $excludes[$key]);
+			$sth->bindParam($i ++, $excludes[$key], \PDO::PARAM_INT);
 		}
 
 		if ( $userId ) {
-			$sth->bindParam($i ++, $userId);
-			$sth->bindParam($i ++, $userId);
+			$sth->bindParam($i ++, $userId, \PDO::PARAM_INT);
+			$sth->bindParam($i ++, $userId, \PDO::PARAM_INT);
 		}
+
+		$limitFrom  = ( $page - 1 ) * self::ITEMS_PER_PAGE;
+		$limitCount = self::ITEMS_PER_PAGE;
+
+		$sth->bindParam($i ++, $limitFrom,  \PDO::PARAM_INT);
+		$sth->bindParam($i ++, $limitCount, \PDO::PARAM_INT);
 
 		$sth->execute();
 

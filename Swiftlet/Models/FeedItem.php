@@ -65,8 +65,8 @@ class FeedItem extends \Swiftlet\Model
 		$sth->bindParam('language',  $data->language);
 		$sth->bindParam('english',   $data->english);
 		$sth->bindParam('posted_at', $data->postedAt);
-		$sth->bindParam('feed_id',   $this->feed->id);
-		$sth->bindParam('short',     $data->short);
+		$sth->bindParam('feed_id',   $this->feed->id, \PDO::PARAM_INT);
+		$sth->bindParam('short',     $data->short,    \PDO::PARAM_INT);
 
 		$sth->execute();
 
@@ -124,9 +124,9 @@ class FeedItem extends \Swiftlet\Model
 			$i = 1;
 
 			foreach( $words as $key => $word ) {
-				$sth->bindParam($i ++, $this->id);
+				$sth->bindParam($i ++, $this->id,          \PDO::PARAM_INT);
 				$sth->bindParam($i ++, $words[$key]);
-				$sth->bindParam($i ++, $wordsCount[$word]);
+				$sth->bindParam($i ++, $wordsCount[$word], \PDO::PARAM_INT);
 			}
 
 			$sth->execute();

@@ -64,9 +64,9 @@ class Read extends \Swiftlet\Controller
         vote = :vote
 			;');
 
-		$sth->bindParam('user_id', $userId);
-		$sth->bindParam('item_id', $itemId);
-		$sth->bindParam('vote',    $vote);
+		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+		$sth->bindParam('item_id', $itemId, \PDO::PARAM_INT);
+		$sth->bindParam('vote',    $vote,   \PDO::PARAM_INT);
 
 		try {
 			$sth->execute();
@@ -111,7 +111,7 @@ class Read extends \Swiftlet\Controller
 					`read` = 1
 				;');
 
-			$sth->bindParam('user_id', $userId);
+			$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 
 			$sth->execute();
 		} else {
@@ -137,8 +137,8 @@ class Read extends \Swiftlet\Controller
 					`read` = 1
 				;');
 
-			$sth->bindParam('user_id', $userId);
-			$sth->bindParam('item_id', $itemId);
+			$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+			$sth->bindParam('item_id', $itemId, \PDO::PARAM_INT);
 
 			$sth->execute();
 		}
@@ -180,9 +180,9 @@ class Read extends \Swiftlet\Controller
         saved = :saved
 			;');
 
-		$sth->bindParam('user_id', $userId);
-		$sth->bindParam('item_id', $itemId);
-		$sth->bindParam('saved',   $save);
+		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+		$sth->bindParam('item_id', $itemId, \PDO::PARAM_INT);
+		$sth->bindParam('saved',   $save,   \PDO::PARAM_INT);
 
 		try {
 			$sth->execute();

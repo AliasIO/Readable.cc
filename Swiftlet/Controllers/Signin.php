@@ -42,7 +42,7 @@ class Signin extends \Swiftlet\Controller
 					LIMIT 1
 					;');
 
-				$sth->bindParam('id', $user->id);
+				$sth->bindParam('id', $user->id, \PDO::PARAM_INT);
 
 				$sth->execute();
 

@@ -53,7 +53,7 @@ class Subscriptions extends \Swiftlet\Controller
 			LIMIT 10000
 			;');
 
-		$sth->bindParam('user_id', $userId);
+		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 
 		$sth->execute();
 
@@ -255,7 +255,7 @@ class Subscriptions extends \Swiftlet\Controller
 			LIMIT 1000
 			;');
 
-		$sth->bindParam('user_id', $userId);
+		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 
 		$sth->execute();
 

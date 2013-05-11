@@ -141,7 +141,7 @@ class Forgot extends \Swiftlet\Controller
 							LIMIT 1
 							;');
 
-						$sth->bindParam(':id', $userId);
+						$sth->bindParam(':id', $userId, \PDO::PARAM_INT);
 
 						$sth->execute();
 					}

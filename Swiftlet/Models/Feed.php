@@ -387,8 +387,8 @@ class Feed extends \Swiftlet\Model
 				)
 				;');
 
-			$sth->bindParam('user_id', $userId);
-			$sth->bindParam('feed_id', $this->id);
+			$sth->bindParam('user_id', $userId,   \PDO::PARAM_INT);
+			$sth->bindParam('feed_id', $this->id, \PDO::PARAM_INT);
 
 			$sth->execute();
 		}

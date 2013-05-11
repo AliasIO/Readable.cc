@@ -157,7 +157,7 @@ class Auth extends \Swiftlet\Model
 			LIMIT 1
 			;');
 
-		$sth->bindParam(':id',       $id);
+		$sth->bindParam(':id',       $id, \PDO::PARAM_INT);
 		$sth->bindParam(':password', $hash);
 
 		return $sth->execute();
@@ -187,7 +187,7 @@ class Auth extends \Swiftlet\Model
 			LIMIT 1
 			;');
 
-		$sth->bindParam(':id', $id);
+		$sth->bindParam(':id', $id, \PDO::PARAM_INT);
 
 		$sth->execute();
 

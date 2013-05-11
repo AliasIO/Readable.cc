@@ -66,11 +66,11 @@ class Reading extends \Swiftlet\Controllers\Read
 
 		$i = 1;
 
-		$sth->bindParam($i ++, $userId);
-		$sth->bindParam($i ++, $userId);
+		$sth->bindParam($i ++, $userId, \PDO::PARAM_INT);
+		$sth->bindParam($i ++, $userId, \PDO::PARAM_INT);
 
 		foreach( $excludes as $key => $itemId ) {
-			$sth->bindParam($i ++, $excludes[$key]);
+			$sth->bindParam($i ++, $excludes[$key], \PDO::PARAM_INT);
 		}
 
 		$sth->execute();
@@ -96,17 +96,21 @@ class Reading extends \Swiftlet\Controllers\Read
 				1 AS feed_subscribed
 			' . $sql . '
 			ORDER BY DATE(items.posted_at) DESC, users_items.score DESC
-			LIMIT ' . self::ITEMS_PER_PAGE . '
+			LIMIT ?
 			');
 
 		$i = 1;
 
-		$sth->bindParam($i ++, $userId);
-		$sth->bindParam($i ++, $userId);
+		$sth->bindParam($i ++, $userId, \PDO::PARAM_INT);
+		$sth->bindParam($i ++, $userId, \PDO::PARAM_INT);
 
 		foreach( $excludes as $key => $itemId ) {
-			$sth->bindParam($i ++, $excludes[$key]);
+			$sth->bindParam($i ++, $excludes[$key], \PDO::PARAM_INT);
 		}
+
+		$limit = self::ITEMS_PER_PAGE;
+
+		$sth->bindParam($i ++, $limit, \PDO::PARAM_INT);
 
 		$sth->execute();
 

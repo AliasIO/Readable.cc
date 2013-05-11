@@ -44,8 +44,8 @@ class Subscription extends \Swiftlet\Model
 				)
 				;');
 
-			$sth->bindParam('user_id', $userId);
-			$sth->bindParam('feed_id', $id);
+			$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+			$sth->bindParam('feed_id', $id,     \PDO::PARAM_INT);
 
 			$sth->execute();
 		}
@@ -75,10 +75,10 @@ class Subscription extends \Swiftlet\Model
 				' . ( $id ? 'feeds.id = :id' : 'feeds.url = :url' ) . '
 			;');
 
-		$sth->bindParam('user_id', $userId);
+		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 
 		if ( $id ) {
-			$sth->bindParam('id', $id);
+			$sth->bindParam('id', $id, \PDO::PARAM_INT);
 		} else {
 			$sth->bindParam('url', $url);
 		}

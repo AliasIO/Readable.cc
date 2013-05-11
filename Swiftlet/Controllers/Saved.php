@@ -65,17 +65,23 @@ class Saved extends \Swiftlet\Controllers\Read
 				users_items.saved   = 1
 				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
       ORDER BY DATE(items.posted_at) DESC
-			LIMIT ' . ( ( $page - 1 ) * self::ITEMS_PER_PAGE ) . ', ' . ( $page * self::ITEMS_PER_PAGE ) . '
+			LIMIT ?, ?
 			;');
 
 		$i = 1;
 
-		$sth->bindParam($i ++, $userId);
-		$sth->bindParam($i ++, $userId);
+		$sth->bindParam($i ++, $userId, \PDO::PARAM_INT);
+		$sth->bindParam($i ++, $userId, \PDO::PARAM_INT);
 
 		foreach( $excludes as $key => $itemId ) {
-			$sth->bindParam($i ++, $excludes[$key]);
+			$sth->bindParam($i ++, $excludes[$key], \PDO::PARAM_INT);
 		}
+
+		$limitFrom  = ( $page - 1 ) * self::ITEMS_PER_PAGE;
+		$limitCount = self::ITEMS_PER_PAGE;
+
+		$sth->bindParam($i ++, $limitFrom,  \PDO::PARAM_INT);
+		$sth->bindParam($i ++, $limitCount, \PDO::PARAM_INT);
 
 		$sth->execute();
 
