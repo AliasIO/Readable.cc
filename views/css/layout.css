@@ -124,6 +124,14 @@ blockquote p {
 		display: none;
 	}
 
+#item-count {
+	display: none;
+	font-size: 80%;
+	line-height: 1em;
+	position: relative;
+	top: -.2em;
+}
+
 .container {
 	padding: 0 20px;
 	min-width: 240px;

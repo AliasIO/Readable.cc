@@ -1,3 +1,7 @@
+<script>
+	readable.itemCount = <?php echo $this->get('itemCount') ?>;
+</script>
+
 <?php $items = $this->get('items', false) ?>
 
 <?php if ( !$items ): ?>

@@ -41,6 +41,45 @@ class Reading extends \Swiftlet\Controllers\Read
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
+		$sql = '
+			FROM             items
+      INNER JOIN users_feeds ON users_feeds.feed_id = items.feed_id
+      INNER JOIN       feeds ON       feeds.id      = items.feed_id
+			LEFT  JOIN users_items ON users_items.item_id = items.id      AND users_items.user_id = ?
+			WHERE
+				  users_feeds.user_id = ?                               AND
+				( users_items.read    = 0 OR users_items.read IS NULL )
+				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
+			';
+
+		// Count items
+		$sth = $dbh->prepare('
+			SELECT
+				COUNT(main.id) AS item_count
+			FROM (
+				SELECT
+					items.id
+				' . $sql . '
+				LIMIT 1001
+				) AS main
+			');
+
+		$i = 1;
+
+		$sth->bindParam($i ++, $userId);
+		$sth->bindParam($i ++, $userId);
+
+		foreach( $excludes as $key => $itemId ) {
+			$sth->bindParam($i ++, $excludes[$key]);
+		}
+
+		$sth->execute();
+
+		$result = $sth->fetch(\PDO::FETCH_OBJ);
+
+		$this->view->set('itemCount', $result->item_count);
+
+		// Fetch items
 		$sth = $dbh->prepare('
       SELECT
 				feeds.id    AS feed_id,
@@ -55,17 +94,10 @@ class Reading extends \Swiftlet\Controllers\Read
 				COALESCE(users_items.score, 0) AS score,
 				COALESCE(users_items.saved, 0) AS saved,
 				1 AS feed_subscribed
-			FROM             items
-      INNER JOIN users_feeds ON users_feeds.feed_id = items.feed_id
-      INNER JOIN       feeds ON       feeds.id      = items.feed_id
-			LEFT  JOIN users_items ON users_items.item_id = items.id      AND users_items.user_id = ?
-			WHERE
-				  users_feeds.user_id = ?                               AND
-				( users_items.read    = 0 OR users_items.read IS NULL )
-				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
-      ORDER BY DATE(items.posted_at) DESC, users_items.score DESC
+			' . $sql . '
+			ORDER BY DATE(items.posted_at) DESC, users_items.score DESC
 			LIMIT ' . self::ITEMS_PER_PAGE . '
-			;');
+			');
 
 		$i = 1;
 

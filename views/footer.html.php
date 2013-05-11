@@ -22,14 +22,6 @@
 		<script src="/views/js/readable.js"></script>
 
 		<script>
-			readable.email      = '<?php echo str_replace('@', ' ', $this->app->getConfig('emailFrom')) ?>';
-			readable.controller = '<?php echo $this->get('controller') ?>';
-			readable.args       = '<?php echo implode('/', $this->app->getArgs()) ?>';
-			readable.sessionId  = '<?php echo $this->app->getSingleton('session')->getId() ?>';
-			readable.signedIn   = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
-		</script>
-
-		<script>
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-216336-24']);
 			_gaq.push(['_setDomainName', 'readable.cc']);

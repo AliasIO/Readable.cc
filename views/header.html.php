@@ -18,6 +18,19 @@
 		<link href="/views/lib/bootstrap/css/readable.css" rel="stylesheet">
 		<link href="/views/lib/entypo/entypo.css" rel="stylesheet">
 		<link href="/views/css/layout.css" rel="stylesheet">
+
+		<script>
+			var readable = {};
+
+			(function(app) {
+				app.email      = '<?php echo str_replace('@', ' ', $this->app->getConfig('emailFrom')) ?>';
+				app.controller = '<?php echo $this->get('controller') ?>';
+				app.args       = '<?php echo implode('/', $this->app->getArgs()) ?>';
+				app.sessionId  = '<?php echo $this->app->getSingleton('session')->getId() ?>';
+				app.signedIn   = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
+				app.itemCount  = 0;
+			}(readable));
+		</script>
 	</head>
 	<body>
 		<header class="navbar navbar-fixed-top">
@@ -31,7 +44,7 @@
 
 					<ul class="nav pull-right">
 						<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
-						<li class="reading <?php echo $this->name == 'reading' ? 'active' : '' ?>"><a href="/reading"><i class="entypo rss"    ></i><span> My Reading</span></a></li>
+						<li class="reading <?php echo $this->name == 'reading' ? 'active' : '' ?>"><a href="/reading"><i class="entypo rss"    ></i><span> My Reading <span id="item-count">(<span>0</span>)</span></span></a></li>
 						<li class="saved   <?php echo $this->name == 'saved'   ? 'active' : '' ?>"><a href="/saved"  ><i class="entypo install"></i><span> Saved</span></a></li>
 
 						<li class="email dropdown">
