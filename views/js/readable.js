@@ -682,7 +682,7 @@
 				return;
 			}
 
-			if ( $(document).scrollTop() > $(document).height() - ( $(window).height() * 3 ) ) {
+			if ( $(document).scrollTop() > $(document).height() - ( $(window).height() * 5 ) ) {
 				app.items.loadMore();
 			}
 
