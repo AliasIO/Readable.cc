@@ -72,7 +72,19 @@ class Feed extends \Swiftlet\Controllers\Read
 			$this->view->set('pageDescription', 'News from ' . $feed->title . ' at ' . parse_url($feed->link, PHP_URL_HOST) . '.');
 			$this->view->set('title',           $feed->title);
 			$this->view->set('link',            $feed->link);
-			$this->view->set('canonicalUrl',    $this->app->getConfig('websiteUrl') . $this->app->getSingleton('helper')->getFeedLink($feedId, $feed->title));
+
+			// Redirect to full URL
+			$feedLink = $this->app->getSingleton('helper')->getFeedLink($feedId, $feed->title);
+
+			$args = $this->app->getArgs();
+
+			if ( empty($args[1]) || '/feed/view/' . $feedId . '/' . $args[1] !== $feedLink ) {
+				header('HTTP/1.1 301 Moved Permanently');
+				header('Status: 301 Moved Permanently');
+				header('Location: ' . $feedLink);
+
+				exit;
+			}
 
 			/*
 			$select = '

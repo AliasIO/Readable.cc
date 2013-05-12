@@ -11,10 +11,6 @@
 		<meta name="description" content="<?php echo $this->get('pageDescription') ? $this->get('pageDescription') . ' ' : '' ?>Readable.cc is an RSS reader that makes feeds readable. Vote on articles to improve your personal reading list.">
 		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
 
-		<?php if ( $this->get('canonicalUrl') ): ?>
-		<link rel="canonical" href="<?php echo $this->get('canonicalUrl') ?>">
-		<?php endif ?>
-
 		<link href="/views/lib/bootstrap/css/readable.css" rel="stylesheet">
 		<link href="/views/lib/entypo/entypo.css" rel="stylesheet">
 		<link href="/views/css/layout.css" rel="stylesheet">
