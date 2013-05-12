@@ -23,6 +23,14 @@
 					<button class="btn btn-small alert-cancel">Continue reading</button>
 				</p>
 			</div>
+
+			<div class="modal modal-no-more-items">
+				<h4>That's all folks</h4>
+
+				<p>
+					You're at the last article.
+				</p>
+			</div>
 		</div> <!-- /container -->
 
 		<div id="overlay"></div>

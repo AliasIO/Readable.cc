@@ -7,6 +7,10 @@
 <?php $items = $this->get('items', false) ?>
 
 <?php if ( !$items ): ?>
+<script>
+	readable.items.noMoreItems = true;
+</script>
+
 <div id="items-footer">
 	<p>
 		<i class="entypo chevron-small-left"></i> No more unread articles <i class="entypo chevron-small-right"></i>

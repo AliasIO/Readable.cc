@@ -70,7 +70,7 @@
 	};
 
 	// Display alert
-	app.notice = function(message, instant) {
+	app.notice = function(message) {
 		$('#overlay, .alert').hide();
 
 		$('<div class="alert alert-float">' + message + '</div>')
@@ -152,6 +152,7 @@
 		nextItem: null,
 		page: app.page,
 		lastRequestedPage: 0,
+		noMoreItems: false,
 
 		init: function() {
 			var
@@ -162,6 +163,10 @@
 
 			Mousetrap.bind(['j', 's', 'space'], function() {
 				var next = app.items.activeItem ? app.items.activeItem.nextAll('article').first() : $('#items article').first();
+
+				if ( app.items.noMoreItems ) {
+					app.notice($('.modal-no-more-items').html());
+				}
 
 				if ( !next[0] ) {
 					return;
@@ -198,7 +203,7 @@
 
 			Mousetrap.bind([ 'm', 'A' ], function() {
 				if ( app.controller === 'reading' ) {
-					app.notice($('.modal-mark-all-read').html(), true);
+					app.notice($('.modal-mark-all-read').html());
 
 					$('button.mark-all-read-confirm').focus();
 				}
@@ -214,7 +219,7 @@
 				console.log('x'+app.controller);
 
 				if ( app.controller === 'reading' ) {
-					app.notice($('.modal-mark-all-read').html(), true);
+					app.notice($('.modal-mark-all-read').html());
 
 					$('button.mark-all-read-confirm').focus();
 				}
@@ -467,7 +472,9 @@
 			app.navBar.pin(instant);
 
 			$('html,body')
-				.animate({ scrollTop: el.offset().top - app.items.pageTop }, instant ? 0 : app.duration.scroll, function() {
+				.animate({ scrollTop: el.offset().top - app.items.pageTop }, instant ? 0 : app.duration.scroll)
+				.promise()
+				.done(function() {
 					app.items.findActive(instant);
 
 					app.navBar.init();
@@ -511,12 +518,12 @@
 
 						app.items.markAsRead(app.items.activeItemId);
 
-						if ( $(this).is(':last-child') ) {
+						if ( this === $('#items article').last()[0] ) {
 							app.items.loadMore();
 						}
 
 						// Hide floating alerts
-						$('.alert-float').click();
+						$('.alert-float').trigger('click');
 					}
 
 					return false;
@@ -683,7 +690,7 @@
 		},
 
 		loadMore: function() {
-			if ( app.items.page + 1 <= app.items.lastRequestedPage ) {
+			if ( app.items.noMoreItems || app.items.page + 1 <= app.items.lastRequestedPage ) {
 				return;
 			}
 
