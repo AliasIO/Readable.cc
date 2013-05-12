@@ -659,6 +659,10 @@ footer {
 		border-top: 1px solid transparent;
 		margin-bottom: 26px;
 	}
+
+	#feedback {
+		display: none;
+	}
 }
 
 @media all and (max-width: 380px) {
