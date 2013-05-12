@@ -21,7 +21,9 @@ class Index extends \Swiftlet\Controllers\Read
 	 */
 	public function items()
 	{
-		$this->view->name = 'read';
+		if ( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+			$this->view->name = 'read';
+		}
 
 		$this->getItems();
 	}
@@ -34,7 +36,7 @@ class Index extends \Swiftlet\Controllers\Read
 		$userId = $this->app->getSingleton('session')->get('id');
 
 		$excludes = !empty($_GET['excludes']) ? explode(' ', $_GET['excludes']) : array();
-		$page     = !empty($_GET['page'])     ? (int)        $_GET['page']      : 1;
+		$page     = !empty($_GET['page'])     ? (int)        abs($_GET['page']) : 1;
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 

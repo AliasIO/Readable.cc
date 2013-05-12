@@ -150,7 +150,7 @@
 		pageTop: 0,
 		previousItem: null,
 		nextItem: null,
-		page: 1,
+		page: app.page,
 		lastRequestedPage: 0,
 
 		init: function() {
@@ -336,6 +336,8 @@
 
 		itemsAdded: function() {
 			app.trackPageView(app.controller + '/page/' + app.items.page);
+
+			$('#items .pagination').hide();
 
 			var i = 0;
 
@@ -691,9 +693,16 @@
 
 			app.items.lastRequestedPage = app.items.page + 1;
 
+			var data = { page: app.items.page + 1 };
+
+			// Excludes ensures displayed items that may not have been marked read don't get loaded again
+			if ( app.notSignedIn && app.controller === 'index' || app.controller === 'reading' ) {
+				data.excludes = app.excludes.join(' ');
+			}
+
 			$.ajax({
 				url: '/' + app.controller + '/items/' + app.args,
-				data: { page: app.items.page + 1, excludes: app.excludes.join(' ') },
+				data: data,
 				context: $('#items')
 			}).done(function(data) {
 				$('#items .loading').remove();

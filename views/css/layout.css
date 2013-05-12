@@ -273,6 +273,11 @@ blockquote p {
 			padding: 0 1em;
 		}
 
+	#items .pagination {
+		font-size: 80%;
+		text-align: center;
+	}
+
 article {
 	border-top: 1px solid transparent;
 	margin-bottom: 52px;

@@ -25,7 +25,9 @@ class Saved extends \Swiftlet\Controllers\Read
 	{
 		$this->app->getSingleton('helper')->ensureValidUser();
 
-		$this->view->name = 'read';
+		if ( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+			$this->view->name = 'read';
+		}
 
 		$this->getItems();
 	}

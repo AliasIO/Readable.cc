@@ -1,6 +1,8 @@
+<?php if ( $this->app->getControllerName() === 'Reading' ): ?>
 <script>
 	readable.itemCount = <?php echo $this->get('itemCount') ?>;
 </script>
+<?php endif ?>
 
 <?php $items = $this->get('items', false) ?>
 
@@ -76,4 +78,14 @@
 	</div>
 </article>
 <?php endforeach ?>
+<?php endif ?>
+
+<?php if ( !empty($_GET['page']) && $page = (int) abs($_GET['page']) ): ?>
+<p class="pagination">
+	<?php if ( $page > 1 ): ?>
+	<a href="?page=<?php echo $page - 1 ?>">Previous page</a> &nbsp; &mdash; &nbsp;
+	<?php endif ?>
+
+	<a href="?page=<?php echo $page + 1 ?>">Next page</a>
+</p>
 <?php endif ?>

@@ -29,6 +29,7 @@
 				app.sessionId  = '<?php echo $this->app->getSingleton('session')->getId() ?>';
 				app.signedIn   = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
 				app.itemCount  = 0;
+				app.page       = <?php echo !empty($_GET['page']) && (int) $_GET['page'] - 1 ? (int) $_GET['page'] - 1 : 0 ?>;
 			}(readable));
 		</script>
 	</head>
