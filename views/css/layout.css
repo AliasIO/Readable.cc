@@ -151,6 +151,14 @@ blockquote p {
 	cursor: pointer;
 }
 
+	.alert h4 {
+		margin-top: 13px;
+	}
+
+	.alert .btn {
+		margin: 13px 5px 0 0;
+	}
+
 .alert.alert-float {
 	position: fixed;
 	top: 100px;
@@ -163,6 +171,18 @@ blockquote p {
 
 .alert.alert-sticky {
 	cursor: default;
+}
+
+#overlay {
+	background: #fff;
+	display: none;
+	height: 100%;
+	left: 0;
+	opacity: .8;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 8;
 }
 
 #contents {
@@ -621,6 +641,14 @@ footer {
 	.control-group .controls {
 		margin-left: 0;
 	}
+
+	#page-head {
+		height: 200px;
+	}
+
+		#page-head p {
+			display: none;
+		}
 
 	article {
 		border-top: 1px solid transparent;

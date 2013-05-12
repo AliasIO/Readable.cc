@@ -19,11 +19,13 @@
 				</p>
 
 				<p>
-					<button id="mark-all-read" class="btn btn-small btn-danger">Clear reading list</button>
+					<button class="btn btn-small btn-primary rmark-all-read-confirm">Clear reading list</button>
 					<button class="btn btn-small alert-cancel">Continue reading</button>
 				</p>
 			</div>
 		</div> <!-- /container -->
+
+		<div id="overlay"></div>
 
 		<p id="feedback">
 			<a href="/contact">Feedback</a>

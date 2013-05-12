@@ -30,7 +30,7 @@
 		$(document).on('click', '.alert .alert-cancel', function(e) {
 			e.stopPropagation();
 
-			$(this).closest('.alert').hide();
+			$('#overlay, .alert').hide();
 		});
 
 		// Hide alerts on click
@@ -39,11 +39,7 @@
 				return;
 			}
 
-			if ( $(this).hasClass('alert-float') ) {
-				$(this).stop().fadeOut(app.duration.fade);
-			} else {
-				$(this).stop().hide();
-			}
+			$('#overlay, .alert').hide();
 		});
 
 		$(window).resize(function() {
@@ -75,15 +71,17 @@
 
 	// Display alert
 	app.notice = function(message, instant) {
-		$('.alert').hide();
+		$('#overlay, .alert').hide();
 
 		$('<div class="alert alert-float">' + message + '</div>')
 			.stop()
 			.hide()
 			.outerWidth($('#contents').width())
 			.appendTo('#contents')
-			.fadeIn(instant ? 0 : app.duration.fade)
+			.show()
 			;
+
+		$('#overlay').show();
 
 		return app;
 	};
@@ -201,11 +199,25 @@
 			Mousetrap.bind([ 'm', 'A' ], function() {
 				if ( app.controller === 'reading' ) {
 					app.notice($('.modal-mark-all-read').html(), true);
+
+					$('button.mark-all-read-confirm').focus();
 				}
 			});
 
 			Mousetrap.bind('escape', function() {
-				$('.alert').hide();
+				$('#overlay, .alert').hide();
+			});
+
+			$(document).on('click', '.mark-all-read', function(e) {
+				e.preventDefault();
+
+				console.log('x'+app.controller);
+
+				if ( app.controller === 'reading' ) {
+					app.notice($('.modal-mark-all-read').html(), true);
+
+					$('button.mark-all-read-confirm').focus();
+				}
 			});
 
 			$(document).ajaxError(function(e, xhr) {
@@ -309,7 +321,7 @@
 				app.items.save($(this).data('item-id'), $(this).hasClass('saved') ? 0 : 1);
 			});
 
-			$(document).on('click', '#mark-all-read', function(e) {
+			$(document).on('click', '.mark-all-read-confirm', function(e) {
 				e.stopPropagation();
 
 				$(this).blur();
