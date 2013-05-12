@@ -47,14 +47,43 @@
 
 body {
   font-family: Poly, Georgia, "Times New Roman", Times, serif;
-	font-size: 20px;
+	font-size: 18px;
 	line-height: 26px;
 	overflow-y: scroll;
-	padding-top: 80px;
+	padding-top: 65px;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: Lora, Georgia, "Times New Roman", Times, serif;
+  margin: 25px 0 15px 0;
+  font-weight: bold;
+  line-height: 1.2em;
+  color: inherit;
+  text-rendering: optimizelegibility;
+}
+
+h1 {
+  font-size: 42px;
+}
+
+h2 {
+  font-size: 36px;
+}
+
+h3 {
+  font-size: 30px;
+}
+
+h4 {
+  font-size: 26px;
+}
+
+h5 {
+  font-size: 22px;
+}
+
+h6 {
+  font-size: 18px;
 }
 
 a {
@@ -68,14 +97,14 @@ a:hover {
 
 img {
 	color: #999;
-	font-size: 75%;
+	font-size: 80%;
 }
 
 p, table {
-	margin: 0 0 13px;
+	margin: 0 0 15px;
 }
 
-strong {
+strong, b {
 	letter-spacing: -1px;
 }
 
@@ -86,14 +115,14 @@ code {
 
 blockquote {
 	font-style: italic;
-	margin-bottom: 13px;
+	margin-bottom: 15px;
 }
 
 blockquote p {
 	font-size: inherit;
 	font-weight: inherit;
 	line-height: inherit;
-	margin-bottom: 13px;
+	margin-bottom: 15px;
 }
 
 .navbar {
@@ -152,11 +181,11 @@ blockquote p {
 }
 
 	.alert h4 {
-		margin-top: 13px;
+		margin-top: 15px;
 	}
 
 	.alert .btn {
-		margin: 13px 5px 0 0;
+		margin: 15px 5px 0 0;
 	}
 
 .alert.alert-float {
@@ -264,7 +293,7 @@ blockquote p {
 		border-bottom: 1px solid #333;
 		height: .65em;
 		font-style: italic;
-		margin: 78px 0 78px 0;
+		margin: 60px 0;
 		text-align: center;
 	}
 
@@ -274,13 +303,13 @@ blockquote p {
 		}
 
 	#items .pagination {
-		font-size: 80%;
+		font-size: 90%;
 		text-align: center;
 	}
 
 article {
 	border-top: 1px solid transparent;
-	margin-bottom: 52px;
+	margin-bottom: 40px;
 }
 
 	article ul,
@@ -307,16 +336,16 @@ article {
 		clear: both;
 		display: block;
 		height: 315px;
-		margin-bottom: 13px;
+		margin-bottom: 15px;
 		width: 560px;
 	}
 
 	article li {
-		margin-bottom: 13px;
+		margin-bottom: 15px;
 	}
 
 		article li ul {
-			margin-top: 13px;
+			margin-top: 15px;
 		}
 
 	article h1 {
@@ -344,7 +373,7 @@ article {
 	}
 
 	article .item-date {
-		font-size: 80%;
+		font-size: 90%;
 		font-style: italic;
 		margin-bottom: 20px;
 	}
@@ -384,11 +413,10 @@ article {
 		}
 
 	article p {
-		text-align: justify;
 	}
 
 		article p.caption {
-			font-size: 80%;
+			font-size: 90%;
 			font-style: italic;
 			text-align: left;
 		}
@@ -413,7 +441,7 @@ article {
 
 	article img.feature {
 		float: left;
-		margin: 0 13px 13px 0 !important;
+		margin: 0 15px 15px 0 !important;
 		max-height: 300px;
 		max-width: 50%;
 		padding: 0;
@@ -421,17 +449,17 @@ article {
 
 	article img {
 		display: block;
-		margin: 13px 0;
+		margin: 15px 0;
 	}
 
 	article img.image-left {
 		float: left;
-		margin: 0 13px 13px 0;
+		margin: 0 15px 15px 0;
 		padding: 0;
 	}
 
 	article img.image-right {
-		margin: 13px 0 0 0;
+		margin: 15px 0 0 0;
 	}
 
 	article p.no-text {
@@ -447,7 +475,7 @@ article {
 	article .alert {
 		font-size: 80%;
 		text-align: left;
-		margin: 20px 0 13px 0;
+		margin: 20px 0 15px 0;
 	}
 
 fieldset {
@@ -506,7 +534,7 @@ fieldset:last-child {
 
 	#form-subscriptions-subscribe .message {
 		color: #1c9b47;
-		font-size: 80%;
+		font-size: 90%;
 		padding-left: 10px;
 	}
 
@@ -523,41 +551,10 @@ fieldset:last-child {
 		width: 26px;
 	}
 
-#account-words {
-	cursor: default;
-	line-height: 2em;
-	text-align: justify;
-	text-transform: uppercase;
-}
-
-	#account-words span {
-		border: 1px solid #fefefe;
-		display: inline-block;
-		padding: 2px 5px;
-		margin: 3px 0;
-		vertical-align: middle;
-		-webkit-border-radius: 3px;
-			 -moz-border-radius: 3px;
-						border-radius: 3px;
-	}
-
-	#account-words .interesting {
-	}
-
-	#account-words .boring {
-		color: #ccc;
-	}
-
-	#account-words span:hover {
-		background: #fff;
-		border: 1px solid #ececec;
-		color: inherit;
-	}
-
 footer {
 	color: #999;
-	font-size: 75%;
-	text-align: right;
+	font-size: 85%;
+	text-align: center;
 }
 
 	footer a:hover {
@@ -567,7 +564,7 @@ footer {
 #feedback {
 	border: 2px solid #fff;
 	line-height: 30px;
-	font-size: 75%;
+	font-size: 80%;
 	position: fixed;
 	text-align: center;
 	bottom: 0;
