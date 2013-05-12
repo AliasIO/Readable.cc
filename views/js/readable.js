@@ -827,5 +827,5 @@
 		}
 	};
 
-	$(function() { app.init(); });
+	app.init();
 }(readable, jQuery));
