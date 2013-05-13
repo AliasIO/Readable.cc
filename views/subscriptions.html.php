@@ -17,6 +17,10 @@
 <?php endif ?>
 
 <?php if ( $feeds = $this->get('feeds') ): ?>
+<p>
+	Jump to: <em><a href="#feed-subscribe">Subscribe to feed</a></em>, <em><a href="#feed-import-export">Import &amp; export feeds</a></em>.
+</p>
+
 <h3>Subscriptions</h3>
 
 <table id="subscriptions" class="table table-bordered table-striped table-hover">
@@ -145,7 +149,7 @@
 <div class="divider"></div>
 <?php endif ?>
 
-<h3>Subscribe to feed</h3>
+<h3 id="feed-subscribe">Subscribe to feed</h3>
 
 <p>
 	Specify a URL to a <a href="https://en.wikipedia.org/wiki/RSS">RSS</a> or <a href="https://en.wikipedia.org/wiki/Atom_%28standard%29">Atom</a> feed to subscribe.
@@ -175,7 +179,12 @@
 
 <div class="divider"></div>
 
-<h3>Import & export feeds</h3>
+<h3 id="feed-import-export">Import &amp; export feeds</h3>
+
+<p>
+	<em><a href="https://www.google.com/takeout/?pli=1#custom:reader">Export your <strong>Google Reader</strong> subscriptions through Google Takeout</a>. Extract the ZIP file
+	and upload the file called &lsquo;subscriptions.xml&rsquo; (in a folder called &lsquo;Reader&rsquo;) below.</em>
+</p>
 
 <p>
 	It may take several hours for imported feeds to appear in &lsquo;<a href="/reading">My Reading</a>&rsquo;.

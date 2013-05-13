@@ -32,6 +32,10 @@
 			<td><code>m</code>, <code>Shift-a</code></td>
 			<td>Mark all articles &lsquo;read&rsquo; (in &lsquo;<a href="/reading">My Reading</a>&rsquo;)</td>
 		</tr>
+		<tr>
+			<td><code>s</code></td>
+			<td>Toggle save</td>
+		</tr>
 	</tbody>
 </table>
 

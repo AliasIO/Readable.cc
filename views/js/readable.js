@@ -209,6 +209,12 @@
 				}
 			});
 
+			Mousetrap.bind([ 's' ], function() {
+				if ( app.signedIn && app.items.activeItem ) {
+					app.items.activeItem.find('.item-save').trigger('click');
+				}
+			});
+
 			Mousetrap.bind('escape', function() {
 				$('#overlay, .alert').hide();
 			});
