@@ -35,7 +35,7 @@ class Helper extends \Swiftlet\Model
 	 */
 	public function localize(&$dateTime)
 	{
-		$dateTime = strtotime($dateTime) + $this->app->getSingleton('session')->get('timezone');
+		$dateTime = $dateTime ? strtotime($dateTime) + $this->app->getSingleton('session')->get('timezone') : 0;
 	}
 
 	/**
