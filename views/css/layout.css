@@ -86,6 +86,19 @@ h6 {
   font-size: 18px;
 }
 
+ul, ol {
+  padding: 0;
+  margin: 0 0 15px 20px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+li {
+  line-height: 26px;
+}
+
 a {
 	border-bottom: 1px solid #ccc;
 }
@@ -341,11 +354,15 @@ article {
 	}
 
 	article li {
-		margin-bottom: 15px;
+		margin-bottom: 5px;
 	}
 
+		article li p {
+			margin-bottom: 5px;
+		}
+
 		article li ul {
-			margin-top: 15px;
+			margin-top: 5px;
 		}
 
 	article h1 {
