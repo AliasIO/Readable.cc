@@ -18,21 +18,39 @@ class Subscription extends \Swiftlet\Model
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		if ( $url ) {
-			$feed = $this->app->getModel('feed');
+			$sth = $dbh->prepare('
+				SELECT
+					id
+				FROM feeds
+				WHERE url = :url
+				LIMIT 1
+				');
 
-			$feed->fetch($url)->save();
+			$sth->bindParam('url', $url);
 
-			$id = $feed->id;
+			$sth->execute();
 
-			$itemIds = array();
+			$result = $sth->fetch(\PDO::FETCH_OBJ);
 
-			foreach ( $feed->getItems() as $item ) {
-				if ( $item->getId() ) {
-					$itemIds[] = $item->getId();
+			if ( $result ) {
+				$id = $result->id;
+			} else {
+				$feed = $this->app->getModel('feed');
+
+				$feed->fetch($url)->save();
+
+				$id = $feed->id;
+
+				$itemIds = array();
+
+				foreach ( $feed->getItems() as $item ) {
+					if ( $item->getId() ) {
+						$itemIds[] = $item->getId();
+					}
 				}
-			}
 
-			$this->app->getsingleton('learn')->learn($itemIds);
+				$this->app->getsingleton('learn')->learn($itemIds);
+			}
 		} else {
 			$sth = $dbh->prepare('
 				INSERT IGNORE INTO users_feeds (
