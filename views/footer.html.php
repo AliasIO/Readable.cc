@@ -19,7 +19,7 @@
 				</p>
 
 				<p>
-					<button class="btn btn-small btn-primary rmark-all-read-confirm">Clear reading list</button>
+					<button class="btn btn-small btn-primary mark-all-read-confirm">Clear reading list</button>
 					<button class="btn btn-small alert-cancel">Continue reading</button>
 				</p>
 			</div>
