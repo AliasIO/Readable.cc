@@ -19,7 +19,7 @@ class Helper extends \Swiftlet\Model
 				exit(json_encode(array('message' => 'You need to be logged in')));
 			}
 
-			header('Location: /signin');
+			header('Location: ' . $this->app->getRootPath() . 'signin');
 
 			exit;
 		}
@@ -56,22 +56,12 @@ class Helper extends \Swiftlet\Model
 	}
 
 	/**
-	 * Set controller name on view
-	 *
-	 * @param object $controller
-	 */
-	public function viewSetControllerName($controller, $view)
-	{
-		$view->set('controller', strtolower(preg_replace('/^Swiftlet\\\Controllers\\\/', '', get_class($controller))));
-	}
-
-	/**
 	 * Generate direct link to feed
 	 *
 	 * @param object $controller
 	 */
 	public function getFeedLink($id, $title)
 	{
-		return '/feed/view/' . $id . '/' . trim(preg_replace('/--+/', '-', preg_replace('/[^a-z0-9]/', '-', strtolower( html_entity_decode($title, ENT_QUOTES, 'UTF-8')))), '-');
+		return $this->app->getRootPath() . 'feed/view/' . $id . '/' . trim(preg_replace('/--+/', '-', preg_replace('/[^a-z0-9]/', '-', strtolower( html_entity_decode($title, ENT_QUOTES, 'UTF-8')))), '-');
 	}
 }

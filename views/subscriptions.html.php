@@ -54,7 +54,7 @@
 <h3>Get started</h3>
 
 <p>
-	Add a few subscriptions to get started. Articles appear in &lsquo;<a href="/reading">My Reading</a>&rsquo;.
+	Add a few subscriptions to get started. Articles appear in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.
 </p>
 
 <table id="suggestions" class="table table-bordered table-striped table-hover">
@@ -156,7 +156,7 @@
 	Alternatively you can just use a website's URL and we'll try to find a feed automatically.
 </p>
 
-<form id="form-subscriptions-subscribe" method="post" action="/subscriptions" class="form-subscriptions form-horizontal well">
+<form id="form-subscriptions-subscribe" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="form-subscriptions form-horizontal well">
 	<input type="hidden" name="form" value="subscribe">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
@@ -171,7 +171,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="entypo rss"></i> Subscribe</button><div class="loading"></div><span class="message"></span>
+				<button class="btn btn-primary" type="submit"><i class="entypo squared-plus"></i>&nbsp;Subscribe</button><div class="loading"></div><span class="message"></span>
 			</div>
 		</div>
 	</fieldset>
@@ -187,10 +187,10 @@
 </p>
 
 <p>
-	It may take several hours for imported feeds to appear in &lsquo;<a href="/reading">My Reading</a>&rsquo;.
+	It may take several hours for imported feeds to appear in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.
 </p>
 
-<form id="form-subscriptions-import" method="post" action="/subscriptions" class="form-horizontal well" enctype="multipart/form-data">
+<form id="form-subscriptions-import" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="form-horizontal well" enctype="multipart/form-data">
 	<input type="hidden" name="form" value="import">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
@@ -205,7 +205,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="entypo rss"></i> Import feeds</button>
+				<button class="btn btn-primary" type="submit">Import feeds</button>
 			</div>
 		</div>
 	</fieldset>
@@ -213,7 +213,7 @@
 	<fieldset>
 		<div class="control-group">
 			<div class="controls">
-				<a class="btn btn-primary" href="/subscriptions/export"><i class="entypo rss"></i> Export feeds</a>
+				<a class="btn btn-primary" href="<?php echo $this->app->getRootPath() ?>subscriptions/export">Export feeds</a>
 			</div>
 		</div>
 	</fieldset>

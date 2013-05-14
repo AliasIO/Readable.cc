@@ -55,7 +55,7 @@ class Signin extends \Swiftlet\Controller
 
 				file_put_contents('sessions/' . $sessionHash . '.php', "<?php header('HTTP/1.0 403 Forbidden'); exit ?>\n" . $user->id);
 
-				header('Location: /reading');
+				header('Location: ' . $this->app->getRootPath() . 'reading');
 
 				exit;
 			} catch ( \Exception $e ) {

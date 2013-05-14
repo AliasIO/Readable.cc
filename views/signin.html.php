@@ -16,7 +16,7 @@
 </div>
 <?php endif ?>
 
-<form method="post" action="/signin" class="form-signin form-horizontal well">
+<form method="post" action="<?php echo $this->app->getRootPath() ?>signin" class="form-signin form-horizontal well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
@@ -38,8 +38,8 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="entypo login"></i> Sign in</button>
-				&nbsp; <small><a href="/forgot">Forgot password?</a></small>
+				<button class="btn btn-primary" type="submit">Sign in</button>
+				&nbsp; <small><a href="<?php echo $this->app->getRootPath() ?>forgot">Forgot password?</a></small>
 			</div>
 		</div>
 	</fieldset>

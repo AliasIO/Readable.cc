@@ -20,7 +20,7 @@
 	Please report any content that you feel is inappropriate for this website.
 </p>
 
-<form method="post" action="/report/article/<?php echo $this->get('itemId') ?>" class="form-report form-horizontal well">
+<form method="post" action="<?php echo $this->app->getRootPath() ?>report/article/<?php echo $this->get('itemId') ?>" class="form-report form-horizontal well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
@@ -42,7 +42,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="entypo flag"></i> Send report</button>
+				<button class="btn btn-primary" type="submit">Send report</button>
 			</div>
 		</div>
 	</fieldset>

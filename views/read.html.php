@@ -40,7 +40,7 @@
 		<span class="feed-options">
 			&mdash;
 			<?php if ( $this->get('controller') == 'index' ): ?>
-			<a href="/report/article/<?php echo $item->id ?>" class="report" data-feed-id="<?php echo $item->feed_id ?>" title="Report inappropriate content">
+			<a href="<?php echo $this->app->getRootPath() ?>report/article/<?php echo $item->id ?>" class="report" data-feed-id="<?php echo $item->feed_id ?>" title="Report inappropriate content">
 				<i class="entypo flag"></i>Report
 			</a>
 			&nbsp;

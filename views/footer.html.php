@@ -1,14 +1,14 @@
 			<footer>
 				<p>
-					<a href="/about">About</a> &nbsp;-&nbsp;
-					<a href="/contact">Contact</a>
+					<a href="<?php echo $this->app->getRootPath() ?>about">About</a> &nbsp;-&nbsp;
+					<a href="<?php echo $this->app->getRootPath() ?>contact">Contact</a>
 				</p>
 			</footer>
 
 			<div class="modal modal-signin">
 				<h4>Not signed in</h4>
 
-				<p>You're missing out. Please <a href="/signin">sign in</a> or <a href="/signup">create an account</a>.</p>
+				<p>You're missing out. Please <a href="<?php echo $this->app->getRootPath() ?>signin">sign in</a> or <a href="<?php echo $this->app->getRootPath() ?>signup">create an account</a>.</p>
 			</div>
 
 			<div class="modal modal-mark-all-read">
@@ -36,13 +36,12 @@
 		<div id="overlay"></div>
 
 		<p id="feedback">
-			<a href="/contact">Feedback</a>
+			<a href="<?php echo $this->app->getRootPath() ?>contact">Feedback</a>
 		</p>
 
-		<script src="/views/lib/jquery-1.9.1.min.js"></script>
-		<script src="/views/lib/bootstrap/js/bootstrap.min.js"></script>
-		<script src="/views/lib/mousetrap.min.js"></script>
-		<script src="/views/js/readable.js"></script>
+		<script src="<?php echo $this->app->getRootPath() ?>views/lib/jquery-1.9.1.min.js"></script>
+		<script src="<?php echo $this->app->getRootPath() ?>views/lib/mousetrap.min.js"></script>
+		<script src="<?php echo $this->app->getRootPath() ?>views/js/readable.js"></script>
 
 		<script>
 			var _gaq = _gaq || [];

@@ -5,9 +5,9 @@
 		<h1>Popular Reading</h1>
 
 		<p>
-			<span>Navigate to next and previous articles with <code>j</code> and <code>k</code> (<a href="/shortcuts">more</a>).</span>
+			<span>Navigate to next and previous articles with <code>j</code> and <code>k</code> (<a href="<?php echo $this->app->getRootPath() ?>shortcuts">more</a>).</span>
 			<?php if ( !$this->app->getSingleton('session')->get('id') ): ?>
-			<span><a href="/signup">Sign up</a> to subscribe to RSS feeds and vote on articles for personalised reading.</span>
+			<span><a href="<?php echo $this->app->getRootPath() ?>signup">Sign up</a> to subscribe to RSS feeds and vote on articles for personalised reading.</span>
 			<?php endif ?>
 		</p>
 	</div>

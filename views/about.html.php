@@ -14,7 +14,7 @@
 </p>
 
 <p>
-	Content the majority is likely to find interesting appears on the &lsquo;<a href="/">Popular Reading</a>&rsquo; page.
+	Content the majority is likely to find interesting appears on the &lsquo;<a href="<?php echo $this->app->getRootPath() ?>">Popular Reading</a>&rsquo; page.
 </p>
 
 <p>
@@ -23,11 +23,11 @@
 </p>
 
 <p>
-	Hit the &lsquo;save&rsquo; button on articles you wish to read later. They will appear on the &lsquo;<a href="/saved">Saved</a>&rsquo; page.
+	Hit the &lsquo;save&rsquo; button on articles you wish to read later. They will appear on the &lsquo;<a href="<?php echo $this->app->getRootPath() ?>saved">Saved</a>&rsquo; page.
 </p>
 
 <p>
-	If you have any questions or suggestions, head over to the &lsquo;<a href="/contact">Contact</a>&rsquo; page.
+	If you have any questions or suggestions, head over to the &lsquo;<a href="<?php echo $this->app->getRootPath() ?>contact">Contact</a>&rsquo; page.
 </p>
 
 <div class="divider"></div>

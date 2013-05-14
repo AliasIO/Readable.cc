@@ -20,7 +20,7 @@
 	Sign up to manage your own <a href="https://en.wikipedia.org/wiki/Web_feed">feeds</a> and vote on articles. Articles we believe you'll find interesting are promoted to the top of your reading list.
 </p>
 
-<form method="post" action="/signup" class="form-signin form-horizontal well">
+<form method="post" action="<?php echo $this->app->getRootPath() ?>signup" class="form-signin form-horizontal well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
@@ -50,7 +50,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="entypo add-user"></i> Create account</button>
+				<button class="btn btn-primary" type="submit">Create account</button>
 			</div>
 		</div>
 	</fieldset>

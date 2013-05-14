@@ -39,7 +39,7 @@ class Signup extends \Swiftlet\Controller
 						$session->set('email',    $user->email);
 						$session->set('timezone', $user->timezone);
 
-						header('Location: /subscriptions/welcome');
+						header('Location: ' . $this->app->getRootPath() . 'subscriptions/welcome');
 
 						exit;
 					} else {

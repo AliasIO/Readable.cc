@@ -16,8 +16,6 @@ class Read extends \Swiftlet\Controller
 	public function __construct(\Swiftlet\Interfaces\App $app, \Swiftlet\Interfaces\View $view)
 	{
 		parent::__construct($app, $view);
-
-		$this->app->getSingleton('helper')->viewSetControllerName($this, $this->view);
 	}
 
 	/**
@@ -82,7 +80,7 @@ class Read extends \Swiftlet\Controller
 	/**
 	 * Mark item as read
 	 */
-	public function read()
+	public function markRead()
 	{
 		header('Content-type: application/json');
 

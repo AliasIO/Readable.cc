@@ -5,8 +5,8 @@
 		<h1>My Reading</h1>
 
 		<p>
-			<span><a href="/subscriptions">Subscribe</a> to feeds and vote on articles for personalised reading.</span>
-			<span>Click &lsquo;save&rsquo; on articles you wish to <a href="/saved">read later</a>.</span>
+			<span><a href="<?php echo $this->app->getRootPath() ?>subscriptions">Subscribe</a> to feeds and vote on articles for personalised reading.</span>
+			<span>Click &lsquo;save&rsquo; on articles you wish to <a href="<?php echo $this->app->getRootPath() ?>saved">read later</a>.</span>
 			<span>Vote on articles for personalised reading.</span>
 			<span>Press &lsquo;m&rsquo; to <a class="mark-all-read" href="javascript: void(0);">mark all items in your reading list read</a>.</span>
 		</p>

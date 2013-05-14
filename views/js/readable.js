@@ -26,6 +26,22 @@
 	app.init = function() {
 		$('.contact-email').text(app.email.replace(' ', '@')).attr('href', 'mailto:' + app.email.replace(' ', '@'));
 
+		$('header ul ul')
+			.hide()
+			.parent()
+			.on('click', function(e) {
+				e.stopPropagation();
+
+				var dropdown = $(this).find('ul');
+
+				dropdown.toggle();
+			});
+			;
+
+		$(document).on('click', function() {
+			$('header ul ul').hide();
+		});
+
 		// Hide alerts on click
 		$(document).on('click', '.alert .alert-cancel', function(e) {
 			e.stopPropagation();
@@ -51,20 +67,20 @@
 		}).resize();
 
 		switch ( app.controller ) {
-			case 'index':
-			case 'reading':
-			case 'saved':
-			case 'feed':
+			case 'Index':
+			case 'Reading':
+			case 'Saved':
+			case 'Feed':
 				app.items.init();
 
 				break;
-			case 'subscriptions':
+			case 'Subscriptions':
 				app.subscriptions.init();
 
 				break;
 		}
 
-		app.navBar.init();
+		app.header.init();
 
 		return app;
 	};
@@ -92,13 +108,13 @@
 		return app;
 	};
 
-	app.navBar = {
+	app.header = {
 		height: 0,
 		anchor: null,
 		previousScrollTop: 0,
 
 		init: function() {
-			$(document).bind('scroll', app.navBar.scroll);
+			$(document).bind('scroll', app.header.scroll);
 
 			if ( $('#items').length ) {
 				$(document).bind('scroll', app.items.infiniteScroll);
@@ -106,22 +122,22 @@
 
 			$(document).scroll();
 
-			app.navBar.height = $('.navbar').outerHeight();
+			app.header.height = $('header').outerHeight();
 
-			return app.navBar;
+			return app.header;
 		},
 
 		scroll: function() {
 			var
 				scrollTop   = $(document).scrollTop(),
-				navBarTop   = Math.min(0, Math.max(parseInt($('.navbar').css('top')) - ( scrollTop - app.navBar.previousScrollTop ), - app.navBar.height));
+				headerTop   = Math.min(0, Math.max(parseInt($('header').css('top')) - ( scrollTop - app.header.previousScrollTop ), - app.header.height));
 				;
 
-			if ( navBarTop <= 0 && navBarTop >= - app.navBar.height ) {
-				$('.navbar').css({ top: navBarTop });
+			if ( headerTop <= 0 && headerTop >= - app.header.height ) {
+				$('header').css({ top: headerTop });
 			}
 
-			app.navBar.previousScrollTop = scrollTop;
+			app.header.previousScrollTop = scrollTop;
 
 			// Read line
 			if ( scrollTop > app.items.pageTop ) {
@@ -130,17 +146,17 @@
 				$('#items-read-line:visible').fadeOut(app.duration.fade);
 			}
 
-			return app.navBar;
+			return app.header;
 		},
 
 		pin: function(instant) {
-			$(document).unbind('scroll', app.navBar.scroll);
+			$(document).unbind('scroll', app.header.scroll);
 
-			app.navBar.previousScrollTop = $(document).height();
+			app.header.previousScrollTop = $(document).height();
 
-			$('.navbar').stop().animate({ top: 0 }, instant ? 0 : app.duration.scroll);
+			$('header').stop().animate({ top: 0 }, instant ? 0 : app.duration.scroll);
 
-			return app.navBar;
+			return app.header;
 		}
 	};
 
@@ -191,7 +207,7 @@
 				return false;
 			});
 
-			Mousetrap.bind('home', function() { app.navBar.pin(true).init(); });
+			Mousetrap.bind('home', function() { app.header.pin(true).init(); });
 
 			Mousetrap.bind(['o', 'enter'], function() {
 				if ( app.items.activeItem ) {
@@ -202,7 +218,7 @@
 			});
 
 			Mousetrap.bind([ 'm', 'A' ], function() {
-				if ( app.controller === 'reading' ) {
+				if ( app.controller === 'Reading' ) {
 					app.notice($('.modal-mark-all-read').html());
 
 					$('button.mark-all-read-confirm').focus();
@@ -222,9 +238,7 @@
 			$(document).on('click', '.mark-all-read', function(e) {
 				e.preventDefault();
 
-				console.log('x'+app.controller);
-
-				if ( app.controller === 'reading' ) {
+				if ( app.controller === 'Reading' ) {
 					app.notice($('.modal-mark-all-read').html());
 
 					$('button.mark-all-read-confirm').focus();
@@ -346,7 +360,7 @@
 		},
 
 		itemsAdded: function() {
-			app.trackPageView(app.controller + '/page/' + app.items.page);
+			app.trackPageView(app.controller.toLowerCase() + '/page/' + app.items.page);
 
 			$('#items .pagination').hide();
 
@@ -475,7 +489,7 @@
 				return;
 			}
 
-			app.navBar.pin(instant);
+			app.header.pin(instant);
 
 			$('html,body')
 				.animate({ scrollTop: el.offset().top - app.items.pageTop }, instant ? 0 : app.duration.scroll)
@@ -483,7 +497,7 @@
 				.done(function() {
 					app.items.findActive(instant);
 
-					app.navBar.init();
+					app.header.init();
 				});
 
 			return app.items;
@@ -563,7 +577,7 @@
 			}
 
 			$.ajax({
-				url: '/' + app.controller + '/vote/' + app.args,
+				url: '/read/vote/' + app.args,
 				method: 'post',
 				data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
 			}).fail(function() {
@@ -591,7 +605,7 @@
 				app.items.updateItemCount(-1);
 
 				$.ajax({
-					url: '/' + app.controller + '/read/' + app.args,
+					url: '/read/markRead/' + app.args,
 					method: 'post',
 					data: { item_id: itemId, sessionId: app.sessionId }
 				});
@@ -601,9 +615,9 @@
 		},
 
 		markAllAsRead: function() {
-			if ( app.signedIn && app.controller === 'reading' ) {
+			if ( app.signedIn && app.controller === 'Reading' ) {
 				$.ajax({
-					url: '/' + app.controller + '/read/' + app.args,
+					url: '/read/markRead/' + app.args,
 					method: 'post',
 					data: { item_id: 'all', sessionId: app.sessionId }
 				})
@@ -634,7 +648,7 @@
 
 			if ( app.signedIn ) {
 				$.ajax({
-					url: '/' + app.controller + '/save/' + app.args,
+					url: '/read/save/' + app.args,
 					method: 'post',
 					data: { item_id: itemId, save: save, sessionId: app.sessionId }
 				}).fail(function() {
@@ -667,7 +681,7 @@
 			}
 
 			$.ajax({
-				url: '/' + app.controller + '/subscribe/' + app.args,
+				url: '/read/subscribe/' + app.args,
 				method: 'post',
 				data: { feed_id: feedId, action: action, sessionId: app.sessionId }
 			}).fail(function(data) {
@@ -709,12 +723,12 @@
 			var data = { page: app.items.page + 1 };
 
 			// Excludes ensures displayed items that may not have been marked read don't get loaded again
-			if ( app.notSignedIn && app.controller === 'index' || app.controller === 'reading' ) {
+			if ( app.notSignedIn && app.controller === 'Index' || app.controller === 'Reading' ) {
 				data.excludes = app.excludes.join(' ');
 			}
 
 			$.ajax({
-				url: '/' + app.controller + '/items/' + app.args,
+				url: '/' + app.controller.toLowerCase() + '/items/' + app.args,
 				data: data,
 				context: $('#items')
 			}).done(function(data) {
@@ -733,7 +747,7 @@
 		},
 
 		updateItemCount: function(diff) {
-			if ( app.controller != 'reading' ) {
+			if ( app.controller != 'Reading' ) {
 				return
 			}
 

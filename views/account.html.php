@@ -16,7 +16,7 @@
 </div>
 <?php endif ?>
 
-<form method="post" action="/account" class="form-signin form-horizontal well">
+<form method="post" action="<?php echo $this->app->getRootPath() ?>account" class="form-signin form-horizontal well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
@@ -70,7 +70,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="entypo user"></i> Update account</button>
+				<button class="btn btn-primary" type="submit">Update account</button>
 			</div>
 		</div>
 	</fieldset>
@@ -100,10 +100,10 @@
 
 <p>
 	Delete your account forever. Every record associated with your account will be deleted and unrecoverable.
-	You can <a href="/subscriptions/export">export your subscriptions</a>.
+	You can <a href="<?php echo $this->app->getRootPath() ?>subscriptions/export">export your subscriptions</a>.
 </p>
 
-<form method="post" action="/account/delete" class="form-signin form-horizontal well">
+<form method="post" action="<?php echo $this->app->getRootPath() ?>account/delete" class="form-signin form-horizontal well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
@@ -117,7 +117,7 @@
 
 		<div class="control-group <?php echo $this->get('error-email') ? 'error' : '' ?>">
 			<div class="controls">
-				<button class="btn btn-danger" type="submit"><i class="entypo user"></i> Delete account</button>
+				<button class="btn btn-danger" type="submit">Delete account</button>
 			</div>
 		</div>
 	</fieldset>
