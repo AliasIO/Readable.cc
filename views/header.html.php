@@ -42,7 +42,7 @@
 					<a href="javascript: void(0);">
 						<?php echo $this->get('pageTitle') ?>
 						<?php if ( $this->app->getControllerName() === 'Reading' ): ?>
-						<span id="item-count">(<span>0</span>)</span>
+						<span class="item-count">(<span>0</span>)</span>
 						<?php endif ?>
 						<i class="entypo chevron-down"></i>
 					</a>
@@ -50,7 +50,7 @@
 
 				<ul class="collapsed">
 					<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
-					<li class="reading <?php echo $this->name == 'reading' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>reading">My Reading<span id="item-count"> (<span>0</span>)</span></a></li>
+					<li class="reading <?php echo $this->name == 'reading' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>reading">My Reading<span class="item-count"> (<span>0</span>)</span></a></li>
 					<li class="saved   <?php echo $this->name == 'saved'   ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>saved"  >Saved</a></li>
 
 					<li class="email">

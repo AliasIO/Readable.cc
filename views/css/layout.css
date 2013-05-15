@@ -237,7 +237,7 @@ header {
 					background: #f8f8f8;
 				}
 
-#item-count {
+.item-count {
 	display: none;
 	font-size: 80%;
 	line-height: 1em;

@@ -756,12 +756,12 @@
 				app.itemCount += diff;
 			}
 
-			$('#item-count span').text(app.itemCount > 1000 ? '1000+' : Math.max(0, app.itemCount));
+			$('.item-count span').text(app.itemCount > 1000 ? '1000+' : Math.max(0, app.itemCount));
 
 			if ( !app.itemCount ) {
-				$('#item-count:visible').hide();
+				$('.item-count:visible').hide();
 			} else {
-				$('#item-count:hidden').show();
+				$('.item-count:hidden').show();
 			}
 		}
 	};
