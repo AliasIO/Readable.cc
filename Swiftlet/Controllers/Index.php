@@ -5,7 +5,7 @@ namespace Swiftlet\Controllers;
 class Index extends \Swiftlet\Controllers\Read
 {
 	protected
-		$title = 'RSS Reader'
+		$title = 'Popular Reading'
 		;
 
 	/**

@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title><?php echo ( $this->name == 'index' ? '' : ( $this->get('pageTitle') . ' - ' ) ) . $this->htmlEncode($this->app->getConfig('siteName')) . ( $this->name == 'index' ? ' - ' . $this->get('pageTitle') : '' ) ?></title>
+		<title><?php echo ( $this->name == 'index' ? '' : ( $this->get('pageTitle') . ' - ' ) ) . $this->htmlEncode($this->app->getConfig('siteName')) . ( $this->name == 'index' ? ' - RSS Reader' : '' ) ?></title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -38,15 +38,25 @@
 					Readable.cc is the best web-based Google Reader alternative. RSS feeds are made readable and interesting content is identified algorithmically.
 				</p>
 
-				<ul>
+				<h2>
+					<a href="javascript: void(0);">
+						<?php echo $this->get('pageTitle') ?>
+						<?php if ( $this->app->getControllerName() === 'Reading' ): ?>
+						<span id="item-count">(<span>0</span>)</span>
+						<?php endif ?>
+						<i class="entypo chevron-down"></i>
+					</a>
+				</h2>
+
+				<ul class="collapsed">
 					<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
-					<li class="reading <?php echo $this->name == 'reading' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>reading">My Reading <span id="item-count">(<span>0</span>)</span></a></li>
+					<li class="reading <?php echo $this->name == 'reading' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>reading">My Reading<span id="item-count"> (<span>0</span>)</span></a></li>
 					<li class="saved   <?php echo $this->name == 'saved'   ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>saved"  >Saved</a></li>
 
 					<li class="email">
 						<a href="#"><span><?php echo $this->app->getSingleton('session')->get('email') ?></span> <i class="entypo chevron-down"></i></a>
 
-						<ul>
+						<ul class="collapsed">
 							<li class="account"      ><a href="<?php echo $this->app->getRootPath() ?>account"      >Account</a></li>
 							<li class="subscriptions"><a href="<?php echo $this->app->getRootPath() ?>subscriptions">Subscriptions</a></li>
 							<li class="signout"      ><a href="<?php echo $this->app->getRootPath() ?>signout"      >Sign out</a></li>

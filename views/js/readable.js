@@ -26,20 +26,21 @@
 	app.init = function() {
 		$('.contact-email').text(app.email.replace(' ', '@')).attr('href', 'mailto:' + app.email.replace(' ', '@'));
 
-		$('header ul ul')
-			.hide()
-			.parent()
-			.on('click', function(e) {
+		$('header h2').on('click', function(e) {
+			e.stopPropagation();
+
+			$('header ul').toggleClass('collapsed');
+		});
+
+		$('header ul ul').parent().on('click', function(e) {
 				e.stopPropagation();
 
-				var dropdown = $(this).find('ul');
-
-				dropdown.toggle();
+				$('header ul').toggleClass('collapsed');
 			});
 			;
 
 		$(document).on('click', function() {
-			$('header ul ul').hide();
+			$('header ul, header ul ul').addClass('collapsed');
 		});
 
 		// Hide alerts on click
@@ -61,7 +62,7 @@
 		$(window).resize(function() {
 			$('.alert-float').outerWidth($('#contents').width());
 
-			app.mobile = $(document).width() < 850;
+			app.mobile = $(document).width() < 600;
 
 			app.duration = app.mobile ? { fade: 0, scroll: 0 } : { fade: 300, scroll: 300 };
 		}).resize();

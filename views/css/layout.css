@@ -166,6 +166,10 @@ header {
 			display: none;
 		}
 
+	header h2 {
+		display: none;
+	}
+
 	header p {
 		display: none;
 	}
@@ -212,6 +216,10 @@ header {
 			padding: 10px 0;
 			top: 60px;
 			width: 150px;
+		}
+
+		header ul ul.collapsed {
+			display: none;
 		}
 
 			header ul ul li {
@@ -742,21 +750,83 @@ footer {
 		margin-bottom: 26px;
 	}
 
+	#subscriptions td:last-child button {
+		visibility: visible;
+	}
+
 	#feedback {
 		display: none;
 	}
 }
 
 @media all and (max-width: 600px) {
-	header ul {
-		padding-right: 10px;
+	fieldset {
+		margin-left: 0;
 	}
 
-	header ul li.email span {
+	header h2 {
+		display: block;
+		font-family: inherit;
+		font-weight: normal;
+		font-size: 16px;
+		line-height: 60px;
+		margin: 0 20px 0 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		white-space: nowrap;
+	}
+
+	header ul {
+		background: #fff;
+		border: 1px solid #eee;
+		font-size: 22px;
+		padding: 10px 0 10px 0;
+		top: 60px;
+		width: 220px;
+	}
+
+	header ul.collapsed {
 		display: none;
 	}
 
+	header ul li {
+		display: block;
+		float: none;
+	}
+
+		header ul li.email > a {
+			display: none;
+		}
+
+		header ul li.active {
+			background: #f8f8f8;
+			-webkit-box-shadow: none;
+				 -moz-box-shadow: none;
+							box-shadow: none;
+		}
+
 		header ul li a {
-			padding: 0 10px;
+			display: block;
+			line-height: 1em;
+			padding: 10px 20px;
+		}
+
+				header ul li a:hover {
+					background: #f8f8f8;
+				}
+
+		header ul ul {
+			border-width: 1px 0 0 0;
+			display: block;
+			margin-top: 10px;
+			padding-bottom: 0;
+			position: relative;
+			top: 0;
+			width: inherit;
+		}
+
+		header ul ul.collapsed {
+			display: block;
 		}
 }
