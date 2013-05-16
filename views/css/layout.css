@@ -484,8 +484,7 @@ article {
 
 	article .article-buttons {
 		clear: both;
-		overflow: hidden;
-		margin-top: 25px;
+		margin-top: 15px;
 	}
 
 		article.inactive .article-buttons {
@@ -497,7 +496,7 @@ article {
 		}
 
 		article .article-buttons button {
-			margin-right: 10px;
+			margin: 15px 10px 0 0;
 		}
 
 	article p {
