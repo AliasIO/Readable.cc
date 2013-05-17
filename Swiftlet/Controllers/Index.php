@@ -73,7 +73,10 @@ class Index extends \Swiftlet\Controllers\Read
 					COALESCE(users_items.vote,  0)   AS vote,
 					COALESCE(users_items.saved, 0)   AS saved,
 					IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
-				FROM ( ' . $select . ' ) AS main
+				FROM (
+					' . $select . '
+					LIMIT 1000
+				) AS main
 				LEFT JOIN users_items ON users_items.item_id = main.id      AND users_items.user_id = ?
 				LEFT JOIN users_feeds ON users_feeds.feed_id = main.feed_id AND users_feeds.user_id = ?
 				WHERE
