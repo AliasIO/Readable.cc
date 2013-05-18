@@ -50,7 +50,7 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`items` (
   `score` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `url` (`url` ASC) ,
-  INDEX `posted_at` (`posted_at` ASC) ,
+  INDEX `posted_at_score` (`posted_at` ASC, `score` ASC) ,
   INDEX `feed_id` (`feed_id` ASC) ,
   INDEX `hidden` (`hidden` ASC) ,
   INDEX `language` (`language` ASC) ,

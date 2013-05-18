@@ -68,6 +68,7 @@ class Index extends \Swiftlet\Controllers\Read
 					main.feed_id,
 					main.feed_title,
 					main.feed_link,
+					COALESCE(users_items.score, 0)   AS score,
 					COALESCE(users_items.vote,  0)   AS vote,
 					COALESCE(users_items.saved, 0)   AS saved,
 					IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
