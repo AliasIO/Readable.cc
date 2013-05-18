@@ -55,13 +55,12 @@ class Index extends \Swiftlet\Controllers\Read
 				0                AS vote,
 				0                AS saved
 			FROM       items
-			INNER JOIN feeds ON feeds.id = items.feed_id
+			INNER JOIN feeds ON feeds.id = items.feed_id AND feeds.hidden = 0
 			WHERE
-				feeds.hidden  = 0 AND
+				items.score   > 0 AND
 				items.hidden  = 0 AND
 				items.english = 1 AND
-				items.short   = 0 AND
-				items.score   > 0
+				items.short   = 0
 				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
 			ORDER BY DATE(items.posted_at) DESC, items.score DESC
 			';
@@ -73,11 +72,12 @@ class Index extends \Swiftlet\Controllers\Read
 					COALESCE(users_items.vote,  0)   AS vote,
 					COALESCE(users_items.saved, 0)   AS saved,
 					IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
-				FROM ( ' . $select . ' ) AS main
-				LEFT JOIN users_items ON users_items.item_id = main.id      AND users_items.user_id = ?
+				FROM (
+					' . $select . '
+					LIMIT 1000
+				) AS main
+				LEFT JOIN users_items ON users_items.item_id = main.id      AND users_items.user_id = ? AND ( users_items.read = 0 OR users_items.read IS NULL )
 				LEFT JOIN users_feeds ON users_feeds.feed_id = main.feed_id AND users_feeds.user_id = ?
-				WHERE
-					users_items.read = 0 OR users_items.read IS NULL
 				';
 		}
 
