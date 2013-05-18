@@ -42,18 +42,14 @@ class Index extends \Swiftlet\Controllers\Read
 
 		$select = '
 			SELECT
-				feeds.id         AS feed_id,
-				feeds.title      AS feed_title,
-				feeds.link       AS feed_link,
+				feeds.id    AS feed_id,
+				feeds.title AS feed_title,
+				feeds.link  AS feed_link,
 				items.id,
-				items.url,
-				items.title,
-				items.contents,
-				items.posted_at,
-				items.score      AS score,
-				0                AS feed_subscribed,
-				0                AS vote,
-				0                AS saved
+				items.score,
+				0           AS vote,
+				0           AS saved,
+				0           AS feed_subscribed
 			FROM       items
 			INNER JOIN feeds ON feeds.id = items.feed_id AND feeds.hidden = 0
 			WHERE
@@ -61,14 +57,17 @@ class Index extends \Swiftlet\Controllers\Read
 				items.hidden  = 0 AND
 				items.english = 1 AND
 				items.short   = 0
-				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
+				' . ( $userId && $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
 			ORDER BY DATE(items.posted_at) DESC, items.score DESC
 			';
 
 		if ( $userId ) {
 			$select = '
 				SELECT
-					main.*,
+					main.id,
+					main.feed_id,
+					main.feed_title,
+					main.feed_link,
 					COALESCE(users_items.vote,  0)   AS vote,
 					COALESCE(users_items.saved, 0)   AS saved,
 					IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
@@ -81,7 +80,19 @@ class Index extends \Swiftlet\Controllers\Read
 				';
 		}
 
-		$select .= ' LIMIT ?, ?';
+		$select = '
+			SELECT
+				main.*,
+				items.url,
+				items.title,
+				items.contents,
+				items.posted_at
+			FROM (
+				' . $select . '
+			) AS main
+			INNER JOIN items ON items.id = main.id
+			LIMIT ?, ?
+			';
 
 		$sth = $dbh->prepare($select);
 
