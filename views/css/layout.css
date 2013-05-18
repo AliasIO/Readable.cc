@@ -1,27 +1,4 @@
 @font-face {
-    font-family: 'Lora';
-    src: url('../lib/lora/Lora-Bold-webfont.eot');
-    src: url('../lib/lora/Lora-Bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../lib/lora/Lora-Bold-webfont.woff') format('woff'),
-         url('../lib/lora/Lora-Bold-webfont.ttf') format('truetype'),
-         url('../lib/lora/Lora-Bold-webfont.svg#LoraBold') format('svg');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Lora'
-    src: url('../lib/lora/Lora-BoldItalic-webfont.eot');
-    src: url('../lib/lora/Lora-BoldItalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../lib/lora/Lora-BoldItalic-webfont.woff') format('woff'),
-         url('../lib/lora/Lora-BoldItalic-webfont.ttf') format('truetype'),
-         url('../lib/lora/Lora-BoldItalic-webfont.svg#LoraBoldItalic') format('svg');
-    font-weight: bold;
-    font-style: italic;
-}
-
-
-@font-face {
     font-family: 'Poly';
     src: url('../lib/poly/Poly-Italic-webfont.eot');
     src: url('../lib/poly/Poly-Italic-webfont.eot?#iefix') format('embedded-opentype'),
@@ -30,33 +7,65 @@
          url('../lib/poly/Poly-Italic-webfont.svg#PolyItalic') format('svg');
     font-weight: normal;
     font-style: italic;
-
 }
 
 @font-face {
-    font-family: 'Poly';
-    src: url('../lib/poly/Poly-Regular-webfont.eot');
-    src: url('../lib/poly/Poly-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../lib/poly/Poly-Regular-webfont.woff') format('woff'),
-         url('../lib/poly/Poly-Regular-webfont.ttf') format('truetype'),
-         url('../lib/poly/Poly-Regular-webfont.svg#PolyRegular') format('svg');
+    font-family: 'MerriweatherRegular';
+    src: url('../lib/merriweather/Merriweather-Regular-webfont.eot');
+    src: url('../lib/merriweather/Merriweather-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../lib/merriweather/Merriweather-Regular-webfont.woff') format('woff'),
+         url('../lib/merriweather/Merriweather-Regular-webfont.ttf') format('truetype'),
+         url('../lib/merriweather/Merriweather-Regular-webfont.svg#MerriweatherRegular') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
+
+@font-face {
+    font-family: 'MerriweatherItalic';
+    src: url('../lib/merriweather/Merriweather-Italic-webfont.eot');
+    src: url('../lib/merriweather/Merriweather-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../lib/merriweather/Merriweather-Italic-webfont.woff') format('woff'),
+         url('../lib/merriweather/Merriweather-Italic-webfont.ttf') format('truetype'),
+         url('../lib/merriweather/Merriweather-Italic-webfont.svg#MerriweatherItalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'MerriweatherBold';
+    src: url('../lib/merriweather/Merriweather-Bold-webfont.eot');
+    src: url('../lib/merriweather/Merriweather-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../lib/merriweather/Merriweather-Bold-webfont.woff') format('woff'),
+         url('../lib/merriweather/Merriweather-Bold-webfont.ttf') format('truetype'),
+         url('../lib/merriweather/Merriweather-Bold-webfont.svg#MerriweatherBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MerriweatherHeavy';
+    src: url('../lib/merriweather/Merriweather-Black-webfont.eot');
+    src: url('../lib/merriweather/Merriweather-Black-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../lib/merriweather/Merriweather-Black-webfont.woff') format('woff'),
+         url('../lib/merriweather/Merriweather-Black-webfont.ttf') format('truetype'),
+         url('../lib/merriweather/Merriweather-Black-webfont.svg#MerriweatherHeavy') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
 
 body {
 	background: #fff;
-  font-family: Poly, Georgia, "Times New Roman", Times, serif;
-	font-size: 18px;
+  font-family: MerriweatherRegular, Georgia, "Times New Roman", Times, serif;
+	font-size: 16px;
 	line-height: 26px;
 	margin: 0;
 	overflow-y: scroll;
-	padding-top: 65px;
+	padding: 65px 0 100px 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: Lora, Georgia, "Times New Roman", Times, serif;
+  font-family: MerriweatherHeavy, Georgia, "Times New Roman", Times, serif;
   margin: 25px 0 15px 0;
   font-weight: bold;
   line-height: 1.2em;
@@ -65,27 +74,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 42px;
+  font-size: 38px;
 }
 
 h2 {
-  font-size: 36px;
+  font-size: 32px;
 }
 
 h3 {
-  font-size: 30px;
+  font-size: 28px;
 }
 
 h4 {
-  font-size: 26px;
+  font-size: 24px;
 }
 
 h5 {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 h6 {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 ul, ol {
@@ -120,7 +129,11 @@ p, table {
 }
 
 strong, b {
-	letter-spacing: -1px;
+	font-family: MerriweatherBold;
+}
+
+em, i {
+	font-family: MerriweatherItalic;
 }
 
 code {
@@ -128,21 +141,76 @@ code {
 	font-style: normal;
 }
 
+code,
+pre {
+  padding: 0 3px 2px;
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-size: 15px;
+  color: #000;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+}
+
+code {
+  padding: 2px 4px;
+  white-space: nowrap;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+}
+
+pre {
+  display: block;
+  padding: 12.5px;
+  margin: 0 0 13px;
+  font-size: 16px;
+  line-height: 26px;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre;
+  white-space: pre-wrap;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  color: inherit;
+  white-space: pre;
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: 0;
+}
+
 blockquote {
+	background: #f8f8f8;
+	font-family: MerriweatherItalic;
 	font-style: italic;
 	margin-bottom: 15px;
+  padding: 15px 15px 0 15px;
+  margin: 0 0 13px;
+  border-left: 5px solid #eeeeee;
+	overflow: hidden;
 }
 
 blockquote p {
-	font-size: inherit;
-	font-weight: inherit;
-	line-height: inherit;
-	margin-bottom: 15px;
+margin-bottom: 15px;
+}
+
+q:before,
+q:after,
+blockquote:before,
+blockquote:after {
+  content: "";
 }
 
 header {
 	background: #fff;
-	border-bottom: 1px solid #eee;
+	border-bottom: 1px solid #ddd;
 	height: 60px;
 	line-height: 60px;
 	position: fixed;
@@ -184,7 +252,8 @@ header {
 	}
 
 	header ul {
-		font-size: 16px;
+		font-family: MerriweatherItalic;
+		font-size: 14px;
 		font-style: italic;
 		margin: 0;
 		position: absolute;
@@ -204,6 +273,12 @@ header {
 							box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.15);
 		}
 
+		header ul li.mark-all-read {
+			border-bottom: 1px solid #eee;
+			margin-bottom: 10px;
+			padding-bottom: 10px;
+		}
+
 			header ul li a {
 				display: inline-block;
 				padding: 0 20px;
@@ -212,10 +287,13 @@ header {
 
 		header ul ul {
 			background: #fff;
-			border: 1px solid #eee;
+			border: 1px solid #ddd;
+			border-top: 1px solid #eee;
 			padding: 10px 0;
+			right: 20px;
 			top: 60px;
 			width: 150px;
+			z-index: 9;
 		}
 
 		header ul ul.collapsed {
@@ -286,6 +364,21 @@ header {
 	cursor: default;
 }
 
+.jump {
+	font-size: 14px;
+}
+
+	.jump p {
+		margin-bottom: 0;
+	}
+
+	.jump ul {
+	}
+
+	.jump li {
+		list-style: none;
+	}
+
 #overlay {
 	background: #fff;
 	display: none;
@@ -321,6 +414,7 @@ header {
 	}
 
 	#page-head p {
+		font-family: MerriweatherItalic;
 		height: 40px;
 		margin-bottom: 0;
 		overflow: hidden;
@@ -355,6 +449,7 @@ header {
 
 #items-footer {
 	color: #999;
+	font-family: MerriweatherItalic;
 	font-style: italic;
 	margin: 100px 0;
 	text-align: center;
@@ -375,7 +470,8 @@ header {
 
 	#items .date-separator {
 		border-bottom: 1px solid #333;
-		height: .65em;
+		height: .75em;
+		font-family: MerriweatherItalic;
 		font-style: italic;
 		margin: 60px 0;
 		text-align: center;
@@ -461,6 +557,7 @@ article {
 	}
 
 	article .item-date {
+		font-family: MerriweatherItalic;
 		font-size: 85%;
 		font-style: italic;
 		margin-bottom: 20px;
@@ -503,6 +600,7 @@ article {
 	}
 
 		article p.caption {
+			font-family: MerriweatherItalic;
 			font-size: 90%;
 			font-style: italic;
 			text-align: left;
@@ -576,10 +674,10 @@ fieldset:last-child {
 }
 
 #subscriptions {
-	font-size: 17px;
 }
 
 	#subscriptions td {
+		padding: 4px 8px;
 		vertical-align: middle;
 	}
 
@@ -608,7 +706,6 @@ fieldset:last-child {
 	}
 
 #suggestions {
-	font-size: 17px;
 }
 
 	#suggestions td {
@@ -644,17 +741,6 @@ fieldset:last-child {
 		margin-left: 10px;
 		vertical-align: middle;
 		width: 26px;
-	}
-
-footer {
-	color: #999;
-	font-size: 85%;
-	text-align: center;
-	margin: 100px 0;
-}
-
-	footer a:hover {
-		color: #333;
 	}
 
 #feedback {
@@ -790,6 +876,10 @@ footer {
 		display: none;
 	}
 
+		header ul .item-count {
+			visibility: hidden;
+		}
+
 	header ul li {
 		display: block;
 		float: none;
@@ -822,6 +912,7 @@ footer {
 			margin-top: 10px;
 			padding-bottom: 0;
 			position: relative;
+			right: 0;
 			top: 0;
 			width: inherit;
 		}

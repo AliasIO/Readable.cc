@@ -1,10 +1,3 @@
-			<footer>
-				<p>
-					<a href="<?php echo $this->app->getRootPath() ?>about">About</a> &nbsp;-&nbsp;
-					<a href="<?php echo $this->app->getRootPath() ?>contact">Contact</a>
-				</p>
-			</footer>
-
 			<div class="modal modal-signin">
 				<h4>Not signed in</h4>
 
@@ -41,7 +34,7 @@
 
 		<script src="<?php echo $this->app->getRootPath() ?>views/lib/jquery-1.9.1.min.js"></script>
 		<script src="<?php echo $this->app->getRootPath() ?>views/lib/mousetrap.min.js"></script>
-		<script src="<?php echo $this->app->getRootPath() ?>views/js/readable.js?a"></script>
+		<script src="<?php echo $this->app->getRootPath() ?>views/js/readable.js?b"></script>
 
 		<script>
 			var _gaq = _gaq || [];

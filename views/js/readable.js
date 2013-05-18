@@ -33,14 +33,14 @@
 		});
 
 		$('header ul ul').parent().on('click', function(e) {
-				e.stopPropagation();
+			$('header ul').toggleClass('collapsed');
+		});
+		;
 
-				$('header ul').toggleClass('collapsed');
-			});
-			;
-
-		$(document).on('click', function() {
-			$('header ul, header ul ul').addClass('collapsed');
+		$(document).on('click', function(e) {
+			if ( !$(e.target).closest('header ul').length ) {
+				$('header ul, header ul ul').addClass('collapsed');
+			}
 		});
 
 		// Hide alerts on click
@@ -478,6 +478,11 @@
 				el.find('br:only-child').each(function() {
 					$(this).closest('p').remove();
 				});
+
+				// Remove empty elements
+				el.find('.item-contents *').filter( function() {
+					return !$.trim($(this).text()).length && !$(this).has('img').length;
+				}).remove()
 
 				el.addClass('processed')
 			}

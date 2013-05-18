@@ -631,139 +631,6 @@ a.text-success:focus {
   color: #147033;
 }
 
-.text-left {
-  text-align: left;
-}
-
-.text-right {
-  text-align: right;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.page-header {
-  padding-bottom: 12px;
-  margin: 25px 0 30px;
-  border-bottom: 1px solid #eeeeee;
-}
-
-blockquote {
-	background: #f8f8f8;
-  padding: 15px 15px 0 15px;
-  margin: 0 0 13px;
-  border-left: 5px solid #eeeeee;
-	overflow: hidden;
-}
-
-blockquote p {
-  margin-bottom: 0;
-  font-size: 21.25px;
-  font-weight: 300;
-  line-height: 1.25;
-}
-
-blockquote small {
-  display: block;
-  line-height: 26px;
-  color: #999999;
-}
-
-blockquote small:before {
-  content: '\2014 \00A0';
-}
-
-blockquote.pull-right {
-  float: right;
-  padding-right: 15px;
-  padding-left: 0;
-  border-right: 5px solid #eeeeee;
-  border-left: 0;
-}
-
-blockquote.pull-right p,
-blockquote.pull-right small {
-  text-align: right;
-}
-
-blockquote.pull-right small:before {
-  content: '';
-}
-
-blockquote.pull-right small:after {
-  content: '\00A0 \2014';
-}
-
-q:before,
-q:after,
-blockquote:before,
-blockquote:after {
-  content: "";
-}
-
-address {
-  display: block;
-  margin-bottom: 26px;
-  font-style: normal;
-  line-height: 26px;
-}
-
-code,
-pre {
-  padding: 0 3px 2px;
-  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
-  font-size: 15px;
-  color: #333333;
-  -webkit-border-radius: 3px;
-     -moz-border-radius: 3px;
-          border-radius: 3px;
-}
-
-code {
-  padding: 2px 4px;
-  color: #d14;
-  white-space: nowrap;
-  background-color: #f7f7f9;
-  border: 1px solid #e1e1e8;
-}
-
-pre {
-  display: block;
-  padding: 12.5px;
-  margin: 0 0 13px;
-  font-size: 16px;
-  line-height: 26px;
-  word-break: break-all;
-  word-wrap: break-word;
-  white-space: pre;
-  white-space: pre-wrap;
-  background-color: #f5f5f5;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
-}
-
-pre.prettyprint {
-  margin-bottom: 26px;
-}
-
-pre code {
-  padding: 0;
-  color: inherit;
-  white-space: pre;
-  white-space: pre-wrap;
-  background-color: transparent;
-  border: 0;
-}
-
-.pre-scrollable {
-  max-height: 340px;
-  overflow-y: scroll;
-}
-
 form {
   margin: 0 0 26px;
 }
@@ -796,9 +663,9 @@ input,
 button,
 select,
 textarea {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: normal;
-  line-height: 26px;
+  line-height: 22px;
 }
 
 input,
@@ -831,11 +698,11 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: 26px;
+  height: 22px;
   padding: 4px 6px;
   margin-bottom: 13px;
-  font-size: 17px;
-  line-height: 26px;
+  font-size: 14px;
+  line-height: 22px;
   color: #555555;
   vertical-align: middle;
   -webkit-border-radius: 3px;
@@ -919,13 +786,13 @@ input[type="checkbox"] {
 
 select,
 input[type="file"] {
-  height: 36px;
+  height: 34px;
   /* In IE7, the height of the select element cannot be changed by height, only font-size */
 
   *margin-top: 4px;
   /* For IE7, add top margin to align select with labels */
 
-  line-height: 36px;
+  line-height: 34px;
 }
 
 select {
@@ -1359,312 +1226,14 @@ select:focus:invalid:focus {
           box-shadow: 0 0 6px #f8b9b7;
 }
 
-.form-actions {
-  padding: 25px 20px 26px;
-  margin-top: 26px;
-  margin-bottom: 26px;
-  background-color: #f5f5f5;
-  border-top: 1px solid #e5e5e5;
-  *zoom: 1;
-}
-
-.form-actions:before,
-.form-actions:after {
-  display: table;
-  line-height: 0;
-  content: "";
-}
-
-.form-actions:after {
-  clear: both;
-}
-
-.help-block,
-.help-inline {
-  color: #595959;
-}
-
-.help-block {
-  display: block;
-  margin-bottom: 13px;
-}
-
-.help-inline {
-  display: inline-block;
-  *display: inline;
-  padding-left: 5px;
-  vertical-align: middle;
-  *zoom: 1;
-}
-
-.input-append,
-.input-prepend {
-  display: inline-block;
-  margin-bottom: 13px;
-  font-size: 0;
-  white-space: nowrap;
-  vertical-align: middle;
-}
-
-.input-append input,
-.input-prepend input,
-.input-append select,
-.input-prepend select,
-.input-append .uneditable-input,
-.input-prepend .uneditable-input,
-.input-append .dropdown-menu,
-.input-prepend .dropdown-menu,
-.input-append .popover,
-.input-prepend .popover {
-  font-size: 17px;
-}
-
-.input-append input,
-.input-prepend input,
-.input-append select,
-.input-prepend select,
-.input-append .uneditable-input,
-.input-prepend .uneditable-input {
-  position: relative;
-  margin-bottom: 0;
-  *margin-left: 0;
-  vertical-align: top;
-  -webkit-border-radius: 0 4px 4px 0;
-     -moz-border-radius: 0 4px 4px 0;
-          border-radius: 0 4px 4px 0;
-}
-
-.input-append input:focus,
-.input-prepend input:focus,
-.input-append select:focus,
-.input-prepend select:focus,
-.input-append .uneditable-input:focus,
-.input-prepend .uneditable-input:focus {
-  z-index: 2;
-}
-
-.input-append .add-on,
-.input-prepend .add-on {
-  display: inline-block;
-  width: auto;
-  height: 26px;
-  min-width: 16px;
-  padding: 4px 5px;
-  font-size: 17px;
-  font-weight: normal;
-  line-height: 26px;
-  text-align: center;
-  text-shadow: 0 1px 0 #ffffff;
-  background-color: #eeeeee;
-  border: 1px solid #ccc;
-}
-
-.input-append .add-on,
-.input-prepend .add-on,
-.input-append .btn,
-.input-prepend .btn,
-.input-append .btn-group > .dropdown-toggle,
-.input-prepend .btn-group > .dropdown-toggle {
-  vertical-align: top;
-  -webkit-border-radius: 0;
-     -moz-border-radius: 0;
-          border-radius: 0;
-}
-
-.input-append .active,
-.input-prepend .active {
-  background-color: #6ce495;
-  border-color: #1c9b47;
-}
-
-.input-prepend .add-on,
-.input-prepend .btn {
-  margin-right: -1px;
-}
-
-.input-prepend .add-on:first-child,
-.input-prepend .btn:first-child {
-  -webkit-border-radius: 4px 0 0 4px;
-     -moz-border-radius: 4px 0 0 4px;
-          border-radius: 4px 0 0 4px;
-}
-
-.input-append input,
-.input-append select,
-.input-append .uneditable-input {
-  -webkit-border-radius: 4px 0 0 4px;
-     -moz-border-radius: 4px 0 0 4px;
-          border-radius: 4px 0 0 4px;
-}
-
-.input-append input + .btn-group .btn:last-child,
-.input-append select + .btn-group .btn:last-child,
-.input-append .uneditable-input + .btn-group .btn:last-child {
-  -webkit-border-radius: 0 4px 4px 0;
-     -moz-border-radius: 0 4px 4px 0;
-          border-radius: 0 4px 4px 0;
-}
-
-.input-append .add-on,
-.input-append .btn,
-.input-append .btn-group {
-  margin-left: -1px;
-}
-
-.input-append .add-on:last-child,
-.input-append .btn:last-child,
-.input-append .btn-group:last-child > .dropdown-toggle {
-  -webkit-border-radius: 0 4px 4px 0;
-     -moz-border-radius: 0 4px 4px 0;
-          border-radius: 0 4px 4px 0;
-}
-
-.input-prepend.input-append input,
-.input-prepend.input-append select,
-.input-prepend.input-append .uneditable-input {
-  -webkit-border-radius: 0;
-     -moz-border-radius: 0;
-          border-radius: 0;
-}
-
-.input-prepend.input-append input + .btn-group .btn,
-.input-prepend.input-append select + .btn-group .btn,
-.input-prepend.input-append .uneditable-input + .btn-group .btn {
-  -webkit-border-radius: 0 4px 4px 0;
-     -moz-border-radius: 0 4px 4px 0;
-          border-radius: 0 4px 4px 0;
-}
-
-.input-prepend.input-append .add-on:first-child,
-.input-prepend.input-append .btn:first-child {
-  margin-right: -1px;
-  -webkit-border-radius: 4px 0 0 4px;
-     -moz-border-radius: 4px 0 0 4px;
-          border-radius: 4px 0 0 4px;
-}
-
-.input-prepend.input-append .add-on:last-child,
-.input-prepend.input-append .btn:last-child {
-  margin-left: -1px;
-  -webkit-border-radius: 0 4px 4px 0;
-     -moz-border-radius: 0 4px 4px 0;
-          border-radius: 0 4px 4px 0;
-}
-
-.input-prepend.input-append .btn-group:first-child {
-  margin-left: 0;
-}
-
-input.search-query {
-  padding-right: 14px;
-  padding-right: 4px \9;
-  padding-left: 14px;
-  padding-left: 4px \9;
-  /* IE7-8 doesn't have border-radius, so don't indent the padding */
-
-  margin-bottom: 0;
-  -webkit-border-radius: 15px;
-     -moz-border-radius: 15px;
-          border-radius: 15px;
-}
-
-/* Allow for input prepend/append in search forms */
-
-.form-search .input-append .search-query,
-.form-search .input-prepend .search-query {
-  -webkit-border-radius: 0;
-     -moz-border-radius: 0;
-          border-radius: 0;
-}
-
-.form-search .input-append .search-query {
-  -webkit-border-radius: 14px 0 0 14px;
-     -moz-border-radius: 14px 0 0 14px;
-          border-radius: 14px 0 0 14px;
-}
-
-.form-search .input-append .btn {
-  -webkit-border-radius: 0 14px 14px 0;
-     -moz-border-radius: 0 14px 14px 0;
-          border-radius: 0 14px 14px 0;
-}
-
-.form-search .input-prepend .search-query {
-  -webkit-border-radius: 0 14px 14px 0;
-     -moz-border-radius: 0 14px 14px 0;
-          border-radius: 0 14px 14px 0;
-}
-
-.form-search .input-prepend .btn {
-  -webkit-border-radius: 14px 0 0 14px;
-     -moz-border-radius: 14px 0 0 14px;
-          border-radius: 14px 0 0 14px;
-}
-
-.form-search input,
-.form-inline input,
 .form-horizontal input,
-.form-search textarea,
-.form-inline textarea,
 .form-horizontal textarea,
-.form-search select,
-.form-inline select,
-.form-horizontal select,
-.form-search .help-inline,
-.form-inline .help-inline,
-.form-horizontal .help-inline,
-.form-search .uneditable-input,
-.form-inline .uneditable-input,
-.form-horizontal .uneditable-input,
-.form-search .input-prepend,
-.form-inline .input-prepend,
-.form-horizontal .input-prepend,
-.form-search .input-append,
-.form-inline .input-append,
-.form-horizontal .input-append {
+.form-horizontal select {
   display: inline-block;
   *display: inline;
   margin-bottom: 0;
   vertical-align: middle;
   *zoom: 1;
-}
-
-.form-search .hide,
-.form-inline .hide,
-.form-horizontal .hide {
-  display: none;
-}
-
-.form-search label,
-.form-inline label,
-.form-search .btn-group,
-.form-inline .btn-group {
-  display: inline-block;
-}
-
-.form-search .input-append,
-.form-inline .input-append,
-.form-search .input-prepend,
-.form-inline .input-prepend {
-  margin-bottom: 0;
-}
-
-.form-search .radio,
-.form-search .checkbox,
-.form-inline .radio,
-.form-inline .checkbox {
-  padding-left: 0;
-  margin-bottom: 0;
-  vertical-align: middle;
-}
-
-.form-search .radio input[type="radio"],
-.form-search .checkbox input[type="checkbox"],
-.form-inline .radio input[type="radio"],
-.form-inline .checkbox input[type="checkbox"] {
-  float: left;
-  margin-right: 3px;
-  margin-left: 0;
 }
 
 .control-group {
@@ -1732,6 +1301,7 @@ table {
   background-color: transparent;
   border-collapse: collapse;
   border-spacing: 0;
+	font-size: 14px;
 }
 
 .table {
@@ -1742,13 +1312,14 @@ table {
 .table th,
 .table td {
   padding: 8px;
-  line-height: 26px;
+  line-height: 20px;
   text-align: left;
   vertical-align: top;
   border-top: 1px solid #dddddd;
 }
 
 .table th {
+	font-family: MerriweatherBold;
   font-weight: bold;
 }
 
@@ -2112,7 +1683,7 @@ button.close {
   padding: 4px 12px;
   margin-bottom: 0;
   *margin-left: .3em;
-  font-size: 17px;
+  font-size: 15px;
   line-height: 26px;
   color: #333333;
   text-align: center;
@@ -2215,7 +1786,7 @@ button.close {
 
 .btn-small {
   padding: 2px 10px;
-  font-size: 16px;
+  font-size: 13px;
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
           border-radius: 3px;
@@ -2869,9 +2440,9 @@ input[type="submit"].btn.btn-mini {
 .badge {
   display: inline-block;
   padding: 2px 4px;
-  font-size: 14.382px;
+  font-size: 15px;
   font-weight: bold;
-  line-height: 14px;
+  line-height: 15px;
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   white-space: nowrap;

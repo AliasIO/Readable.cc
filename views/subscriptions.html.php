@@ -17,9 +17,16 @@
 <?php endif ?>
 
 <?php if ( $feeds = $this->get('feeds') ): ?>
-<p>
-	Jump to: <em><a href="#feed-subscribe">Subscribe to feed</a></em>, <em><a href="#feed-import-export">Import &amp; export feeds</a></em>.
-</p>
+<div class="jump">
+	<p>
+		Jump to:
+	</p>
+
+	<ul>
+		<li><a href="#feed-subscribe">Subscribe to feed</a></li>
+		<li><a href="#feed-import-export">Import &amp; export feeds</a></il>
+	</ul>
+</div>
 
 <h3>Subscriptions</h3>
 
