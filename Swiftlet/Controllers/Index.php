@@ -89,9 +89,9 @@ class Index extends \Swiftlet\Controllers\Read
 				items.posted_at
 			FROM (
 				' . $select . '
+				LIMIT ?, ?
 			) AS main
 			INNER JOIN items ON items.id = main.id
-			LIMIT ?, ?
 			';
 
 		$sth = $dbh->prepare($select);
