@@ -422,22 +422,26 @@
 
 					var img = $('<img>').hide().appendTo('body').attr('src', src);
 
-					img.on('load', function() {
-						if ( img.width() > 50 && img.height() > 50 ) {
-							self
-								.attr('src', src)
-								.removeAttr('data-src')
-								.width(img.width())
-								.height(img.height())
-								;
+					img
+						.on('load', function() {
+							if ( img.width() > 50 && img.height() > 50 ) {
+								self
+									.attr('src', src)
+									.removeAttr('data-src')
+									.width(img.width())
+									.height(img.height())
+									;
 
-							img.remove();
-						} else {
+								img.remove();
+							} else {
+								self.remove();
+
+								app.items.removeEmptyElements(el);
+							}
+						})
+						.on('error', function() {
 							self.remove();
-
-							app.items.removeEmptyElements(el);
-						}
-					});
+						});
 				}
 			});
 		},
