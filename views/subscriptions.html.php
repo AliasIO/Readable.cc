@@ -16,7 +16,6 @@
 </div>
 <?php endif ?>
 
-<?php if ( $feeds = $this->get('feeds') ): ?>
 <div class="jump">
 	<p>
 		Jump to:
@@ -28,6 +27,7 @@
 	</ul>
 </div>
 
+<?php if ( $feeds = $this->get('feeds') ): ?>
 <h3>Subscriptions</h3>
 
 <table id="subscriptions" class="table table-bordered table-striped table-hover">
@@ -159,7 +159,7 @@
 <h3 id="feed-subscribe">Subscribe to feed</h3>
 
 <p>
-	Specify a URL to a <a href="https://en.wikipedia.org/wiki/RSS">RSS</a> or <a href="https://en.wikipedia.org/wiki/Atom_%28standard%29">Atom</a> feed to subscribe.
+	Enter an <a href="https://en.wikipedia.org/wiki/RSS">RSS</a> or <a href="https://en.wikipedia.org/wiki/Atom_%28standard%29">Atom</a> feed URL to subscribe.
 	Alternatively you can just use a website's URL and we'll try to find a feed automatically.
 </p>
 
@@ -194,7 +194,7 @@
 </p>
 
 <p>
-	It may take several hours for imported feeds to appear in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.
+	It may take up to a few hours for imported feeds to appear in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.
 </p>
 
 <form id="form-subscriptions-import" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="form-horizontal well" enctype="multipart/form-data">

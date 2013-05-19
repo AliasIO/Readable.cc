@@ -83,6 +83,10 @@
 				app.subscriptions.init();
 
 				break;
+			case 'Signup':
+				app.signup.init();
+
+				break;
 		}
 
 		app.header.init();
@@ -903,6 +907,12 @@
 			});
 
 			return app.subscriptions;
+		}
+	};
+
+	app.signup = {
+		init: function() {
+			$('#email').focus();
 		}
 	};
 

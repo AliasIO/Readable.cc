@@ -68,7 +68,7 @@
 					</li>
 					<?php else: ?>
 					<li class="help   <?php echo $this->name == 'help'   ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>help"  >Help</a></li>
-					<li class="signup <?php echo $this->name == 'signup' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signup">Create account</a></li>
+					<li class="signup <?php echo $this->name == 'signup' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signup" title="Sign up for free!"><span>Create account</span></a></li>
 					<li class="signin <?php echo $this->name == 'signin' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signin">Sign in</a></li>
 					<?php endif ?>
 				</ul>
