@@ -652,6 +652,11 @@ article {
 		margin: 15px 0 0 0;
 	}
 
+	article img[data-src] {
+		padding: 0;
+		margin: 0;
+	}
+
 	article p.no-text {
 		text-align: left;
 	}
