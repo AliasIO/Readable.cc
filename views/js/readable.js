@@ -26,16 +26,20 @@
 	app.init = function() {
 		$('.contact-email').text(app.email.replace(' ', '@')).attr('href', 'mailto:' + app.email.replace(' ', '@'));
 
-		$('header h2').on('click', function(e) {
-			e.stopPropagation();
+		$('header h2')
+			.on('click', function(e) {
+				e.stopPropagation();
 
-			$('header ul').toggleClass('collapsed');
-		});
+				$('header ul').toggleClass('collapsed');
+			}).on('touchstart', function(e) {
+				e.preventDefault();
+
+				$(e.target).trigger('click');
+			});
 
 		$('header ul ul').parent().on('click', function(e) {
 			$('header ul').toggleClass('collapsed');
 		});
-		;
 
 		$(document).on('click', function(e) {
 			if ( !$(e.target).closest('header ul').length ) {
@@ -165,8 +169,6 @@
 		activeItemId: null,
 		activeItem: null,
 		pageTop: 0,
-		previousItem: null,
-		nextItem: null,
 		page: app.page,
 		lastRequestedPage: 0,
 		noMoreItems: false,
@@ -405,6 +407,54 @@
 			return app.items;
 		},
 
+		lazyLoadImages: function(el) {
+			if ( el.hasClass('lazyLoaded') ) {
+				return;
+			}
+
+			el.addClass('lazyLoaded');
+
+			el.find('img').each(function() {
+				var self = $(this);
+
+				if ( self.data('src') ) {
+					var src = self.data('src');
+
+					var img = $('<img>').hide().appendTo('body').attr('src', src);
+
+					img.on('load', function() {
+						if ( img.width() > 50 && img.height() > 50 ) {
+							self
+								.attr('src', src)
+								.removeAttr('data-src')
+								.width(img.width())
+								.height(img.height())
+								;
+
+							img.remove();
+						} else {
+							self.remove();
+
+							app.items.removeEmptyElements(el);
+						}
+					});
+				}
+			});
+		},
+
+		removeEmptyElements: function(el) {
+			el.find('.item-contents *').filter( function() {
+				var self = $(this);
+
+				return (
+					self.prop('tagName').toLowerCase() !== 'img' &&
+					self.prop('tagName').toLowerCase() !== 'br' &&
+					!self.find('img').length &&
+					!$.trim(self.text())
+					);
+			}).remove()
+		},
+
 		expand: function(el, instant) {
 			$('article:not([data-item-id=' + el.data('item-id') + '])')
 				.stop()
@@ -426,18 +476,9 @@
 					$(this).attr('src', $(this).attr('src'));
 				});
 
-				// Remove small images, mainly tracking pixels and smiley faces
-				el.find('img').each(function() {
-					if ( $(this).width() <= 50 || $(this).height() <= 50 ) {
-						var parent = $(this).parent();
-
-						$(this).remove();
-
-						if ( parent.html() == '' ) {
-							parent.remove();
-						}
-					}
-				});
+				// Lazy load current (if needed) and next article's images
+				app.items.lazyLoadImages(el);
+				app.items.lazyLoadImages(el.nextAll('article').first());
 
 				// Images at start of paragraph
 				el.find('img').each(function() {
@@ -480,9 +521,7 @@
 				});
 
 				// Remove empty elements
-				el.find('.item-contents *').filter( function() {
-					return !$.trim($(this).text()).length && !$(this).has('img').length;
-				}).remove()
+				app.items.removeEmptyElements(el);
 
 				el.addClass('processed')
 			}
@@ -550,6 +589,9 @@
 
 						// Hide floating alerts
 						$('.alert-float').trigger('click');
+
+						// Collapse navigation
+						$('header ul, header ul ul').addClass('collapsed');
 					}
 
 					return false;
@@ -729,7 +771,7 @@
 			var data = { page: app.items.page + 1 };
 
 			// Excludes ensures displayed items that may not have been marked read don't get loaded again
-			if ( app.notSignedIn && app.controller === 'Index' || app.controller === 'Reading' ) {
+			if ( app.signedIn && ( app.controller === 'Index' || app.controller === 'Reading' ) ) {
 				data.excludes = app.excludes.join(' ');
 			}
 

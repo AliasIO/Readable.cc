@@ -73,6 +73,10 @@ h1, h2, h3, h4, h5, h6 {
   text-rendering: optimizelegibility;
 }
 
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 h1 {
   font-size: 38px;
 }
@@ -227,7 +231,7 @@ header {
 		font-family: inherit;
 		font-size: 16px;
 		line-height: inherit;
-		margin: 0;
+		margin: 0 0 0 -20px;
 	}
 
 		header h1 strong {
@@ -245,6 +249,7 @@ header {
 	header a {
 		border-bottom: none;
 		display: inline-block;
+		padding: 0 20px;
 	}
 
 	header a:hover {
@@ -856,12 +861,16 @@ fieldset:last-child {
 		font-size: 16px;
 		font-style: italic;
 		line-height: 60px;
-		margin: 0 20px 0 0;
+		margin: 0;
 		position: absolute;
 		right: 0;
 		top: 0;
 		white-space: nowrap;
 	}
+
+		header h2 a {
+			padding-right: 20px;
+		}
 
 	header ul {
 		background: #fff;
