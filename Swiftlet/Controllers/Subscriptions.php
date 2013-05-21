@@ -153,7 +153,7 @@ class Subscriptions extends \Swiftlet\Controller
 	 */
 	protected function import()
 	{
-		$this->app->getSingleton('helper')->ensureValidUser();
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
 
 		$success = false;
 		$error   = false;
@@ -175,9 +175,45 @@ class Subscriptions extends \Swiftlet\Controller
 
 					$feeds = array();
 
+					$folders = $this->app->getSingleton('helper')->getUserFolders();
+
 					foreach ( $xml->body->outline as $outline ) {
+						$folderId = null;
+
 						if ( !$outline->outline ) {
 							$outline = array($outline);
+						}
+
+						$folderTitle = $outline->attributes()->title ? $outline->attributes()->title : ( $outline->attributes()->text ? $outline->attributes()->text : '' );
+
+						if ( $folderTitle ) {
+							foreach ( $folders as $folder ) {
+								if ( strtolower($folder->title) == strtolower($folderTitle) ) {
+									$folderId = $folder->id;
+								}
+							}
+
+							// Create a new folder
+							if ( !$folderId ) {
+								$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+								$sth = $dbh->prepare('
+									INSERT INTO folders (
+										title,
+										user_id
+									) VALUES (
+										:title,
+										:user_id
+									)
+									');
+
+								$sth->bindParam('title',   $folderTitle);
+								$sth->bindParam('user_id', $userId);
+
+								$sth->execute();
+
+								$folderId = $dbh->lastInsertId();
+							}
 						}
 
 						foreach ( $outline as $xml ) {
@@ -189,13 +225,13 @@ class Subscriptions extends \Swiftlet\Controller
 								throw new \Exception('Invalid OPML');
 							}
 
-							$feed = $this->app->getModel('feed')->dummy($title, $url, $link);
+							$feed = $this->app->getModel('feed')->dummy($title, $url, $link, $folderId);
 
 							$feed->save();
 						}
 					}
 				} catch ( \Exception $e ) {
-					$error = 'The OPML file appears to be invalid.';
+					$error = 'The OPML file appears to be invalid.'.$e->getMessage();
 				}
 			} else {
 				switch ( $_FILES['file']['error'] ) {

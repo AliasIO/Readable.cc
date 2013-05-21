@@ -50,12 +50,13 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`items` (
   `score` INT(11) UNSIGNED NOT NULL DEFAULT 0 ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `url` (`url` ASC) ,
-  INDEX `posted_at_score` (`posted_at` ASC, `score` ASC) ,
+  INDEX `posted_at` (`posted_at` ASC) ,
   INDEX `feed_id` (`feed_id` ASC) ,
   INDEX `hidden` (`hidden` ASC) ,
   INDEX `language` (`language` ASC) ,
   INDEX `short` (`short` ASC) ,
   INDEX `english` (`english` ASC) ,
+  INDEX `score` (`score` ASC) ,
   CONSTRAINT `items_feed_id`
     FOREIGN KEY (`feed_id` )
     REFERENCES `readable_cc`.`feeds` (`id` )
@@ -137,6 +138,27 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `readable_cc`.`folders`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `readable_cc`.`folders` ;
+
+CREATE  TABLE IF NOT EXISTS `readable_cc`.`folders` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `title` VARCHAR(255) NULL ,
+  `user_id` INT(11) UNSIGNED NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `user_id` (`user_id` ASC) ,
+  CONSTRAINT `folders_user_id`
+    FOREIGN KEY (`user_id` )
+    REFERENCES `readable_cc`.`users` (`id` )
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `readable_cc`.`users_feeds`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `readable_cc`.`users_feeds` ;
@@ -145,10 +167,12 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`users_feeds` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `user_id` INT(11) UNSIGNED NOT NULL ,
   `feed_id` INT(11) UNSIGNED NOT NULL ,
+  `folder_id` INT(11) UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `user_feed` (`user_id` ASC, `feed_id` ASC) ,
   INDEX `users_feeds_user_id` (`user_id` ASC) ,
   INDEX `users_feeds_feed_id` (`feed_id` ASC) ,
+  INDEX `users_feeds_folder_id` (`folder_id` ASC) ,
   CONSTRAINT `users_feeds_user_id`
     FOREIGN KEY (`user_id` )
     REFERENCES `readable_cc`.`users` (`id` )
@@ -158,6 +182,11 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`users_feeds` (
     FOREIGN KEY (`feed_id` )
     REFERENCES `readable_cc`.`feeds` (`id` )
     ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `users_feeds_folder_id`
+    FOREIGN KEY (`folder_id` )
+    REFERENCES `readable_cc`.`folders` (`id` )
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 7

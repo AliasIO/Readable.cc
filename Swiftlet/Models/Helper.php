@@ -28,6 +28,36 @@ class Helper extends \Swiftlet\Model
 	}
 
 	/**
+	 * Get the current user's folders
+	 *
+	 * @return array
+	 */
+	public function getUserFolders()
+	{
+		$userId = $this->app->getSingleton('session')->get('id');
+
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+			SELECT
+				folders.id,
+				folders.title
+			FROM       folders
+			WHERE
+		 		user_id = :user_id
+			LIMIT 1000
+			;');
+
+		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+
+		$sth->execute();
+
+		$folders = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+		return $folders;
+	}
+
+	/**
 	 * Apply local time-zone offset to UTC date-time
 	 *
 	 * @param string $dateTime

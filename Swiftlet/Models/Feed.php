@@ -28,6 +28,7 @@ class Feed extends \Swiftlet\Model
 		$title,
 		$link,
 		$language,
+		$folderId,
 		$items = array(),
 		$dummy = false
 		;
@@ -148,13 +149,15 @@ class Feed extends \Swiftlet\Model
 	 * @param string $title
 	 * @param string $url
 	 * @param string $link
+	 * @param int $folderId
 	 * @return object
 	 */
-	public function dummy($title, $url, $link)
+	public function dummy($title, $url, $link, $folderId)
 	{
-		$this->title = $title;
-		$this->url   = $url;
-		$this->link  = $link;
+		$this->title    = $title;
+		$this->url      = $url;
+		$this->link     = $link;
+		$this->folderId = $folderId;
 
 		$this->dummy = true;
 
@@ -380,15 +383,18 @@ class Feed extends \Swiftlet\Model
 			$sth = $dbh->prepare('
 				INSERT LOW_PRIORITY IGNORE INTO users_feeds (
 					user_id,
-					feed_id
+					feed_id,
+					folder_id
 				) VALUES (
 					:user_id,
-					:feed_id
+					:feed_id,
+					:folder_id
 				)
 				;');
 
-			$sth->bindParam('user_id', $userId,   \PDO::PARAM_INT);
-			$sth->bindParam('feed_id', $this->id, \PDO::PARAM_INT);
+			$sth->bindParam('user_id',   $userId,         \PDO::PARAM_INT);
+			$sth->bindParam('feed_id',   $this->id,       \PDO::PARAM_INT);
+			$sth->bindParam('folder_id', $this->folderId, \PDO::PARAM_INT);
 
 			$sth->execute();
 		}
@@ -424,6 +430,16 @@ class Feed extends \Swiftlet\Model
 	public function getLink()
 	{
 		return $this->link;
+	}
+
+	/**
+	 * Get feed folder ID
+	 *
+	 * return int
+	 */
+	public function getFolderId()
+	{
+		return $this->folderId;
 	}
 
 	/**
