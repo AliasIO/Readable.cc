@@ -28,6 +28,10 @@
 				app.page       = <?php echo !empty($_GET['page']) && (int) $_GET['page'] - 1 ? (int) $_GET['page'] - 1 : 0 ?>;
 			}(readable));
 		</script>
+
+		<!--[if lt IE 9]>
+		<script src="<?php echo $this->app->getRootPath() ?>views/lib/html5shiv.js"></script>
+		<![endif]-->
 	</head>
 	<body>
 		<header>
