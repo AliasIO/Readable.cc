@@ -766,12 +766,16 @@ fieldset:last-child {
 		white-space: nowrap;
 	}
 
-	#suggestions td:nth-child(2) {
-		width: 100%;
+	#suggestions th:first-child {
+		width: 150px;
 	}
 
 	#suggestions td:last-child {
-		text-align: right;
+		width: 120px;
+	}
+
+	#suggestions td button {
+		width: 100%;
 	}
 
 #form-subscriptions-subscribe {

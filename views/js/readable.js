@@ -833,9 +833,9 @@
 					;
 
 				if ( action === 'subscribe' ) {
-					$(this).removeClass('subscribe').addClass('btn-danger unsubscribe').html('<i class="entypo squared-minus"></i>&nbsp;Unsubscribe');
+					$(this).removeClass('subscribe').addClass('btn-danger unsubscribe').html('Unsubscribe');
 				} else {
-					$(this).removeClass('unsubscribe').removeClass('btn-danger').addClass('subscribe').html('<i class="entypo squared-plus"></i>&nbsp;Subscribe');
+					$(this).removeClass('unsubscribe').removeClass('btn-danger').addClass('subscribe').html('Subscribe');
 				}
 
 				$.ajax({
@@ -854,9 +854,9 @@
 					;
 
 				if ( action === 'subscribe' ) {
-					$(this).removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-minus"></i>&nbsp;Unsubscribe');
+					$(this).removeClass('subscribe').addClass('unsubscribe').html('Unsubscribe');
 				} else {
-					$(this).removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-plus"></i>&nbsp;Subscribe');
+					$(this).removeClass('unsubscribe').addClass('subscribe').html('Subscribe');
 				}
 
 				$.ajax({

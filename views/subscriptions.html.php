@@ -74,9 +74,7 @@
 			<td>
 				<div>
 					<br>
-					<button class="btn btn-danger btn-small unsubscribe" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
-						<i class="entypo squared-minus"></i>&nbsp;Unsubscribe
-					</button>
+					<button class="btn btn-danger btn-small unsubscribe" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">Unsubscribe</button>
 				</div>
 			</td>
 		</tr>
@@ -97,86 +95,62 @@
 		<tr>
 			<th>World News</th>
 			<td><a href="https://www.nytimes.com/">The New York Times</a></td>
-			<td><button class="subscribe btn btn-small" data-url="http://rss.nytimes.com/services/xml/rss/nyt/GlobalHome.xml">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="http://rss.nytimes.com/services/xml/rss/nyt/GlobalHome.xml">Subscribe</button></td>
 		</tr>
 		<tr>
 			<th><br></th>
 			<td><a href="http://boston.com/">Boston.com</a></td>
-			<td><button class="subscribe btn btn-small" data-url="http://feeds.boston.com/boston/topstories">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="http://feeds.boston.com/boston/topstories">Subscribe</button></td>
 		</tr>
 		<tr>
 			<th>Technology</th>
 			<td><a href="https://www.techdirt.com/">Techdirt</a></td>
-			<td><button class="subscribe btn btn-small" data-url="http://feeds.feedburner.com/techdirt/feed">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="http://feeds.feedburner.com/techdirt/feed">Subscribe</button></td>
 		</tr>
 		<tr>
 			<th><br></th>
 			<td><a href="http://thenextweb.com/">The Next Web</a></td>
-			<td><button class="subscribe btn btn-small" data-url="http://feeds2.feedburner.com/thenextwebtopstories">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="http://feeds2.feedburner.com/thenextwebtopstories">Subscribe</button></td>
 		</tr>
 		<tr>
 			<th>Science</th>
 			<td><a href="http://arstechnica.com/science/">Ars Technica - Scientific Method</a></td>
-			<td><button class="subscribe btn btn-small" data-url="http://feeds.arstechnica.com/arstechnica/science?format=xml">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="http://feeds.arstechnica.com/arstechnica/science?format=xml">Subscribe</button></td>
 		</tr>
 		<tr>
 			<th><br></th>
 			<td><a href="http://www.nasa.gov">NASA Breaking News</a></td>
-			<td><button class="subscribe btn btn-small" data-url="http://www.nasa.gov/rss/breaking_news.rss">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="http://www.nasa.gov/rss/breaking_news.rss">Subscribe</button></td>
 		</tr>
 		<tr>
 			<th>Comics</th>
 			<td><a href="https://xkcd.com/">xkcd</a></td>
-			<td><button class="subscribe btn btn-small" data-url="https://xkcd.com/rss.xml">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="https://xkcd.com/rss.xml">Subscribe</button></td>
 		</tr>
 		<tr>
 			<th><br></th>
 			<td><a href="http://pbfcomics.com/">The Perry Bible Fellowship</a></td>
-			<td><button class="subscribe btn btn-small" data-url="http://pbfcomics.com/feed/feed.xml">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="http://pbfcomics.com/feed/feed.xml">Subscribe</button></td>
 		</tr>
 		<tr>
 			<th>Sports</th>
 			<td><a href="http://sports.yahoo.com/">Yahoo! Sports</a></td>
-			<td><button class="subscribe btn btn-small" data-url="http://news.yahoo.com/rss/sports">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="http://news.yahoo.com/rss/sports">Subscribe</button></td>
 		</tr>
 		<tr>
 			<th><br></th>
 			<td><a href="http://espn.go.com/">ESPN</a></td>
-			<td><button class="subscribe btn btn-small" data-url="http://sports.espn.go.com/espn/rss/news">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="http://sports.espn.go.com/espn/rss/news">Subscribe</button></td>
 		</tr>
 		<tr>
 			<th>Entertainment</th>
 			<td><a href="http://www.bbc.com/news/entertainment_and_arts/">BBC News - Entertainment &amp; Arts</a></td>
-			<td><button class="subscribe btn btn-small" data-url="http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml">Subscribe</button></td>
 		</tr>
 		<tr>
 			<th><br></th>
 			<td><a href="https://www.google.com/news/section?topic=e">Google News - Entertainment</a></td>
-			<td><button class="subscribe btn btn-small" data-url="https://www.google.com/news?pz=1&cf=all&ned=au&hl=en&topic=e&output=rss">
-				<i class="entypo squared-plus"></i>&nbsp;Subscribe</button>
-			</td>
+			<td><button class="subscribe btn btn-small" data-url="https://www.google.com/news?pz=1&cf=all&ned=au&hl=en&topic=e&output=rss">Subscribe</button></td>
 		</tr>
 	</tbody>
 </table>
@@ -208,7 +182,7 @@
 			<label class="control-label" for="folder">Folder</label>
 
 			<div class="controls">
-				<select data-feed-id="<?php echo $feed->id ?>">
+				<select id="folder" name="folder">
 					<option value="">No folder</option>
 					<?php foreach ( $this->get('folders') as $folder ): ?>
 					<option value="<?php echo $folder->id ?>">
@@ -221,7 +195,7 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit"><i class="entypo squared-plus"></i>&nbsp;Subscribe</button><div class="loading"></div><span class="message"></span>
+				<button class="btn btn-primary" type="submit">Subscribe</button><div class="loading"></div><span class="message"></span>
 			</div>
 		</div>
 	</fieldset>
