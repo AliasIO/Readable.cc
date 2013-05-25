@@ -76,6 +76,7 @@
 			case 'Reading':
 			case 'Saved':
 			case 'Feed':
+			case 'Folder':
 				app.items.init();
 
 				break;
@@ -832,9 +833,9 @@
 					;
 
 				if ( action === 'subscribe' ) {
-					$(this).removeClass('subscribe').addClass('unsubscribe').html('<i class="entypo squared-minus"></i>&nbsp;Unsubscribe');
+					$(this).removeClass('subscribe').addClass('btn-danger unsubscribe').html('<i class="entypo squared-minus"></i>&nbsp;Unsubscribe');
 				} else {
-					$(this).removeClass('unsubscribe').addClass('subscribe').html('<i class="entypo squared-plus"></i>&nbsp;Subscribe');
+					$(this).removeClass('unsubscribe').removeClass('btn-danger').addClass('subscribe').html('<i class="entypo squared-plus"></i>&nbsp;Subscribe');
 				}
 
 				$.ajax({
@@ -906,7 +907,21 @@
 				});
 			});
 
-			return app.subscriptions;
+			$('#subscriptions select').on('change', function() {
+				var id = $(this).data('feed-id');
+
+				$(this).closest('div').find('em').text($(this).val() ? $(this).find('option:selected').text() : '');
+
+				$.ajax({
+					url: '/subscriptions/folder',
+					method: 'post',
+					data: { id: id, folderId: $(this).val(), sessionId: app.sessionId }
+				});
+			});
+
+			$('#folders input').on('keyup', function() {
+				$(this).closest('div').find('span').text($(this).val());
+			});
 		}
 	};
 

@@ -692,37 +692,71 @@ fieldset:last-child {
 	margin-bottom: 0;
 }
 
-#subscriptions {
+.table-list {
 }
 
-	#subscriptions td {
-		padding: 4px 8px;
+	.table-list td {
+		height: 32px;
 		vertical-align: middle;
 	}
 
-	#subscriptions td:first-child {
-		width: 100%;
+	.table-list td:first-child {
 	}
 
-	#subscriptions td:last-child {
-		text-align: right;
+		.table-list td:first-child i {
+			font-size: 2em;
+		}
+
+	.table-list th:nth-child(2),
+	.table-list td:nth-child(2) {
+		text-align: center;
+		width: 150px;
 	}
 
-		#subscriptions td:last-child button {
+	.table-list th:last-child,
+	.table-list td:last-child {
+		text-align: center;
+		width: 120px;
+	}
+
+		.table-list td em {
+			color: #555;
+		}
+
+		.table-list td span {
 			visibility: hidden;
 		}
 
-		#subscriptions tr:hover td:last-child button {
+		.table-list td:hover span {
 			visibility: visible;
 		}
 
-	#subscriptions td span {
-		visibility: hidden;
-	}
+		.table-list td div {
+			height: 32px;
+			line-height: 32px;
+			position: relative;
+		}
 
-	#subscriptions td:hover span {
-		visibility: visible;
-	}
+		.table-list td button,
+		.table-list td select,
+		.table-list td input[type="text"] {
+			left: 0;
+			margin: 0;
+			position: absolute;
+			top: 0;
+			visibility: hidden;
+			width: 100%;
+		}
+
+		.table-list td input[type="text"] {
+			width: auto;
+		}
+
+		.table-list tr:hover td button,
+		.table-list tr:hover td select,
+		.table-list tr:hover td input[type="text"] {
+			visibility: visible;
+		}
 
 #suggestions {
 }

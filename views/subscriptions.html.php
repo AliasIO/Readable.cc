@@ -23,6 +23,7 @@
 
 	<ul>
 		<li><a href="#feed-subscribe">Subscribe to feed</a></li>
+		<li><a href="#feed-folders">Manage folders</a></li>
 		<li><a href="#feed-import-export">Import &amp; export feeds</a></il>
 	</ul>
 </div>
@@ -30,8 +31,13 @@
 <?php if ( $feeds = $this->get('feeds') ): ?>
 <h3>Subscriptions</h3>
 
-<table id="subscriptions" class="table table-bordered table-striped table-hover">
+<table id="subscriptions" class="table table-bordered table-striped table-hover table-list">
 	<tbody>
+		<tr>
+			<th>Subscription</th>
+			<th>Folder</th>
+			<th>Action</th>
+		</tr>
 		<?php foreach ( $feeds as $feed ): ?>
 		<tr>
 			<td>
@@ -47,9 +53,31 @@
 				</span>
 			</td>
 			<td>
-				<button class="btn btn-small unsubscribe" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
-					<i class="entypo squared-minus"></i>&nbsp;Unsubscribe
-				</button>
+				<div>
+					<em>
+						<?php foreach ( $this->get('folders') as $folder ): ?>
+						<?php if ( $feed->folder_id == $folder->id ): ?>
+						<?php echo $folder->title ?>
+						<?php endif ?>
+						<?php endforeach ?>
+					</em>
+					<select data-feed-id="<?php echo $feed->id ?>">
+						<option value="">No folder</option>
+						<?php foreach ( $this->get('folders') as $folder ): ?>
+						<option value="<?php echo $folder->id ?>"<?php echo $feed->folder_id == $folder->id ? ' selected="selected"' : '' ?>>
+							<?php echo $folder->title ?>
+						</option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</td>
+			<td>
+				<div>
+					<br>
+					<button class="btn btn-danger btn-small unsubscribe" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">
+						<i class="entypo squared-minus"></i>&nbsp;Unsubscribe
+					</button>
+				</div>
 			</td>
 		</tr>
 		<?php endforeach ?>
@@ -176,9 +204,82 @@
 			</div>
 		</div>
 
+		<div class="control-group <?php echo $this->get('error-url') ? 'error' : '' ?>">
+			<label class="control-label" for="folder">Folder</label>
+
+			<div class="controls">
+				<select data-feed-id="<?php echo $feed->id ?>">
+					<option value="">No folder</option>
+					<?php foreach ( $this->get('folders') as $folder ): ?>
+					<option value="<?php echo $folder->id ?>">
+						<?php echo $folder->title ?>
+					</option>
+					<?php endforeach ?>
+				</select>
+			</div>
+		</div>
+
 		<div class="control-group">
 			<div class="controls">
 				<button class="btn btn-primary" type="submit"><i class="entypo squared-plus"></i>&nbsp;Subscribe</button><div class="loading"></div><span class="message"></span>
+			</div>
+		</div>
+	</fieldset>
+</form>
+
+<div class="divider"></div>
+
+<h3 id="feed-subscribe">Manage folders</h3>
+
+<form id="form-folders" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="form-folders form-horizontal well">
+	<input type="hidden" name="form" value="folders">
+	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
+
+	<?php if ( $folders = $this->get('folders') ): ?>
+	<fieldset>
+		<table id="folders" class="table table-bordered table-striped table-hover table-list">
+			<tbody>
+				<tr>
+					<th>Folder</th>
+					<th>Delete?</th>
+				</tr>
+				<?php foreach ( $folders as $folder ): ?>
+				<tr>
+					<td>
+						<div>
+							<div><?php echo $folder->title ?></div>
+
+							<input type="text" name="title[<?php echo $folder->id ?>]" value="<?php echo $folder->title ?>">
+						</div>
+					</td>
+					<td>
+						<input type="checkbox" name="delete[<?php echo $folder->id ?>]" value="1">
+					</td>
+				</tr>
+				<?php endforeach ?>
+			</tbody>
+		</table>
+
+		<div class="control-group">
+			<div class="controls">
+				<button class="btn btn-primary" type="submit">Save folders</button><div class="loading"></div>
+			</div>
+		</div>
+	</fieldset>
+	<?php endif ?>
+
+	<fieldset>
+		<div class="control-group <?php echo $this->get('error-title') ? 'error' : '' ?>">
+			<label class="control-label" for="url">Folder name</label>
+
+			<div class="controls">
+				<input id="title" name="title[new]" class="input-block-level" type="text" value="<?php echo $this->get('title') ?>" placeholder="E.g. News">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<div class="controls">
+				<button class="btn btn-primary" type="submit">Add folder</button><div class="loading"></div>
 			</div>
 		</div>
 	</fieldset>

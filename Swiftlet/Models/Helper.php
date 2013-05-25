@@ -45,6 +45,7 @@ class Helper extends \Swiftlet\Model
 			FROM       folders
 			WHERE
 		 		user_id = :user_id
+			ORDER BY folders.title
 			LIMIT 1000
 			;');
 
@@ -88,10 +89,35 @@ class Helper extends \Swiftlet\Model
 	/**
 	 * Generate direct link to feed
 	 *
-	 * @param object $controller
+	 * @param int $id
+	 * @param string $title
+	 * @return string
 	 */
 	public function getFeedLink($id, $title)
 	{
-		return $this->app->getRootPath() . 'feed/view/' . $id . '/' . trim(preg_replace('/--+/', '-', preg_replace('/[^a-z0-9]/', '-', strtolower( html_entity_decode($title, ENT_QUOTES, 'UTF-8')))), '-');
+		return $this->app->getRootPath() . 'feed/view/' . $id . '/' . $this->getSlug($title);
+	}
+
+	/**
+	 * Generate direct link to folder
+	 *
+	 * @param int $id
+	 * @param string $title
+	 * @return string
+	 */
+	public function getFolderLink($id, $title)
+	{
+		return $this->app->getRootPath() . 'folder/view/' . $id . '/' . $this->getSlug($title);
+	}
+
+	/**
+	 * String to URL segment
+	 *
+	 * @param string $string
+	 * @return string
+	 */
+	protected function getSlug($string)
+	{
+		return trim(preg_replace('/--+/', '-', preg_replace('/[^a-z0-9]/', '-', strtolower( html_entity_decode($string, ENT_QUOTES, 'UTF-8')))), '-');
 	}
 }

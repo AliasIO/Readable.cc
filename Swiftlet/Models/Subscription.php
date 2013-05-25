@@ -103,4 +103,34 @@ class Subscription extends \Swiftlet\Model
 
 		$sth->execute();
 	}
+
+	/**
+	 * Add subscription to folder
+	 *
+	 * @param int $id
+	 * @param int $folderId
+	 */
+	public function folder($id, $folderId)
+	{
+		$userId = $this->app->getSingleton('session')->get('id');
+
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+			UPDATE
+				users_feeds
+			SET
+				folder_id = :folder_id
+			WHERE
+				user_id = :user_id AND
+				feed_id = :feed_id
+			LIMIT 1
+			;');
+
+		$sth->bindParam('user_id',   $userId,   \PDO::PARAM_INT);
+		$sth->bindParam('feed_id',   $id,       \PDO::PARAM_INT);
+		$sth->bindParam('folder_id', $folderId, \PDO::PARAM_INT);
+
+		$sth->execute();
+	}
 }

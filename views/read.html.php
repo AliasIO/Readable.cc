@@ -37,6 +37,9 @@
 		By
 		<strong><a href="<?php echo $this->app->getSingleton('helper')->getFeedLink($item->feed_id, $item->feed_title) ?>" title="<?php echo parse_url($item->feed_link, PHP_URL_HOST) ?>"><?php echo $item->feed_title ?></a></strong>
 		<?php echo $item->posted_at ? 'on ' . date('F j, Y', $item->posted_at) : '' ?>
+		<?php if ( $this->app->getControllerName() === 'Reading' && $item->folder_title ): ?>
+		in <strong><a href="<?php echo $this->app->getSingleton('helper')->getFolderLink($item->folder_id, $item->folder_title) ?>"><?php echo $item->folder_title ?></a></strong>
+		<?php endif ?>
 		<span class="feed-options">
 			&mdash;
 			<?php if ( $this->get('controller') == 'index' ): ?>

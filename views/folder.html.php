@@ -5,8 +5,9 @@
 		<h1><?php echo $this->get('title') ?></h1>
 
 		<p>
-			<span>Articles from <a href="<?php echo $this->get('link') ?>"><?php echo parse_url($this->get('link'), PHP_URL_HOST) ?></a></span>
-			<?php if ( !$this->app->getSingleton('session')->get('id') ): ?>
+			<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
+			<span>This folder is public and anonymous, share the URL with anyone</span>
+			<?php else: ?>
 			<span><a href="<?php echo $this->app->getRootPath() ?>signup">Sign up</a> to subscribe to RSS feeds and vote on articles for personalised reading.</span>
 			<?php endif ?>
 		</p>
@@ -16,7 +17,7 @@
 <?php if ( $this->app->getAction() == 'view' && !$this->get('items', false) ): ?>
 <div id="items-footer">
 	<p>
-		<i class="entypo chevron-small-left"></i> No articles, please come back later <i class="entypo chevron-small-right"></i>
+		<i class="entypo chevron-small-left"></i> No unread articles, please come back later <i class="entypo chevron-small-right"></i>
 	</p>
 </div>
 <?php else: ?>

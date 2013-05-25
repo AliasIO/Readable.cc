@@ -92,6 +92,7 @@ class Reading extends \Swiftlet\Controllers\Read
 				items.title,
 				items.contents,
 				items.posted_at,
+				users_feeds.folder_id,
 				COALESCE(users_items.vote,  0) AS vote,
 				COALESCE(users_items.score, 0) AS score,
 				COALESCE(users_items.saved, 0) AS saved,
@@ -121,6 +122,20 @@ class Reading extends \Swiftlet\Controllers\Read
 		$items = $result;
 
 		$this->prepare($items);
+
+		$folders = $this->app->getSingleton('helper')->getUserFolders();
+
+		foreach ( $items as $i => $item ) {
+			$item->folder_title = '';
+
+			if ( $item->folder_id ) {
+				foreach ( $folders as $folder ) {
+					if ( $item->folder_id == $folder->id ) {
+						$item->folder_title = $folder->title;
+					}
+				}
+			}
+		}
 
 		$this->view->set('items', $items);
 	}

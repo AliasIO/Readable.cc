@@ -5,8 +5,7 @@ namespace Swiftlet\Controllers;
 class Subscriptions extends \Swiftlet\Controller
 {
 	const
-		OPML_INVALID = 1,
-		XSD_OPML     = 'opml-2.0.xsd'
+		OPML_INVALID = 1
 		;
 
 	protected
@@ -42,7 +41,8 @@ class Subscriptions extends \Swiftlet\Controller
 				feeds.url,
 				feeds.title,
 				feeds.link,
-				feeds.last_fetched_at
+				feeds.last_fetched_at,
+				users_feeds.folder_id
 			FROM       users_feeds
 			INNER JOIN feeds       ON users_feeds.feed_id = feeds.id
 			WHERE
@@ -61,7 +61,8 @@ class Subscriptions extends \Swiftlet\Controller
 			$this->app->getSingleton('helper')->localize($feed->last_fetched_at);
 		}
 
-		$this->view->set('feeds', $feeds);
+		$this->view->set('feeds',   $feeds);
+		$this->view->set('folders', $this->app->getSingleton('helper')->getUserFolders());
 	}
 
 	/**
@@ -134,6 +135,23 @@ class Subscriptions extends \Swiftlet\Controller
 		$url = !empty($_POST['url']) ?       $_POST['url'] : null;
 
 		$this->app->getSingleton('subscription')->unsubscribe($id, $url);
+
+		exit(json_encode(array()));
+	}
+
+	/**
+	 * Add feed to folder
+	 */
+	public function folder()
+	{
+		header('Content-type: application/json');
+
+		$this->app->getSingleton('helper')->ensureValidUser(true);
+
+		$id       = !empty($_POST['id'])       ? (int) $_POST['id']       : null;
+		$folderId = !empty($_POST['folderId']) ? (int) $_POST['folderId'] : null;
+
+		$this->app->getSingleton('subscription')->folder($id, $folderId);
 
 		exit(json_encode(array()));
 	}
