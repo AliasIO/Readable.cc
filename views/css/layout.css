@@ -269,6 +269,7 @@ header {
 		header ul li {
 			display: inline-block;
 			float: left;
+			position: relative;
 		}
 
 		header ul li.signup span {
@@ -304,10 +305,14 @@ header {
 			border: 1px solid #ddd;
 			border-top: 1px solid #eee;
 			padding: 10px 0;
-			right: 20px;
+			right: 0;
 			top: 60px;
 			width: 150px;
 			z-index: 9;
+		}
+
+		header ul li.email ul {
+			right: 20px;
 		}
 
 		header ul ul.collapsed {
@@ -317,6 +322,12 @@ header {
 			header ul ul li {
 				display: block;
 				float: none;
+			}
+
+			header ul ul li.active {
+				-webkit-box-shadow: none;
+					 -moz-box-shadow: none;
+								box-shadow: none;
 			}
 
 				header ul ul li a {
@@ -973,12 +984,28 @@ fieldset:last-child {
 			margin-top: 10px;
 			padding-bottom: 0;
 			position: relative;
-			right: 0;
+			right: 0 !important;
 			top: 0;
 			width: inherit;
 		}
 
 		header ul ul.collapsed {
 			display: block;
+		}
+
+		header ul li.folders ul {
+			border-width: 1px;
+			box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+			margin: 0;
+			padding-bottom: 10px;
+			position: absolute;
+			right: 40px !important;
+			top: 40px;
+			width: 220px;
+			z-index: 10;
+		}
+
+		header ul li.folders ul.collapsed {
+			display: none;
 		}
 }

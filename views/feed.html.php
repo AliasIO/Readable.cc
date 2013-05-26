@@ -2,7 +2,7 @@
 
 <div id="page-head-wrap">
 	<div id="page-head">
-		<h1><?php echo $this->get('title') ?></h1>
+		<h1>Feed: <?php echo $this->get('title') ?></h1>
 
 		<p>
 			<span>Articles from <a href="<?php echo $this->get('link') ?>"><?php echo parse_url($this->get('link'), PHP_URL_HOST) ?></a></span>

@@ -30,7 +30,7 @@
 			.on('click', function(e) {
 				e.stopPropagation();
 
-				$('header ul').toggleClass('collapsed');
+				$('header ul').first().toggleClass('collapsed');
 			}).on('touchstart', function(e) {
 				e.preventDefault();
 
@@ -38,7 +38,7 @@
 			});
 
 		$('header ul ul').parent().on('click', function(e) {
-			$('header ul').toggleClass('collapsed');
+			$(this).find('ul').toggleClass('collapsed');
 		});
 
 		$(document).on('click', function(e) {
@@ -226,7 +226,7 @@
 			});
 
 			Mousetrap.bind([ 'm', 'A' ], function() {
-				if ( app.controller === 'Reading' ) {
+				if ( app.controller === 'Reading' || app.controller === 'Folder' ) {
 					app.notice($('.modal-mark-all-read').html());
 
 					$('button.mark-all-read-confirm').focus();
@@ -246,7 +246,7 @@
 			$(document).on('click', '.mark-all-read', function(e) {
 				e.preventDefault();
 
-				if ( app.controller === 'Reading' ) {
+				if ( app.controller === 'Reading' || app.controller === 'Folder' ) {
 					app.notice($('.modal-mark-all-read').html());
 
 					$('button.mark-all-read-confirm').focus();
@@ -804,7 +804,7 @@
 		},
 
 		updateItemCount: function(diff) {
-			if ( app.controller != 'Reading' ) {
+			if ( app.controller != 'Reading' && app.controller != 'Folder' ) {
 				return
 			}
 
@@ -815,9 +815,9 @@
 			$('.item-count span').text(app.itemCount > 1000 ? '1000+' : Math.max(0, app.itemCount));
 
 			if ( !app.itemCount ) {
-				$('.item-count:visible').hide();
+				$('.active .item-count:visible').hide();
 			} else {
-				$('.item-count:hidden').show();
+				$('.active .item-count:hidden').show();
 			}
 		}
 	};

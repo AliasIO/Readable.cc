@@ -49,11 +49,11 @@ class Folder extends \Swiftlet\Controllers\Read
 				title
 			FROM folders
 			WHERE
-				folders.id = :folder_id
+				id = :id
 			LIMIT 1
 			');
 
-		$sth->bindParam('folder_id', $folderId, \PDO::PARAM_INT);
+		$sth->bindParam('id', $folderId, \PDO::PARAM_INT);
 
 		$sth->execute();
 

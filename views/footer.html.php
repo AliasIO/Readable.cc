@@ -8,11 +8,11 @@
 				<h4>Mark all articles &lsquo;read&rsquo;</h4>
 
 				<p>
-					Are you sure you wish to clear your reading list?
+					Are you sure you wish to clear this list?
 				</p>
 
 				<p>
-					<button class="btn btn-small btn-primary mark-all-read-confirm">Clear reading list</button>
+					<button class="btn btn-small btn-primary mark-all-read-confirm">Clear list</button>
 					<button class="btn btn-small alert-cancel">Continue reading</button>
 				</p>
 			</div>
@@ -34,7 +34,7 @@
 
 		<script src="<?php echo $this->app->getRootPath() ?>views/lib/jquery-1.9.1.min.js"></script>
 		<script src="<?php echo $this->app->getRootPath() ?>views/lib/mousetrap.min.js"></script>
-		<script src="<?php echo $this->app->getRootPath() ?>views/js/readable.js?d"></script>
+		<script src="<?php echo $this->app->getRootPath() ?>views/js/readable.js?e"></script>
 
 		<script>
 			var _gaq = _gaq || [];

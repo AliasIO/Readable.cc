@@ -1,4 +1,4 @@
-<?php if ( $this->app->getControllerName() === 'Reading' ): ?>
+<?php if ( $this->app->getControllerName() === 'Reading' || $this->app->getControllerName() === 'Folder' ): ?>
 <script>
 	readable.itemCount = <?php echo $this->get('itemCount') ?>;
 </script>

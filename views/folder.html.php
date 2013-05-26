@@ -2,13 +2,13 @@
 
 <div id="page-head-wrap">
 	<div id="page-head">
-		<h1><?php echo $this->get('title') ?></h1>
+		<h1>Folder: <?php echo $this->get('title') ?></h1>
 
 		<p>
 			<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
-			<span>This folder is public and anonymous, share the URL with anyone</span>
+			<span>Folders are public and anonymous, share the link with anyone!</span>
 			<?php else: ?>
-			<span><a href="<?php echo $this->app->getRootPath() ?>signup">Sign up</a> to subscribe to RSS feeds and vote on articles for personalised reading.</span>
+			<span><a href="<?php echo $this->app->getRootPath() ?>signup">Sign up</a> to manage feeds and create folders of your own.</span>
 			<?php endif ?>
 		</p>
 	</div>

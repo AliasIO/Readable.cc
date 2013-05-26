@@ -13,7 +13,7 @@
 
 		<link href="<?php echo $this->app->getRootPath() ?>views/lib/bootstrap/css/readable.css" rel="stylesheet">
 		<link href="<?php echo $this->app->getRootPath() ?>views/lib/entypo/entypo.css" rel="stylesheet">
-		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css?f" rel="stylesheet">
+		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css?e" rel="stylesheet">
 
 		<script>
 			var readable = {};
@@ -42,10 +42,10 @@
 					Readable.cc is the best web-based Google Reader alternative. RSS feeds are made readable and interesting content is identified algorithmically.
 				</p>
 
-				<h2>
+				<h2 class="active">
 					<a href="javascript: void(0);">
 						<?php echo $this->get('pageTitle') ?>
-						<?php if ( $this->app->getControllerName() === 'Reading' ): ?>
+						<?php if ( $this->app->getControllerName() === 'Reading' || $this->app->getControllerName() === 'Folder' ): ?>
 						<span class="item-count">(<span>0</span>)</span>
 						<?php endif ?>
 						<i class="entypo chevron-down"></i>
@@ -54,20 +54,37 @@
 
 				<ul class="collapsed">
 					<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
-					<li class="reading <?php echo $this->name == 'reading' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>reading">My Reading<span class="item-count"> (<span>0</span>)</span></a></li>
+					<li class="reading <?php echo $this->name == 'reading' ? 'active' : '' ?>">
+						<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading<span class="item-count"> (<span>0</span>)</span>
+					</a></li>
+
+					<?php if ( $folders = $this->app->getSingleton('helper')->getUserFolders() ): ?>
+					<li class="folders <?php echo $this->app->getControllerName() === 'Folder' ? 'active' : '' ?>">
+						<a href="javascript: void(0);">Folder</i><span class="item-count"> (<span>0</span>)</span></a>
+
+						<ul class="collapsed">
+							<?php foreach ( $folders as $folder ): ?>
+							<li class="folder"><a href="<?php echo $this->app->getSingleton('helper')->getFolderLink($folder->id, $folder->title) ?>">
+								<?php echo $this->htmlEncode($folder->title) ?>
+							</a></li>
+							<?php endforeach ?>
+						</ul>
+					</li>
+					<?php endif ?>
+
 					<li class="saved   <?php echo $this->name == 'saved'   ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>saved"  >Saved</a></li>
 					<li class="help    <?php echo $this->name == 'help'    ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>help"   >Help</a></li>
 
 					<li class="email">
-						<a href="javascript: void(0);"><span><?php echo $this->app->getSingleton('session')->get('email') ?></span> <i class="entypo chevron-down"></i></a>
+						<a href="javascript: void(0);"><span><?php echo $this->app->getSingleton('session')->get('email') ?></span>&nbsp;<i class="entypo chevron-down"></i></i></a>
 
 						<ul class="collapsed">
-							<?php if ( $this->app->getControllerName() === 'Reading' ): ?>
+							<?php if ( $this->app->getControllerName() === 'Reading' || $this->app->getControllerName() === 'Folder' ): ?>
 							<li class="mark-all-read"><a href="javascript: void(0);">Mark all read</a></li>
 							<?php endif ?>
-							<li class="account"      ><a href="<?php echo $this->app->getRootPath() ?>account"      >Account</a></li>
-							<li class="subscriptions"><a href="<?php echo $this->app->getRootPath() ?>subscriptions">Subscriptions</a></li>
-							<li class="signout"      ><a href="<?php echo $this->app->getRootPath() ?>signout"      >Sign out</a></li>
+							<li class="account       <?php echo $this->name == 'account'       ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>account"      >Account</a></li>
+							<li class="subscriptions <?php echo $this->name == 'subscriptions' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>subscriptions">Subscriptions</a></li>
+							<li class="signout       <?php echo $this->name == 'signout'       ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signout"      >Sign out</a></li>
 						</ul>
 					</li>
 					<?php else: ?>

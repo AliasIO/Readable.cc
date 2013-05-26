@@ -39,6 +39,10 @@
 </p>
 
 <p>
+	Organise your subscriptions in folders. Folders are public and can be shared anonymously with anyone.
+</p>
+
+<p>
 	Hit the &lsquo;save&rsquo; button on articles you wish to read later. They will appear on the &lsquo;<a href="<?php echo $this->app->getRootPath() ?>saved">Saved</a>&rsquo; page.
 </p>
 

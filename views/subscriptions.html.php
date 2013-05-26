@@ -206,7 +206,7 @@
 <h3 id="feed-subscribe">Manage folders</h3>
 
 <p>
-	Organise your subscriptions into folders. Deleting a folder does not delete subscriptions.
+	Organise your subscriptions into folders. Folders are public and can be shared with anyone anonymously. Deleting a folder does not delete subscriptions.
 </p>
 
 <form id="form-folders" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="form-folders form-horizontal well">
