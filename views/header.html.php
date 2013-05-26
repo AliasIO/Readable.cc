@@ -13,7 +13,7 @@
 
 		<link href="<?php echo $this->app->getRootPath() ?>views/lib/bootstrap/css/readable.css" rel="stylesheet">
 		<link href="<?php echo $this->app->getRootPath() ?>views/lib/entypo/entypo.css" rel="stylesheet">
-		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css?e" rel="stylesheet">
+		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css?f" rel="stylesheet">
 
 		<script>
 			var readable = {};
