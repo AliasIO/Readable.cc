@@ -672,7 +672,7 @@
 		},
 
 		markAllAsRead: function() {
-			if ( app.signedIn && app.controller === 'Reading' ) {
+			if ( app.signedIn && ( app.controller === 'Reading' || app.controller === 'Folder' ) ) {
 				$.ajax({
 					url: '/read/markRead/' + app.args,
 					method: 'post',
