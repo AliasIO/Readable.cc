@@ -29,5 +29,18 @@ class Sitemap extends \Swiftlet\Controllers\Read
 		$feeds = $sth->fetchAll(\PDO::FETCH_OBJ);
 
 		$this->view->set('feeds', $feeds);
+
+		$sth = $dbh->prepare('
+			SELECT
+				id,
+				title
+			FROM folders
+			;');
+
+		$sth->execute();
+
+		$folders = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+		$this->view->set('folders', $folders);
 	}
 }

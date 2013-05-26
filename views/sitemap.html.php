@@ -4,6 +4,13 @@
 	<?php foreach ( $this->get('feeds') as $feed ): ?>
 	<url>
 		<loc><?php echo $this->app->getConfig('websiteUrl') . $this->app->getSingleton('helper')->getFeedLink($feed->id, $feed->title) ?></loc>
+		<priority>0.8</priority>
+	</url>
+	<?php endforeach ?>
+	<?php foreach ( $this->get('folders') as $folder ): ?>
+	<url>
+		<loc><?php echo $this->app->getConfig('websiteUrl') . $this->app->getSingleton('helper')->getFolderLink($folder->id, $folder->title) ?></loc>
+		<priority>0.6</priority>
 	</url>
 	<?php endforeach ?>
 </urlset>
