@@ -29,7 +29,7 @@
 		<div id="overlay"></div>
 
 		<p id="feedback">
-			<a href="<?php echo $this->app->getRootPath() ?>contact">Feedback</a>
+			<a href="<?php echo $this->app->getRootPath() ?>help#contact">Feedback</a>
 		</p>
 
 		<script src="<?php echo $this->app->getRootPath() ?>views/lib/jquery-1.9.1.min.js"></script>

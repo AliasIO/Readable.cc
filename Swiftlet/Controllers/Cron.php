@@ -15,7 +15,7 @@ class Cron extends \Swiftlet\Controller
 			SELECT
 				feeds.id,
 				feeds.url
-			FROM      users
+			FROM       users
 			INNER JOIN users_feeds ON       users.id      = users_feeds.user_id
 			INNER JOIN feeds       ON users_feeds.feed_id =       feeds.id
 			WHERE
