@@ -28,6 +28,8 @@
 	</ul>
 </div>
 
+<?php $folders = $this->get('folders') ?>
+
 <?php if ( $feeds = $this->get('feeds') ): ?>
 <h3>Subscriptions</h3>
 
@@ -55,7 +57,7 @@
 			<td>
 				<div>
 					<em>
-						<?php foreach ( $this->get('folders') as $folder ): ?>
+						<?php foreach ( $folders as $folder ): ?>
 						<?php if ( $feed->folder_id == $folder->id ): ?>
 						<?php echo $folder->title ?>
 						<?php endif ?>
@@ -63,7 +65,7 @@
 					</em>
 					<select data-feed-id="<?php echo $feed->id ?>">
 						<option value="">No folder</option>
-						<?php foreach ( $this->get('folders') as $folder ): ?>
+						<?php foreach ( $folders as $folder ): ?>
 						<option value="<?php echo $folder->id ?>"<?php echo $feed->folder_id == $folder->id ? ' selected="selected"' : '' ?>>
 							<?php echo $folder->title ?>
 						</option>
@@ -184,7 +186,7 @@
 			<div class="controls">
 				<select id="folder" name="folder">
 					<option value="">No folder</option>
-					<?php foreach ( $this->get('folders') as $folder ): ?>
+					<?php foreach ( $folders as $folder ): ?>
 					<option value="<?php echo $folder->id ?>">
 						<?php echo $folder->title ?>
 					</option>
@@ -213,7 +215,7 @@
 	<input type="hidden" name="form" value="folders">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
-	<?php if ( $folders = $this->get('folders') ): ?>
+	<?php if ( $folders ): ?>
 	<fieldset>
 		<table id="folders" class="table table-bordered table-striped table-hover table-list">
 			<tbody>

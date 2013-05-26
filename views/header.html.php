@@ -60,7 +60,7 @@
 
 					<?php if ( $folders = $this->app->getSingleton('helper')->getUserFolders() ): ?>
 					<li class="folders <?php echo $this->app->getControllerName() === 'Folder' ? 'active' : '' ?>">
-						<a href="javascript: void(0);">Folder</i><span class="item-count"> (<span>0</span>)</span></a>
+						<a href="javascript: void(0);">Folder<span class="item-count"> (<span>0</span>)</span></a>
 
 						<ul class="collapsed">
 							<?php foreach ( $folders as $folder ): ?>
@@ -76,7 +76,7 @@
 					<li class="help    <?php echo $this->name == 'help'    ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>help"   >Help</a></li>
 
 					<li class="email">
-						<a href="javascript: void(0);"><span><?php echo $this->app->getSingleton('session')->get('email') ?></span>&nbsp;<i class="entypo chevron-down"></i></i></a>
+						<a href="javascript: void(0);"><span><?php echo $this->app->getSingleton('session')->get('email') ?></span>&nbsp;<i class="entypo chevron-down"></i></a>
 
 						<ul class="collapsed">
 							<?php if ( $this->app->getControllerName() === 'Reading' || $this->app->getControllerName() === 'Folder' ): ?>
