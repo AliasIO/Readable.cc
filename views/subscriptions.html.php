@@ -23,7 +23,7 @@
 
 	<ul>
 		<li><a href="#feed-subscribe">Subscribe to feed</a></li>
-		<li><a href="#feed-folders">Manage folders</a></li>
+		<li><a href="#folders">Manage folders</a></li>
 		<li><a href="#feed-import-export">Import &amp; export feeds</a></il>
 	</ul>
 </div>
@@ -203,7 +203,7 @@
 
 <div class="divider"></div>
 
-<h3 id="feed-subscribe">Manage folders</h3>
+<h3 id="folders">Manage folders</h3>
 
 <p>
 	Organise your subscriptions into folders. Folders are public and can be shared with anyone anonymously. Deleting a folder does not delete subscriptions.
