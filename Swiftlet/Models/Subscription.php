@@ -11,7 +11,7 @@ class Subscription extends \Swiftlet\Model
 	 * @param string $url
 	 * @return int
 	 */
-	public function subscribe($id, $url = '')
+	public function subscribe($id, $url = '', $folderId = null)
 	{
 		$userId = $this->app->getSingleton('session')->get('id');
 
@@ -51,22 +51,25 @@ class Subscription extends \Swiftlet\Model
 
 				$this->app->getsingleton('learn')->learn($itemIds);
 			}
-		} else {
-			$sth = $dbh->prepare('
-				INSERT IGNORE INTO users_feeds (
-					user_id,
-					feed_id
-				) VALUES (
-					:user_id,
-					:feed_id
-				)
-				;');
-
-			$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
-			$sth->bindParam('feed_id', $id,     \PDO::PARAM_INT);
-
-			$sth->execute();
 		}
+
+		$sth = $dbh->prepare('
+			INSERT IGNORE INTO users_feeds (
+				user_id,
+				feed_id,
+				folder_id
+			) VALUES (
+				:user_id,
+				:feed_id,
+				:folder_id
+			)
+			');
+
+		$sth->bindParam('user_id',   $userId,   \PDO::PARAM_INT);
+		$sth->bindParam('feed_id',   $id,       \PDO::PARAM_INT);
+		$sth->bindParam('folder_id', $folderId, \PDO::PARAM_INT);
+
+		$sth->execute();
 
 		return $id;
 	}

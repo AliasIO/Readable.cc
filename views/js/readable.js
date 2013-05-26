@@ -854,9 +854,9 @@
 					;
 
 				if ( action === 'subscribe' ) {
-					$(this).removeClass('subscribe').addClass('unsubscribe').html('Unsubscribe');
+					$(this).removeClass('subscribe').addClass('btn-danger unsubscribe').html('Unsubscribe');
 				} else {
-					$(this).removeClass('unsubscribe').addClass('subscribe').html('Subscribe');
+					$(this).removeClass('unsubscribe').removeClass('btn-danger').addClass('subscribe').html('Subscribe');
 				}
 
 				$.ajax({
@@ -870,16 +870,19 @@
 				e.preventDefault();
 
 				var
-					input        = $(this).find('input[name  = url]'),
-					controlGroup = input.closest('.control-group'),
+					inputUrl     = $(this).find('input[name=url]'),
+					inputFolder  = $(this).find('select[name=folder]'),
+					controlGroup = inputUrl.closest('.control-group'),
 					button       = $(this).find('button'),
 					loading      = $(this).find('.loading'),
 					message      = $(this).find('.message'),
-					url          = input.val()
+					url          = inputUrl.val(),
+					folderId     = inputFolder.val()
 					;
 
-				button.attr('disabled', 'disabled').blur();
-				input .attr('disabled', 'disabled');
+				button     .attr('disabled', 'disabled').blur();
+				inputUrl   .attr('disabled', 'disabled');
+				inputFolder.attr('disabled', 'disabled');
 
 				message.removeClass('error').hide();
 
@@ -890,10 +893,11 @@
 				$.ajax({
 					url: '/subscriptions/subscribe',
 					method: 'post',
-					data: { url: url, sessionId: app.sessionId }
+					data: { url: url, folderId: folderId, sessionId: app.sessionId }
 				}).always(function() {
-					button.removeAttr('disabled');
-					input .removeAttr('disabled');
+					button     .removeAttr('disabled');
+					inputUrl   .removeAttr('disabled');
+					inputFolder.removeAttr('disabled');
 
 					loading.css({ display: 'none' });
 				}).done(function(data) {
@@ -920,7 +924,7 @@
 			});
 
 			$('#folders input').on('keyup', function() {
-				$(this).closest('div').find('span').text($(this).val());
+				$(this).closest('div').find('div').text($(this).val());
 			});
 		}
 	};

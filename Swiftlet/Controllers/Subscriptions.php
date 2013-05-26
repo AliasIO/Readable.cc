@@ -29,6 +29,10 @@ class Subscriptions extends \Swiftlet\Controller
 					$this->import();
 
 					break;
+				case 'folders':
+					$this->folders();
+
+					break;
 			}
 		}
 
@@ -77,14 +81,15 @@ class Subscriptions extends \Swiftlet\Controller
 		$success = false;
 		$error   = false;
 
-		$id  = !empty($_POST['id'])  ? (int) $_POST['id']  : null;
-		$url = !empty($_POST['url']) ?       $_POST['url'] : null;
+		$id       = !empty($_POST['id'])       ? (int) $_POST['id']       : null;
+		$folderId = !empty($_POST['folderId']) ? (int) $_POST['folderId'] : null;
+		$url      = !empty($_POST['url'])      ?       $_POST['url']      : null;
 
 		if ( !$id && !$url ) {
 			$error = 'Please provide a URL.';
 		} else {
 			try {
-				$id = $this->app->getSingleton('subscription')->subscribe($id, $url);
+				$id = $this->app->getSingleton('subscription')->subscribe($id, $url, $folderId);
 			} catch ( \Exception $e ) {
 				switch ( $e->getCode() ) {
 					case \Swiftlet\Models\Feed::FEED_INVALID:
@@ -164,6 +169,60 @@ class Subscriptions extends \Swiftlet\Controller
 		$this->view->set('success', 'Welcome! Your account has been created and you have been signed in.');
 
 		$this->index();
+	}
+
+	/**
+	 * Export feeds to OPML
+	 */
+	public function export()
+	{
+		header('Content-type: application/xml');
+		header('Content-Disposition: attachment; filename="feeds.opml.xml"');
+
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+			SELECT
+				feeds.url,
+				feeds.title,
+				feeds.link
+			FROM      users_feeds
+			LEFT JOIN feeds ON users_feeds.feed_id = feeds.id
+			WHERE
+				users_feeds.user_id = :user_id
+			ORDER BY users_feeds.id DESC
+			LIMIT 1000
+			;');
+
+		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+
+		$sth->execute();
+
+		$feeds = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+		$opml = new \SimpleXMLElement('<opml></opml>');
+
+		$opml->addAttribute('version', '1.0');
+
+		$opml->addChild('head', $this->app->getConfig('websiteName'));
+
+		$body = $opml->addChild('body');
+
+		$outlines = $body->addChild('outline');
+
+		$outlines->addAttribute('title', 'My Reading');
+
+		foreach ( $feeds as $feed ) {
+			$outline = $outlines->addChild('outline');
+
+			$outline->addAttribute('title',   $feed->title);
+			$outline->addAttribute('xmlUrl',  $feed->url);
+			$outline->addAttribute('htmlUrl', $feed->link);
+		}
+
+		exit($opml->saveXML());
 	}
 
 	/**
@@ -283,56 +342,97 @@ class Subscriptions extends \Swiftlet\Controller
 	}
 
 	/**
-	 * Export feeds to OPML
+	 * Save folders
 	 */
-	public function export()
+	protected function folders()
 	{
-		header('Content-type: application/xml');
-		header('Content-Disposition: attachment; filename="feeds.opml.xml"');
-
 		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+
+		$success = false;
+		$error   = false;
+
+		$titles = isset($_POST['titles']) ? $_POST['titles'] : array();
+		$delete = isset($_POST['delete']) ? $_POST['delete'] : array();
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
-		$sth = $dbh->prepare('
-			SELECT
-				feeds.url,
-				feeds.title,
-				feeds.link
-			FROM      users_feeds
-			LEFT JOIN feeds ON users_feeds.feed_id = feeds.id
-			WHERE
-				users_feeds.user_id = :user_id
-			ORDER BY users_feeds.id DESC
-			LIMIT 1000
-			;');
+		foreach ( $titles as $folderId => $title ) {
+			if ( $folderId === 'new' ) {
+				break;
+			}
 
-		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+			if ( isset($delete[$folderId]) ) {
+				$sth = $dbh->prepare('
+					UPDATE users_feeds SET
+						folder_id = NULL
+					WHERE
+						folder_id = :folder_id AND
+						user_id   = :user_id
+					LIMIT 1000
+					');
 
-		$sth->execute();
+				$sth->bindParam('folder_id', $folderId, \PDO::PARAM_INT);
+				$sth->bindParam('user_id',   $userId,   \PDO::PARAM_INT);
 
-		$feeds = $sth->fetchAll(\PDO::FETCH_OBJ);
+				$sth->execute();
 
-		$opml = new \SimpleXMLElement('<opml></opml>');
+				$sth = $dbh->prepare('
+					DELETE
+					FROM folders
+					WHERE
+						id      = :id AND
+						user_id = :user_id
+					LIMIT 1
+					');
 
-		$opml->addAttribute('version', '1.0');
+					$sth->bindParam('id',      $folderId, \PDO::PARAM_INT);
+					$sth->bindParam('user_id', $userId,   \PDO::PARAM_INT);
 
-		$opml->addChild('head', $this->app->getConfig('websiteName'));
+					$sth->execute();
+			} else {
+				$sth = $dbh->prepare('
+					UPDATE folders SET
+						title = :title
+					WHERE
+						id      = :id      AND
+						user_id = :user_id
+					LIMIT 1
+					');
 
-		$body = $opml->addChild('body');
+				$sth->bindParam('title',   $title);
+				$sth->bindParam('id',      $folderId, \PDO::PARAM_INT);
+				$sth->bindParam('user_id', $userId,   \PDO::PARAM_INT);
 
-		$outlines = $body->addChild('outline');
-
-		$outlines->addAttribute('title', 'My Reading');
-
-		foreach ( $feeds as $feed ) {
-			$outline = $outlines->addChild('outline');
-
-			$outline->addAttribute('title',   $feed->title);
-			$outline->addAttribute('xmlUrl',  $feed->url);
-			$outline->addAttribute('htmlUrl', $feed->link);
+				$sth->execute();
+			}
 		}
 
-		exit($opml->saveXML());
+		if ( !empty($titles['new']) ) {
+			$title = $titles['new'];
+
+			$sth = $dbh->prepare('
+				INSERT INTO folders (
+					title,
+					user_id
+				) VALUES (
+					:title,
+					:user_id
+				)
+				');
+
+			$sth->bindParam('title',   $title);
+			$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+
+			$sth->execute();
+		}
+
+		if ( $error ) {
+			$this->view->set('error', $error);
+
+			$this->view->set('error-file', true);
+		} else {
+			$this->view->set('success', 'The folders have been saved.');
+		}
 	}
+
 }

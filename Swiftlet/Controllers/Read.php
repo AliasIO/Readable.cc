@@ -176,19 +176,13 @@ class Read extends \Swiftlet\Controller
       )
       ON DUPLICATE KEY UPDATE
         saved = :saved
-			;');
+			');
 
 		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 		$sth->bindParam('item_id', $itemId, \PDO::PARAM_INT);
 		$sth->bindParam('saved',   $save,   \PDO::PARAM_INT);
 
-		try {
-			$sth->execute();
-		} catch ( \Exception $e ) {
-			header('HTTP/1.0 500 Server Error');
-
-			exit(json_encode(array('message' => 'Something went wrong, please try again.')));
-		}
+		$sth->execute();
 
 		exit(json_encode(array()));
 	}

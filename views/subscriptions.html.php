@@ -205,6 +205,10 @@
 
 <h3 id="feed-subscribe">Manage folders</h3>
 
+<p>
+	Organise your subscriptions into folders. Deleting a folder does not delete subscriptions.
+</p>
+
 <form id="form-folders" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="form-folders form-horizontal well">
 	<input type="hidden" name="form" value="folders">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
@@ -223,7 +227,7 @@
 						<div>
 							<div><?php echo $folder->title ?></div>
 
-							<input type="text" name="title[<?php echo $folder->id ?>]" value="<?php echo $folder->title ?>">
+							<input type="text" name="titles[<?php echo $folder->id ?>]" value="<?php echo $folder->title ?>">
 						</div>
 					</td>
 					<td>
@@ -233,12 +237,6 @@
 				<?php endforeach ?>
 			</tbody>
 		</table>
-
-		<div class="control-group">
-			<div class="controls">
-				<button class="btn btn-primary" type="submit">Save folders</button><div class="loading"></div>
-			</div>
-		</div>
 	</fieldset>
 	<?php endif ?>
 
@@ -247,13 +245,13 @@
 			<label class="control-label" for="url">Folder name</label>
 
 			<div class="controls">
-				<input id="title" name="title[new]" class="input-block-level" type="text" value="<?php echo $this->get('title') ?>" placeholder="E.g. News">
+				<input id="title" name="titles[new]" class="input-block-level" type="text" value="<?php echo $this->get('title') ?>" placeholder="E.g. News">
 			</div>
 		</div>
 
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit">Add folder</button><div class="loading"></div>
+				<button class="btn btn-primary" type="submit">Save folders</button><div class="loading"></div>
 			</div>
 		</div>
 	</fieldset>
