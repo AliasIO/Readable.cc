@@ -78,7 +78,7 @@ class Feed extends \Swiftlet\Controllers\Read
 
 			$args = $this->app->getArgs();
 
-			if ( $feedLink && ( empty($args[1]) || '/feed/view/' . $feedId . '/' . $args[1] !== $feedLink ) ) {
+			if ( $feedLink != '/feed/view/' . $feedId . '/' && ( empty($args[1]) || '/feed/view/' . $feedId . '/' . $args[1] !== $feedLink ) ) {
 				header('HTTP/1.1 301 Moved Permanently');
 				header('Status: 301 Moved Permanently');
 				header('Location: ' . $feedLink);
