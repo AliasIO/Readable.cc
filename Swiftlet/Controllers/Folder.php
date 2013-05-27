@@ -76,7 +76,7 @@ class Folder extends \Swiftlet\Controllers\Read
 
 			$args = $this->app->getArgs();
 
-			if ( empty($args[1]) || '/folder/view/' . $folderId . '/' . $args[1] !== $folderLink ) {
+			if ( $folderLink && ( empty($args[1]) || '/folder/view/' . $folderId . '/' . $args[1] !== $folderLink ) ) {
 				header('HTTP/1.1 301 Moved Permanently');
 				header('Status: 301 Moved Permanently');
 				header('Location: ' . $folderLink);
