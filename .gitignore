@@ -5,3 +5,4 @@ HTMLPurifier/DefinitionCache/Serializer/HTML/
 HTMLPurifier/DefinitionCache/Serializer/URI/
 *.bak
 sessions/*.php
+.sass-cache

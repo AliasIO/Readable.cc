@@ -1,0 +1,774 @@
+@import compass
+
+$fontBody: MerriweatherRegular, Georgia, "Times New Roman", Times, serif
+$fontBodyItalic: MerriweatherItalic, Georgia, "Times New Roman", Times, serif
+$fontBodyBold: MerriweatherBold, Georgia, "Times New Roman", Times, serif
+$fontHeading: MerriweatherHeavy, Georgia, "Times New Roman", Times, serif
+$fontHeadingAlt: Poly, MerriweatherHeavy, Georgia, "Times New Roman", Times, serif
+$fontCode: Monaco, Menlo, Consolas, "Courier New", monospace
+
+$textMargin: 15px
+
+$small: 80%
+$medium: 85%
+
++font-face('Poly', font-files('poly/Poly-Italic-webfont.woff', 'poly/Poly-Italic-webfont.ttf', 'poly/Poly-Italic-webfont.svg#PolyItalic'), 'poly/Poly-Italic-webfont.eot', normal, italic)
++font-face('MerriweatherRegular', font-files('merriweather/Merriweather-Regular-webfont.woff', 'merriweather/Merriweather-Regular-webfont.ttf', 'merriweather/Merriweather-Regular-webfont.svg#MerriweatherRegular'), 'merriweather/Merriweather-Regular-webfont.eot', normal, normal) 
++font-face('MerriweatherItalic', font-files('merriweather/Merriweather-Italic-webfont.woff', 'merriweather/Merriweather-Italic-webfont.ttf', 'merriweather/Merriweather-Italic-webfont.svg#MerriweatherItalic'), 'merriweather/Merriweather-Italic-webfont.eot', normal, italic) 
++font-face('MerriweatherBold', font-files('merriweather/Merriweather-Bold-webfont.woff', 'merriweather/Merriweather-Bold-webfont.ttf', 'merriweather/Merriweather-Bold-webfont.svg#MerriweatherBold'), 'merriweather/Merriweather-Bold-webfont.eot', bold, normal) 
++font-face('MerriweatherHeavy', font-files('merriweather/Merriweather-Black-webfont.woff', 'merriweather/Merriweather-Black-webfont.ttf', 'merriweather/Merriweather-Black-webfont.svg#MerriweatherHeavy'), 'merriweather/Merriweather-Black-webfont.eot', bold, normal) 
+
+*
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+
+body
+	background: #fff
+	font-family: $fontBody
+	font-size: 16px
+	line-height: 26px
+	margin: 0
+	overflow-y: scroll
+	padding: 65px 0 100px 0
+
+h1, h2, h3, h4, h5, h6
+	font-family: $fontHeading
+	margin: 25px 0 $textMargin 0
+	font-weight: bold
+	line-height: 1.2em
+	color: inherit
+	text-rendering: optimizelegibility
+
+h1
+	font-size: 38px
+
+h2
+	font-size: 32px
+
+h3
+	font-size: 28px
+
+h4
+	font-size: 24px
+
+h5
+	font-size: 20px
+
+h6
+	font-size: 16px
+
+ul, ol
+	padding: 0
+	margin: 0 0 $textMargin 20px
+
+	ul, ol
+		margin-bottom: 0
+
+	li
+		line-height: 26px
+
+a
+	border-bottom: 1px solid #ccc
+
+	&:hover
+		border-bottom: 1px solid #333
+		text-decoration: none
+
+img
+	color: #999
+	font-size: 80%
+
+p, table
+	margin: 0 0 $textMargin
+
+strong, b
+	font-family: $fontBodyBold 
+
+em, i
+	font-family: $fontBodyItalic 
+
+code
+	color: inherit
+	font-style: normal
+
+code, pre
+	padding: 0 3px 2px
+	font-family: $fontCode
+	font-size: $textMargin
+	color: #000
+	+border-radius(3)
+
+code
+	padding: 2px 4px
+	white-space: nowrap
+	background-color: #f7f7f9
+	border: 1px solid #e1e1e8
+
+pre
+	display: block
+	padding: 12.5px
+	margin: 0 0 13px
+	font-size: 16px
+	line-height: 26px
+	word-break: break-all
+	word-wrap: break-word
+	white-space: pre
+	white-space: pre-wrap
+	background-color: #f5f5f5
+	border: 1px solid #ccc
+	border: 1px solid rgba(0, 0, 0, 0.15)
+	+border-radius(4)
+
+	code
+		padding: 0
+		color: inherit
+		white-space: pre
+		white-space: pre-wrap
+		background-color: transparent
+		border: 0
+
+blockquote
+	background: #f8f8f8
+	font-family: $fontBodyItalic 
+	font-style: italic
+	margin-bottom: $textMargin
+	padding: $textMargin $textMargin 0 $textMargin
+	margin: 0 0 $textMargin
+	border-left: 5px solid #eee
+	overflow: hidden
+
+	p
+		margin-bottom: $textMargin
+
+q:before, q:after, blockquote:before, blockquote:after
+	content: ""
+
+header
+	background: #fff
+	border-bottom: 1px solid #ddd
+	height: 60px
+	line-height: 60px
+	position: fixed
+	top: 0
+	width: 100%
+	z-index: 99
+
+	.container
+		position: relative
+
+	h1
+		font-family: inherit
+		font-size: 16px
+		line-height: inherit
+		margin: 0 0 0 -20px
+
+		strong
+			display: none
+
+	h2
+		display: none
+
+	p
+		display: none
+
+	a
+		border-bottom: none
+		display: inline-block
+		padding: 0 20px
+
+		&:hover
+			border-bottom: none
+
+	ul
+		font-family: $fontBodyItalic
+		font-size: 14px
+		font-style: italic
+		margin: 0
+		position: absolute
+		right: 0
+		top: 0
+
+		li
+			display: inline-block
+			float: left
+			position: relative
+
+			&.signup span
+				background: #a00
+				color: #fff
+				padding: 5px 8px
+				+border-radius(3)
+
+			&.active
+				background: #fefefe
+				+box-shadow(0 2px 8px rgba(0, 0, 0, 0.15) inset)
+
+			&.mark-all-read
+				border-bottom: 1px solid #eee
+				margin-bottom: 10px
+				padding-bottom: 10px
+
+			a
+				display: inline-block
+				padding: 0 20px
+				line-height: 60px
+
+			ul
+				background: #fff
+				border: 1px solid #ddd
+				border-top: 1px solid #eee
+				padding: 10px 0
+				right: 0
+				top: 60px
+				width: 150px
+				z-index: 9
+
+			&.email ul
+				right: 20px
+
+			ul
+
+				&.collapsed
+					display: none
+
+				li
+					display: block
+					float: none
+
+					&.active
+						+box-shadow(none)
+
+					a
+						display: block
+						line-height: 1.5em
+						padding: 5px 20px
+
+						&:hover
+							background: #f8f8f8
+
+.item-count
+	display: none
+	font-size: $small
+	line-height: 1em
+	position: relative
+	top: -.2em
+
+.container
+	padding: 0 20px
+	min-width: 240px
+	max-width: 940px
+	width: auto !important
+
+.divider
+	margin: 52px 0 26px 0
+
+.modal
+	display: none
+
+.alert
+	cursor: pointer
+
+	h4
+		margin-top: $textMargin
+
+	.btn
+		margin: $textMargin 5px 0 0
+
+	&.alert-float
+		position: fixed
+		top: 100px
+		z-index: 999
+		width: auto
+		+box-shadow(0 1px 4px rgba(0, 0, 0, 0.065))
+
+	&.alert-sticky
+		cursor: default
+
+.jump
+	font-size: $medium
+
+	p
+		margin-bottom: 0
+
+	ul
+
+		li
+			list-style: none
+
+#overlay
+	background: #fff
+	display: none
+	height: 100%
+	left: 0
+	+opacity(.8)
+	position: fixed
+	top: 0
+	width: 100%
+	z-index: 8
+
+#contents
+	position: relative
+
+#page-head-wrap
+	display: table
+	width: 100%
+
+#page-head
+	display: table-cell
+	font-style: italic
+	height: 300px
+	text-align: center
+	vertical-align: middle
+
+	h1
+		font-family: $fontHeadingAlt
+		font-weight: normal
+
+	p
+		font-family: $fontBodyItalic 
+		height: 40px
+		margin-bottom: 0
+		overflow: hidden
+		position: relative
+
+	span
+		display: none
+		line-height: 30px
+		position: absolute
+		width: 100%
+
+		&:first-child
+			display: block
+
+#items-read-line
+	color: #ccc
+	display: none
+	font-family: EntypoRegular
+	font-size: 2em
+	line-height: 50px
+	margin: 0 -30px
+	position: fixed
+	top: 0
+
+	&:before
+		content: '\E766'
+
+#items-footer
+	color: #999
+	font-family: $fontBodyItalic 
+	font-style: italic
+	margin: 100px 0
+	text-align: center
+
+#items
+
+	.loading
+		background: url('../images/loading.gif') center center no-repeat
+		margin-bottom: 52px
+		height: 64px
+
+	.placeholder
+		border-top: 1px solid #e9e9e9
+
+	.date-separator
+		border-bottom: 1px solid #333
+		height: .75em
+		font-family: $fontBodyItalic 
+		font-style: italic
+		margin: 60px 0
+		text-align: center
+
+		span
+			background: #fff
+			padding: 0 1em
+
+	.pagination
+		font-size: $small
+		text-align: center
+
+article
+	border-top: 1px solid transparent
+	margin-bottom: 40px
+
+	ul, ol, blockquote, table, pre, img, h1, h2, h3, h4, h5, h6
+		clear: both
+
+	iframe
+		display: none
+
+		&[src]
+			border: none
+			clear: both
+			display: block
+			height: 315px
+			margin-bottom: $textMargin
+			width: 560px
+
+	li
+		margin-bottom: 5px
+
+		p
+			margin-bottom: 5px
+
+		ul
+			margin-top: 5px
+
+	h1
+		margin-top: 0
+
+	&.boring h1
+		color: #999
+
+	&.inactive.boring h1
+		text-decoration: line-through
+
+	&.inactive
+		cursor: pointer
+
+		a
+			border-bottom: none
+
+	&.collapsed 
+	
+		a
+			border-bottom: none
+
+	.item-wrap
+		display: none
+
+	.item-date
+		font-family: $fontBodyItalic
+		font-size: 85%
+		font-style: italic
+		margin-bottom: 20px
+
+		strong
+			letter-spacing: 0
+
+		.feed-options
+			display: none
+
+		.entypo
+			font-size: 1.7em
+
+	&.active.expanded:hover .item-date .feed-options
+		display: inline
+
+	.article-buttons
+		clear: both
+		margin-top: $textMargin
+
+		a
+			text-decoration: none
+
+		button
+			margin: $textMargin 10px 0 0
+
+	&.inactive .article-buttons
+		+opacity(.5)
+
+	p
+
+		&.caption
+			font-family: $fontBodyItalic 
+			font-size: $small
+			font-style: italic
+			text-align: left
+
+		&.no-text
+			text-align: left
+
+			img
+				display: inline-block
+				margin: 0
+				vertical-align: top
+
+	h1 a, h1 a:hover, h1 a:active, h1 a:focus
+		border-bottom: none
+		text-decoration: none
+
+	&.active.expanded h1 a:hover:after
+		content: ' \2192'
+
+	img
+		background: #fff
+		border: 1px solid #fff
+		display: block
+		margin: $textMargin 0
+		padding: 5px 2px 5px 0
+		max-width: 100%
+		max-height: 1000px
+		vertical-align: bottom
+
+		&.feature
+			float: left
+			margin: 0 $textMargin $textMargin 0 !important
+			max-height: 300px
+			max-width: 50%
+			padding: 0
+
+		&.image-left
+			float: left
+			margin: 0 $textMargin $textMargin 0
+			padding: 0
+
+		&.image-right
+			margin: $textMargin 0 0 0
+
+		&[data-src]
+			padding: 0
+			margin: 0
+
+	.alert
+		font-size: $small
+		text-align: left
+		margin: 20px 0 $textMargin 0
+
+fieldset
+	border-bottom: 1px solid #e5e5e5
+	margin: 26px
+
+	&:last-child
+		border-bottom: none
+		margin-bottom: 0
+
+.table-list
+
+	th:nth-child(2), td:nth-child(2)
+		text-align: center
+		width: 150px
+
+	th:last-child, td:last-child
+		text-align: center
+		width: 120px
+
+	td
+		height: 32px
+		overflow: hidden
+		vertical-align: middle
+
+		&:first-child
+
+			i
+				font-size: 2em
+
+		em
+			color: #555
+
+		span
+			visibility: hidden
+
+		&:hover span
+			visibility: visible
+
+		div
+			height: 32px
+			line-height: 32px
+			position: relative
+
+			button, select, input[type="text"]
+				left: 0
+				margin: 0
+				position: absolute
+				top: 0
+				visibility: hidden
+				width: 100%
+
+	tr:hover td
+		
+		button, select, input[type="text"]
+			visibility: visible
+
+#suggestions
+
+	td, th
+		vertical-align: middle
+		white-space: nowrap
+
+	th:first-child
+		width: 150px
+
+	td:last-child
+		width: 120px
+
+	td button
+		width: 100%
+
+#form-subscriptions-subscribe
+
+	.message
+		color: #1c9b47
+		font-size: $small
+		padding-left: 10px
+
+	.message.error
+		color: #9c0001
+
+	.loading
+		background: url('../images/loading-small.gif') center center no-repeat
+		display: none
+		height: 26px
+		margin-left: 10px
+		vertical-align: middle
+		width: 26px
+
+#feedback
+	border: 2px solid #fff
+	line-height: 30px
+	font-size: $small
+	position: fixed
+	text-align: center
+	bottom: 0
+	margin: 0
+	right: 0
+	width: 100px
+
+	a
+		background: #ccc
+		border: none
+		display: block
+		color: #fff
+
+		&:hover
+			background: #333
+
+@media all and (max-width: 995px)
+	.alert
+		width: auto
+
+@media all and (max-width: 850px)
+	body
+		font-size: 20px !important
+
+	h1, h2, h3, h4, h5, h6
+		margin: 6px 0
+
+	h1
+		font-size: 30px
+		line-height: 40px
+
+	h2
+		font-size: 26px
+		line-height: 30px
+
+	h3
+		font-size: 22px
+		line-height: 25px
+
+	h4, h5, h6
+		font-size: 20px
+
+	article .item-date
+		font-size: $small
+
+	#items .date-separator
+		margin: 30px 0
+
+	.control-group .control-label
+		float: none
+		font-weight: bold
+		text-align: left
+		width: auto
+
+	.control-group .controls
+		margin-left: 0
+
+	#page-head
+		height: 150px
+
+		#page-head p
+			display: none
+
+	article
+		border-top: 1px solid transparent
+		margin-bottom: 26px
+
+	#subscriptions td:last-child button
+		visibility: visible
+
+	#feedback
+		display: none
+
+@media all and (max-width: 600px)
+	fieldset
+		margin-left: 0
+
+	header
+
+		h2
+			display: block
+			font-family: inherit
+			font-weight: normal
+			font-size: 16px
+			font-style: italic
+			line-height: 60px
+			margin: 0
+			position: absolute
+			right: 0
+			top: 0
+			white-space: nowrap
+
+			a
+				padding-right: 20px
+
+		.item-count
+			visibility: hidden
+
+		ul
+			background: #fff
+			border: 1px solid #eee
+			font-size: 22px
+			padding: 10px 0 10px 0
+			top: 60px
+			width: 100%
+
+			&.collapsed
+				display: none
+
+			li
+				display: block
+				float: none
+
+				&.email > a
+					display: none
+
+				&.active
+					background: #f8f8f8
+					+box-shadow(none)
+
+				a
+					display: block
+					line-height: 1em
+					padding: 10px 20px
+
+					&:hover
+						background: #f8f8f8
+
+				ul
+					border-width: 1px 0 0 0
+					display: block
+					margin-top: 10px
+					padding-bottom: 0
+					position: relative
+					right: 0 !important
+					top: 0
+					width: inherit
+
+					&.collapsed
+						display: block
+
+				&.folders
+
+					ul
+						border-width: 1px
+						+box-shadow(0 0 8px rgba(0, 0, 0, .2))
+						left: 20px
+						margin: 0
+						padding-bottom: 10px
+						position: absolute
+						right: 20px !important
+						top: 40px
+						width: auto
+						z-index: 10
+
+						&.collapsed
+							display: none

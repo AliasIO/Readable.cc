@@ -229,7 +229,7 @@
 						<div>
 							<div><?php echo $folder->title ?></div>
 
-							<input type="text" name="titles[<?php echo $folder->id ?>]" value="<?php echo $folder->title ?>">
+							<input type="text" name="titles[<?php echo $folder->id ?>]" value="<?php echo $folder->title ?>" class="input-block-level">
 						</div>
 					</td>
 					<td>
