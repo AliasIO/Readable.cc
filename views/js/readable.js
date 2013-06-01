@@ -914,17 +914,11 @@
 			$('#subscriptions select').on('change', function() {
 				var id = $(this).data('feed-id');
 
-				$(this).closest('div').find('em').text($(this).val() ? $(this).find('option:selected').text() : '');
-
 				$.ajax({
 					url: '/subscriptions/folder',
 					method: 'post',
 					data: { id: id, folderId: $(this).val(), sessionId: app.sessionId }
 				});
-			});
-
-			$('#folders input').on('keyup', function() {
-				$(this).closest('div').find('div').text($(this).val());
 			});
 		}
 	};

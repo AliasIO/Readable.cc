@@ -7,6 +7,9 @@ $fontHeading: MerriweatherHeavy, Georgia, "Times New Roman", Times, serif
 $fontHeadingAlt: Poly, MerriweatherHeavy, Georgia, "Times New Roman", Times, serif
 $fontCode: Monaco, Menlo, Consolas, "Courier New", monospace
 
+$colorBorder: #ddd
+$colorError: #9c0001
+
 $textMargin: 15px
 
 $small: 80%
@@ -20,6 +23,11 @@ $medium: 85%
 
 *
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+
+html
+	font-size: 100%
+	-webkit-text-size-adjust: 100%
+	-ms-text-size-adjust: 100%
 
 body
 	background: #fff
@@ -68,10 +76,15 @@ ul, ol
 
 a
 	border-bottom: 1px solid #ccc
+	color: inherit
+	text-decoration: none
 
 	&:hover
 		border-bottom: 1px solid #333
 		text-decoration: none
+
+	&:hover, &:focus, &:active
+		outline: none
 
 img
 	color: #999
@@ -95,7 +108,7 @@ code, pre
 	font-family: $fontCode
 	font-size: $textMargin
 	color: #000
-	+border-radius(3)
+	+border-radius(3px)
 
 code
 	padding: 2px 4px
@@ -116,7 +129,7 @@ pre
 	background-color: #f5f5f5
 	border: 1px solid #ccc
 	border: 1px solid rgba(0, 0, 0, 0.15)
-	+border-radius(4)
+	+border-radius(4px)
 
 	code
 		padding: 0
@@ -142,9 +155,28 @@ blockquote
 q:before, q:after, blockquote:before, blockquote:after
 	content: ""
 
+.alert
+	background-color: #fff
+	border: 1px solid #ddd
+	+border-radius(2px)
+	font-size: $medium
+	padding: $textMargin / 2 $textMargin
+	margin-bottom: $textMargin * 2
+	+text-shadow(0 1px 0 rgba(255, 255, 255, 0.5))
+
+.alert-success
+	color: #1c9b47
+	background-color: #dff0d8
+	border-color: #d6e9c6
+
+.alert-error
+	color: $colorError
+	background-color: #f2dede
+	border-color: #eed3d7
+
 header
 	background: #fff
-	border-bottom: 1px solid #ddd
+	border-bottom: 1px solid $colorBorder
 	height: 60px
 	line-height: 60px
 	position: fixed
@@ -196,7 +228,7 @@ header
 				background: #a00
 				color: #fff
 				padding: 5px 8px
-				+border-radius(3)
+				+border-radius(3px)
 
 			&.active
 				background: #fefefe
@@ -214,7 +246,7 @@ header
 
 			ul
 				background: #fff
-				border: 1px solid #ddd
+				border: 1px solid $colorBorder
 				border-top: 1px solid #eee
 				padding: 10px 0
 				right: 0
@@ -254,6 +286,7 @@ header
 
 .container
 	padding: 0 20px
+	margin: 0 auto
 	min-width: 240px
 	max-width: 940px
 	width: auto !important
@@ -362,7 +395,7 @@ header
 #items
 
 	.loading
-		background: url('../images/loading.gif') center center no-repeat
+		background: image-url('loading.gif') center center no-repeat
 		margin-bottom: 52px
 		height: 64px
 
@@ -461,6 +494,7 @@ article
 			text-decoration: none
 
 		button
+			font-size: $small
 			margin: $textMargin 10px 0 0
 
 	&.inactive .article-buttons
@@ -488,6 +522,8 @@ article
 
 	&.active.expanded h1 a:hover:after
 		content: ' \2192'
+		margin-left: $textMargin
+		position: absolute
 
 	img
 		background: #fff
@@ -496,7 +532,7 @@ article
 		margin: $textMargin 0
 		padding: 5px 2px 5px 0
 		max-width: 100%
-		max-height: 1000px
+		max-height: 2000px
 		vertical-align: bottom
 
 		&.feature
@@ -515,21 +551,200 @@ article
 			margin: $textMargin 0 0 0
 
 		&[data-src]
-			padding: 0
-			margin: 0
+			border: 1px solid #ececec
+			padding: 8px 5px
+			margin: 1px
 
 	.alert
 		font-size: $small
 		text-align: left
 		margin: 20px 0 $textMargin 0
 
+.well
+	padding: 10px
+	margin-bottom: $textMargin * 2
+	background-color: #fefefe
+	border: 1px solid #ececec
+	+border-radius(2px)
+
+form
+	font-size: $medium
+
+	.control-group
+		margin-bottom: $textMargin * 2
+
+		&.error 
+
+			.control-label
+				color: $colorError
+
+			input[type="email"],
+			input[type="password"],
+			input[type="text"],
+			input[type="file"],
+			textarea,
+			select
+				border-color: $colorError
+				+box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075))
+				color: $colorError
+
+		button, .btn
+			font-size: inherit
+			line-height: 22px
+			padding: 4px 20px
+
+	.control-label
+		float: left
+		padding-top: 5px
+		text-align: right
+		width: 160px
+	
+	.controls
+		margin-left: 180px	
+
 fieldset
+	border: 0
 	border-bottom: 1px solid #e5e5e5
+	margin: 0
+	padding: 0
 	margin: 26px
 
 	&:last-child
 		border-bottom: none
 		margin-bottom: 0
+
+button, .btn
+	background-color: #e9e9e9
+	@include background(linear-gradient(top bottom, #f9f9f9, #e9e9e9))
+	background-repeat: repeat-x
+	border: 1px solid #ccc
+	border-color: #e9e9e9 #e9e9e9 #bbb
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)
+	border-bottom-color: #b3b3b3
+	+border-radius(2px)
+	+box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05))
+	color: #333
+	cursor: pointer
+	display: inline-block
+	font-family: inherit
+	font-size: $medium
+	line-height: 18px
+	text-align: center
+	+text-shadow(0 1px 1px rgba(255, 255, 255, 0.75))
+	margin-bottom: 0
+	padding: 4px 12px
+	vertical-align: middle
+
+	&:hover,
+	&:focus,
+	&:active,
+	&[disabled]
+		color: #333
+		background-color: #e9e9e9
+
+	&:hover,
+	&:focus
+		color: #333
+		text-decoration: none
+		background-position: 0 -15px
+		+transition(background-position 0.1s linear)
+
+	&.btn-primary,
+	&.btn-inverse
+		background-color: #3b3b3b
+		@include background(linear-gradient(top bottom, #404040, #333333))
+		border-color: #333 #333 #0d0d0d
+		border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)
+		color: #fff
+		+text-shadow(0 -1px 0 rgba(0, 0, 0, 0.25))
+
+		&:hover,
+		&:focus,
+		&:active,
+		&[disabled]
+			color: #ffffff
+			background-color: #333
+
+	&.btn-danger
+		background-color: #ab0001
+		@include background(linear-gradient(top bottom, #b60001, #9c0001))
+		border-color: #9c0001 #9c0001 #500001
+		border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)
+		color: #fff
+		+text-shadow(0 -1px 0 rgba(0, 0, 0, 0.25))
+
+		&:hover,
+		&:focus,
+		&:active,
+		&[disabled]
+			color: #ffffff
+			background-color: #9c0001
+
+button
+input[type="checkbox"],
+input[type="radio"],
+select
+	cursor: pointer
+
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="file"],
+textarea,
+select
+	background-color: #fff
+	border: 1px solid $colorBorder
+	+box-sizing(border-box)
+	+border-radius(2px)
+	font-family: $fontBody
+	font-size: inherit
+	min-width: 250px
+	outline: none
+	padding: 5px 5px
+	vertical-align: middle
+
+	&.input-block-level
+		width: 100%
+
+table
+	max-width: 100%
+	background-color: transparent
+	border-collapse: collapse
+	border-spacing: 0
+	font-size: 14px
+
+	&.table
+		border: 1px solid $colorBorder
+		border-collapse: separate
+		*border-collapse: collapse
+		border-left: 0
+		+border-radius(2px)
+		width: 100%
+		margin-bottom: $textMargin * 2
+
+		th
+			font-family: $fontBodyBold
+			font-weight: bold
+
+		td, th
+			border-left: 1px solid $colorBorder
+			padding: 8px
+			line-height: 20px
+			text-align: left
+			border-top: 1px solid $colorBorder
+
+		thead:first-child tr:first-child th,
+		tbody:first-child tr:first-child th,
+		tbody:first-child tr:first-child td
+			border-top: 0
+
+		tbody > tr:nth-child(odd) > td,
+		tbody > tr:nth-child(odd) > th
+			background-color: #f9f9f9
+
+		tbody tr:hover > td,
+		tbody tr:hover > th
+			background-color: #f5f5f5
 
 .table-list
 
@@ -546,37 +761,6 @@ fieldset
 		overflow: hidden
 		vertical-align: middle
 
-		&:first-child
-
-			i
-				font-size: 2em
-
-		em
-			color: #555
-
-		span
-			visibility: hidden
-
-		&:hover span
-			visibility: visible
-
-		div
-			height: 32px
-			line-height: 32px
-			position: relative
-
-			button, select, input[type="text"]
-				left: 0
-				margin: 0
-				position: absolute
-				top: 0
-				visibility: hidden
-				width: 100%
-
-	tr:hover td
-		
-		button, select, input[type="text"]
-			visibility: visible
 
 #suggestions
 
@@ -593,18 +777,49 @@ fieldset
 	td button
 		width: 100%
 
+#subscriptions
+
+	td
+
+		&:first-child
+
+			i
+				font-size: 2em
+
+		em
+			color: #555
+
+		span
+			visibility: hidden
+
+		&:hover span
+			visibility: visible
+
+		button, select, input[type="text"]
+			margin: 0
+			min-width: 0
+			width: 100%
+
+		button
+			+opacity(.1)
+
+	tr:hover td
+
+		button, select, input[type="text"]
+			+opacity(1)
+
+
 #form-subscriptions-subscribe
 
 	.message
 		color: #1c9b47
-		font-size: $small
 		padding-left: 10px
 
 	.message.error
-		color: #9c0001
+		color: $colorError
 
 	.loading
-		background: url('../images/loading-small.gif') center center no-repeat
+		background: image-url('loading-small.gif') center center no-repeat
 		display: none
 		height: 26px
 		margin-left: 10px
@@ -675,7 +890,7 @@ fieldset
 	#page-head
 		height: 150px
 
-		#page-head p
+		p
 			display: none
 
 	article
@@ -683,7 +898,7 @@ fieldset
 		margin-bottom: 26px
 
 	#subscriptions td:last-child button
-		visibility: visible
+		+opacity(1)
 
 	#feedback
 		display: none

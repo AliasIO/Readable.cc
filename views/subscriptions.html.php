@@ -34,12 +34,14 @@
 <h3>Subscriptions</h3>
 
 <table id="subscriptions" class="table table-bordered table-striped table-hover table-list">
-	<tbody>
+	<thead>
 		<tr>
 			<th>Subscription</th>
 			<th>Folder</th>
 			<th>Action</th>
 		</tr>
+	</thead>
+	<tbody>
 		<?php foreach ( $feeds as $feed ): ?>
 		<tr>
 			<td>
@@ -55,29 +57,17 @@
 				</span>
 			</td>
 			<td>
-				<div>
-					<em>
-						<?php foreach ( $folders as $folder ): ?>
-						<?php if ( $feed->folder_id == $folder->id ): ?>
+				<select data-feed-id="<?php echo $feed->id ?>">
+					<option value=""></option>
+					<?php foreach ( $folders as $folder ): ?>
+					<option value="<?php echo $folder->id ?>"<?php echo $feed->folder_id == $folder->id ? ' selected="selected"' : '' ?>>
 						<?php echo $folder->title ?>
-						<?php endif ?>
-						<?php endforeach ?>
-					</em>
-					<select data-feed-id="<?php echo $feed->id ?>">
-						<option value="">No folder</option>
-						<?php foreach ( $folders as $folder ): ?>
-						<option value="<?php echo $folder->id ?>"<?php echo $feed->folder_id == $folder->id ? ' selected="selected"' : '' ?>>
-							<?php echo $folder->title ?>
-						</option>
-						<?php endforeach ?>
-					</select>
-				</div>
+					</option>
+					<?php endforeach ?>
+				</select>
 			</td>
 			<td>
-				<div>
-					<br>
-					<button class="btn btn-danger btn-small unsubscribe" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">Unsubscribe</button>
-				</div>
+				<button class="btn btn-danger btn-small unsubscribe" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">Unsubscribe</button>
 			</td>
 		</tr>
 		<?php endforeach ?>
@@ -218,19 +208,19 @@
 	<?php if ( $folders ): ?>
 	<fieldset>
 		<table id="folders" class="table table-bordered table-striped table-hover table-list">
-			<tbody>
+			<thead>
 				<tr>
 					<th>Folder</th>
 					<th>Delete?</th>
 				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				<tr>
 				<?php foreach ( $folders as $folder ): ?>
 				<tr>
 					<td>
-						<div>
-							<div><?php echo $folder->title ?></div>
-
-							<input type="text" name="titles[<?php echo $folder->id ?>]" value="<?php echo $folder->title ?>" class="input-block-level">
-						</div>
+						<input type="text" name="titles[<?php echo $folder->id ?>]" value="<?php echo $folder->title ?>" class="input-block-level">
 					</td>
 					<td>
 						<input type="checkbox" name="delete[<?php echo $folder->id ?>]" value="1">
@@ -247,7 +237,7 @@
 			<label class="control-label" for="url">Folder name</label>
 
 			<div class="controls">
-				<input id="title" name="titles[new]" class="input-block-level" type="text" value="<?php echo $this->get('title') ?>" placeholder="E.g. News">
+				<input id="title" name="titles[new]" type="text" value="<?php echo $this->get('title') ?>" placeholder="E.g. News">
 			</div>
 		</div>
 
@@ -281,7 +271,7 @@
 			<label class="control-label" for="file">OPML File</label>
 
 			<div class="controls">
-				<input id="file" name="file" class="input-block-level" type="file">
+				<input id="file" name="file" type="file">
 			</div>
 		</div>
 

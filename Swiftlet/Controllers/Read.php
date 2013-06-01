@@ -293,6 +293,6 @@ class Read extends \Swiftlet\Controller
 		}
 
 		// Remove src attribute from images for lazy loading
-		$html = preg_replace('/(<img[^>]+src=(["\']))([^"\']+)(\2[^>]+>)/', '\1' . $this->app->getRootPath() . 'views/images/pixel.gif\2 data-src="\3\4', $html);
+		$html = preg_replace('/(<img[^>]+src=(["\']))([^"\']+)(\2[^>]+>)/', '\1' . $this->app->getRootPath() . 'views/images/loading-image.gif\2 data-src="\3\4', $html);
 	}
 }

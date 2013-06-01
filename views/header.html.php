@@ -11,9 +11,11 @@
 		<meta name="description" content="<?php echo $this->get('pageDescription') ? $this->get('pageDescription') . ' ' : '' ?>Readable.cc is an RSS reader that makes feeds readable. Vote on articles to improve your personal reading list.">
 		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
 
+		<!--
 		<link href="<?php echo $this->app->getRootPath() ?>views/lib/bootstrap/css/readable.css" rel="stylesheet">
-		<link href="<?php echo $this->app->getRootPath() ?>views/lib/entypo/entypo.css" rel="stylesheet">
-		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css?e" rel="stylesheet">
+		-->
+		<link href="<?php echo $this->app->getRootPath() ?>views/fonts/entypo/entypo.css" rel="stylesheet">
+		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css?f" rel="stylesheet">
 
 		<script>
 			var readable = {};

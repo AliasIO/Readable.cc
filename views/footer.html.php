@@ -32,11 +32,13 @@
 			<a href="<?php echo $this->app->getRootPath() ?>help#contact">Feedback</a>
 		</p>
 
+		<!--
 		<script src="<?php echo $this->app->getRootPath() ?>views/lib/mathjax/MathJax.js?config=readable.js"></script>
+		-->
 
 		<script src="<?php echo $this->app->getRootPath() ?>views/lib/jquery-1.9.1.min.js"></script>
 		<script src="<?php echo $this->app->getRootPath() ?>views/lib/mousetrap.min.js"></script>
-		<script src="<?php echo $this->app->getRootPath() ?>views/js/readable.js?e"></script>
+		<script src="<?php echo $this->app->getRootPath() ?>views/js/readable.js?f"></script>
 
 		<script>
 			var _gaq = _gaq || [];
