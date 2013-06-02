@@ -88,6 +88,11 @@
 				app.signup.init();
 
 				break;
+			case 'Search':
+				app.items.init();
+				app.search.init();
+
+				break;
 		}
 
 		app.header.init();
@@ -176,7 +181,7 @@
 		pageTop: 0,
 		page: app.page,
 		lastRequestedPage: 0,
-		noMoreItems: false,
+		noMoreItems: typeof app.noMoreItems !== 'undefined' ? app.noMoreItems : false,
 
 		init: function() {
 			var
@@ -259,7 +264,7 @@
 						app.notSignedIn();
 					} else {
 						if ( confirm('Your session has expired. Sign back in?') ) {
-							location = '/signin';
+							location = app.rootPath + 'signin';
 						}
 					}
 				}
@@ -634,7 +639,7 @@
 			}
 
 			$.ajax({
-				url: '/read/vote/' + app.args,
+				url: app.rootPath + 'read/vote/' + app.args,
 				method: 'post',
 				data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
 			}).fail(function() {
@@ -662,7 +667,7 @@
 				app.items.updateItemCount(-1);
 
 				$.ajax({
-					url: '/read/markRead/' + app.args,
+					url: app.rootPath + 'read/markRead/',
 					method: 'post',
 					data: { item_id: itemId, sessionId: app.sessionId }
 				});
@@ -674,7 +679,7 @@
 		markAllAsRead: function() {
 			if ( app.signedIn && ( app.controller === 'Reading' || app.controller === 'Folder' ) ) {
 				$.ajax({
-					url: '/read/markRead/' + app.args,
+					url: app.rootPath + 'read/markRead/' + app.args,
 					method: 'post',
 					data: { item_id: 'all', sessionId: app.sessionId }
 				})
@@ -705,7 +710,7 @@
 
 			if ( app.signedIn ) {
 				$.ajax({
-					url: '/read/save/' + app.args,
+					url: app.rootPath + 'read/save/' + app.args,
 					method: 'post',
 					data: { item_id: itemId, save: save, sessionId: app.sessionId }
 				}).fail(function() {
@@ -738,7 +743,7 @@
 			}
 
 			$.ajax({
-				url: '/read/subscribe/' + app.args,
+				url: app.rootPath + 'read/subscribe/' + app.args,
 				method: 'post',
 				data: { feed_id: feedId, action: action, sessionId: app.sessionId }
 			}).fail(function(data) {
@@ -785,7 +790,7 @@
 			}
 
 			$.ajax({
-				url: '/' + app.controller.toLowerCase() + '/items/' + app.args,
+				url: app.rootPath + app.controller.toLowerCase() + '/items/' + app.args,
 				data: data,
 				context: $('#items')
 			}).done(function(data) {
@@ -839,7 +844,7 @@
 				}
 
 				$.ajax({
-					url: '/subscriptions/' + action,
+					url: app.rootPath + 'subscriptions/' + action,
 					method: 'post',
 					data: { id: id, sessionId: app.sessionId }
 				});
@@ -860,7 +865,7 @@
 				}
 
 				$.ajax({
-					url: '/subscriptions/' + action,
+					url: app.rootPath + 'subscriptions/' + action,
 					method: 'post',
 					data: { url: url, sessionId: app.sessionId }
 				});
@@ -891,7 +896,7 @@
 				loading.css({ display: 'inline-block' });
 
 				$.ajax({
-					url: '/subscriptions/subscribe',
+					url: app.rootPath + 'subscriptions/subscribe',
 					method: 'post',
 					data: { url: url, folderId: folderId, sessionId: app.sessionId }
 				}).always(function() {
@@ -915,10 +920,20 @@
 				var id = $(this).data('feed-id');
 
 				$.ajax({
-					url: '/subscriptions/folder',
+					url: app.rootPath + 'subscriptions/folder',
 					method: 'post',
 					data: { id: id, folderId: $(this).val(), sessionId: app.sessionId }
 				});
+			});
+		}
+	};
+
+	app.search = {
+		init: function() {
+			$('form').on('submit', function(e) {
+				e.preventDefault();
+
+				location = app.rootPath + 'search/query/' + $('#query').val();
 			});
 		}
 	};

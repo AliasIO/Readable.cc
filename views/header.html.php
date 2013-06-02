@@ -25,6 +25,7 @@
 				app.controller = '<?php echo $this->app->getControllerName() ?>';
 				app.args       = '<?php echo implode('/', $this->app->getArgs()) ?>';
 				app.sessionId  = '<?php echo $this->app->getSingleton('session')->getId() ?>';
+				app.rootPath   = '<?php echo $this->app->getRootPath() ?>';
 				app.signedIn   = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
 				app.itemCount  = 0;
 				app.page       = <?php echo !empty($_GET['page']) && (int) $_GET['page'] - 1 ? (int) $_GET['page'] - 1 : 0 ?>;
@@ -74,8 +75,9 @@
 					</li>
 					<?php endif ?>
 
-					<li class="saved   <?php echo $this->name == 'saved'   ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>saved"  >Saved</a></li>
-					<li class="help    <?php echo $this->name == 'help'    ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>help"   >Help</a></li>
+					<li class="saved  <?php echo $this->app->getControllerName() == 'Saved'   ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>saved"  >Saved</a></li>
+					<li class="search <?php echo $this->app->getControllerName() == 'Search'  ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>search" >Search</a></li>
+					<li class="help   <?php echo $this->app->getControllerName() == 'Help'    ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>help"   >Help</a></li>
 
 					<li class="email">
 						<a href="javascript: void(0);"><span><?php echo $this->app->getSingleton('session')->get('email') ?></span>&nbsp;<i class="entypo chevron-down"></i></a>
@@ -84,15 +86,16 @@
 							<?php if ( $this->app->getControllerName() === 'Reading' || $this->app->getControllerName() === 'Folder' ): ?>
 							<li class="mark-all-read"><a href="javascript: void(0);">Mark all read</a></li>
 							<?php endif ?>
-							<li class="account       <?php echo $this->name == 'account'       ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>account"      >Account</a></li>
-							<li class="subscriptions <?php echo $this->name == 'subscriptions' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>subscriptions">Subscriptions</a></li>
-							<li class="signout       <?php echo $this->name == 'signout'       ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signout"      >Sign out</a></li>
+							<li class="account       <?php echo $this->app->getControllerName() == 'Account'       ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>account"      >Account</a></li>
+							<li class="subscriptions <?php echo $this->app->getControllerName() == 'Subscriptions' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>subscriptions">Subscriptions</a></li>
+							<li class="signout       <?php echo $this->app->getControllerName() == 'Signout'       ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signout"      >Sign out</a></li>
 						</ul>
 					</li>
 					<?php else: ?>
-					<li class="help   <?php echo $this->name == 'help'   ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>help"  >Help</a></li>
-					<li class="signup <?php echo $this->name == 'signup' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signup" title="Sign up for free!"><span>Create account</span></a></li>
-					<li class="signin <?php echo $this->name == 'signin' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signin">Sign in</a></li>
+					<li class="search <?php echo $this->app->getControllerName() == 'Search' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>search">Search</a></li>
+					<li class="help   <?php echo $this->app->getControllerName() == 'Help'   ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>help"  >Help</a></li>
+					<li class="signup <?php echo $this->app->getControllerName() == 'Signup' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signup" title="Sign up for free!"><span>Create account</span></a></li>
+					<li class="signin <?php echo $this->app->getControllerName() == 'Signin' ? 'active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signin">Sign in</a></li>
 					<?php endif ?>
 				</ul>
 			</div>

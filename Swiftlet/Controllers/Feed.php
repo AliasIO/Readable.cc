@@ -17,7 +17,7 @@ class Feed extends \Swiftlet\Controllers\Read
 	}
 
 	/**
-	 * Get personal items
+	 * Get feed items
 	 */
 	public function items()
 	{
@@ -29,14 +29,11 @@ class Feed extends \Swiftlet\Controllers\Read
 	}
 
 	/**
-	 * Get personal items
+	 * Get feed items
 	 */
 	protected function getItems()
 	{
-		$userId = $this->app->getSingleton('session')->get('id');
-
-		$excludes = !empty($_GET['excludes']) ? explode(' ', $_GET['excludes']) : array();
-		$page     = !empty($_GET['page'])     ? (int)        abs($_GET['page']) : 1;
+		$page = !empty($_GET['page']) ? (int) abs($_GET['page']) : 1;
 
 		$args = $this->app->getArgs();
 

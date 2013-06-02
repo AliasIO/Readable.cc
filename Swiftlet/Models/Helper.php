@@ -111,6 +111,19 @@ class Helper extends \Swiftlet\Model
 	}
 
 	/**
+	 * Extract words from string
+	 *
+	 * @param string $string
+	 * @return array
+	 */
+	public function extractWords($string)
+	{
+		$string = trim(preg_replace('/\s+/', ' ', preg_replace('/\b([0-9]+.)\b/', ' ', preg_replace('/\W/', ' ', preg_replace('/&[a-z]+/', '', strtolower($string))))));
+
+		return explode(' ', $string);
+	}
+
+	/**
 	 * String to URL segment
 	 *
 	 * @param string $string

@@ -2,7 +2,7 @@
 
 <div id="page-head-wrap">
 	<div id="page-head">
-		<h1>My Reading</h1>
+		<h1><?php echo $this->get('pageTitle') ?></h1>
 
 		<p>
 			<span><a href="<?php echo $this->app->getRootPath() ?>subscriptions">Subscribe</a> to feeds and vote on articles for personalised reading.</span>

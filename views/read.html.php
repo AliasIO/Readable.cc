@@ -8,12 +8,12 @@
 
 <?php if ( !$items ): ?>
 <script>
-	readable.items.noMoreItems = true;
+	readable.noMoreItems = true;
 </script>
 
 <div id="items-footer">
 	<p>
-		<i class="entypo chevron-small-left"></i> No more unread articles <i class="entypo chevron-small-right"></i>
+		<i class="entypo chevron-small-left"></i> No more articles <i class="entypo chevron-small-right"></i>
 	</p>
 </div>
 
