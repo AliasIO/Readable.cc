@@ -72,12 +72,17 @@ class Search extends \Swiftlet\Controllers\Read
 						0                AS saved,
 						0                AS score,
 						0                AS feed_subscribed
-					FROM       words
-					INNER JOIN items_words ON items_words.word_id =       words.id
+					FROM (
+						SELECT
+							id
+						FROM words
+						WHERE
+							words.word IN ( ' . implode(', ', array_fill(0, count($words), '?')) . ' )
+						LIMIT 20
+					) AS main
+					INNER JOIN items_words ON items_words.word_id =        main.id
 					INNER JOIN items       ON       items.id      = items_words.item_id
 					INNER JOIN feeds       ON       feeds.id      =       items.feed_id
-					WHERE
-						words.word IN ( ' . implode(', ', array_fill(0, count($words), '?')) . ' )
 					ORDER BY DATE(items.posted_at) DESC
 					LIMIT 1000
 				) AS main
