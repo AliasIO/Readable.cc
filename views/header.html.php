@@ -15,7 +15,7 @@
 		<link href="<?php echo $this->app->getRootPath() ?>views/lib/bootstrap/css/readable.css" rel="stylesheet">
 		-->
 		<link href="<?php echo $this->app->getRootPath() ?>views/fonts/entypo/entypo.css" rel="stylesheet">
-		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css?f" rel="stylesheet">
+		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css?g" rel="stylesheet">
 
 		<script>
 			var readable = {};
