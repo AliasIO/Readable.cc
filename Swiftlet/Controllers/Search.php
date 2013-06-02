@@ -59,7 +59,12 @@ class Search extends \Swiftlet\Controllers\Read
 					feeds.id         AS feed_id,
 					feeds.title      AS feed_title,
 					feeds.link       AS feed_link,
-					main.*,
+					items.id,
+					items.feed_id,
+					items.url,
+					items.title,
+					items.contents,
+					items.posted_at,
 					0                AS vote,
 					0                AS saved,
 					0                AS score,
@@ -71,10 +76,6 @@ class Search extends \Swiftlet\Controllers\Read
 					FROM (
 						SELECT
 							items.id,
-							items.feed_id,
-							items.url,
-							items.title,
-							items.contents,
 							items.posted_at
 						FROM (
 							SELECT
@@ -82,18 +83,21 @@ class Search extends \Swiftlet\Controllers\Read
 							FROM words
 							WHERE
 								words.word IN ( ' . implode(', ', array_fill(0, count($words), '?')) . ' )
-							LIMIT 20
+							LIMIT 10                                                     -- Search 10 words at most
 						) AS main
 						INNER JOIN items_words ON items_words.word_id =        main.id
 						INNER JOIN items       ON       items.id      = items_words.item_id
+						WHERE
+							items.posted_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY) -- Search items no more than a month old
 						ORDER BY DATE(items.posted_at) DESC
-						LIMIT 1000
+						LIMIT 1000                                                     -- Return at most the last 1000 matching items
 					) AS main
 					GROUP BY id
-					ORDER BY matches DESC, DATE(posted_at) DESC
+					ORDER BY matches DESC, DATE(main.posted_at) DESC
 					LIMIT ?, ?
 				) AS main
-				INNER JOIN feeds ON feeds.id = main.feed_id
+				INNER JOIN items ON items.id = main.id
+				INNER JOIN feeds ON feeds.id = items.feed_id
 				');
 
 			$i = 1;
