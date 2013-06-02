@@ -56,39 +56,44 @@ class Search extends \Swiftlet\Controllers\Read
 
 			$sth = $dbh->prepare('
 				SELECT
-					*,
-					COUNT(id) AS matches
+					feeds.id         AS feed_id,
+					feeds.title      AS feed_title,
+					feeds.link       AS feed_link,
+					main.*,
+					0                AS vote,
+					0                AS saved,
+					0                AS score,
+					0                AS feed_subscribed
 				FROM (
 					SELECT
-						feeds.id         AS feed_id,
-						feeds.title      AS feed_title,
-						feeds.link       AS feed_link,
-						items.id,
-						items.url,
-						items.title,
-						items.contents,
-						items.posted_at,
-						0                AS vote,
-						0                AS saved,
-						0                AS score,
-						0                AS feed_subscribed
+						main.*,
+						COUNT(id) AS matches
 					FROM (
 						SELECT
-							id
-						FROM words
-						WHERE
-							words.word IN ( ' . implode(', ', array_fill(0, count($words), '?')) . ' )
-						LIMIT 20
+							items.id,
+							items.feed_id,
+							items.url,
+							items.title,
+							items.contents,
+							items.posted_at
+						FROM (
+							SELECT
+								id
+							FROM words
+							WHERE
+								words.word IN ( ' . implode(', ', array_fill(0, count($words), '?')) . ' )
+							LIMIT 20
+						) AS main
+						INNER JOIN items_words ON items_words.word_id =        main.id
+						INNER JOIN items       ON       items.id      = items_words.item_id
+						ORDER BY DATE(items.posted_at) DESC
+						LIMIT 1000
 					) AS main
-					INNER JOIN items_words ON items_words.word_id =        main.id
-					INNER JOIN items       ON       items.id      = items_words.item_id
-					INNER JOIN feeds       ON       feeds.id      =       items.feed_id
-					ORDER BY DATE(items.posted_at) DESC
-					LIMIT 1000
+					GROUP BY id
+					ORDER BY matches DESC, DATE(posted_at) DESC
+					LIMIT ?, ?
 				) AS main
-				GROUP BY id
-				ORDER BY matches DESC, DATE(posted_at) DESC
-				LIMIT ?, ?
+				INNER JOIN feeds ON feeds.id = main.feed_id
 				');
 
 			$i = 1;
