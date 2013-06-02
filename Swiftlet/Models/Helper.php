@@ -120,7 +120,7 @@ class Helper extends \Swiftlet\Model
 	{
 		$string = trim(preg_replace('/\s+/', ' ', preg_replace('/\b([0-9]+.)\b/', ' ', preg_replace('/\W/', ' ', preg_replace('/&[a-z]+/', '', strtolower($string))))));
 
-		return explode(' ', $string);
+		return array_filter(explode(' ', $string));
 	}
 
 	/**
