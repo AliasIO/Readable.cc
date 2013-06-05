@@ -817,12 +817,14 @@
 				app.itemCount += diff;
 			}
 
-			$('.item-count span').text(app.itemCount > 1000 ? '1000+' : Math.max(0, app.itemCount));
+			app.itemCount = Math.max(0, app.itemCount);
 
-			if ( !app.itemCount ) {
-				$('.active .item-count:visible').hide();
-			} else {
+			$('.item-count span').text(app.itemCount > 1000 ? '1000+' : app.itemCount);
+
+			if ( app.itemCount ) {
 				$('.active .item-count:hidden').show();
+			} else {
+				$('.active .item-count:visible').hide();
 			}
 		}
 	};

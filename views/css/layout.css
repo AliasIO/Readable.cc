@@ -447,8 +447,9 @@ article {
     cursor: pointer; }
     article.inactive a {
       border-bottom: none; }
-  article.collapsed a {
-    border-bottom: none; }
+  article.collapsed a, article.collapsed a:hover, article.collapsed a:focus, article.collapsed a:active {
+    border-bottom: none;
+    color: inherit; }
   article .item-wrap {
     display: none; }
   article .item-date {
