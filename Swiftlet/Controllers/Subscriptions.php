@@ -257,11 +257,12 @@ class Subscriptions extends \Swiftlet\Controller
 					foreach ( $xml->body->outline as $outline ) {
 						$folderId = null;
 
+						$folderTitle = $outline->attributes()->title ? $outline->attributes()->title : ( $outline->attributes()->text ? $outline->attributes()->text : '' );
+
 						if ( !$outline->outline ) {
 							$outline = array($outline);
 						}
 
-						$folderTitle = $outline->attributes()->title ? $outline->attributes()->title : ( $outline->attributes()->text ? $outline->attributes()->text : '' );
 
 						if ( $folderTitle ) {
 							foreach ( $folders as $folder ) {
