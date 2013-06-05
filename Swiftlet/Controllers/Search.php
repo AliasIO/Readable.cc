@@ -35,17 +35,52 @@ class Search extends \Swiftlet\Controllers\Read
 	{
 		$this->items();
 	}
-
 	/**
 	 * Get items
 	 */
 	protected function getItems()
 	{
+		$feedIds = array();
+
+		if ( $userId = $this->app->getSingleton('session')->get('id') ) {
+			$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+			$sth = $dbh->prepare('
+				SELECT
+					feeds.id,
+					feeds.title
+				FROM       users_feeds
+				INNER JOIN feeds       ON users_feeds.feed_id = feeds.id
+				WHERE
+					users_feeds.user_id = :user_id
+				ORDER BY feeds.title
+				LIMIT 10000
+				;');
+
+			$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+
+			$sth->execute();
+
+			$feeds = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+			foreach ( $feeds as $feed ) {
+				$this->app->getSingleton('helper')->localize($feed->last_fetched_at);
+			}
+
+			$this->view->set('feeds', $feeds);
+
+			foreach ( $feeds as $feed ) {
+				$feedIds[] = $feed->id;
+			}
+		}
+
 		$args = $this->app->getArgs();
 
-		$query = !empty($args[0]) ? $args[0] : '';
+		$query   = !empty($args[0]) ? $args[0] : '';
+		$feedIds = !empty($args[1]) ? ( $args[1] == 'my' ? $feedIds : array((int) $args[1]) ) : array();
 
 		$this->view->set('query', $query);
+		$this->view->set('feed',  count($feedIds) > 1 ? 'my' : ( count($feedIds) == 1 ? $feedIds[0] : '' ));
 
 		$words = $this->app->getSingleton('helper')->extractWords($query);
 
@@ -88,6 +123,7 @@ class Search extends \Swiftlet\Controllers\Read
 						) AS main
 						INNER JOIN items_words ON items_words.word_id =        main.id
 						INNER JOIN items       ON       items.id      = items_words.item_id
+						INNER JOIN feeds       ON       feeds.id      =       items.feed_id' . ( $feedIds ? ' AND feeds.id IN ( ' . implode(', ', array_fill(0, count($feedIds), '?')) . ' ) ' : '' ) . '
 						WHERE
 							items.posted_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY) -- Search items no more than a month old
 						ORDER BY DATE(items.posted_at) DESC
@@ -105,6 +141,10 @@ class Search extends \Swiftlet\Controllers\Read
 
 			foreach( $words as $key => $word ) {
 				$sth->bindParam($i ++, $words[$key], \PDO::PARAM_INT);
+			}
+
+			foreach( $feedIds as $key => $feedId ) {
+				$sth->bindParam($i ++, $feedIds[$key], \PDO::PARAM_INT);
 			}
 
 			$limitFrom  = ( $page - 1 ) * self::ITEMS_PER_PAGE;

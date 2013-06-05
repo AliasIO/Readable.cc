@@ -537,6 +537,11 @@ article {
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px; }
+  .well button, .well .btn {
+    font-size: inherit;
+    line-height: 36px;
+    height: 36px;
+    padding: 0 30px; }
 
 form {
   font-size: 85%; }
@@ -555,10 +560,6 @@ form {
       -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
       box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
       color: #9c0001; }
-    form .control-group button, form .control-group .btn {
-      font-size: inherit;
-      line-height: 22px;
-      padding: 4px 20px; }
   form .control-label {
     float: left;
     padding-top: 5px;
@@ -602,12 +603,16 @@ button, .btn {
   display: inline-block;
   font-family: inherit;
   font-size: 85%;
-  line-height: 18px;
+  height: 30px;
+  line-height: 30px;
   text-align: center;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   margin-bottom: 0;
-  padding: 4px 12px;
+  padding: 0 10px;
   vertical-align: middle; }
+  button::-moz-focus-inner, .btn::-moz-focus-inner {
+    border: 0;
+    padding: 0; }
   button:hover, button:focus, button:active, button[disabled], .btn:hover, .btn:focus, .btn:active, .btn[disabled] {
     color: #333333;
     background-color: #e9e9e9; }
@@ -663,6 +668,7 @@ select {
   border-radius: 2px;
   font-family: MerriweatherRegular, Georgia, "Times New Roman", Times, serif;
   font-size: inherit;
+  height: 30px;
   min-width: 250px;
   outline: none;
   padding: 5px 5px;
@@ -674,6 +680,9 @@ select {
   textarea.input-block-level,
   select.input-block-level {
     width: 100%; }
+
+input[type="file"] {
+  height: auto; }
 
 table {
   max-width: 100%;

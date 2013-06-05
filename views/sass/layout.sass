@@ -587,6 +587,12 @@ article
 	border: 1px solid #ececec
 	+border-radius(2px)
 
+	button, .btn
+		font-size: inherit
+		line-height: 36px
+		height: 36px
+		padding: 0 30px
+
 form
 	font-size: $medium
 
@@ -607,11 +613,6 @@ form
 				border-color: $colorError
 				+box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075))
 				color: $colorError
-
-		button, .btn
-			font-size: inherit
-			line-height: 22px
-			padding: 4px 20px
 
 	.control-label
 		float: left
@@ -648,12 +649,17 @@ button, .btn
 	display: inline-block
 	font-family: inherit
 	font-size: $medium
-	line-height: 18px
+	height: 30px
+	line-height: 30px
 	text-align: center
 	+text-shadow(0 1px 1px rgba(255, 255, 255, 0.75))
 	margin-bottom: 0
-	padding: 4px 12px
+	padding: 0 10px
 	vertical-align: middle
+	
+	&::-moz-focus-inner
+		border: 0
+		padding: 0
 
 	&:hover,
 	&:focus,
@@ -711,6 +717,7 @@ select
 	+border-radius(2px)
 	font-family: $fontBody
 	font-size: inherit
+	height: 30px
 	min-width: 250px
 	outline: none
 	padding: 5px 5px
@@ -718,6 +725,9 @@ select
 
 	&.input-block-level
 		width: 100%
+
+input[type="file"]
+	height: auto
 
 table
 	max-width: 100%

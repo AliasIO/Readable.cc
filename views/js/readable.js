@@ -935,7 +935,7 @@
 			$('form').on('submit', function(e) {
 				e.preventDefault();
 
-				location = app.rootPath + 'search/query/' + $('#query').val();
+				location = app.rootPath + 'search/query/' + $('#query').val() + ( $('#feed').val() ? '/' + $('#feed').val() : '' );
 			});
 		}
 	};
