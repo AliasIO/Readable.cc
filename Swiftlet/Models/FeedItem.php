@@ -76,58 +76,60 @@ class FeedItem extends \Swiftlet\Model
 			// Extract words
 			$words = $this->app->getSingleton('helper')->extractWords($data->title . ' ' . $data->contents);
 
-			$wordsCount = array();
+			if ( $words ) {
+				$wordsCount = array();
 
-			foreach ( $words as $word ) {
-				if ( !isset($wordsCount[$word]) ) {
-					$wordsCount[$word] = 0;
+				foreach ( $words as $word ) {
+					if ( !isset($wordsCount[$word]) ) {
+						$wordsCount[$word] = 0;
+					}
+
+					$wordsCount[$word] ++;
 				}
 
-				$wordsCount[$word] ++;
+				$sth = $dbh->prepare('
+					INSERT LOW_PRIORITY IGNORE INTO words (
+						word
+					) VALUES ' . implode(', ', array_fill(0, count($words), '( ? )')) . '
+					;');
+
+				$i = 1;
+
+				foreach( $words as $key => $word ) {
+					$sth->bindParam($i ++, $words[$key]);
+				}
+
+				$sth->execute();
+
+				// Link item to words
+				$inserts = array();
+
+				foreach( $words as $word ) {
+					$inserts[] = array(
+						'id'    => $this->id,
+						'word'  => $word,
+						'count' => $wordsCount[$word]
+						);
+				}
+
+				$sth = $dbh->prepare('
+					INSERT LOW_PRIORITY IGNORE INTO items_words (
+						item_id,
+						word_id,
+						count
+					) VALUES ' . implode(', ', array_fill(0, count($words), '( ?, ( SELECT id FROM words WHERE word = ? LIMIT 1 ), ? )')) . '
+					;');
+
+				$i = 1;
+
+				foreach( $words as $key => $word ) {
+					$sth->bindParam($i ++, $this->id,          \PDO::PARAM_INT);
+					$sth->bindParam($i ++, $words[$key]);
+					$sth->bindParam($i ++, $wordsCount[$word], \PDO::PARAM_INT);
+				}
+
+				$sth->execute();
 			}
-
-			$sth = $dbh->prepare('
-				INSERT LOW_PRIORITY IGNORE INTO words (
-					word
-				) VALUES ' . implode(', ', array_fill(0, count($words), '( ? )')) . '
-				;');
-
-			$i = 1;
-
-			foreach( $words as $key => $word ) {
-				$sth->bindParam($i ++, $words[$key]);
-			}
-
-			$sth->execute();
-
-			// Link item to words
-			$inserts = array();
-
-			foreach( $words as $word ) {
-				$inserts[] = array(
-					'id'    => $this->id,
-					'word'  => $word,
-					'count' => $wordsCount[$word]
-					);
-			}
-
-			$sth = $dbh->prepare('
-				INSERT LOW_PRIORITY IGNORE INTO items_words (
-					item_id,
-					word_id,
-					count
-				) VALUES ' . implode(', ', array_fill(0, count($words), '( ?, ( SELECT id FROM words WHERE word = ? LIMIT 1 ), ? )')) . '
-				;');
-
-			$i = 1;
-
-			foreach( $words as $key => $word ) {
-				$sth->bindParam($i ++, $this->id,          \PDO::PARAM_INT);
-				$sth->bindParam($i ++, $words[$key]);
-				$sth->bindParam($i ++, $wordsCount[$word], \PDO::PARAM_INT);
-			}
-
-			$sth->execute();
 		}
 	}
 
