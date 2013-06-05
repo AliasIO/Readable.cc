@@ -1,8 +1,6 @@
 <?php require 'header.html.php' ?>
 
-<div class="page-header">
-	<h1><?php echo $this->get('pageTitle') ?></h1>
-</div>
+<h1><?php echo $this->get('pageTitle') ?></h1>
 
 <?php if ( $this->get('success') ): ?>
 <div class="alert alert-success">
@@ -31,9 +29,9 @@
 <?php $folders = $this->get('folders') ?>
 
 <?php if ( $feeds = $this->get('feeds') ): ?>
-<h3>Subscriptions</h3>
+<h2>Subscriptions</h3>
 
-<table id="subscriptions" class="table table-bordered table-striped table-hover table-list">
+<table id="table-subscriptions" class="table table-list">
 	<thead>
 		<tr>
 			<th>Subscription</th>
@@ -76,13 +74,13 @@
 
 <div class="divider"></div>
 <?php else: ?>
-<h3>Get started</h3>
+<h2>Get started</h3>
 
 <p>
 	Add a few subscriptions to get started. Articles appear in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.
 </p>
 
-<table id="suggestions" class="table table-bordered table-striped table-hover">
+<table id="table-subscriptions-suggestions" class="table">
 	<tbody>
 		<tr>
 			<th>World News</th>
@@ -150,14 +148,14 @@
 <div class="divider"></div>
 <?php endif ?>
 
-<h3 id="feed-subscribe">Subscribe to feed</h3>
+<h2 id="feed-subscribe">Subscribe to feed</h3>
 
 <p>
 	Enter an <a href="https://en.wikipedia.org/wiki/RSS">RSS</a> or <a href="https://en.wikipedia.org/wiki/Atom_%28standard%29">Atom</a> feed URL to subscribe.
 	Alternatively you can just use a website's URL and we'll try to find a feed automatically.
 </p>
 
-<form id="form-subscriptions-subscribe" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="form-subscriptions form-horizontal well">
+<form id="form-subscriptions-subscribe" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="well">
 	<input type="hidden" name="form" value="subscribe">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
@@ -195,13 +193,13 @@
 
 <div class="divider"></div>
 
-<h3 id="folders">Manage folders</h3>
+<h2 id="folders">Manage folders</h3>
 
 <p>
 	Organise your subscriptions into folders. Folders are public and can be shared with anyone anonymously. Deleting a folder does not delete subscriptions.
 </p>
 
-<form id="form-folders" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="form-folders form-horizontal well">
+<form id="form-subscriptions-folders" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="well">
 	<input type="hidden" name="form" value="folders">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
@@ -251,7 +249,7 @@
 
 <div class="divider"></div>
 
-<h3 id="feed-import-export">Import &amp; export feeds</h3>
+<h2 id="feed-import-export">Import &amp; export feeds</h3>
 
 <p>
 	<em><a href="https://www.google.com/takeout/?pli=1#custom:reader">Export your <strong>Google Reader</strong> subscriptions through Google Takeout</a>. Extract the ZIP file
@@ -262,7 +260,7 @@
 	It may take up to a few hours for imported feeds to appear in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.
 </p>
 
-<form id="form-subscriptions-import" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="form-horizontal well" enctype="multipart/form-data">
+<form id="form-subscriptions-import" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="well" enctype="multipart/form-data">
 	<input type="hidden" name="form" value="import">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 

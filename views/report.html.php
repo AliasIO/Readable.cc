@@ -1,8 +1,6 @@
 <?php require 'header.html.php' ?>
 
-<div class="page-header">
-	<h1><?php echo $this->get('pageTitle') ?></h1>
-</div>
+<h1><?php echo $this->get('pageTitle') ?></h1>
 
 <?php if ( $this->get('success') ): ?>
 <div class="alert alert-success">
@@ -20,7 +18,7 @@
 	Please report any content that you feel is inappropriate for this website.
 </p>
 
-<form method="post" action="<?php echo $this->app->getRootPath() ?>report/article/<?php echo $this->get('itemId') ?>" class="form-report form-horizontal well">
+<form id="form-report" method="post" action="<?php echo $this->app->getRootPath() ?>report/article/<?php echo $this->get('itemId') ?>" class="well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>

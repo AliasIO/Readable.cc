@@ -8,7 +8,11 @@
 
 <?php if ( !$items ): ?>
 <script>
-	readable.noMoreItems = true;
+	if ( readable.items ) {
+		readable.items.noMoreItems = true;
+	} else {
+		readable.noMoreItems = true;
+	}
 </script>
 
 <div id="items-footer">

@@ -21,7 +21,7 @@ class Cron extends \Swiftlet\Controller
 			WHERE
 			    users.enabled                 = 1                                                                                       AND -- Fetch feed for enabled users
 			    users.last_active_at          > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY)                                              AND -- Fetch feed for active users
-			  ( feeds.last_fetch_attempted_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL  6 HOUR) OR  feeds.last_fetch_attempted_at IS NULL ) AND -- Fetch feeds four times a day
+			  ( feeds.last_fetch_attempted_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL  3 HOUR) OR  feeds.last_fetch_attempted_at IS NULL ) AND -- Fetch feeds eight times a day
 			  ( feeds.last_fetched_at         > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 90 DAY)  OR  feeds.last_fetched_at         IS NULL )     -- Give up on feeds after three months of failed attempts
 			GROUP BY feeds.id
 			LIMIT 100

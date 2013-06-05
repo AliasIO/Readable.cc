@@ -39,8 +39,8 @@ class Saved extends \Swiftlet\Controllers\Read
 	{
 		$userId = $this->app->getSingleton('session')->get('id');
 
-		$excludes = !empty($_GET['excludes']) ? explode(' ', $_GET['excludes']) : array();
-		$page     = !empty($_GET['page']) ? (int) $_GET['page'] : 1;
+		$excludes = !empty($_GET['excludes']) ? explode(' ', $_GET['excludes'])  : array();
+		$page     = !empty($_GET['page'])     ? max(1, (int) abs($_GET['page'])) : 1;
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 

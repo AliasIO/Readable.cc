@@ -33,7 +33,7 @@ class Feed extends \Swiftlet\Controllers\Read
 	 */
 	protected function getItems()
 	{
-		$page = !empty($_GET['page']) ? (int) abs($_GET['page']) : 1;
+		$page = !empty($_GET['page']) ? max(1, (int) abs($_GET['page'])) : 1;
 
 		$args = $this->app->getArgs();
 

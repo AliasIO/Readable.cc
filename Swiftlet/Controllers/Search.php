@@ -83,6 +83,7 @@ class Search extends \Swiftlet\Controllers\Read
 							FROM words
 							WHERE
 								words.word IN ( ' . implode(', ', array_fill(0, count($words), '?')) . ' )
+							GROUP BY words.id
 							LIMIT 10                                                     -- Search 10 words at most
 						) AS main
 						INNER JOIN items_words ON items_words.word_id =        main.id

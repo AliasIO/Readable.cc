@@ -190,7 +190,7 @@
 
 			app.items.updateItemCount();
 
-			Mousetrap.bind(['j', 's', 'space'], function() {
+			Mousetrap.bind(['j', 'space'], function() {
 				var next = app.items.activeItem ? app.items.activeItem.nextAll('article').first() : $('#items article').first();
 
 				if ( app.items.noMoreItems ) {
@@ -207,7 +207,7 @@
 				return false;
 			});
 
-			Mousetrap.bind(['k', 'w'], function() {
+			Mousetrap.bind(['k'], function() {
 				var previous = app.items.activeItem ? app.items.activeItem.prevAll('article').first() : $('#items article').first();
 
 				if ( !previous[0] ) {
@@ -597,7 +597,7 @@
 
 						app.items.markAsRead(app.items.activeItemId);
 
-						if ( this === $('#items article').last()[0] ) {
+						if ( !$('#items-footer').length && this === $('#items article').last()[0] ) {
 							app.items.loadMore();
 						}
 
@@ -829,7 +829,7 @@
 
 	app.subscriptions = {
 		init: function() {
-			$('#subscriptions button').click(function() {
+			$('#table-subscriptions button').click(function() {
 				$(this).blur();
 
 				var
@@ -850,7 +850,7 @@
 				});
 			});
 
-			$('#suggestions button').click(function() {
+			$('#table-subscriptions-suggestions button').click(function() {
 				$(this).blur();
 
 				var
@@ -916,7 +916,7 @@
 				});
 			});
 
-			$('#subscriptions select').on('change', function() {
+			$('#table-subscriptions select').on('change', function() {
 				var id = $(this).data('feed-id');
 
 				$.ajax({

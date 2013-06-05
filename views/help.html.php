@@ -1,8 +1,6 @@
 <?php require 'header.html.php' ?>
 
-<div class="page-header">
-	<h1><?php echo $this->get('pageTitle') ?></h1>
-</div>
+<h1><?php echo $this->get('pageTitle') ?></h1>
 
 <div class="jump">
 	<p>
@@ -47,7 +45,7 @@
 </p>
 
 <p>
-	Readable.cc is free and <a href="https://github.com/ElbertF/Readable.cc">open source</a>.
+	<?php echo $this->app->getConfig('siteName') ?> is free and <a href="<?php echo $this->app->getConfig('repoUrl') ?>">open source</a>.
 </p>
 
 <div class="divider"></div>
@@ -55,10 +53,10 @@
 <h2 id="shortcuts">Keyboard shortcuts</h2>
 
 <p>
-	Keyboard shortcuts to help you move around on the reading lists (&lsquo;<a href="/">Popular Reading</a>&rsquo;, &lsquo;<a href="/reading">My Reading</a>&rsquo; and &lsquo;<a href="/saved">Saved</a>&rsquo;).
+	Keyboard shortcuts to help you move around on the reading lists (&lsquo;<a href="<?php echo $this->app->getRootPath() ?>">Popular Reading</a>&rsquo;, &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo; and &lsquo;<a href="<?php echo $this->app->getRootPath() ?>saved">Saved</a>&rsquo;).
 </p>
 
-<table class="table table-bordered table-striped table-hover">
+<table class="table">
 	<thead>
 		<tr>
 			<th>Key</th>
@@ -67,11 +65,11 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><code>j</code>, <code>s</code>, <code>Spacebar</code></td>
+			<td><code>j</code>, <code>Spacebar</code></td>
 			<td>Next article</td>
 		</tr>
 		<tr>
-			<td><code>k</code>, <code>w</code></td>
+			<td><code>k</code></td>
 			<td>Previous article</td>
 		</tr>
 		<tr>
@@ -84,7 +82,7 @@
 		</tr>
 		<tr>
 			<td><code>m</code>, <code>Shift-a</code></td>
-			<td>Mark all articles read in &lsquo;<a href="/reading">My Reading</a>&rsquo;</td>
+			<td>Mark all articles read in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;</td>
 		</tr>
 	</tbody>
 </table>
@@ -102,7 +100,7 @@
 </p>
 
 <p>
-	Follow Readable.cc on Twitter:
+	Follow <?php echo $this->app->getConfig('siteName') ?> on Twitter:
 </p>
 
 <p>
@@ -118,7 +116,7 @@
 </p>
 
 <p>
-	<small>Readable.cc was created by <a href="http://alias.io">Elbert Alias</a></small>
+	<small><a href="http://readable.cc">Readable.cc</a> was created by <a href="http://alias.io">Elbert Alias</a></small>
 </p>
 
 <?php require 'footer.html.php' ?>

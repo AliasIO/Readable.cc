@@ -1,8 +1,6 @@
 <?php require 'header.html.php' ?>
 
-<div class="page-header">
-	<h1><?php echo $this->get('pageTitle') ?></h1>
-</div>
+<h1><?php echo $this->get('pageTitle') ?></h1>
 
 <?php if ( $this->get('success') ): ?>
 <div class="alert alert-success">
@@ -17,7 +15,7 @@
 <?php endif ?>
 
 <p>
-	Readable.cc is a free <a href="https://en.wikipedia.org/wiki/News_aggregator">news reader</a>.
+	<?php echo $this->app->getConfig('siteName') ?> is a free <a href="https://en.wikipedia.org/wiki/News_aggregator">news reader</a>.
 </p>
 
 <p>
@@ -28,7 +26,7 @@
 	Sign up to manage your own <a href="https://en.wikipedia.org/wiki/Web_feed">feeds</a> and vote on articles. Articles we believe you'll find interesting are promoted to the top of your reading list.
 </p>
 
-<form method="post" action="<?php echo $this->app->getRootPath() ?>signup" class="form-signin form-horizontal well">
+<form id="form-signup" method="post" action="<?php echo $this->app->getRootPath() ?>signup" class="form-horizontal well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
@@ -36,7 +34,7 @@
 			<label class="control-label" for="email">Email address</label>
 
 			<div class="controls">
-				<input id="email" name="email" class="input-xlarge" type="email" value="<?php echo $this->get('email') ?>">
+				<input id="email" name="email" type="email" value="<?php echo $this->get('email') ?>">
 			</div>
 		</div>
 
@@ -44,7 +42,7 @@
 			<label class="control-label" for="password">Password</label>
 
 			<div class="controls">
-				<input id="password" name="password" class="input-xlarge" type="password">
+				<input id="password" name="password" type="password">
 			</div>
 		</div>
 
@@ -52,7 +50,7 @@
 			<label class="control-label" for="password-repeat">Repeat password</label>
 
 			<div class="controls">
-				<input id="password" name="password-repeat" class="input-xlarge" type="password">
+				<input id="password" name="password-repeat" type="password">
 			</div>
 		</div>
 

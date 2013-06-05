@@ -16,7 +16,7 @@
 </div>
 <?php endif ?>
 
-<form method="post" action="<?php echo $this->app->getRootPath() ?>signin" class="form-signin form-horizontal well">
+<form id="form-signin" method="post" action="<?php echo $this->app->getRootPath() ?>signin" class="well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
@@ -24,7 +24,7 @@
 			<label class="control-label" for="email">Email address</label>
 
 			<div class="controls">
-				<input id="email" name="email" class="input-xlarge" type="email" value="<?php echo $this->get('email') ?>">
+				<input id="email" name="email" type="email" value="<?php echo $this->get('email') ?>">
 			</div>
 		</div>
 
@@ -32,7 +32,7 @@
 			<label class="control-label" for="password">Password</label>
 
 			<div class="controls">
-				<input id="password" name="password" class="input-xlarge" type="password">
+				<input id="password" name="password" type="password">
 			</div>
 		</div>
 

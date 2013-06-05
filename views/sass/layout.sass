@@ -9,6 +9,8 @@ $fontCode: Monaco, Menlo, Consolas, "Courier New", monospace
 
 $colorBorder: #ddd
 $colorError: #9c0001
+$colorText: #333
+$colorTextSecondary: #666
 
 $textMargin: 15px
 
@@ -31,6 +33,7 @@ html
 
 body
 	background: #fff
+	color: $colorText
 	font-family: $fontBody
 	font-size: 16px
 	line-height: 26px
@@ -40,29 +43,29 @@ body
 
 h1, h2, h3, h4, h5, h6
 	font-family: $fontHeading
-	margin: 25px 0 $textMargin 0
 	font-weight: bold
 	line-height: 1.2em
-	color: inherit
+	margin: 25px 0 $textMargin 0
 	text-rendering: optimizelegibility
 
 h1
-	font-size: 38px
+	font-size: 34px
+	margin-top: $textMargin * 3
 
 h2
-	font-size: 32px
+	font-size: 26px
 
 h3
-	font-size: 28px
-
-h4
-	font-size: 24px
-
-h5
 	font-size: 20px
 
-h6
+h4
+	font-size: 18px
+
+h5
 	font-size: 16px
+
+h6
+	font-size: 14px
 
 ul, ol
 	padding: 0
@@ -80,10 +83,11 @@ a
 	text-decoration: none
 
 	&:hover
-		border-bottom: 1px solid #333
+		border-bottom: 1px solid $colorText
 		text-decoration: none
 
 	&:hover, &:focus, &:active
+		color: #000
 		outline: none
 
 img
@@ -177,6 +181,7 @@ q:before, q:after, blockquote:before, blockquote:after
 header
 	background: #fff
 	border-bottom: 1px solid $colorBorder
+	+box-shadow(0 0 50px rgba(0, 0, 0, 0.05))
 	height: 60px
 	line-height: 60px
 	position: fixed
@@ -207,7 +212,7 @@ header
 		display: inline-block
 		padding: 0 20px
 
-		&:hover
+		&:hover, &:active
 			border-bottom: none
 
 	ul
@@ -220,6 +225,8 @@ header
 		top: 0
 
 		li
+			border: 1px solid transparent
+			border-width: 0 1px
 			display: inline-block
 			float: left
 			position: relative
@@ -231,8 +238,9 @@ header
 				+border-radius(3px)
 
 			&.active
-				background: #fefefe
-				+box-shadow(0 2px 8px rgba(0, 0, 0, 0.15) inset)
+				border-color: #eee
+				border-width: 0 1px
+				color: #000
 
 			&.mark-all-read
 				border-bottom: 1px solid #eee
@@ -248,6 +256,9 @@ header
 				background: #fff
 				border: 1px solid $colorBorder
 				border-top: 1px solid #eee
+				max-height: 400px
+				overflow: hidden
+				overflow-y: auto 
 				padding: 10px 0
 				right: 0
 				top: 60px
@@ -263,6 +274,7 @@ header
 					display: none
 
 				li
+					border-width: 0
 					display: block
 					float: none
 
@@ -403,11 +415,12 @@ header
 		border-top: 1px solid #e9e9e9
 
 	.date-separator
-		border-bottom: 1px solid #333
+		border-bottom: 1px solid $colorBorder
+		color: $colorTextSecondary
 		height: .75em
 		font-family: $fontBodyItalic 
 		font-style: italic
-		margin: 60px 0
+		margin: 40px 0 45px 0
 		text-align: center
 
 		span
@@ -420,7 +433,7 @@ header
 
 article
 	border-top: 1px solid transparent
-	margin-bottom: 40px
+	margin-bottom: $textMargin * 2
 
 	ul, ol, blockquote, table, pre, img, h1, h2, h3, h4, h5, h6
 		clear: both
@@ -446,7 +459,7 @@ article
 			margin-top: 5px
 
 	h1
-		margin-top: 0
+		margin: 0 0 10px 0
 
 	&.boring h1
 		color: #999
@@ -469,8 +482,9 @@ article
 		display: none
 
 	.item-date
+		color: $colorTextSecondary
 		font-family: $fontBodyItalic
-		font-size: 85%
+		font-size: $medium
 		font-style: italic
 		margin-bottom: 20px
 
@@ -483,12 +497,17 @@ article
 		.entypo
 			font-size: 1.7em
 
-	&.active.expanded:hover .item-date .feed-options
-		display: inline
+	&.active.expanded
+		
+		.item-date
+			color: inherit
+
+		&:hover .item-date .feed-options
+			display: inline
 
 	.article-buttons
 		clear: both
-		margin-top: $textMargin
+		margin: -10px 0 $textMargin * 3 0
 
 		a
 			text-decoration: none
@@ -623,7 +642,7 @@ button, .btn
 	border-bottom-color: #b3b3b3
 	+border-radius(2px)
 	+box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05))
-	color: #333
+	color: $colorText
 	cursor: pointer
 	display: inline-block
 	font-family: inherit
@@ -639,14 +658,14 @@ button, .btn
 	&:focus,
 	&:active,
 	&[disabled]
-		color: #333
+		color: $colorText
 		background-color: #e9e9e9
 
 	&.btn-primary,
 	&.btn-inverse
 		background-color: #3b3b3b
-		@include background(linear-gradient(top, #404040, #333333))
-		border-color: #333 #333 #0d0d0d
+		@include background(linear-gradient(top, #404040, $colorText))
+		border-color: $colorText $colorText #0d0d0d
 		border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25)
 		color: #fff
 		+text-shadow(0 -1px 0 rgba(0, 0, 0, 0.25))
@@ -656,7 +675,7 @@ button, .btn
 		&:active,
 		&[disabled]
 			color: #fff
-			background-color: #333
+			background-color: $colorText
 
 	&.btn-danger
 		background-color: #ab0001
@@ -754,23 +773,7 @@ table
 		overflow: hidden
 		vertical-align: middle
 
-
-#suggestions
-
-	td, th
-		vertical-align: middle
-		white-space: nowrap
-
-	th:first-child
-		width: 150px
-
-	td:last-child
-		width: 120px
-
-	td button
-		width: 100%
-
-#subscriptions
+#table-subscriptions
 
 	td
 
@@ -801,6 +804,20 @@ table
 		button, select, input[type="text"]
 			+opacity(1)
 
+#table-subscriptions-suggestions
+
+	td, th
+		vertical-align: middle
+		white-space: nowrap
+
+	th:first-child
+		width: 150px
+
+	td:last-child
+		width: 120px
+
+	td button
+		width: 100%
 
 #form-subscriptions-subscribe
 
@@ -837,7 +854,7 @@ table
 		color: #fff
 
 		&:hover
-			background: #333
+			background: $colorText
 
 @media all and (max-width: 995px)
 	.alert
@@ -853,6 +870,7 @@ table
 	h1
 		font-size: 30px
 		line-height: 40px
+		margin-top: $textMargin * 2
 
 	h2
 		font-size: 26px
@@ -933,6 +951,7 @@ table
 				display: none
 
 			li
+				border-width: 0
 				display: block
 				float: none
 
@@ -948,13 +967,12 @@ table
 					line-height: 1em
 					padding: 10px 20px
 
-					&:hover
-						background: #f8f8f8
-
 				ul
 					border-width: 1px 0 0 0
 					display: block
 					margin-top: 10px
+					max-height: inherit
+					overflow: hidden
 					padding-bottom: 0
 					position: relative
 					right: 0 !important
@@ -971,6 +989,8 @@ table
 						+box-shadow(0 0 8px rgba(0, 0, 0, .2))
 						left: 20px
 						margin: 0
+						max-height: 250px
+						overflow-y: auto
 						padding-bottom: 10px
 						position: absolute
 						right: 20px !important

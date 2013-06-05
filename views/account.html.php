@@ -1,8 +1,6 @@
 <?php require 'header.html.php' ?>
 
-<div class="page-header">
-	<h1><?php echo $this->get('pageTitle') ?></h1>
-</div>
+<h1><?php echo $this->get('pageTitle') ?></h1>
 
 <?php if ( $this->get('success') ): ?>
 <div class="alert alert-success">
@@ -16,7 +14,7 @@
 </div>
 <?php endif ?>
 
-<form method="post" action="<?php echo $this->app->getRootPath() ?>account" class="form-signin form-horizontal well">
+<form id="form-account" method="post" action="<?php echo $this->app->getRootPath() ?>account" class="well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
@@ -76,24 +74,6 @@
 	</fieldset>
 </form>
 
-<?php /*
-<?php if ( $words = $this->get('words') ): ?>
-<h2>Word cloud</h2>
-
-<p>
-	Based on articles you have voted on these are words we believe you find interesting (black) or boring (grey).
-</p>
-
-<div id="account-words" class="well">
-	<?php foreach ( $words as $word ): ?>
-	<span class="<?php echo $word->score > 0 ? 'interesting' : 'boring' ?>" style="font-size: <?php echo abs($word->score * .5) + 10 ?>px;" title="<?php echo $word->word ?> (<?php echo $word->score > 0 ? 'interesting' : 'boring' ?>)">
-		<?php echo $word->word ?>
-	</span>
-	<?php endforeach ?>
-</div>
-<?php endif ?>
-*/ ?>
-
 <div class="divider"></div>
 
 <h2>Delete</h2>
@@ -103,7 +83,7 @@
 	You can <a href="<?php echo $this->app->getRootPath() ?>subscriptions/export">export your subscriptions</a>.
 </p>
 
-<form method="post" action="<?php echo $this->app->getRootPath() ?>account/delete" class="form-signin form-horizontal well">
+<form id="form-account-delete" method="post" action="<?php echo $this->app->getRootPath() ?>account/delete" class="well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>

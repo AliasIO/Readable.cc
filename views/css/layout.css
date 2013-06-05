@@ -43,6 +43,7 @@ html {
 
 body {
   background: white;
+  color: #333333;
   font-family: MerriweatherRegular, Georgia, "Times New Roman", Times, serif;
   font-size: 16px;
   line-height: 26px;
@@ -52,29 +53,29 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: MerriweatherHeavy, Georgia, "Times New Roman", Times, serif;
-  margin: 25px 0 15px 0;
   font-weight: bold;
   line-height: 1.2em;
-  color: inherit;
+  margin: 25px 0 15px 0;
   text-rendering: optimizelegibility; }
 
 h1 {
-  font-size: 38px; }
+  font-size: 34px;
+  margin-top: 45px; }
 
 h2 {
-  font-size: 32px; }
+  font-size: 26px; }
 
 h3 {
-  font-size: 28px; }
-
-h4 {
-  font-size: 24px; }
-
-h5 {
   font-size: 20px; }
 
-h6 {
+h4 {
+  font-size: 18px; }
+
+h5 {
   font-size: 16px; }
+
+h6 {
+  font-size: 14px; }
 
 ul, ol {
   padding: 0;
@@ -92,6 +93,7 @@ a {
     border-bottom: 1px solid #333333;
     text-decoration: none; }
   a:hover, a:focus, a:active {
+    color: black;
     outline: none; }
 
 img {
@@ -195,6 +197,9 @@ q:before, q:after, blockquote:before, blockquote:after {
 header {
   background: white;
   border-bottom: 1px solid #dddddd;
+  -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
   height: 60px;
   line-height: 60px;
   position: fixed;
@@ -218,7 +223,7 @@ header {
     border-bottom: none;
     display: inline-block;
     padding: 0 20px; }
-    header a:hover {
+    header a:hover, header a:active {
       border-bottom: none; }
   header ul {
     font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
@@ -229,6 +234,8 @@ header {
     right: 0;
     top: 0; }
     header ul li {
+      border: 1px solid transparent;
+      border-width: 0 1px;
       display: inline-block;
       float: left;
       position: relative; }
@@ -242,10 +249,9 @@ header {
         -o-border-radius: 3px;
         border-radius: 3px; }
       header ul li.active {
-        background: #fefefe;
-        -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) inset;
-        -moz-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) inset;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) inset; }
+        border-color: #eeeeee;
+        border-width: 0 1px;
+        color: black; }
       header ul li.mark-all-read {
         border-bottom: 1px solid #eeeeee;
         margin-bottom: 10px;
@@ -258,6 +264,9 @@ header {
         background: white;
         border: 1px solid #dddddd;
         border-top: 1px solid #eeeeee;
+        max-height: 400px;
+        overflow: hidden;
+        overflow-y: auto;
         padding: 10px 0;
         right: 0;
         top: 60px;
@@ -268,6 +277,7 @@ header {
       header ul li ul.collapsed {
         display: none; }
       header ul li ul li {
+        border-width: 0;
         display: block;
         float: none; }
         header ul li ul li.active {
@@ -393,11 +403,12 @@ header {
 #items .placeholder {
   border-top: 1px solid #e9e9e9; }
 #items .date-separator {
-  border-bottom: 1px solid #333333;
+  border-bottom: 1px solid #dddddd;
+  color: #666666;
   height: 0.75em;
   font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
   font-style: italic;
-  margin: 60px 0;
+  margin: 40px 0 45px 0;
   text-align: center; }
   #items .date-separator span {
     background: white;
@@ -408,7 +419,7 @@ header {
 
 article {
   border-top: 1px solid transparent;
-  margin-bottom: 40px; }
+  margin-bottom: 30px; }
   article ul, article ol, article blockquote, article table, article pre, article img, article h1, article h2, article h3, article h4, article h5, article h6 {
     clear: both; }
   article iframe {
@@ -427,7 +438,7 @@ article {
     article li ul {
       margin-top: 5px; }
   article h1 {
-    margin-top: 0; }
+    margin: 0 0 10px 0; }
   article.boring h1 {
     color: #999999; }
   article.inactive.boring h1 {
@@ -441,6 +452,7 @@ article {
   article .item-wrap {
     display: none; }
   article .item-date {
+    color: #666666;
     font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
     font-size: 85%;
     font-style: italic;
@@ -451,11 +463,13 @@ article {
       display: none; }
     article .item-date .entypo {
       font-size: 1.7em; }
+  article.active.expanded .item-date {
+    color: inherit; }
   article.active.expanded:hover .item-date .feed-options {
     display: inline; }
   article .article-buttons {
     clear: both;
-    margin-top: 15px; }
+    margin: -10px 0 45px 0; }
     article .article-buttons a {
       text-decoration: none; }
     article .article-buttons button {
@@ -709,34 +723,34 @@ table {
   overflow: hidden;
   vertical-align: middle; }
 
-#suggestions td, #suggestions th {
-  vertical-align: middle;
-  white-space: nowrap; }
-#suggestions th:first-child {
-  width: 150px; }
-#suggestions td:last-child {
-  width: 120px; }
-#suggestions td button {
-  width: 100%; }
-
-#subscriptions td:first-child i {
+#table-subscriptions td:first-child i {
   font-size: 2em; }
-#subscriptions td em {
+#table-subscriptions td em {
   color: #555555; }
-#subscriptions td span {
+#table-subscriptions td span {
   visibility: hidden; }
-#subscriptions td:hover span {
+#table-subscriptions td:hover span {
   visibility: visible; }
-#subscriptions td button, #subscriptions td select, #subscriptions td input[type="text"] {
+#table-subscriptions td button, #table-subscriptions td select, #table-subscriptions td input[type="text"] {
   margin: 0;
   min-width: 0;
   width: 100%; }
-#subscriptions td button {
+#table-subscriptions td button {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=10);
   opacity: 0.1; }
-#subscriptions tr:hover td button, #subscriptions tr:hover td select, #subscriptions tr:hover td input[type="text"] {
+#table-subscriptions tr:hover td button, #table-subscriptions tr:hover td select, #table-subscriptions tr:hover td input[type="text"] {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1; }
+
+#table-subscriptions-suggestions td, #table-subscriptions-suggestions th {
+  vertical-align: middle;
+  white-space: nowrap; }
+#table-subscriptions-suggestions th:first-child {
+  width: 150px; }
+#table-subscriptions-suggestions td:last-child {
+  width: 120px; }
+#table-subscriptions-suggestions td button {
+  width: 100%; }
 
 #form-subscriptions-subscribe .message {
   color: #1c9b47;
@@ -781,7 +795,8 @@ table {
 
   h1 {
     font-size: 30px;
-    line-height: 40px; }
+    line-height: 40px;
+    margin-top: 30px; }
 
   h2 {
     font-size: 26px;
@@ -854,6 +869,7 @@ table {
     header ul.collapsed {
       display: none; }
     header ul li {
+      border-width: 0;
       display: block;
       float: none; }
       header ul li.email > a {
@@ -867,12 +883,12 @@ table {
         display: block;
         line-height: 1em;
         padding: 10px 20px; }
-        header ul li a:hover {
-          background: #f8f8f8; }
       header ul li ul {
         border-width: 1px 0 0 0;
         display: block;
         margin-top: 10px;
+        max-height: inherit;
+        overflow: hidden;
         padding-bottom: 0;
         position: relative;
         right: 0 !important;
@@ -887,6 +903,8 @@ table {
         box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
         left: 20px;
         margin: 0;
+        max-height: 250px;
+        overflow-y: auto;
         padding-bottom: 10px;
         position: absolute;
         right: 20px !important;
