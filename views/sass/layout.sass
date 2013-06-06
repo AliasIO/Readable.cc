@@ -4,8 +4,7 @@ $fontBody: MerriweatherRegular, Georgia, "Times New Roman", Times, serif
 $fontBodyItalic: MerriweatherItalic, Georgia, "Times New Roman", Times, serif
 $fontBodyBold: MerriweatherBold, Georgia, "Times New Roman", Times, serif
 $fontHeading: MerriweatherHeavy, Georgia, "Times New Roman", Times, serif
-$fontHeadingAlt: Poly, MerriweatherHeavy, Georgia, "Times New Roman", Times, serif
-$fontCode: Monaco, Menlo, Consolas, "Courier New", monospace
+$fontCode: Consolas, "DejaVu Sans Mono", "Liberation Mono", Courier, monospace
 
 $colorBorder: #ddd
 $colorError: #9c0001
@@ -17,7 +16,6 @@ $textMargin: 15px
 $small: 80%
 $medium: 85%
 
-+font-face('Poly', font-files('poly/Poly-Italic-webfont.woff', 'poly/Poly-Italic-webfont.ttf', 'poly/Poly-Italic-webfont.svg#PolyItalic'), 'poly/Poly-Italic-webfont.eot', normal, italic)
 +font-face('MerriweatherRegular', font-files('merriweather/Merriweather-Regular-webfont.woff', 'merriweather/Merriweather-Regular-webfont.ttf', 'merriweather/Merriweather-Regular-webfont.svg#MerriweatherRegular'), 'merriweather/Merriweather-Regular-webfont.eot', normal, normal) 
 +font-face('MerriweatherItalic', font-files('merriweather/Merriweather-Italic-webfont.woff', 'merriweather/Merriweather-Italic-webfont.ttf', 'merriweather/Merriweather-Italic-webfont.svg#MerriweatherItalic'), 'merriweather/Merriweather-Italic-webfont.eot', normal, italic) 
 +font-face('MerriweatherBold', font-files('merriweather/Merriweather-Bold-webfont.woff', 'merriweather/Merriweather-Bold-webfont.ttf', 'merriweather/Merriweather-Bold-webfont.svg#MerriweatherBold'), 'merriweather/Merriweather-Bold-webfont.eot', bold, normal) 
@@ -104,21 +102,20 @@ em, i
 	font-family: $fontBodyItalic 
 
 code
-	color: inherit
 	font-style: normal
 
 code, pre
-	padding: 0 3px 2px
+	background-color: #f8f8f8
+	border: 1px solid $colorBorder
+	+border-radius(2px)
+	color: inherit
 	font-family: $fontCode
-	font-size: $textMargin
-	color: #000
-	+border-radius(3px)
+	font-size: 13px
+	padding: 0 3px 2px
 
 code
 	padding: 2px 4px
 	white-space: nowrap
-	background-color: #f7f7f9
-	border: 1px solid #e1e1e8
 
 pre
 	display: block
@@ -130,10 +127,6 @@ pre
 	word-wrap: break-word
 	white-space: pre
 	white-space: pre-wrap
-	background-color: #f5f5f5
-	border: 1px solid #ccc
-	border: 1px solid rgba(0, 0, 0, 0.15)
-	+border-radius(4px)
 
 	code
 		padding: 0
@@ -365,7 +358,7 @@ header
 	vertical-align: middle
 
 	h1
-		font-family: $fontHeadingAlt
+		font-family: $fontBodyItalic
 		font-weight: normal
 
 	p
