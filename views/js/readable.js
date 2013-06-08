@@ -439,7 +439,6 @@
 									.attr('src', src)
 									.removeAttr('data-src')
 									.width(img.width())
-									.height(img.height())
 									;
 
 								img.remove();

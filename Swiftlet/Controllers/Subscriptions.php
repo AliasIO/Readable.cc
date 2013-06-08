@@ -257,40 +257,39 @@ class Subscriptions extends \Swiftlet\Controller
 					foreach ( $xml->body->outline as $outline ) {
 						$folderId = null;
 
-						$folderTitle = $outline->attributes()->title ? $outline->attributes()->title : ( $outline->attributes()->text ? $outline->attributes()->text : '' );
-
 						if ( !$outline->outline ) {
 							$outline = array($outline);
-						}
+						} else {
+							$folderTitle = $outline->attributes()->title ? $outline->attributes()->title : ( $outline->attributes()->text ? $outline->attributes()->text : '' );
 
-
-						if ( $folderTitle ) {
-							foreach ( $folders as $folder ) {
-								if ( strtolower($folder->title) == strtolower($folderTitle) ) {
-									$folderId = $folder->id;
+							if ( $folderTitle ) {
+								foreach ( $folders as $folder ) {
+									if ( strtolower($folder->title) == strtolower($folderTitle) ) {
+										$folderId = $folder->id;
+									}
 								}
-							}
 
-							// Create a new folder
-							if ( !$folderId ) {
-								$dbh = $this->app->getSingleton('pdo')->getHandle();
+								// Create a new folder
+								if ( !$folderId ) {
+									$dbh = $this->app->getSingleton('pdo')->getHandle();
 
-								$sth = $dbh->prepare('
-									INSERT INTO folders (
-										title,
-										user_id
-									) VALUES (
-										:title,
-										:user_id
-									)
-									');
+									$sth = $dbh->prepare('
+										INSERT INTO folders (
+											title,
+											user_id
+										) VALUES (
+											:title,
+											:user_id
+										)
+										');
 
-								$sth->bindParam('title',   $folderTitle);
-								$sth->bindParam('user_id', $userId);
+									$sth->bindParam('title',   $folderTitle);
+									$sth->bindParam('user_id', $userId);
 
-								$sth->execute();
+									$sth->execute();
 
-								$folderId = $dbh->lastInsertId();
+									$folderId = $dbh->lastInsertId();
+								}
 							}
 						}
 

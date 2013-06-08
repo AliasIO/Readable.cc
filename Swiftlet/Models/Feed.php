@@ -50,7 +50,7 @@ class Feed extends \Swiftlet\Model
 			WHERE
 				url = :url
 			LIMIT 1
-			;');
+			');
 
 		$sth->bindParam('url', $url);
 
@@ -134,7 +134,7 @@ class Feed extends \Swiftlet\Model
 			WHERE
 				url = :url
 			LIMIT 1
-			;');
+			');
 
 		$sth->bindParam('url', $url);
 
@@ -346,7 +346,7 @@ class Feed extends \Swiftlet\Model
 				' . ( $this->dummy ? 'NULL' : 'UTC_TIMESTAMP()' ) . ',
 				' . ( $this->dummy ? 'NULL' : 'UTC_TIMESTAMP()' ) . '
 			)
-			;');
+			');
 
 		$sth->bindParam('url',   $this->url);
 		$sth->bindParam('title', $this->title);
@@ -365,7 +365,7 @@ class Feed extends \Swiftlet\Model
 				WHERE
 					url = :url
 				LIMIT 1
-				;');
+				');
 
 			$sth->bindParam('url', $this->url);
 
@@ -390,7 +390,7 @@ class Feed extends \Swiftlet\Model
 					:feed_id,
 					:folder_id
 				)
-				;');
+				');
 
 			$sth->bindParam('user_id',   $userId,         \PDO::PARAM_INT);
 			$sth->bindParam('feed_id',   $this->id,       \PDO::PARAM_INT);
