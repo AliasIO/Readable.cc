@@ -11,17 +11,17 @@ Built on [Swiftlet](http://swiftlet.org), a tiny MVC framework written in PHP.
 Prerequisites
 -------------
 
-  * Web server, e.g. Nginx or Apache with mod_rewrite
-  * PHP 5.3+
-		* CLI (php5-cli)
-		* cURL (php5-curl)
-	  * Mcrypt (php5-mcrypt)
-	* MySQL 5.5+
+* Web server, e.g. Nginx or Apache with mod_rewrite
+* PHP 5.3+
+	* CLI (php5-cli)
+	* cURL (php5-curl)
+	* Mcrypt (php5-mcrypt)
+* MySQL 5.5+
 
 Optional:
 
-	* [SASS](http://sass-lang.com)
-	* [Compass](http://compass-style.org)
+* [SASS](http://sass-lang.com)
+* [Compass](http://compass-style.org)
 
 
 Installation
