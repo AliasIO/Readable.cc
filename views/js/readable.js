@@ -251,8 +251,6 @@
 					default:
 						return;
 				}
-
-				e.preventDefault();
 			});
 
 			$(document).on('click', '.mark-all-read', function(e) {
