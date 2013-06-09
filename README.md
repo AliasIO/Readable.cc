@@ -29,7 +29,9 @@ Installation
 
 Load `mysql/schema.sql` into MySQL to create the database.
 
-`$ mysql < mysql/schema.sql`
+```shell
+$ mysql < mysql/schema.sql
+```
 
 Copy `config/pdo.example.php` to `config/pdo.php` and edit the file.
 
@@ -37,17 +39,17 @@ Edit `config.php`.
 
 Make the following directories writable:
 
-  * `sessions`
-	* `HTMLPurifier/DefinitionCache/Serializer/HTML`
-	* `HTMLPurifier/DefinitionCache/Serializer/URI`
+* `sessions`
+* `HTMLPurifier/DefinitionCache/Serializer/HTML`
+* `HTMLPurifier/DefinitionCache/Serializer/URI`
 
-```
+```shell
 $ chmod 777 sessions HTMLPurifier/DefinitionCache/Serializer/HTML HTMLPurifier/DefinitionCache/Serializer/URI
 ```
 
 Set up a cron job to periodically fetch feeds.
 
-```
+```shell
 # Example crontab entry
 
 */5 * * * * /usr/bin/php /srv/readable.cc/index.php -q cron > /dev/null
