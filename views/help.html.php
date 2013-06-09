@@ -81,7 +81,7 @@
 			<td>Toggle save article</td>
 		</tr>
 		<tr>
-			<td><code>m</code>, <code>Shift-a</code></td>
+			<td><code>m</code>, <code>a</code></td>
 			<td>Mark all articles read in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;</td>
 		</tr>
 	</tbody>
