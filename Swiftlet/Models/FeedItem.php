@@ -51,7 +51,7 @@ class FeedItem extends \Swiftlet\Model
 				:short,
 				UTC_TIMESTAMP()
 			)
-			;');
+			');
 
 		$data = $this->getData();
 

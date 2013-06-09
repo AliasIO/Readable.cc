@@ -106,7 +106,7 @@ class Subscriptions extends \Swiftlet\Controller
 						break;
 					case \Swiftlet\Models\Feed::CURL_ERROR:
 					default:
-						$error = 'The feed could not be fetched (' . $e->getMessage() . '.)';
+						$error = 'The feed could not be fetched';
 
 						break;
 					case \Swiftlet\Models\Feed::SERVER_ERROR:

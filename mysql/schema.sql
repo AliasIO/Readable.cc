@@ -167,7 +167,7 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`users_feeds` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `user_id` INT(11) UNSIGNED NOT NULL ,
   `feed_id` INT(11) UNSIGNED NOT NULL ,
-  `folder_id` INT(11) UNSIGNED NOT NULL ,
+  `folder_id` INT(11) UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `user_feed` (`user_id` ASC, `feed_id` ASC) ,
   INDEX `users_feeds_user_id` (`user_id` ASC) ,
