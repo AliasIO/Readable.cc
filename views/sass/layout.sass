@@ -506,9 +506,73 @@ article
 		a
 			text-decoration: none
 
+		.share	
+			display: inline-block
+			position: relative
+
+			ul
+				background: #fff
+				border: 1px solid $colorBorder
+				bottom: 29px
+				display: none
+				font-family: $fontBodyItalic
+				font-size: 14px
+				font-style: italic
+				left: 0
+				margin: 0
+				padding: 10px 0
+				position: absolute
+				text-align: left
+				width: 120px
+
+				li
+					display: block
+					list-style: none
+					margin: 0
+
+					a
+						border: none
+						display: block
+						line-height: 30px
+						padding: 0 20px
+
+						&:hover
+							background: #f8f8f8
+
 		button
 			font-size: $small
 			margin: $textMargin 10px 0 0
+			position: relative
+
+			&.item-share
+
+				ul
+					background: #fff
+					border: 1px solid $colorBorder
+					bottom: 28px
+					font-family: $fontBodyItalic
+					font-size: 14px
+					font-style: italic
+					left: -1px
+					margin: 0
+					padding: 10px 0
+					position: absolute
+					text-align: left
+					width: 180px
+
+					li
+						display: block
+						list-style: none
+						margin: 0
+
+						a
+							border: none
+							display: block
+							line-height: 30px
+							padding: 0 20px
+
+							i
+								font-size: 2em
 
 	&.inactive .article-buttons
 		+opacity(.5)

@@ -25,7 +25,7 @@ class Learn extends \Swiftlet\Model
 				( last_learned_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY) OR last_learned_at IS NULL ) AND -- Learn once a day at most
 			    last_active_at  > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY)                                  -- Learn only for recently active users
 			LIMIT 1000
-			;');
+			');
 
 		$sth->execute();
 
@@ -79,7 +79,7 @@ class Learn extends \Swiftlet\Model
 					) AS main, (
 						SELECT @row := 0
 					) AS rownum
-					;');
+					');
 
 				$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 
@@ -119,7 +119,7 @@ class Learn extends \Swiftlet\Model
 				GROUP BY user_id, item_id
 				ON DUPLICATE KEY UPDATE
 					score = VALUES(score)
-				;');
+				');
 
 			$sth->execute();
 

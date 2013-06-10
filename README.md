@@ -29,7 +29,7 @@ Installation
 
 Load `mysql/schema.sql` into MySQL to create the database.
 
-```shell
+```
 $ mysql < mysql/schema.sql
 ```
 
@@ -43,13 +43,13 @@ Make the following directories writable:
 * `HTMLPurifier/DefinitionCache/Serializer/HTML`
 * `HTMLPurifier/DefinitionCache/Serializer/URI`
 
-```shell
+```
 $ chmod 777 sessions HTMLPurifier/DefinitionCache/Serializer/HTML HTMLPurifier/DefinitionCache/Serializer/URI
 ```
 
 Set up a cron job to periodically fetch feeds.
 
-```shell
+```
 # Example crontab entry
 
 */5 * * * * /usr/bin/php /srv/readable.cc/index.php -q cron > /dev/null

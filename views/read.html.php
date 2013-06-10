@@ -67,7 +67,7 @@
 			<?php echo $item->contents ?>
 		</div>
 
-		<p class="article-buttons">
+		<div class="article-buttons">
 			<button class="btn btn-small item-vote<?php echo $item->vote == 1 ? ' btn-inverse voted' : '' ?>" data-item-id="<?php echo $item->id ?>" data-vote="1"  title="Promote articles like these in &lsquo;My Reading&rsquo;">
 				<i class="entypo thumbs-up"></i>&nbsp;Interesting
 			</button>
@@ -79,7 +79,19 @@
 			<button class="btn btn-small item-save<?php echo $item->saved ? ' btn-inverse saved' : '' ?>" data-item-id="<?php echo $item->id ?>" title="Save this article to read later">
 				<i class="entypo install"></i>&nbsp;Save<?php echo $item->saved ? 'd' : '' ?>
 			</button>
-		</p>
+
+			<div class="share">
+				<button class="btn btn-small item-share" title="Share this article">
+					<i class="entypo share"></i>&nbsp;Share
+				</button>
+
+				<ul>
+					<li><a href="http://www.facebook.com/sharer.php?s=100&amp;p[url]=<?php echo rawurlencode($item->url) ?>&amp;p[title]=<?php echo rawurlencode($item->title) ?>">Facebook</a></li>
+					<li><a href="https://plus.google.com/share?url=<?php echo rawurlencode($item->url) ?>">Google+</a></li>
+					<li><a href="http://twitter.com/home?status=<?php echo rawurlencode($item->title . ' ' . $item->url) ?> via @readablecc">Twitter</a></li>
+				</ul>
+			</div>
+		</div>
 
 		<?php if ( $item->score < 0 ): ?>
 		<p class="alert">

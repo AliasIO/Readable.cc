@@ -41,6 +41,14 @@
 			if ( !$(e.target).closest('header ul').length ) {
 				$('header ul, header ul ul').addClass('collapsed');
 			}
+
+			if ( !$(e.target).closest('.share').length ) {
+				$('.article-buttons').find('.share ul').hide();
+			}
+		});
+
+		$(document).on('click', 'button.item-share', function(e) {
+			$(this).parent().find('ul').toggle();
 		});
 
 		// Hide alerts on click

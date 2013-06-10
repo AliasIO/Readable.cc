@@ -26,7 +26,7 @@ class Cron extends \Swiftlet\Controller
 			GROUP BY feeds.id
 			ORDER BY feeds.last_fetched_at ASC
 			LIMIT 100
-			;');
+			');
 
 		$sth->execute();
 

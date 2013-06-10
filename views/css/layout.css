@@ -457,9 +457,62 @@ article {
     margin: -10px 0 45px 0; }
     article .article-buttons a {
       text-decoration: none; }
+    article .article-buttons .share {
+      display: inline-block;
+      position: relative; }
+      article .article-buttons .share ul {
+        background: white;
+        border: 1px solid #dddddd;
+        bottom: 29px;
+        display: none;
+        font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
+        font-size: 14px;
+        font-style: italic;
+        left: 0;
+        margin: 0;
+        padding: 10px 0;
+        position: absolute;
+        text-align: left;
+        width: 120px; }
+        article .article-buttons .share ul li {
+          display: block;
+          list-style: none;
+          margin: 0; }
+          article .article-buttons .share ul li a {
+            border: none;
+            display: block;
+            line-height: 30px;
+            padding: 0 20px; }
+            article .article-buttons .share ul li a:hover {
+              background: #f8f8f8; }
     article .article-buttons button {
       font-size: 80%;
-      margin: 15px 10px 0 0; }
+      margin: 15px 10px 0 0;
+      position: relative; }
+      article .article-buttons button.item-share ul {
+        background: white;
+        border: 1px solid #dddddd;
+        bottom: 28px;
+        font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
+        font-size: 14px;
+        font-style: italic;
+        left: -1px;
+        margin: 0;
+        padding: 10px 0;
+        position: absolute;
+        text-align: left;
+        width: 180px; }
+        article .article-buttons button.item-share ul li {
+          display: block;
+          list-style: none;
+          margin: 0; }
+          article .article-buttons button.item-share ul li a {
+            border: none;
+            display: block;
+            line-height: 30px;
+            padding: 0 20px; }
+            article .article-buttons button.item-share ul li a i {
+              font-size: 2em; }
   article.inactive .article-buttons {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
     opacity: 0.5; }
