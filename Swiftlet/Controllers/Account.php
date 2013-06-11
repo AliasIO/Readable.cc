@@ -129,6 +129,10 @@ class Account extends \Swiftlet\Controller
 						$this->view->set('error-current-password', true);
 
 						break;
+					case $auth::USER_NOT_ENABLED:
+						$error[] = 'Your changes could not be saved because your email address has not been verified. Please recover your account via the &lsquo;<a href="' . $this->app->getRootPath() . 'forgot">Forgot password</a>&rsquo; page.';
+
+						break;
 					default:
 						$error[] = 'An unknown error ocurred.' . $e->getMessage();
 				}

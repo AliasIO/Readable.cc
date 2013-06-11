@@ -713,10 +713,6 @@ button, .btn
 	margin-bottom: 0
 	padding: 0 10px
 	vertical-align: middle
-	
-	&::-moz-focus-inner
-		border: 0
-		padding: 0
 
 	&:hover,
 	&:focus,
@@ -761,6 +757,11 @@ input[type="checkbox"],
 input[type="radio"],
 select
 	cursor: pointer
+	margin: 1px
+
+	&::-moz-focus-inner
+		border: 0
+		padding: 0
 
 input[type="email"],
 input[type="password"],
@@ -768,17 +769,22 @@ input[type="text"],
 input[type="file"],
 textarea,
 select
-	background-color: #fff
+	background: #fff !important
 	border: 1px solid $colorBorder
 	+box-sizing(border-box)
 	+border-radius(2px)
 	font-family: $fontBody
 	font-size: inherit
 	height: 30px
+	margin: 1px
 	min-width: 250px
 	outline: none
 	padding: 5px 5px
 	vertical-align: middle
+
+	&::-moz-focus-inner
+		border: 0
+		padding: 0
 
 	&.input-block-level
 		width: 100%
@@ -958,13 +964,24 @@ table
 		margin: 30px 0
 
 	.control-group .control-label
+		display: block
 		float: none
+		font-family: $fontBodyBold
 		font-weight: bold
 		text-align: left
+		margin-bottom: 5px
 		width: auto
 
 	.control-group .controls
 		margin-left: 0
+
+	input[type="email"],
+	input[type="password"],
+	input[type="text"],
+	input[type="file"],
+	textarea,
+	select
+		width: 100%
 
 	#page-head
 		height: 150px
@@ -985,6 +1002,7 @@ table
 @media all and (max-width: 600px)
 	fieldset
 		margin-left: 0
+		margin-right: 0
 
 	header
 
@@ -1003,9 +1021,6 @@ table
 
 			a
 				padding-right: 20px
-
-		.item-count
-			visibility: hidden
 
 		ul
 			background: #fff
@@ -1030,10 +1045,16 @@ table
 					background: #f8f8f8
 					+box-shadow(none)
 
+				.item-count
+					visibility: hidden
+
 				a
 					display: block
 					line-height: 1em
 					padding: 10px 20px
+
+					&:hover
+						background: none !important
 
 				ul
 					border-width: 1px 0 0 0
