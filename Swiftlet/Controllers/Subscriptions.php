@@ -67,6 +67,7 @@ class Subscriptions extends \Swiftlet\Controller
 
 		$this->view->set('feeds',   $feeds);
 		$this->view->set('folders', $this->app->getSingleton('helper')->getUserFolders());
+		$this->view->set('paid',    $this->app->getSingleton('helper')->userPaid());
 	}
 
 	/**

@@ -20,10 +20,42 @@ class Account extends \Swiftlet\Controller
 
 		$this->userId = $this->app->getSingleton('helper')->ensureValidUser();
 
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+			SELECT
+				amount,
+				currency,
+				created_at,
+				expires_at
+			FROM payments
+			WHERE
+		 		user_id = :user_id
+			ORDER BY created_at DESC
+			LIMIT 1000
+			');
+
+		$sth->bindParam('user_id', $this->userId, \PDO::PARAM_INT);
+
+		$sth->execute();
+
+		$payments = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+		foreach ( $payments as $payment ) {
+			$this->app->getSingleton('helper')->localize($payment->created_at);
+			$this->app->getSingleton('helper')->localize($payment->expires_at);
+
+			$payment->created_at = date('F j, Y', $payment->created_at);
+			$payment->expires_at = date('F j, Y', $payment->expires_at);
+		}
+
+		$this->view->set('payments', $payments);
+
 		$session = $this->app->getSingleton('session');
 
 		$this->view->set('email',    $session->get('email'));
 		$this->view->set('timezone', $session->get('timezone'));
+		$this->view->set('paid',     $this->app->getSingleton('helper')->userPaid());
 
 		$this->view->set('timeZones', array(
 			'-720' => '(GMT -12:00) Eniwetok, Kwajalein',
@@ -162,7 +194,7 @@ class Account extends \Swiftlet\Controller
 			$success = false;
 			$error   = false;
 
-			$password = isset($_POST['password']) ? $_POST['password'] : '';
+			$password = isset($_POST['password-delete']) ? $_POST['password-delete'] : '';
 
 			try {
 				$auth = $this->app->getSingleton('auth');

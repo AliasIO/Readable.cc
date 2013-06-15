@@ -256,6 +256,35 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
+-- -----------------------------------------------------
+-- Table `readable_cc`.`payments`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `readable_cc`.`payments` ;
+
+CREATE  TABLE IF NOT EXISTS `readable_cc`.`payments` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `user_id` INT(11) UNSIGNED NOT NULL ,
+  `amount` INT(11) UNSIGNED NOT NULL ,
+  `currency` VARCHAR(255) NOT NULL ,
+  `description` VARCHAR(255) NULL ,
+  `email` VARCHAR(255) NULL ,
+  `ip_address` VARCHAR(255) NULL ,
+  `created_at` DATETIME NOT NULL ,
+  `expires_at` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `user_id` (`user_id` ASC) ,
+  INDEX `created_at` (`created_at` ASC) ,
+  INDEX `expires_at` (`expires_at` ASC) ,
+  CONSTRAINT `payments_user_id`
+    FOREIGN KEY (`user_id` )
+    REFERENCES `readable_cc`.`users` (`id` )
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

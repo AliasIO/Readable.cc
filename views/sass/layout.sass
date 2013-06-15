@@ -6,7 +6,7 @@ $fontBodyBold: MerriweatherBold, Georgia, "Times New Roman", Times, serif
 $fontHeading: MerriweatherHeavy, Georgia, "Times New Roman", Times, serif
 $fontCode: Consolas, "DejaVu Sans Mono", "Liberation Mono", Courier, monospace
 
-$colorBorder: #ddd
+$colorBorder: #ccc
 $colorError: #9c0001
 $colorText: #333
 $colorTextSecondary: #666
@@ -256,7 +256,7 @@ header
 				right: 0
 				top: 60px
 				width: 150px
-				z-index: 9
+				z-index: 99
 
 			&.email ul
 				right: 20px
@@ -272,6 +272,7 @@ header
 					float: none
 
 					&.active
+						border-width: 0
 						+box-shadow(none)
 
 					a
@@ -314,7 +315,7 @@ header
 	&.alert-float
 		position: fixed
 		top: 100px
-		z-index: 999
+		z-index: 9
 		width: auto
 		+box-shadow(0 1px 4px rgba(0, 0, 0, 0.065))
 
@@ -640,8 +641,8 @@ article
 .well
 	padding: 10px
 	margin-bottom: $textMargin * 2
-	background-color: #fefefe
-	border: 1px solid #ececec
+	background-color: #f9f9f9
+	border: 1px solid $colorBorder
 	+border-radius(2px)
 
 	button, .btn
@@ -682,7 +683,7 @@ form
 
 fieldset
 	border: 0
-	border-bottom: 1px solid #e5e5e5
+	border-bottom: 1px solid $colorBorder
 	margin: 0
 	padding: 0
 	margin: 26px
@@ -800,6 +801,7 @@ table
 	font-size: 14px
 
 	&.table
+		background: #f9f9f9
 		border: 1px solid $colorBorder
 		border-collapse: separate
 		*border-collapse: collapse
@@ -826,7 +828,7 @@ table
 
 		tbody > tr:nth-child(odd) > td,
 		tbody > tr:nth-child(odd) > th
-			background-color: #f9f9f9
+			background-color: #fff
 
 		tbody tr:hover > td,
 		tbody tr:hover > th
@@ -846,6 +848,48 @@ table
 		height: 32px
 		overflow: hidden
 		vertical-align: middle
+
+#form-pay
+
+	img
+
+		vertical-align: middle
+
+	#total-amount
+
+		font-family: $fontBodyBold
+		font-weight: bold
+		font-size: 1.5em
+		line-height: 26px
+		padding-top: 5px
+
+	select
+
+		&[name="amount"]
+			min-width: 164px
+			width: 164px
+
+		&[name="currency"]
+			min-width: 80px
+			width: 80px
+
+		&[name="expiry-month"]
+			min-width: 80px
+			width: 80px
+
+		&[name="expiry-year"]
+			min-width: 80px
+			width: 80px
+
+	input
+
+		&[name="cvc"]
+			min-width: 80px
+			width: 80px
+
+		&[name="address-postcode"]
+			min-width: 80px
+			width: 80px
 
 #table-subscriptions
 

@@ -14,6 +14,19 @@
 </div>
 <?php endif ?>
 
+<div class="jump">
+	<p>
+		Jump to:
+	</p>
+
+	<ul>
+		<li><a href="#payments">Payments</a></li>
+		<li><a href="#delete">Delete</a></il>
+	</ul>
+</div>
+
+<?php $payments = $this->get('payments') ?>
+
 <form id="form-account" method="post" action="<?php echo $this->app->getRootPath() ?>account" class="well">
 	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
 
@@ -38,7 +51,7 @@
 			<label class="control-label" for="password-repeat">Repeat password</label>
 
 			<div class="controls">
-				<input id="password" name="password-repeat" class="input-xlarge" type="password" autocomplete="off">
+				<input id="password-repeat" name="password-repeat" class="input-xlarge" type="password" autocomplete="off">
 			</div>
 		</div>
 	</fieldset>
@@ -76,7 +89,52 @@
 
 <div class="divider"></div>
 
-<h2>Delete</h2>
+<h2 id="payments">Payments</h2>
+
+<?php if ( $payments ): ?>
+<?php if ( $this->get('paid') ): ?>
+<p>
+	Thank you for your support!
+</p>
+<?php endif ?>
+
+<table id="table-payments" class="table table-list">
+	<thead>
+		<tr>
+			<th>Amount</th>
+			<th>Paid at</th>
+			<th>Valid until</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ( $payments as $payment ): ?>
+		<tr>
+			<td>
+				<?php echo $payment->currency . ' ' . number_format($payment->amount / 100, 2) ?>
+			</td>
+			<td>
+				<?php echo $payment->created_at ?>
+			</td>
+			<td>
+				<?php echo $payment->expires_at ?>
+			</td>
+		</tr>
+		<?php endforeach ?>
+	</tbody>
+</table>
+<?php else: ?>
+<p>
+	<em>You have not made any payments.</em>
+</p>
+<?php endif ?>
+
+<?php if ( !$this->get('paid') ): ?>
+<?php require('views/pay-partial.html.php') ?>
+<?php endif ?>
+
+<div class="divider"></div>
+
+<h2 id="delete">Delete</h2>
 
 <p>
 	Delete your account forever. Every record associated with your account will be deleted and unrecoverable.
@@ -88,10 +146,10 @@
 
 	<fieldset>
 		<div class="control-group <?php echo $this->get('error-password-delete') ? 'error' : '' ?>">
-			<label class="control-label" for="password">Password</label>
+			<label class="control-label" for="password-delete">Password</label>
 
 			<div class="controls">
-				<input id="password" name="password" class="input-xlarge" type="password" autocomplete="off">
+				<input id="password-delete" name="password-delete" class="input-xlarge" type="password" autocomplete="off">
 			</div>
 		</div>
 

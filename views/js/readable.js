@@ -84,6 +84,14 @@
 				app.items.init();
 
 				break;
+			case 'Account':
+				app.account.init();
+
+				break;
+			case 'Pay':
+				app.pay.init();
+
+				break;
 			case 'Subscriptions':
 				app.subscriptions.init();
 
@@ -200,6 +208,11 @@
 
 				switch ( e.keyCode ) {
 					case 32: // Space
+						if ( $(':focus').length ) {
+							return;
+						}
+
+						e.preventDefault();
 					case 74: // j
 						next = app.items.activeItem ? app.items.activeItem.nextAll('article').first() : $('#items article').first();
 
@@ -395,18 +408,19 @@
 			$($('#items article').get().reverse()).each(function() {
 				var
 					placeHolder,
-					date     = $(this).data('item-date'),
-					nextDate = $(this).next('article').data('item-date')
+					el       = $(this),
+					date     = el.data('item-date'),
+					nextDate = el.next('article').data('item-date')
 					;
 
 				// Add separator betweens items of different date
-				if ( $.inArray($(this).data('item-id'), app.excludes) === -1 ) {
-					app.excludes.push($(this).data('item-id'));
+				if ( $.inArray(el.data('item-id'), app.excludes) === -1 ) {
+					app.excludes.push(el.data('item-id'));
 				}
 
 				if ( nextDate && date !== nextDate ) {
-					if ( !$(this).next('.date-separator').length ) {
-						$(this).after('<p class="date-separator"><span>' + nextDate + '</span></p>');
+					if ( !el.next('.date-separator').length ) {
+						el.after('<p class="date-separator"><span>' + nextDate + '</span></p>');
 					}
 				}
 
@@ -417,9 +431,9 @@
 
 				placeHolder = $('<div>');
 
-				placeHolder.addClass('placeholder').height($(this).outerHeight(true) - 1);
+				placeHolder.addClass('placeholder').height(el.outerHeight(true) - 1);
 
-				$(this).replaceWith(placeHolder);
+				el.replaceWith(placeHolder);
 			});
 
 			app.items.activeItemId = null;
@@ -583,12 +597,13 @@
 
 			$($('#items article').get().reverse()).each(function() {
 				var
-					top    = $(this).position().top - offset,
-					bottom = top + $(this).outerHeight(true)
+					el     = $(this),
+					top    = el.position().top - offset,
+					bottom = top + el.outerHeight(true)
 					;
 
 				if ( top <= app.items.pageTop + 5 && bottom >= app.items.pageTop ) {
-					if ( app.items.activeItemId !== $(this).data('item-id') ) {
+					if ( app.items.activeItemId !== el.data('item-id') ) {
 						if ( app.items.activeItem ) {
 							app.items.activeItem
 								.stop()
@@ -598,15 +613,15 @@
 								;
 						}
 
-						app.items.activeItemId = $(this).data('item-id');
-						app.items.activeItem   = $(this);
+						app.items.activeItemId = el.data('item-id');
+						app.items.activeItem   = el;
 
-						$(this).removeClass('inactive').addClass('active');
+						el.removeClass('inactive').addClass('active');
 
-						if ( $(this).hasClass('collapsed') ) {
+						if ( el.hasClass('collapsed') ) {
 							$('article').stop().animate({ opacity: 1 }, instant ? 0 : app.duration.fade);
 						} else {
-							$(this).stop().animate({ opacity: 1 }, instant ? 0 : app.duration.fade);
+							el.stop().animate({ opacity: 1 }, instant ? 0 : app.duration.fade);
 
 							$('article:not([data-item-id=' + app.items.activeItemId + '])').stop().animate({ opacity: 0.3 }, instant ? 0 : app.duration.fade);
 						}
@@ -655,7 +670,7 @@
 			}
 
 			$.ajax({
-				url: app.rootPath + 'read/vote/' + app.args,
+				url: app.rootPath + 'read/vote/',
 				method: 'post',
 				data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
 			}).fail(function() {
@@ -695,11 +710,19 @@
 		},
 
 		markAllAsRead: function() {
+			var data;
+
 			if ( app.signedIn && ( app.controller === 'Reading' || app.controller === 'Folder' ) ) {
+				data = { item_id: 'all', sessionId: app.sessionId };
+
+				if ( app.controller === 'Folder' ) {
+					data.folder_id = app.args[0] || null;
+				}
+
 				$.ajax({
-					url: app.rootPath + 'read/markRead/' + app.args,
+					url: app.rootPath + 'read/markRead/',
 					method: 'post',
-					data: { item_id: 'all', sessionId: app.sessionId }
+					data: data
 				})
 				.done(function() {
 					window.location = window.location;
@@ -730,7 +753,7 @@
 
 			if ( app.signedIn ) {
 				$.ajax({
-					url: app.rootPath + 'read/save/' + app.args,
+					url: app.rootPath + 'read/save/',
 					method: 'post',
 					data: { item_id: itemId, save: save, sessionId: app.sessionId }
 				}).fail(function() {
@@ -765,7 +788,7 @@
 			}
 
 			$.ajax({
-				url: app.rootPath + 'read/subscribe/' + app.args,
+				url: app.rootPath + 'read/subscribe/',
 				method: 'post',
 				data: { feed_id: feedId, action: action, sessionId: app.sessionId }
 			}).fail(function() {
@@ -812,7 +835,7 @@
 			}
 
 			$.ajax({
-				url: app.rootPath + app.controller.toLowerCase() + '/items/' + app.args,
+				url: app.rootPath + app.controller.toLowerCase() + '/items/' + app.args.join('/'),
 				data: data,
 				context: $('#items')
 			}).done(function(data) {
@@ -851,20 +874,43 @@
 		}
 	};
 
+	app.account = {
+		init: function() {
+			$('#form-account-delete').on('submit', function() {
+				if ( window.confirm('This action can not be undone!\n\nAre you sure you wish to delete your account?') ) {
+					return true;
+				}
+
+				return false;
+			});
+		}
+	};
+
+	app.pay = {
+		init: function() {
+			$('#name').focus();
+
+			$('#amount, #months').on('change blur keyup', function() {
+				$('#total-amount').text('$' + $('#amount').val() * $('#months').val());
+			}).trigger('change');
+		}
+	};
+
 	app.subscriptions = {
 		init: function() {
 			$('#table-subscriptions button').click(function() {
 				var
-					id     = $(this).data('feed-id'),
-					action = $(this).hasClass('subscribe') ? 'subscribe' : 'unsubscribe'
+					el     = $(this),
+					id     = el.data('feed-id'),
+					action = el.hasClass('subscribe') ? 'subscribe' : 'unsubscribe'
 					;
 
-				$(this).blur();
+				el.blur();
 
 				if ( action === 'subscribe' ) {
-					$(this).removeClass('subscribe').addClass('btn-danger unsubscribe').html('Unsubscribe');
+					el.removeClass('subscribe').addClass('btn-danger unsubscribe').html('Unsubscribe');
 				} else {
-					$(this).removeClass('unsubscribe').removeClass('btn-danger').addClass('subscribe').html('Subscribe');
+					el.removeClass('unsubscribe').removeClass('btn-danger').addClass('subscribe').html('Subscribe');
 				}
 
 				$.ajax({
@@ -876,16 +922,17 @@
 
 			$('#table-subscriptions-suggestions button').click(function() {
 				var
-					url    = $(this).data('url'),
-					action = $(this).hasClass('subscribe') ? 'subscribe' : 'unsubscribe'
+					el     = $(this),
+					url    = el.data('url'),
+					action = el.hasClass('subscribe') ? 'subscribe' : 'unsubscribe'
 					;
 
-				$(this).blur();
+				el.blur();
 
 				if ( action === 'subscribe' ) {
-					$(this).removeClass('subscribe').addClass('btn-danger unsubscribe').html('Unsubscribe');
+					el.removeClass('subscribe').addClass('btn-danger unsubscribe').html('Unsubscribe');
 				} else {
-					$(this).removeClass('unsubscribe').removeClass('btn-danger').addClass('subscribe').html('Subscribe');
+					el.removeClass('unsubscribe').removeClass('btn-danger').addClass('subscribe').html('Subscribe');
 				}
 
 				$.ajax({
@@ -897,12 +944,13 @@
 
 			$('#form-subscriptions-subscribe').submit(function(e) {
 				var
-					inputUrl     = $(this).find('input[name=url]'),
-					inputFolder  = $(this).find('select[name=folder]'),
+					el           = $(this),
+					inputUrl     = el.find('input[name=url]'),
+					inputFolder  = el.find('select[name=folder]'),
 					controlGroup = inputUrl.closest('.control-group'),
-					button       = $(this).find('button'),
-					loading      = $(this).find('.loading'),
-					message      = $(this).find('.message'),
+					button       = el.find('button'),
+					loading      = el.find('.loading'),
+					message      = el.find('.message'),
 					url          = inputUrl.val(),
 					folderId     = inputFolder.val()
 					;

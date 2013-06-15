@@ -1,4 +1,5 @@
 config/pdo.php
+config/pin.net.au.php
 parser/config.yml
 tags
 HTMLPurifier/DefinitionCache/Serializer/HTML/

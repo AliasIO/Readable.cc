@@ -35,6 +35,7 @@ class Search extends \Swiftlet\Controllers\Read
 	{
 		$this->items();
 	}
+
 	/**
 	 * Get items
 	 */

@@ -107,7 +107,7 @@ code {
 
 code, pre {
   background-color: #f8f8f8;
-  border: 1px solid #dddddd;
+  border: 1px solid #cccccc;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
@@ -180,7 +180,7 @@ q:before, q:after, blockquote:before, blockquote:after {
 
 header {
   background: white;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #cccccc;
   -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
@@ -246,7 +246,7 @@ header {
         line-height: 60px; }
       header ul li ul {
         background: white;
-        border: 1px solid #dddddd;
+        border: 1px solid #cccccc;
         border-top: 1px solid #eeeeee;
         max-height: 400px;
         overflow: hidden;
@@ -255,7 +255,7 @@ header {
         right: 0;
         top: 60px;
         width: 150px;
-        z-index: 9; }
+        z-index: 99; }
       header ul li.email ul {
         right: 20px; }
       header ul li ul.collapsed {
@@ -265,6 +265,7 @@ header {
         display: block;
         float: none; }
         header ul li ul li.active {
+          border-width: 0;
           -webkit-box-shadow: none;
           -moz-box-shadow: none;
           box-shadow: none; }
@@ -304,7 +305,7 @@ header {
   .alert.alert-float {
     position: fixed;
     top: 100px;
-    z-index: 999;
+    z-index: 9;
     width: auto;
     -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
@@ -387,7 +388,7 @@ header {
 #items .placeholder {
   border-top: 1px solid #e9e9e9; }
 #items .date-separator {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #cccccc;
   color: #666666;
   height: 0.75em;
   font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
@@ -462,7 +463,7 @@ article {
       position: relative; }
       article .article-buttons .share ul {
         background: white;
-        border: 1px solid #dddddd;
+        border: 1px solid #cccccc;
         bottom: 29px;
         display: none;
         font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
@@ -491,7 +492,7 @@ article {
       position: relative; }
       article .article-buttons button.item-share ul {
         background: white;
-        border: 1px solid #dddddd;
+        border: 1px solid #cccccc;
         bottom: 28px;
         font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
         font-size: 14px;
@@ -567,8 +568,8 @@ article {
 .well {
   padding: 10px;
   margin-bottom: 30px;
-  background-color: #fefefe;
-  border: 1px solid #ececec;
+  background-color: #f9f9f9;
+  border: 1px solid #cccccc;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
@@ -607,7 +608,7 @@ form {
 
 fieldset {
   border: 0;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #cccccc;
   margin: 0;
   padding: 0;
   margin: 26px; }
@@ -697,7 +698,7 @@ input[type="file"],
 textarea,
 select {
   background: white !important;
-  border: 1px solid #dddddd;
+  border: 1px solid #cccccc;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -740,7 +741,8 @@ table {
   border-spacing: 0;
   font-size: 14px; }
   table.table {
-    border: 1px solid #dddddd;
+    background: #f9f9f9;
+    border: 1px solid #cccccc;
     border-collapse: separate;
     *border-collapse: collapse;
     border-left: 0;
@@ -755,18 +757,18 @@ table {
       font-family: MerriweatherBold, Georgia, "Times New Roman", Times, serif;
       font-weight: bold; }
     table.table td, table.table th {
-      border-left: 1px solid #dddddd;
+      border-left: 1px solid #cccccc;
       padding: 8px;
       line-height: 20px;
       text-align: left;
-      border-top: 1px solid #dddddd; }
+      border-top: 1px solid #cccccc; }
     table.table thead:first-child tr:first-child th,
     table.table tbody:first-child tr:first-child th,
     table.table tbody:first-child tr:first-child td {
       border-top: 0; }
     table.table tbody > tr:nth-child(odd) > td,
     table.table tbody > tr:nth-child(odd) > th {
-      background-color: #f9f9f9; }
+      background-color: white; }
     table.table tbody tr:hover > td,
     table.table tbody tr:hover > th {
       background-color: whitesmoke; }
@@ -781,6 +783,33 @@ table {
   height: 32px;
   overflow: hidden;
   vertical-align: middle; }
+
+#form-pay img {
+  vertical-align: middle; }
+#form-pay #total-amount {
+  font-family: MerriweatherBold, Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 1.5em;
+  line-height: 26px;
+  padding-top: 5px; }
+#form-pay select[name="amount"] {
+  min-width: 164px;
+  width: 164px; }
+#form-pay select[name="currency"] {
+  min-width: 80px;
+  width: 80px; }
+#form-pay select[name="expiry-month"] {
+  min-width: 80px;
+  width: 80px; }
+#form-pay select[name="expiry-year"] {
+  min-width: 80px;
+  width: 80px; }
+#form-pay input[name="cvc"] {
+  min-width: 80px;
+  width: 80px; }
+#form-pay input[name="address-postcode"] {
+  min-width: 80px;
+  width: 80px; }
 
 #table-subscriptions td:first-child i {
   font-size: 2em; }

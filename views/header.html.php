@@ -22,7 +22,7 @@
 			(function(app) {
 				app.email      = '<?php echo str_replace('@', ' ', $this->app->getConfig('emailFrom')) ?>';
 				app.controller = '<?php echo $this->app->getControllerName() ?>';
-				app.args       = '<?php echo implode('/', $this->app->getArgs()) ?>';
+				app.args       = [<?php echo $this->app->getArgs() ? '\'' . implode('\', \'', $this->app->getArgs()) . '\'' : '' ?>];
 				app.sessionId  = '<?php echo $this->app->getSingleton('session')->getId() ?>';
 				app.rootPath   = '<?php echo $this->app->getRootPath() ?>';
 				app.signedIn   = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;

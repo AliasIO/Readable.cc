@@ -60,7 +60,7 @@ class Read extends \Swiftlet\Controller
       )
       ON DUPLICATE KEY UPDATE
         vote = :vote
-			;');
+			');
 
 		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 		$sth->bindParam('item_id', $itemId, \PDO::PARAM_INT);
@@ -86,7 +86,8 @@ class Read extends \Swiftlet\Controller
 
 		$userId = $this->app->getSingleton('helper')->ensureValidUser(true);
 
-		$itemId = isset($_POST['item_id']) ? (int) $_POST['item_id'] : null;
+		$itemId   = isset($_POST['item_id'])   ? (int) $_POST['item_id']   : null;
+		$folderId = isset($_POST['folder_id']) ? (int) $_POST['folder_id'] : null;
 
 		if ( $_POST['item_id'] == 'all' ) {
 			$dbh = $this->app->getSingleton('pdo')->getHandle();
@@ -101,15 +102,22 @@ class Read extends \Swiftlet\Controller
 					:user_id,
 					items.id,
 					1
-				FROM             items
-				INNER JOIN users_feeds ON users_feeds.feed_id = items.feed_id
+				FROM       users_feeds
+				' . ( $folderId ? '
+				INNER JOIN folders     ON folders.id      = users_feeds.folder_id AND folders.id = :folder_id
+		 		' : '' ) . '
+				INNER JOIN items       ON   items.feed_id = users_feeds.feed_id
 				WHERE
 					users_feeds.user_id = :user_id
 				ON DUPLICATE KEY UPDATE
 					`read` = 1
-				;');
+				');
 
 			$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+
+			if ( $folderId ) {
+				$sth->bindParam('folder_id', $folderId, \PDO::PARAM_INT);
+			}
 
 			$sth->execute();
 		} else {
@@ -133,7 +141,7 @@ class Read extends \Swiftlet\Controller
 				)
 				ON DUPLICATE KEY UPDATE
 					`read` = 1
-				;');
+				');
 
 			$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 			$sth->bindParam('item_id', $itemId, \PDO::PARAM_INT);

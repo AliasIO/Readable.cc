@@ -14,12 +14,17 @@
 </div>
 <?php endif ?>
 
+<?php $feeds = $this->get('feeds') ?>
+
 <div class="jump">
 	<p>
 		Jump to:
 	</p>
 
 	<ul>
+		<?php if ( $feeds && !$this->get('paid') ): ?>
+		<li><a href="#subscriptions">Subscriptions</a></li>
+		<?php endif ?>
 		<li><a href="#feed-subscribe">Subscribe to feed</a></li>
 		<li><a href="#folders">Manage folders</a></li>
 		<li><a href="#feed-import-export">Import &amp; export feeds</a></il>
@@ -28,8 +33,16 @@
 
 <?php $folders = $this->get('folders') ?>
 
-<?php if ( $feeds = $this->get('feeds') ): ?>
-<h2>Subscriptions</h3>
+<?php if ( $feeds ): ?>
+<?php if ( !$this->get('paid') ): ?>
+<h2>Pay what you want</h2>
+
+<?php require('views/pay-partial.html.php') ?>
+
+<div class="divider"></div>
+<?php endif ?>
+
+<h2 id="subscriptions">Subscriptions</h3>
 
 <table id="table-subscriptions" class="table table-list">
 	<thead>

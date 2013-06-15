@@ -59,6 +59,36 @@ class Helper extends \Swiftlet\Model
 	}
 
 	/**
+	 * Check if the user has currently valid payment
+	 *
+	 * @return boolean
+	 */
+	public function userPaid()
+	{
+		$userId = $this->app->getSingleton('session')->get('id');
+
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+			SELECT
+				1
+			FROM payments
+			WHERE
+		 		user_id    = :user_id AND
+				expires_at > UTC_TIMESTAMP()
+			LIMIT 1
+			');
+
+		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+
+		$sth->execute();
+
+		$paid = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+		return (bool) count($paid);
+	}
+
+	/**
 	 * Apply local time-zone offset to UTC date-time
 	 *
 	 * @param string $dateTime
