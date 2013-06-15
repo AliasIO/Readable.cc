@@ -89,6 +89,7 @@
 
 <div class="divider"></div>
 
+<!--
 <h2 id="payments">Payments</h2>
 
 <?php if ( $payments ): ?>
@@ -133,6 +134,7 @@
 <?php endif ?>
 
 <div class="divider"></div>
+-->
 
 <h2 id="delete">Delete</h2>
 
