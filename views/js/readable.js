@@ -260,6 +260,12 @@
 						}
 
 						break;
+					case 67: // c
+						if ( app.items.activeItem ) {
+							app.items.collapse();
+						}
+
+						break;
 					case 65: // A
 					case 77: // m
 						if ( app.controller === 'Reading' || app.controller === 'Folder' ) {
@@ -581,6 +587,27 @@
 			}
 
 			return app.items;
+		},
+
+		collapse: function(instant) {
+			var el = app.items.activeItem;
+
+			if ( el ) {
+				$('article:not([data-item-id=' + el.data('item-id') + '])')
+					.stop()
+					.animate({ opacity: 1 }, instant ? 0 : app.duration.fade)
+					;
+
+				el
+					.removeClass('expanded')
+					.addClass('collapsed')
+					.find('.item-wrap')
+					.stop()
+					.slideUp(instant ? 0 : app.duration.scroll)
+					;
+
+				app.items.scrollTo(el, instant);
+			}
 		},
 
 		scrollTo: function(el, instant) {

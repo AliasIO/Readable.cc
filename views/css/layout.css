@@ -441,6 +441,7 @@ article {
     color: #666666;
     font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
     font-size: 85%;
+    font-size: 14px;
     font-style: italic;
     margin-bottom: 20px; }
     article .item-date strong {

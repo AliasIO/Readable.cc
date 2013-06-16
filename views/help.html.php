@@ -77,12 +77,20 @@
 			<td>Expand article (open)</td>
 		</tr>
 		<tr>
+			<td><code>c</code></td>
+			<td>Collapse article</td>
+		</tr>
+		<tr>
 			<td><code>s</code></td>
 			<td>Toggle save article</td>
 		</tr>
 		<tr>
 			<td><code>m</code>, <code>a</code></td>
 			<td>Mark all articles read in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;</td>
+		</tr>
+		<tr>
+			<td><code>Escape</code></td>
+			<td>Dismiss dialog box</td>
 		</tr>
 	</tbody>
 </table>
