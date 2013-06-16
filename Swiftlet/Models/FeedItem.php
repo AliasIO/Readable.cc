@@ -190,7 +190,7 @@ class FeedItem extends \Swiftlet\Model
 				$data->url      = (string) $link->attributes()->href;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = $contents ? (string) $contents : '';
-				$data->postedAt = $date ? date('Y-m-d H:i', strtotime((string) $date)) : null;
+				$data->postedAt = $date ? date('Y-m-d H:i:s', strtotime((string) $date)) : null;
 				$data->language = $language;
 
 				break;
@@ -203,7 +203,7 @@ class FeedItem extends \Swiftlet\Model
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = $contents ? (string) $contents : '';
-				$data->postedAt = $date ? date('Y-m-d H:i', strtotime((string) $date)) : null;
+				$data->postedAt = $date ? date('Y-m-d H:i:s', strtotime((string) $date)) : null;
 				$data->language = $this->feed->getLanguage();
 
 				break;

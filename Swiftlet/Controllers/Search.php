@@ -126,9 +126,10 @@ class Search extends \Swiftlet\Controllers\Read
 						INNER JOIN items       ON       items.id      = items_words.item_id
 						INNER JOIN feeds       ON       feeds.id      =       items.feed_id' . ( $feedIds ? ' AND feeds.id IN ( ' . implode(', ', array_fill(0, count($feedIds), '?')) . ' ) ' : '' ) . '
 						WHERE
-							items.posted_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY) -- Search items no more than a month old
+							items.posted_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY) AND -- Search items no more than a month old
+							items.posted_at < UTC_TIMESTAMP()                                -- Do not return future dated items
 						ORDER BY DATE(items.posted_at) DESC
-						LIMIT 1000                                                     -- Return at most the last 1000 matching items
+						LIMIT 1000                                                         -- Return at most the last 1000 matching items
 					) AS main
 					GROUP BY id
 					ORDER BY matches DESC, DATE(main.posted_at) DESC
