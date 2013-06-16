@@ -66,7 +66,7 @@ class Saved extends \Swiftlet\Controllers\Read
 				users_items.user_id = ? AND
 				users_items.saved   = 1
 				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
-      ORDER BY DATE(items.posted_at) DESC
+      ORDER BY DATE(items.created_at) DESC
 			LIMIT ?, ?
 			;');
 

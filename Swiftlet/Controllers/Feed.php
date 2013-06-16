@@ -102,7 +102,7 @@ class Feed extends \Swiftlet\Controllers\Read
 				WHERE
 					feeds.id = :feed_id
 				GROUP BY items.id
-				ORDER BY DATE(items.posted_at) DESC
+				ORDER BY DATE(items.created_at) DESC
 				LIMIT :limit_from, :limit_count
 				');
 

@@ -140,7 +140,7 @@ class Folder extends \Swiftlet\Controllers\Read
 						COALESCE(users_items.saved, 0) AS saved,
 						1 AS feed_subscribed
 					' . $sql . '
-					ORDER BY DATE(items.posted_at) DESC, users_items.score DESC
+					ORDER BY DATE(items.created_at) DESC, users_items.score DESC
 					LIMIT ?
 					');
 

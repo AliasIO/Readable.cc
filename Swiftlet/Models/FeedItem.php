@@ -91,7 +91,7 @@ class FeedItem extends \Swiftlet\Model
 					INSERT LOW_PRIORITY IGNORE INTO words (
 						word
 					) VALUES ' . implode(', ', array_fill(0, count($words), '( ? )')) . '
-					;');
+					');
 
 				$i = 1;
 
@@ -118,7 +118,7 @@ class FeedItem extends \Swiftlet\Model
 						word_id,
 						count
 					) VALUES ' . implode(', ', array_fill(0, count($words), '( ?, ( SELECT id FROM words WHERE word = ? LIMIT 1 ), ? )')) . '
-					;');
+					');
 
 				$i = 1;
 
@@ -162,7 +162,7 @@ class FeedItem extends \Swiftlet\Model
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = $contents ? (string) $contents : '';
-				$data->postedAt = date('Y-m-d H:i', $this->xml->pubDate ? strtotime((string) $this->xml->pubDate) : time());
+				$data->postedAt = $this->xml->pubDate ? date('Y-m-d H:i', strtotime((string) $this->xml->pubDate)) : null;
 				$data->language = $this->feed->getLanguage();
 
 				break;
@@ -190,7 +190,7 @@ class FeedItem extends \Swiftlet\Model
 				$data->url      = (string) $link->attributes()->href;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = $contents ? (string) $contents : '';
-				$data->postedAt = date('Y-m-d H:i', $date ? strtotime((string) $date) : time());
+				$data->postedAt = $date ? date('Y-m-d H:i', strtotime((string) $date)) : null;
 				$data->language = $language;
 
 				break;
@@ -203,7 +203,7 @@ class FeedItem extends \Swiftlet\Model
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
 				$data->contents = $contents ? (string) $contents : '';
-				$data->postedAt = date('Y-m-d H:i', $date ? strtotime((string) $date) : time());
+				$data->postedAt = $date ? date('Y-m-d H:i', strtotime((string) $date)) : null;
 				$data->language = $this->feed->getLanguage();
 
 				break;

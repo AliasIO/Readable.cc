@@ -53,7 +53,7 @@
 <h2 id="shortcuts">Keyboard shortcuts</h2>
 
 <p>
-	Keyboard shortcuts to help you move around on the reading lists (&lsquo;<a href="<?php echo $this->app->getRootPath() ?>">Popular Reading</a>&rsquo;, &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo; and &lsquo;<a href="<?php echo $this->app->getRootPath() ?>saved">Saved</a>&rsquo;).
+	Keyboard shortcuts to help you move around on the reading lists.
 </p>
 
 <table class="table">
