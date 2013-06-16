@@ -24,7 +24,7 @@ class Cron extends \Swiftlet\Controller
 			  ( feeds.last_fetch_attempted_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL  3 HOUR) OR  feeds.last_fetch_attempted_at IS NULL ) AND -- Fetch feeds eight times a day
 			  ( feeds.last_fetched_at         > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 90 DAY)  OR  feeds.last_fetched_at         IS NULL )     -- Give up on feeds after three months of failed attempts
 			GROUP BY feeds.id
-			ORDER BY feeds.last_fetched_at ASC
+			ORDER BY feeds.last_fetch_attempted_at ASC
 			LIMIT 100
 			');
 
