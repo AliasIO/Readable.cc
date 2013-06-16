@@ -485,7 +485,7 @@
 								self
 									.attr('src', src)
 									.removeAttr('data-src')
-									.width(img.width())
+									//.width(img.width())
 									;
 
 								img.remove();
