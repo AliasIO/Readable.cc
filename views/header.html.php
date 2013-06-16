@@ -29,7 +29,7 @@
 				app.itemCount  = 0;
 				app.page       = <?php echo !empty($_GET['page']) && (int) $_GET['page'] - 1 ? (int) $_GET['page'] - 1 : 0 ?>;
 				app.prefs      = {
-					externalLinks: <?php echo $this->app->getSingleton('session')->get('external_links') ?>
+					externalLinks: <?php echo (int) $this->app->getSingleton('session')->get('external_links') ?>
 				};
 			}(readable));
 		</script>
