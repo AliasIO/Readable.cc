@@ -103,7 +103,7 @@ class Reading extends \Swiftlet\Controllers\Read
 				COALESCE(users_items.saved, 0) AS saved,
 				1 AS feed_subscribed
 			' . $sql . '
-			ORDER BY DATE(items.created_at) DESC' . ( $this->app->getSingleton('session')->get('item_order') == self::ITEM_SORT_RELEVANCE_TIME ? ', users_items.score DESC' : '' ) . '
+			ORDER BY DATE(COALESCE(items.posted_at, items.created_at)) DESC' . ( $this->app->getSingleton('session')->get('item_order') == self::ITEM_SORT_RELEVANCE_TIME ? ', users_items.score DESC' : '' ) . '
 			LIMIT ?
 			');
 

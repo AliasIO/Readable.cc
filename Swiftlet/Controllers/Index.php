@@ -58,7 +58,7 @@ class Index extends \Swiftlet\Controllers\Read
 				items.english = 1 AND
 				items.short   = 0
 				' . ( $userId && $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
-			ORDER BY DATE(items.posted_at) DESC, items.score DESC
+			ORDER BY DATE(COALESCE(items.posted_at, items.created_at)) DESC, items.score DESC
 			';
 
 		if ( $userId ) {
