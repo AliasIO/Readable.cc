@@ -177,6 +177,8 @@ class Auth extends \Swiftlet\Model
 				id,
 				email,
 				password,
+				external_links,
+				item_order,
 				timezone,
 				created_at,
 				enabled

@@ -584,7 +584,8 @@ article {
 form {
   font-size: 85%; }
   form .control-group {
-    margin-bottom: 30px; }
+    margin-bottom: 30px;
+    overflow: hidden; }
     form .control-group.error .control-label {
       color: #9c0001; }
     form .control-group.error input[type="email"],
@@ -605,6 +606,11 @@ form {
     width: 160px; }
   form .controls {
     margin-left: 180px; }
+    form .controls .control-label {
+      margin-right: 15px;
+      padding-top: 5px;
+      text-align: left;
+      width: auto; }
 
 fieldset {
   border: 0;
@@ -729,7 +735,7 @@ select {
   input[type="file"].input-block-level,
   textarea.input-block-level,
   select.input-block-level {
-    width: 100%; }
+    width: 99.8%; }
 
 input[type="file"] {
   height: auto; }

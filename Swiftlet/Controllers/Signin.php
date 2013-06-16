@@ -28,9 +28,11 @@ class Signin extends \Swiftlet\Controller
 
 				$session = $this->app->getSingleton('session');
 
-				$session->set('id',       $user->id);
-				$session->set('email',    $user->email);
-				$session->set('timezone', $user->timezone);
+				$session->set('id',             $user->id);
+				$session->set('email',          $user->email);
+				$session->set('external_links', $user->external_links);
+				$session->set('item_order',     $user->item_order);
+				$session->set('timezone',       $user->timezone);
 
 				$dbh = $this->app->getSingleton('pdo')->getHandle();
 

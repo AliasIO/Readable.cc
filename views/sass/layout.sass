@@ -656,6 +656,7 @@ form
 
 	.control-group
 		margin-bottom: $textMargin * 2
+		overflow: hidden
 
 		&.error 
 
@@ -681,6 +682,12 @@ form
 	.controls
 		margin-left: 180px	
 
+		.control-label
+			margin-right: $textMargin
+			padding-top: 5px
+			text-align: left
+			width: auto
+	
 fieldset
 	border: 0
 	border-bottom: 1px solid $colorBorder
@@ -788,7 +795,7 @@ select
 		padding: 0
 
 	&.input-block-level
-		width: 100%
+		width: 99.8%
 
 input[type="file"]
 	height: auto

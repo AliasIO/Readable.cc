@@ -3,6 +3,8 @@
 (function(app, $) {
 	'use strict';
 
+	app.PREF_LINKS_NEW_TAB = 1;
+
 	app.duration = { fade: 300, scroll: 300 };
 	app.excludes = [];
 	app.mobile   = false;
@@ -67,6 +69,14 @@
 			$('#overlay, .alert').hide();
 		});
 
+		if ( app.prefs.externalLinks === app.PREF_LINKS_NEW_TAB ) {
+			$(document).on('click', 'a', function(e) {
+				if ( this.hostname && this.hostname !== window.location.hostname ) {
+					$(this).attr('target', '_blank');
+				}
+			});
+		}
+
 		$(window).resize(function() {
 			$('.alert-float').outerWidth($('#contents').width());
 
@@ -84,8 +94,8 @@
 				app.items.init();
 
 				break;
-			case 'Account':
-				app.account.init();
+			case 'Settings':
+				app.settings.init();
 
 				break;
 			case 'Pay':
@@ -874,9 +884,9 @@
 		}
 	};
 
-	app.account = {
+	app.settings = {
 		init: function() {
-			$('#form-account-delete').on('submit', function() {
+			$('#form-settings-delete').on('submit', function() {
 				if ( window.confirm('This action can not be undone!\n\nAre you sure you wish to delete your account?') ) {
 					return true;
 				}

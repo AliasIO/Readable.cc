@@ -14,7 +14,7 @@
 		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
 
 		<link href="<?php echo $this->app->getRootPath() ?>views/fonts/entypo/entypo.css" rel="stylesheet">
-		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css?l" rel="stylesheet">
+		<link href="<?php echo $this->app->getRootPath() ?>views/css/layout.css?m" rel="stylesheet">
 
 		<script>
 			var readable = {};
@@ -28,6 +28,9 @@
 				app.signedIn   = <?php echo $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
 				app.itemCount  = 0;
 				app.page       = <?php echo !empty($_GET['page']) && (int) $_GET['page'] - 1 ? (int) $_GET['page'] - 1 : 0 ?>;
+				app.prefs      = {
+					externalLinks: <?php echo $this->app->getSingleton('session')->get('external_links') ?>
+				};
 			}(readable));
 		</script>
 
@@ -85,7 +88,7 @@
 							<?php if ( $this->app->getControllerName() === 'Reading' || $this->app->getControllerName() === 'Folder' ): ?>
 							<li class="mark-all-read"><a href="javascript: void(0);">Mark all read</a></li>
 							<?php endif ?>
-							<li class="account      <?php echo $this->app->getControllerName() == 'Account'       ? ' active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>account"      >Account</a></li>
+							<li class="settings     <?php echo $this->app->getControllerName() == 'Settings'      ? ' active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>settings"     >Settings</a></li>
 							<li class="subscriptions<?php echo $this->app->getControllerName() == 'Subscriptions' ? ' active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>subscriptions">Subscriptions</a></li>
 							<li class="signout      <?php echo $this->app->getControllerName() == 'Signout'       ? ' active' : '' ?>"><a href="<?php echo $this->app->getRootPath() ?>signout"      >Sign out</a></li>
 						</ul>
