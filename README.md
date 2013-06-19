@@ -94,7 +94,7 @@ service apache reload
 ```
 
 
-### Nginx
+### Nginx with PHP-FastCGI
 
 Create a virtual host entry, point the document root to the `public` directory.
 
