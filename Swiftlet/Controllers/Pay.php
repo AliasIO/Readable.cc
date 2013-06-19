@@ -494,13 +494,13 @@ class Pay extends \Swiftlet\Controller
 		$result = curl_exec($ch);
 
 		if ( curl_errno($ch) !== CURLE_OK ) {
-			//throw new \Exception(curl_error($ch), self::CURL_ERROR);
+			//throw new Exception(curl_error($ch), self::CURL_ERROR);
 		}
 
 		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 		if ( $httpCode != 200 ) {
-			//throw new \Exception('cURL request returned HTTP code ' . $httpCode, self::SERVER_ERROR);
+			//throw new Exception('cURL request returned HTTP code ' . $httpCode, self::SERVER_ERROR);
 		}
 
 		return json_decode($result);

@@ -1,16 +1,16 @@
-<?php require 'header.html.php' ?>
+<?php require 'header.php' ?>
 
-<h1><?php echo $this->get('pageTitle') ?></h1>
+<h1><?= $this->get('pageTitle') ?></h1>
 
 <?php if ( $this->get('success') ): ?>
 <div class="alert alert-success">
-	<?php echo $this->get('success'); ?>
+	<?= $this->get('success'); ?>
 </div>
 <?php endif ?>
 
 <?php if ( $this->get('error') ): ?>
 <div class="alert alert-error">
-	<?php echo $this->get('error'); ?>
+	<?= $this->get('error'); ?>
 </div>
 <?php endif ?>
 
@@ -18,8 +18,8 @@
 	Please report any content that you feel is inappropriate for this website.
 </p>
 
-<form id="form-report" method="post" action="<?php echo $this->app->getRootPath() ?>report/article/<?php echo $this->get('itemId') ?>" class="well">
-	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
+<form id="form-report" method="post" action="<?= $this->app->getRootPath() ?>report/article/<?= $this->get('itemId') ?>" class="well">
+	<input type="hidden" name="sessionId" value="<?= $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
 		<div class="control-group">
@@ -34,7 +34,7 @@
 			<label class="control-label" for="email">Email address</label>
 
 			<div class="controls">
-				<input id="email" name="email" class="input-xlarge" type="email" value="<?php echo $this->get('email') ?>">
+				<input id="email" name="email" class="input-xlarge" type="email" value="<?= $this->get('email') ?>">
 			</div>
 		</div>
 
@@ -46,4 +46,4 @@
 	</fieldset>
 </form>
 
-<?php require 'footer.html.php' ?>
+<?php require 'footer.php' ?>

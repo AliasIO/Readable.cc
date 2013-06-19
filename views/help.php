@@ -1,6 +1,6 @@
-<?php require 'header.html.php' ?>
+<?php require 'header.php' ?>
 
-<h1><?php echo $this->get('pageTitle') ?></h1>
+<h1><?= $this->get('pageTitle') ?></h1>
 
 <div class="jump">
 	<p>
@@ -28,7 +28,7 @@
 
 <p>
 	New and interesting content is automatically promoted to the top of your reading list based on articles you vote for. Content the majority is likely to find
-	interesting appears on the &lsquo;<a href="<?php echo $this->app->getRootPath() ?>">Popular Reading</a>&rsquo; page.
+	interesting appears on the &lsquo;<a href="<?= $this->app->getRootPath() ?>">Popular Reading</a>&rsquo; page.
 </p>
 
 <p>
@@ -41,11 +41,11 @@
 </p>
 
 <p>
-	Hit the &lsquo;save&rsquo; button on articles you wish to read later. They will appear on the &lsquo;<a href="<?php echo $this->app->getRootPath() ?>saved">Saved</a>&rsquo; page.
+	Hit the &lsquo;save&rsquo; button on articles you wish to read later. They will appear on the &lsquo;<a href="<?= $this->app->getRootPath() ?>saved">Saved</a>&rsquo; page.
 </p>
 
 <p>
-	<?php echo $this->app->getConfig('siteName') ?> is free and <a href="<?php echo $this->app->getConfig('repoUrl') ?>">open source</a>.
+	<?= $this->app->getConfig('siteName') ?> is free and <a href="<?= $this->app->getConfig('repoUrl') ?>">open source</a>.
 </p>
 
 <div class="divider"></div>
@@ -86,7 +86,7 @@
 		</tr>
 		<tr>
 			<td><code>m</code>, <code>a</code></td>
-			<td>Mark all articles read in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;</td>
+			<td>Mark all articles read in &lsquo;<a href="<?= $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;</td>
 		</tr>
 		<tr>
 			<td><code>Escape</code></td>
@@ -104,15 +104,15 @@
 </p>
 
 <p>
-	&nbsp; <em><a class="contact-email" href="mailto:<?php echo $this->app->getConfig('emailHoneyPot') ?>"><?php echo $this->app->getConfig('emailHoneyPot') ?></a></em>
+	&nbsp; <em><a class="contact-email" href="mailto:<?= $this->app->getConfig('emailHoneyPot') ?>"><?= $this->app->getConfig('emailHoneyPot') ?></a></em>
 </p>
 
 <p>
-	Follow <?php echo $this->app->getConfig('siteName') ?> on Twitter:
+	Follow <?= $this->app->getConfig('siteName') ?> on Twitter:
 </p>
 
 <p>
-	&nbsp; <em><a href="https://twitter.com/<?php echo $this->app->getConfig('twitterHandle') ?>">@<?php echo $this->app->getConfig('twitterHandle') ?></a></em>
+	&nbsp; <em><a href="https://twitter.com/<?= $this->app->getConfig('twitterHandle') ?>">@<?= $this->app->getConfig('twitterHandle') ?></a></em>
 </p>
 
 <div class="divider"></div>
@@ -127,4 +127,4 @@
 	<small><a href="http://readable.cc">Readable.cc</a> was created by <a href="http://alias.io">Elbert Alias</a></small>
 </p>
 
-<?php require 'footer.html.php' ?>
+<?php require 'footer.php' ?>

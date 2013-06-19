@@ -91,7 +91,7 @@ class Subscriptions extends \Swiftlet\Controller
 		} else {
 			try {
 				$id = $this->app->getSingleton('subscription')->subscribe($id, $url, $folderId);
-			} catch ( \Exception $e ) {
+			} catch ( Exception $e ) {
 				switch ( $e->getCode() ) {
 					case \Swiftlet\Models\Feed::FEED_INVALID:
 						$error = 'The feed appears to be invalid and could not be added.';
@@ -248,7 +248,7 @@ class Subscriptions extends \Swiftlet\Controller
 					$xml = new \SimpleXMLElement(file_get_contents($file));
 
 					if ( !$xml->body->outline ) {
-						throw new \Exception('Invalid OPML');
+						throw new Exception('Invalid OPML');
 					}
 
 					$feeds = array();
@@ -300,7 +300,7 @@ class Subscriptions extends \Swiftlet\Controller
 							$link  = $xml->attributes()->htmlUrl;
 
 							if ( !$url || !$title || !$link ) {
-								throw new \Exception('Invalid OPML');
+								throw new Exception('Invalid OPML');
 							}
 
 							$feed = $this->app->getModel('feed')->dummy($title, $url, $link, $folderId);
@@ -308,7 +308,7 @@ class Subscriptions extends \Swiftlet\Controller
 							$feed->save();
 						}
 					}
-				} catch ( \Exception $e ) {
+				} catch ( Exception $e ) {
 					$error = 'The OPML file appears to be invalid.'.$e->getMessage();
 				}
 			} else {

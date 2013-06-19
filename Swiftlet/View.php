@@ -15,7 +15,7 @@ class View implements Interfaces\View
 
 	/**
 	 * Constructor
-	 * @param object $app
+	 * @param Interfaces\App $app
 	 * @param string $name
 	 */
 	public function __construct(Interfaces\App $app, $name)
@@ -26,9 +26,9 @@ class View implements Interfaces\View
 
 	/**
 	 * Get a view variable
-	 * @params string $variable
-	 * @params bool $htmlEncode
-	 * @return mixed
+	 * @param string $variable
+	 * @param bool $htmlEncode
+	 * @return mixed|null
 	 */
 	public function get($variable, $htmlEncode = true)
 	{
@@ -39,6 +39,18 @@ class View implements Interfaces\View
 				return $this->variables[$variable];
 			}
 		}
+
+		return null;
+	}
+
+	/**
+	 * Magic method to get a view variable, forwards to $this->get()
+	 * @param string $variable
+	 * @return mixed
+	 */
+	public function __get($variable)
+	{
+		return $this->get($variable);
 	}
 
 	/**
@@ -49,6 +61,16 @@ class View implements Interfaces\View
 	public function set($variable, $value = null)
 	{
 		$this->variables[$variable] = $value;
+	}
+
+	/**
+	 * Magic method to set a view variable, forwards to $this->set()
+	 * @param string $variable
+	 * @param mixed $value
+	 */
+	public function __set($variable, $value = null)
+	{
+		$this->set($variable, $value);
 	}
 
 	/**
@@ -107,15 +129,17 @@ class View implements Interfaces\View
 
 	/**
 	 * Render the view
+	 *
+	 * @throws Exception
 	 */
 	public function render()
 	{
-		if ( is_file($file = 'views/' . $this->name . '.html.php') ) {
+		if ( is_file($file = 'views/' . $this->name . '.php') ) {
 			header('X-Generator: Swiftlet');
 
 			require $file;
 		} else {
-			throw new \Exception('View not found');
+			throw new Exception('View not found');
 		}
 	}
 }

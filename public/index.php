@@ -3,7 +3,7 @@
 namespace Swiftlet;
 
 try {
-	chdir(dirname(__FILE__));
+	chdir(dirname(__FILE__) . '/..');
 
 	// Bootstrap the application
 	require 'Swiftlet/Interfaces/App.php';
@@ -15,13 +15,13 @@ try {
 
 	spl_autoload_register(array($app, 'autoload'));
 
-	require 'config.php';
+	require 'config/main.php';
 
 	date_default_timezone_set('UTC');
 
 	$app->run();
 	$app->serve();
-} catch ( \Exception $e ) {
+} catch ( Exception $e ) {
 	if ( !headers_sent() ) {
 		header('HTTP/1.1 503 Service Temporarily Unavailable');
 		header('Status: 503 Service Temporarily Unavailable');

@@ -1,7 +1,7 @@
 			<div class="modal modal-signin">
 				<h4>Not signed in</h4>
 
-				<p>You're missing out. Please <a href="<?php echo $this->app->getRootPath() ?>signin">sign in</a> or <a href="<?php echo $this->app->getRootPath() ?>signup">create an account</a>.</p>
+				<p>You're missing out. Please <a href="<?= $this->app->getRootPath() ?>signin">sign in</a> or <a href="<?= $this->app->getRootPath() ?>signup">create an account</a>.</p>
 			</div>
 
 			<div class="modal modal-mark-all-read">
@@ -29,15 +29,15 @@
 		<div id="overlay"></div>
 
 		<p id="feedback">
-			<a href="<?php echo $this->app->getRootPath() ?>help#contact">Feedback</a>
+			<a href="<?= $this->app->getRootPath() ?>help#contact">Feedback</a>
 		</p>
 
 		<!--
-		<script src="<?php echo $this->app->getRootPath() ?>views/lib/mathjax/MathJax.js?config=readable.js"></script>
+		<script src="<?= $this->app->getRootPath() ?>lib/mathjax/MathJax.js?config=readable.js"></script>
 		-->
 
-		<script src="<?php echo $this->app->getRootPath() ?>views/lib/jquery-1.9.1.min.js"></script>
-		<script src="<?php echo $this->app->getRootPath() ?>views/js/readable.js?l"></script>
+		<script src="<?= $this->app->getRootPath() ?>lib/jquery-1.9.1.min.js"></script>
+		<script src="<?= $this->app->getRootPath() ?>js/readable.js?l"></script>
 
 		<script>
 			var _gaq = _gaq || [];

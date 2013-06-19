@@ -1,13 +1,13 @@
-<?php require 'header.html.php' ?>
+<?php require 'header.php' ?>
 
 <div id="page-head-wrap">
 	<div id="page-head">
 		<h1>Popular Reading</h1>
 
 		<p>
-			<span>Navigate to next and previous articles with <code>j</code> and <code>k</code> (<a href="<?php echo $this->app->getRootPath() ?>help#shortcuts">more</a>).</span>
+			<span>Navigate to next and previous articles with <code>j</code> and <code>k</code> (<a href="<?= $this->app->getRootPath() ?>help#shortcuts">more</a>).</span>
 			<?php if ( !$this->app->getSingleton('session')->get('id') ): ?>
-			<span><a href="<?php echo $this->app->getRootPath() ?>signup">Sign up</a> to subscribe to RSS feeds and vote on articles for personalised reading.</span>
+			<span><a href="<?= $this->app->getRootPath() ?>signup">Sign up</a> to subscribe to RSS feeds and vote on articles for personalised reading.</span>
 			<?php endif ?>
 		</p>
 	</div>
@@ -23,8 +23,8 @@
 <div id="items-read-line"></div>
 
 <div id="items">
-	<?php require 'read.html.php' ?>
+	<?php require 'read.php' ?>
 </div>
 <?php endif ?>
 
-<?php require 'footer.html.php' ?>
+<?php require 'footer.php' ?>

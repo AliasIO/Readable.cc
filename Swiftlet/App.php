@@ -114,25 +114,31 @@ class App implements Interfaces\App
 	 */
 	public function serve()
 	{
+		ob_start();
+
 		$this->view->render();
+
+		ob_end_flush();
 	}
 
 	/**
 	 * Get a configuration value
 	 * @param string $variable
-	 * @return mixed
+	 * @return mixed|null
 	 */
 	public function getConfig($variable)
 	{
 		if ( isset($this->config[$variable]) ) {
 			return $this->config[$variable];
 		}
+
+		return null;
 	}
 
 	/**
 	 * Set a configuration value
 	 * @param string $variable
-	 * @param mixed
+	 * @param mixed $value
 	 */
 	public function setConfig($variable, $value)
 	{
@@ -235,7 +241,9 @@ class App implements Interfaces\App
 
 		$file = str_replace('\\', '/', $match[1]) . str_replace('_', '/', $match[2]) . '.php';
 
-		require $file;
+		if ( file_exists($file) ) {
+			require $file;
+		}
 	}
 
 	/**
@@ -244,9 +252,11 @@ class App implements Interfaces\App
 	 * @param string $string
 	 * @param string $file
 	 * @param int $line
+	 *
+	 * @throws Exception
 	 */
 	public function error($number, $string, $file, $line)
 	{
-		throw new \Exception('Error #' . $number . ': ' . $string . ' in ' . $file . ' on line ' . $line);
+		throw new Exception('Error #' . $number . ': ' . $string . ' in ' . $file . ' on line ' . $line);
 	}
 }

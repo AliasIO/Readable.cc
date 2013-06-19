@@ -1,16 +1,16 @@
-<?php require 'header.html.php' ?>
+<?php require 'header.php' ?>
 
-<h1><?php echo $this->get('pageTitle') ?></h1>
+<h1><?= $this->get('pageTitle') ?></h1>
 
 <?php if ( $this->get('success') ): ?>
 <div class="alert alert-success">
-	<?php echo $this->get('success'); ?>
+	<?= $this->get('success'); ?>
 </div>
 <?php endif ?>
 
 <?php if ( $this->get('error') ): ?>
 <div class="alert alert-error">
-	<?php echo $this->get('error', false); ?>
+	<?= $this->get('error', false); ?>
 </div>
 <?php endif ?>
 
@@ -38,7 +38,7 @@
 <?php if ( !$this->get('paid') ): ?>
 <h2>Pay what you want</h2>
 
-<?php require('views/pay-partial.html.php') ?>
+<?php require('views/pay-partial.php') ?>
 
 <div class="divider"></div>
 <?php endif ?>
@@ -58,29 +58,29 @@
 		<?php foreach ( $feeds as $feed ): ?>
 		<tr>
 			<td>
-				<a href="<?php echo $this->app->getSingleton('helper')->getFeedLink($feed->id, $feed->title) ?>"><?php echo $feed->title ?></a>
+				<a href="<?= $this->app->getSingleton('helper')->getFeedLink($feed->id, $feed->title) ?>"><?= $feed->title ?></a>
 				<span>
-					<a href="<?php echo $feed->link ?>" title="Visit the website at <?php echo parse_url($feed->link, PHP_URL_HOST) ?>"><i class="entypo link"></i></a>
-					<a href="<?php echo $feed->url  ?>" title="View the feed at <?php echo parse_url($feed->url,  PHP_URL_HOST) ?>"><i class="entypo rss"></i></a>
+					<a href="<?= $feed->link ?>" title="Visit the website at <?= parse_url($feed->link, PHP_URL_HOST) ?>"><i class="entypo link"></i></a>
+					<a href="<?= $feed->url  ?>" title="View the feed at <?= parse_url($feed->url,  PHP_URL_HOST) ?>"><i class="entypo rss"></i></a>
 					<small>
 						&nbsp;
-						<em><?php echo $feed->last_fetched_at ? 'Last fetched on ' . date('F j, Y', $feed->last_fetched_at) : 'Never successfully fetched' ?></em>
+						<em><?= $feed->last_fetched_at ? 'Last fetched on ' . date('F j, Y', $feed->last_fetched_at) : 'Never successfully fetched' ?></em>
 						&nbsp;
 					</small>
 				</span>
 			</td>
 			<td>
-				<select data-feed-id="<?php echo $feed->id ?>">
+				<select data-feed-id="<?= $feed->id ?>">
 					<option value=""></option>
 					<?php foreach ( $folders as $folder ): ?>
-					<option value="<?php echo $folder->id ?>"<?php echo $feed->folder_id == $folder->id ? ' selected="selected"' : '' ?>>
-						<?php echo $folder->title ?>
+					<option value="<?= $folder->id ?>"<?= $feed->folder_id == $folder->id ? ' selected="selected"' : '' ?>>
+						<?= $folder->title ?>
 					</option>
 					<?php endforeach ?>
 				</select>
 			</td>
 			<td>
-				<button class="btn btn-danger btn-small unsubscribe" data-feed-id="<?php echo $feed->id ?>" data-feed-name="<?php echo $feed->title ?>">Unsubscribe</button>
+				<button class="btn btn-danger btn-small unsubscribe" data-feed-id="<?= $feed->id ?>" data-feed-name="<?= $feed->title ?>">Unsubscribe</button>
 			</td>
 		</tr>
 		<?php endforeach ?>
@@ -92,7 +92,7 @@
 <h2>Get started</h3>
 
 <p>
-	Add a few subscriptions to get started. Articles appear in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.
+	Add a few subscriptions to get started. Articles appear in &lsquo;<a href="<?= $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.
 </p>
 
 <table id="table-subscriptions-suggestions" class="table">
@@ -170,28 +170,28 @@
 	Alternatively you can just use a website's URL and we'll try to find a feed automatically.
 </p>
 
-<form id="form-subscriptions-subscribe" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="well">
+<form id="form-subscriptions-subscribe" method="post" action="<?= $this->app->getRootPath() ?>subscriptions" class="well">
 	<input type="hidden" name="form" value="subscribe">
-	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
+	<input type="hidden" name="sessionId" value="<?= $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
-		<div class="control-group <?php echo $this->get('error-url') ? 'error' : '' ?>">
+		<div class="control-group <?= $this->get('error-url') ? 'error' : '' ?>">
 			<label class="control-label" for="url">URL</label>
 
 			<div class="controls">
-				<input id="url" name="url" class="input-block-level" type="text" value="<?php echo $this->get('url') ?>" placeholder="Website or feed URL">
+				<input id="url" name="url" class="input-block-level" type="text" value="<?= $this->get('url') ?>" placeholder="Website or feed URL">
 			</div>
 		</div>
 
-		<div class="control-group <?php echo $this->get('error-url') ? 'error' : '' ?>">
+		<div class="control-group <?= $this->get('error-url') ? 'error' : '' ?>">
 			<label class="control-label" for="folder">Folder</label>
 
 			<div class="controls">
 				<select id="folder" name="folder">
 					<option value="">No folder</option>
 					<?php foreach ( $folders as $folder ): ?>
-					<option value="<?php echo $folder->id ?>">
-						<?php echo $folder->title ?>
+					<option value="<?= $folder->id ?>">
+						<?= $folder->title ?>
 					</option>
 					<?php endforeach ?>
 				</select>
@@ -214,9 +214,9 @@
 	Organise your subscriptions into folders. Folders are public and can be shared with anyone anonymously. Deleting a folder does not delete subscriptions.
 </p>
 
-<form id="form-subscriptions-folders" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="well">
+<form id="form-subscriptions-folders" method="post" action="<?= $this->app->getRootPath() ?>subscriptions" class="well">
 	<input type="hidden" name="form" value="folders">
-	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
+	<input type="hidden" name="sessionId" value="<?= $this->app->getSingleton('session')->getId() ?>">
 
 	<?php if ( $folders ): ?>
 	<fieldset>
@@ -233,10 +233,10 @@
 				<?php foreach ( $folders as $folder ): ?>
 				<tr>
 					<td>
-						<input type="text" name="titles[<?php echo $folder->id ?>]" value="<?php echo $folder->title ?>" class="input-block-level">
+						<input type="text" name="titles[<?= $folder->id ?>]" value="<?= $folder->title ?>" class="input-block-level">
 					</td>
 					<td>
-						<input type="checkbox" name="delete[<?php echo $folder->id ?>]" value="1">
+						<input type="checkbox" name="delete[<?= $folder->id ?>]" value="1">
 					</td>
 				</tr>
 				<?php endforeach ?>
@@ -246,11 +246,11 @@
 	<?php endif ?>
 
 	<fieldset>
-		<div class="control-group <?php echo $this->get('error-title') ? 'error' : '' ?>">
+		<div class="control-group <?= $this->get('error-title') ? 'error' : '' ?>">
 			<label class="control-label" for="url">Folder name</label>
 
 			<div class="controls">
-				<input id="title" name="titles[new]" type="text" value="<?php echo $this->get('title') ?>" placeholder="E.g. News">
+				<input id="title" name="titles[new]" type="text" value="<?= $this->get('title') ?>" placeholder="E.g. News">
 			</div>
 		</div>
 
@@ -272,12 +272,12 @@
 </p>
 
 <p>
-	It may take up to a few hours for imported feeds to appear in &lsquo;<a href="<?php echo $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.
+	It may take up to a few hours for imported feeds to appear in &lsquo;<a href="<?= $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.
 </p>
 
-<form id="form-subscriptions-import" method="post" action="<?php echo $this->app->getRootPath() ?>subscriptions" class="well" enctype="multipart/form-data">
+<form id="form-subscriptions-import" method="post" action="<?= $this->app->getRootPath() ?>subscriptions" class="well" enctype="multipart/form-data">
 	<input type="hidden" name="form" value="import">
-	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
+	<input type="hidden" name="sessionId" value="<?= $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
 		<div class="control-group">
@@ -298,10 +298,10 @@
 	<fieldset>
 		<div class="control-group">
 			<div class="controls">
-				<a class="btn btn-primary" href="<?php echo $this->app->getRootPath() ?>subscriptions/export">Export feeds</a>
+				<a class="btn btn-primary" href="<?= $this->app->getRootPath() ?>subscriptions/export">Export feeds</a>
 			</div>
 		</div>
 	</fieldset>
 </form>
 
-<?php require 'footer.html.php' ?>
+<?php require 'footer.php' ?>

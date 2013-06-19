@@ -1,14 +1,14 @@
 <p>
-	You are free to evaluate <?php echo $this->app->getConfig('siteName') ?> for as long as you wish.
+	You are free to evaluate <?= $this->app->getConfig('siteName') ?> for as long as you wish.
 	If you feel compelled to give your support, consider making a one time payment of however much it's worth to you.
 </p>
 
-<form id="form-pay" method="post" action="<?php echo $this->app->getRootPath() ?>pay" class="well">
+<form id="form-pay" method="post" action="<?= $this->app->getRootPath() ?>pay" class="well">
 	<input type="hidden" name="form" value="pay-partial">
-	<input type="hidden" name="sessionId" value="<?php echo $this->app->getSingleton('session')->getId() ?>">
+	<input type="hidden" name="sessionId" value="<?= $this->app->getSingleton('session')->getId() ?>">
 
 	<fieldset>
-		<div class="control-group <?php echo $this->get('error-url') ? 'error' : '' ?>">
+		<div class="control-group <?= $this->get('error-url') ? 'error' : '' ?>">
 			<label class="control-label" for="amount">Amount</label>
 
 			<div class="controls">
@@ -28,7 +28,7 @@
 			</div>
 		</div>
 
-		<div class="control-group <?php echo $this->get('error-months') ? 'error' : '' ?>">
+		<div class="control-group <?= $this->get('error-months') ? 'error' : '' ?>">
 			<label class="control-label" for="months">Pay for</label>
 
 			<div class="controls">
@@ -43,7 +43,7 @@
 	<fieldset>
 		<div class="control-group">
 			<div class="controls">
-				<button class="btn btn-primary" type="submit">Continue</button> &nbsp; <img src="views/images/cc.png" width="88" height="27" alt="">
+				<button class="btn btn-primary" type="submit">Continue</button> &nbsp; <img src="images/cc.png" width="88" height="27" alt="">
 			</div>
 		</div>
 	</fieldset>

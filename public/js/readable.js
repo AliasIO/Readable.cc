@@ -50,7 +50,7 @@
 		});
 
 		$(document).on('click', 'button.item-share', function(e) {
-			$(this).parent().find('ul').toggle();
+			$(this).trigger('blur').parent().find('ul').toggle();
 		});
 
 		// Hide alerts on click
@@ -374,7 +374,7 @@
 			$('#items').on('click', 'article.active .item-vote', function(e) {
 				e.preventDefault();
 
-				$(this).blur();
+				$(this).trigger('blur');
 
 				app.items.vote($(this).data('item-id'), $(this).hasClass('voted') ? 0 : $(this).data('vote'));
 			});
@@ -388,7 +388,7 @@
 
 				e.preventDefault();
 
-				$(this).blur();
+				$(this).trigger('blur');
 
 				app.items.subscribe(feedId, action);
 			});
@@ -396,7 +396,7 @@
 			$('#items').on('click', 'article.active .item-save', function(e) {
 				e.preventDefault();
 
-				$(this).blur();
+				$(this).trigger('blur');
 
 				app.items.save($(this).data('item-id'), $(this).hasClass('saved') ? 0 : 1);
 			});
@@ -404,7 +404,7 @@
 			$(document).on('click', '.mark-all-read-confirm', function(e) {
 				e.stopPropagation();
 
-				$(this).blur();
+				$(this).trigger('blur');
 
 				app.items.markAllAsRead();
 			});
@@ -942,7 +942,7 @@
 					action = el.hasClass('subscribe') ? 'subscribe' : 'unsubscribe'
 					;
 
-				el.blur();
+				el.trigger('blur');
 
 				if ( action === 'subscribe' ) {
 					el.removeClass('subscribe').addClass('btn-danger unsubscribe').html('Unsubscribe');
@@ -964,7 +964,7 @@
 					action = el.hasClass('subscribe') ? 'subscribe' : 'unsubscribe'
 					;
 
-				el.blur();
+				el.trigger('blur');
 
 				if ( action === 'subscribe' ) {
 					el.removeClass('subscribe').addClass('btn-danger unsubscribe').html('Unsubscribe');
@@ -994,7 +994,7 @@
 
 				e.preventDefault();
 
-				button     .attr('disabled', 'disabled').blur();
+				button     .attr('disabled', 'disabled').trigger('blur');
 				inputUrl   .attr('disabled', 'disabled');
 				inputFolder.attr('disabled', 'disabled');
 

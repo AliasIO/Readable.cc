@@ -21,13 +21,14 @@ class Auth extends \Swiftlet\Model
 	 * Perform compatibility check
 	 *
 	 * @param object $app
+	 * @throws Exception
 	 */
 	public function __construct(\Swiftlet\Interfaces\App $app)
 	{
 		parent::__construct($app);
 
 		if ( CRYPT_BLOWFISH != 1 ) {
-			throw new \Exception(__CLASS__ . ' requires PHP support for BCrypt');
+			throw new Exception(__CLASS__ . ' requires PHP support for BCrypt');
 		}
 	}
 
@@ -37,25 +38,26 @@ class Auth extends \Swiftlet\Model
 	 * @param string $email
 	 * @param string $password
 	 * @return object
+	 * @throws Exception
 	 */
 	public function authenticate($email, $password)
 	{
 		if ( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
-			throw new \Exception('Email address invalid', self::EMAIL_INVALID);
+			throw new Exception('Email address invalid', self::EMAIL_INVALID);
 		}
 
 		$user = $this->getUser($email);
 
 		if ( !$user ) {
-			throw new \Exception('User does not exist', self::USER_NOT_FOUND);
+			throw new Exception('User does not exist', self::USER_NOT_FOUND);
 		}
 
 		if ( crypt($password, $user->password) != $user->password ) {
-			throw new \Exception('Password incorrect', self::PASSWORD_INCORRECT);
+			throw new Exception('Password incorrect', self::PASSWORD_INCORRECT);
 		}
 
 		if ( !$user->enabled && time() > strtotime($user->created_at) + 24 * 60 * 60 ) {
-			throw new \Exception('Account not enabled', self::USER_NOT_ENABLED);
+			throw new Exception('Account not enabled', self::USER_NOT_ENABLED);
 		}
 
 		return $user;
@@ -67,21 +69,22 @@ class Auth extends \Swiftlet\Model
 	 * @param string $email
 	 * @param string $password
 	 * @return bool
+	 * @throws Exception
 	 */
 	public function register($email, $password)
 	{
 		if ( !$password ) {
-			throw new \Exception('No password specified', self::PASSWORD_EMPTY);
+			throw new Exception('No password specified', self::PASSWORD_EMPTY);
 		}
 
 		if ( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
-			throw new \Exception('Email address invalid', self::EMAIL_INVALID);
+			throw new Exception('Email address invalid', self::EMAIL_INVALID);
 		}
 
 		$user = $this->getUser($email);
 
 		if ( $user ) {
-			throw new \Exception('Email address already in use', self::EMAIL_IN_USE);
+			throw new Exception('Email address already in use', self::EMAIL_IN_USE);
 		}
 
 		$hash = $this->generateHash($password);

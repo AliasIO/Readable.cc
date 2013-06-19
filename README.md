@@ -29,8 +29,10 @@ Installation
 
 Load `mysql/schema.sql` into MySQL to create the database.
 
-```
-$ mysql < mysql/schema.sql
+```shell
+# Unix shell command
+
+mysql < mysql/schema.sql
 ```
 
 Copy `config/pdo.example.php` to `config/pdo.php` and edit the file.
@@ -43,14 +45,63 @@ Make the following directories writable:
 * `HTMLPurifier/DefinitionCache/Serializer/HTML`
 * `HTMLPurifier/DefinitionCache/Serializer/URI`
 
-```
-$ chmod 777 sessions HTMLPurifier/DefinitionCache/Serializer/HTML HTMLPurifier/DefinitionCache/Serializer/URI
+```shell
+# Unix shell command
+
+chmod 777 sessions HTMLPurifier/DefinitionCache/Serializer/HTML HTMLPurifier/DefinitionCache/Serializer/URI
 ```
 
 Set up a cron job to periodically fetch feeds.
 
-```
+```shell
 # Example crontab entry
 
 */5 * * * * /usr/bin/php /srv/readable.cc/index.php -q cron > /dev/null
 ```
+
+Web server configuration
+------------------------
+
+### Apache HTTPD
+
+Ensure mod\_rewrite is enabled.
+
+```shell
+# Unix shell command
+
+a2enmod rewrite
+```
+
+Create a virtual host entry.
+
+**/etc/apache2/site-available/readable.cc**
+
+```apacheconf
+# Simplified example
+
+<VirtualHost *:80>
+	ServerName readable.local
+
+	DocumentRoot /var/www/readable.cc/public
+
+	<Directory /var/www/readable.cc/public>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride All
+		Order allow,deny
+		allow from all
+	</Directory>
+</VirtualHost>
+```
+
+Enable the virtual host.
+
+```shell
+# Unix shell command
+
+a2ensite readable.cc
+```
+
+### Nginx
+
+TODO
+

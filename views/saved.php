@@ -1,4 +1,4 @@
-<?php require 'header.html.php' ?>
+<?php require 'header.php' ?>
 
 <div id="page-head-wrap">
 	<div id="page-head">
@@ -20,8 +20,8 @@
 <div id="items-read-line"></div>
 
 <div id="items">
-	<?php require 'read.html.php' ?>
+	<?php require 'read.php' ?>
 </div>
 <?php endif ?>
 
-<?php require 'footer.html.php' ?>
+<?php require 'footer.php' ?>
