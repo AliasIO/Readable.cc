@@ -56,7 +56,10 @@ Set up a cron job to periodically fetch feeds.
 Web server configuration
 ------------------------
 
-### Apache HTTPD
+### Apache
+
+*If you have rewrites enabled you should be able to place the source code in your document root and
+view the website by navigating to `http://localhost/readable.cc/public`.*
 
 Ensure mod\_rewrite is enabled.
 
@@ -66,7 +69,7 @@ a2enmod rewrite
 
 Create a virtual host entry, point the document root to the `public` directory.
 
-**/etc/apache2/site-available/readable.cc**
+**/etc/apache2/sites-available/readable.cc**
 
 ```apacheconf
 <VirtualHost *:80>
