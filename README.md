@@ -106,7 +106,7 @@ server {
 
 	server_name readable.local;
 
-	root /srv/readable.cc;
+	root /srv/readable.cc/public;
 
 	location / {
 		index index.php;
