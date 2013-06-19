@@ -30,14 +30,12 @@ Installation
 Load `mysql/schema.sql` into MySQL to create the database.
 
 ```shell
-# Unix shell command
-
 mysql < mysql/schema.sql
 ```
 
 Copy `config/pdo.example.php` to `config/pdo.php` and edit the file.
 
-Edit `config.php`.
+Edit `config/main.php`.
 
 Make the following directories writable:
 
@@ -46,16 +44,12 @@ Make the following directories writable:
 * `HTMLPurifier/DefinitionCache/Serializer/URI`
 
 ```shell
-# Unix shell command
-
 chmod 777 sessions HTMLPurifier/DefinitionCache/Serializer/HTML HTMLPurifier/DefinitionCache/Serializer/URI
 ```
 
 Set up a cron job to periodically fetch feeds.
 
 ```shell
-# Example crontab entry
-
 */5 * * * * /usr/bin/php /srv/readable.cc/index.php -q cron > /dev/null
 ```
 
@@ -67,24 +61,20 @@ Web server configuration
 Ensure mod\_rewrite is enabled.
 
 ```shell
-# Unix shell command
-
 a2enmod rewrite
 ```
 
-Create a virtual host entry.
+Create a virtual host entry, point the document root to the `public` directory.
 
 **/etc/apache2/site-available/readable.cc**
 
 ```apacheconf
-# Simplified example
-
 <VirtualHost *:80>
 	ServerName readable.local
 
-	DocumentRoot /var/www/readable.cc/public
+	DocumentRoot /srv/readable.cc/public
 
-	<Directory /var/www/readable.cc/public>
+	<Directory /srv/readable.cc/public>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride All
 		Order allow,deny
@@ -93,15 +83,48 @@ Create a virtual host entry.
 </VirtualHost>
 ```
 
-Enable the virtual host.
+Enable the virtual host and reload Apache.
 
 ```shell
-# Unix shell command
-
 a2ensite readable.cc
+service apache reload
 ```
+
 
 ### Nginx
 
-TODO
+Create a virtual host entry, point the document root to the `public` directory.
 
+**/etc/nginx/sites-available/readable.cc**
+
+```nginx
+server {
+	listen 80;
+
+	server_name readable.local;
+
+	root /srv/readable.cc;
+
+	location / {
+		index index.php;
+
+		if ( !-e $request_filename ) {
+			rewrite ^/(.*)$ /index.php?q=$1 last;
+		}
+	}
+
+	location = /index.php {
+		fastcgi_pass  unix:/var/run/php-fastcgi/php-fastcgi.socket;
+		fastcgi_index index.php;
+		fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+		include       fastcgi_params;
+	}
+}
+```
+
+Enable the virtual host and reload Nginx.
+
+```shell
+ln -s /etc/nginx/sites-available/readable.cc /etc/nginx/sites-enabled/readable.cc
+service nginx reload
+```
