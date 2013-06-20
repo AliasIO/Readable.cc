@@ -4,7 +4,7 @@
 	<div id="page-head">
 		<h1>Search articles</h1>
 
-		<form id="search" method="get">
+		<form id="form-search" method="get">
 			<input type="text" id="query" name="query" value="<?= $this->get('query') ?>" placeholder="Enter keywords">
 
 			<?php if ( $this->app->getSingleton('session')->get('id') ): ?>

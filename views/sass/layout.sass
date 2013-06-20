@@ -47,23 +47,23 @@ h1, h2, h3, h4, h5, h6
 	text-rendering: optimizelegibility
 
 h1
-	font-size: 34px
+	font-size: 30px
 	margin-top: $textMargin * 3
 
 h2
-	font-size: 26px
+	font-size: 22px
 
 h3
-	font-size: 20px
-
-h4
 	font-size: 18px
 
-h5
+h4
 	font-size: 16px
 
-h6
+h5
 	font-size: 14px
+
+h6
+	font-size: 12px
 
 ul, ol
 	padding: 0
@@ -361,6 +361,7 @@ header
 	h1
 		font-family: $fontBodyItalic
 		font-weight: normal
+		margin: 40px 0 10px
 
 	p
 		font-family: $fontBodyItalic 
@@ -413,8 +414,9 @@ header
 		color: $colorTextSecondary
 		height: .75em
 		font-family: $fontBodyItalic 
+		font-size: 14px
 		font-style: italic
-		margin: 40px 0 45px 0
+		margin: $textMargin 0 $textMargin + 15 0
 		text-align: center
 
 		span
@@ -427,7 +429,7 @@ header
 
 article
 	border-top: 1px solid transparent
-	margin-bottom: $textMargin * 2
+	margin-bottom: $textMargin
 
 	ul, ol, blockquote, table, pre, img, h1, h2, h3, h4, h5, h6
 		clear: both
@@ -451,9 +453,22 @@ article
 
 		ul
 			margin-top: 5px
+	
+	h1, h2, h3, h4, h5, h6
+		line-height: 1.2em
 
 	h1
-		margin: 0 0 10px 0
+		font-size: 22px
+		margin: 0 0 5px 0
+
+	h2
+		font-size: 18px
+
+	h3
+		font-size: 16px
+
+	h4, h5, h6
+		font-size: 16px
 
 	&.boring h1
 		color: #999
@@ -478,10 +493,8 @@ article
 
 	.item-date
 		color: $colorTextSecondary
-		font-family: $fontBodyItalic
 		font-size: $medium
-		font-size: 14px
-		font-style: italic
+		font-size: 13px
 		margin-bottom: 20px
 
 		strong
@@ -495,15 +508,12 @@ article
 
 	&.active.expanded
 		
-		.item-date
-			color: inherit
-
 		&:hover .item-date .feed-options
 			display: inline
 
 	.article-buttons
 		clear: both
-		margin: -10px 0 $textMargin * 3 0
+		margin: -5px 0 $textMargin * 3 0
 
 		a
 			text-decoration: none
@@ -543,7 +553,8 @@ article
 
 		button
 			font-size: $small
-			margin: $textMargin 10px 0 0
+			float: left
+			margin: $textMargin 5px 0 0
 			position: relative
 
 			&.item-share
@@ -962,6 +973,9 @@ table
 		vertical-align: middle
 		width: 26px
 
+#form-search
+	margin-top: 15px
+
 #feedback
 	border: 2px solid #fff
 	line-height: 30px
@@ -1009,8 +1023,10 @@ table
 	h4, h5, h6
 		font-size: 20px
 
-	article .item-date
-		font-size: $small
+	article
+
+		.item-date
+			font-size: $small
 
 	#items .date-separator
 		margin: 30px 0
@@ -1033,7 +1049,7 @@ table
 	input[type="file"],
 	textarea,
 	select
-		width: 100%
+		width: 99.8%
 
 	#page-head
 		height: 150px
@@ -1041,9 +1057,10 @@ table
 		p
 			display: none
 
-	article
-		border-top: 1px solid transparent
-		margin-bottom: 26px
+	#table-subscriptions
+		
+		span
+			display: none
 
 	#subscriptions td:last-child button
 		+opacity(1)
@@ -1141,3 +1158,37 @@ table
 
 						&.collapsed
 							display: none
+
+	#items
+
+		.date-separator
+			font-size: $small
+	
+	article
+
+		.article-buttons
+
+			.share
+
+				ul
+					bottom: 39px
+					font-size: 22px
+					width: 150px
+
+					li
+
+						a
+							line-height: 40px
+
+	button, .btn
+		line-height: 40px
+		height: 40px
+		padding: 0 30px
+	
+	form
+
+		.control-group
+			margin-bottom: 20px
+	
+	fieldset
+		margin-top: 15px

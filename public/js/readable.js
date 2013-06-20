@@ -485,7 +485,7 @@
 								self
 									.attr('src', src)
 									.removeAttr('data-src')
-									//.width(img.width())
+									.width(img.width())
 									;
 
 								img.remove();
@@ -516,7 +516,7 @@
 		},
 
 		expand: function(el, instant) {
-			$('article:not([data-item-id=' + el.data('item-id') + '])')
+			$('article:not([data-item-id=' + el.data('item-id') + ']), .date-separator')
 				.stop()
 				.animate({ opacity: 0.3 }, instant ? 0 : app.duration.fade)
 				;
@@ -593,7 +593,7 @@
 			var el = app.items.activeItem;
 
 			if ( el ) {
-				$('article:not([data-item-id=' + el.data('item-id') + '])')
+				$('article:not([data-item-id=' + el.data('item-id') + ']), .date-separator')
 					.stop()
 					.animate({ opacity: 1 }, instant ? 0 : app.duration.fade)
 					;
@@ -656,11 +656,11 @@
 						el.removeClass('inactive').addClass('active');
 
 						if ( el.hasClass('collapsed') ) {
-							$('article').stop().animate({ opacity: 1 }, instant ? 0 : app.duration.fade);
+							$('article, .date-separator').stop().animate({ opacity: 1 }, instant ? 0 : app.duration.fade);
 						} else {
 							el.stop().animate({ opacity: 1 }, instant ? 0 : app.duration.fade);
 
-							$('article:not([data-item-id=' + app.items.activeItemId + '])').stop().animate({ opacity: 0.3 }, instant ? 0 : app.duration.fade);
+							$('article:not([data-item-id=' + app.items.activeItemId + ']), .date-separator').stop().animate({ opacity: 0.3 }, instant ? 0 : app.duration.fade);
 						}
 
 						app.items.markAsRead(app.items.activeItemId);

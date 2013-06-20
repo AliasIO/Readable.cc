@@ -37,7 +37,6 @@
 	</h1>
 
 	<p class="item-date">
-		<i class="entypo book"></i>
 		By
 		<strong><a href="<?= $this->app->getSingleton('helper')->getFeedLink($item->feed_id, $item->feed_title) ?>" title="<?= parse_url($item->feed_link, PHP_URL_HOST) ?>"><?= $item->feed_title ?></a></strong>
 		<?= $item->posted_at ? 'on ' . date('F j, Y', $item->posted_at) : '' ?>
