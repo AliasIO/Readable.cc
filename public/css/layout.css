@@ -556,7 +556,6 @@ article {
     article img.feature {
       float: left;
       margin: 0 15px 15px 0 !important;
-      max-height: 300px;
       max-width: 50%;
       padding: 0; }
     article img.image-left {
