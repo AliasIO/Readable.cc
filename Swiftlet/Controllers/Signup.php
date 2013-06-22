@@ -10,6 +10,8 @@ class Signup extends \Swiftlet\Controller
 
 	/**
 	 * Default action
+	 *
+	 * @throws \Swiftlet\Exception
 	 */
 	public function index()
 	{
@@ -45,7 +47,7 @@ class Signup extends \Swiftlet\Controller
 					} else {
 						$error = 'An unknown error occured. Please try again.';
 					}
-				} catch ( \Exception $e ) {
+				} catch ( \Swiftlet\Exception $e ) {
 					$error = 'An unknown error ocurred.'.$e->getMessage();;
 
 					switch ( $e->getCode() ) {

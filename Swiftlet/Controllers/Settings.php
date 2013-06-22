@@ -172,6 +172,8 @@ class Settings extends \Swiftlet\Controller
 
 	/**
 	 * Save account settings
+	 *
+	 * @throws \Swiftlet\Exception
 	 */
 	protected function account()
 	{
@@ -226,7 +228,7 @@ class Settings extends \Swiftlet\Controller
 
 				$session->set('email', $email);
 			}
-		} catch ( \Exception $e ) {
+		} catch ( \Swiftlet\Exception $e ) {
 			switch ( $e->getCode() ) {
 				case $auth::PASSWORD_INCORRECT:
 					$error[] = 'Current password incorrect, please try again';

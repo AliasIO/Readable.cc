@@ -10,6 +10,8 @@ class Signin extends \Swiftlet\Controller
 
 	/**
 	 * Default action
+	 *
+	 * @throws \Swiflet\Exception
 	 */
 	public function index()
 	{
@@ -60,7 +62,7 @@ class Signin extends \Swiftlet\Controller
 				header('Location: ' . $this->app->getRootPath() . 'reading');
 
 				exit;
-			} catch ( Exception $e ) {
+			} catch ( \SwiftletException $e ) {
 				switch ( $e->getCode() ) {
 					case $auth::EMAIL_INVALID:
 						$error = 'Please provide a valid email address.';
@@ -78,7 +80,7 @@ class Signin extends \Swiftlet\Controller
 
 						break;
 					default:
-						throw new Exception($e->getMessage());
+						throw new \SwiftletException($e->getMessage());
 				}
 
 				$this->view->set('error', $error);

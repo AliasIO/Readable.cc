@@ -30,6 +30,8 @@ class Read extends \Swiftlet\Controller
 
 	/**
 	 * Register vote
+	 *
+	 * @throws \Swiftlet\Exception
 	 */
 	public function vote()
 	{
@@ -68,7 +70,7 @@ class Read extends \Swiftlet\Controller
 
 		try {
 			$sth->execute();
-		} catch ( \Exception $e ) {
+		} catch ( \Swiftlet\Exception $e ) {
 			header('HTTP/1.0 500 Server Error');
 
 			exit(json_encode(array('message' => 'Something went wrong, please try again.')));

@@ -4,6 +4,9 @@ namespace Swiftlet\Controllers;
 
 class Cron extends \Swiftlet\Controller
 {
+	/**
+	 * @throws \Swiftlet\Exception
+	 */
 	public function index()
 	{
 		$itemIds = array();
@@ -39,7 +42,7 @@ class Cron extends \Swiftlet\Controller
 
 			try {
 				$feed->fetch($result->url, false);
-			} catch ( \Exception $e ) {
+			} catch ( \Swiftlet\Exception $e ) {
 				echo $result->url . ': (' . $e->getCode() . ') ' . $e->getMessage() . "<br>\n";
 
 				continue;
@@ -72,7 +75,7 @@ class Cron extends \Swiftlet\Controller
 					if ( $expiry < time() ) {
 						try {
 							unlink('sessions/' . $file);
-						} catch ( \Exception $e ) {
+						} catch ( \Swiftlet\Exception $e ) {
 						}
 					}
 				}

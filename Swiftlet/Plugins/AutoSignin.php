@@ -6,6 +6,8 @@ class AutoSignin extends \Swiftlet\Plugin
 {
 	/**
 	 * Implementation of the actionBefore hook
+	 *
+	 * @throws \Swiftlet\Exception
 	 */
 	public function actionBefore()
 	{
@@ -26,7 +28,7 @@ class AutoSignin extends \Swiftlet\Plugin
 						$session->set('timezone',    $user->timezone);
 						$session->set('sessionHash', $_COOKIE['session']);
 					}
-				} catch ( \Exception $e ) {
+				} catch ( \Swiftlet\Exception $e ) {
 				}
 			}
 		}

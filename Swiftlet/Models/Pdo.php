@@ -12,6 +12,7 @@ class Pdo extends \Swiftlet\Model
 	 * Establish database connection
 	 *
 	 * @param object $app
+	 * @throws \Swiftlet\Exception
 	 */
 	public function __construct(\Swiftlet\Interfaces\App $app)
 	{
@@ -24,7 +25,7 @@ class Pdo extends \Swiftlet\Model
 		try {
 			$this->handle = new \PDO($config['driver'] . ':host=' . $config['host'] . ';dbname=' . $config['database'], $config['username'], $config['password']);
 		} catch ( \PDOException $e ) {
-			throw new Exception('Error establishing database connection: ' . $e->getMessage());
+			throw new \Swiftlet\Exception('Error establishing database connection: ' . $e->getMessage());
 		}
 
 		$this->handle->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);

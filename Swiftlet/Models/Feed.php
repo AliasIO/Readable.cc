@@ -38,7 +38,7 @@ class Feed extends \Swiftlet\Model
 	 *
 	 * @param string $url
 	 * @param bool $findLinked
-	 * @throws Exception
+	 * @throws \Swiftlet\Exception
 	 */
 	public function fetch($url, $findLinked = true)
 	{
@@ -86,7 +86,7 @@ class Feed extends \Swiftlet\Model
 			}
 
 			if ( !$this->type ) {
-				throw new Exception('Invalid feed', self::FEED_INVALID);
+				throw new \Swiftlet\Exception('Invalid feed', self::FEED_INVALID);
 			}
 		}
 
@@ -170,7 +170,7 @@ class Feed extends \Swiftlet\Model
 	 *
 	 * @param object $xml
 	 * @return string
-	 * @throws Exception
+	 * @throws \Swiftlet\Exception
 	 */
 	protected function validate($xml)
 	{
@@ -220,7 +220,7 @@ class Feed extends \Swiftlet\Model
 					}
 				}
 			}
-		} catch ( Exception $e ) {
+		} catch ( \Swiftlet\Exception $e ) {
 		}
 	}
 
@@ -229,7 +229,7 @@ class Feed extends \Swiftlet\Model
 	 *
 	 * @param string $url
 	 * @return object
-	 * @throws Exception
+	 * @throws \Swiftlet\Exception
 	 */
 	protected function curl($url)
 	{
@@ -252,9 +252,9 @@ class Feed extends \Swiftlet\Model
 
 		if ( curl_errno($ch) !== CURLE_OK ) {
 			if ( curl_errno($ch) == CURLE_OPERATION_TIMEOUTED ) {
-				throw new Exception(curl_error($ch), self::TIMEOUT);
+				throw new \Swiftlet\Exception(curl_error($ch), self::TIMEOUT);
 			} else {
-				throw new Exception(curl_error($ch), self::CURL_ERROR);
+				throw new \Swiftlet\Exception(curl_error($ch), self::CURL_ERROR);
 			}
 		}
 
@@ -262,9 +262,9 @@ class Feed extends \Swiftlet\Model
 
 		if ( $httpCode != 200 ) {
 			if ( $httpCode == 404 ) {
-				throw new Exception('cURL request returned HTTP code ' . $httpCode, self::NOT_FOUND);
+				throw new \Swiftlet\Exception('cURL request returned HTTP code ' . $httpCode, self::NOT_FOUND);
 			} else {
-				throw new Exception('cURL request returned HTTP code ' . $httpCode, self::SERVER_ERROR);
+				throw new \Swiftlet\Exception('cURL request returned HTTP code ' . $httpCode, self::SERVER_ERROR);
 			}
 		}
 

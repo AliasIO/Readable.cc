@@ -10,6 +10,8 @@ class Signout extends \Swiftlet\Controller
 
 	/**
 	 * Default action
+	 *
+	 * @throws \Swiftlet\Exception
 	 */
 	public function index()
 	{
@@ -20,7 +22,7 @@ class Signout extends \Swiftlet\Controller
 
 			try {
 				unlink('sessions/' . $_COOKIE['session'] . '.php');
-			} catch ( \Exception $e ) {
+			} catch ( \Swiftlet\Exception $e ) {
 			}
 		}
 	}
