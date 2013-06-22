@@ -310,7 +310,7 @@ class Subscriptions extends \Swiftlet\Controller
 							$feed->save();
 						}
 					}
-				} catch ( \Swiftlet\Exception $e ) {
+				} catch ( \Exception $e ) {
 					$error = 'The OPML file appears to be invalid.'.$e->getMessage();
 				}
 			} else {
