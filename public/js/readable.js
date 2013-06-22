@@ -22,6 +22,8 @@
 	};
 
 	app.init = function() {
+		var doubleTap = false;
+
 		$('.contact-email').text(app.email.replace(' ', '@')).attr('href', 'mailto:' + app.email.replace(' ', '@'));
 
 		$('header h2')
@@ -39,35 +41,47 @@
 			$(this).find('ul').toggleClass('collapsed');
 		});
 
-		$(document).on('click', function(e) {
-			if ( !$(e.target).closest('header ul').length ) {
-				$('header ul, header ul ul').addClass('collapsed');
-			}
+		$(document)
+			.on('click', function(e) {
+				if ( !$(e.target).closest('header ul').length ) {
+					$('header ul, header ul ul').addClass('collapsed');
+				}
 
-			if ( !$(e.target).closest('.share').length ) {
-				$('.article-buttons').find('.share ul').hide();
-			}
-		});
+				if ( !$(e.target).closest('.share').length ) {
+					$('.article-buttons').find('.share ul').hide();
+				}
+			})
+			.on('click', 'button.item-share', function(e) {
+				$(this).trigger('blur').parent().find('ul').toggle();
+			})
+			// Hide alerts on click
+			.on('click', '.alert .alert-cancel', function(e) {
+				e.stopPropagation();
 
-		$(document).on('click', 'button.item-share', function(e) {
-			$(this).trigger('blur').parent().find('ul').toggle();
-		});
+				$('#overlay, .alert').hide();
+			})
+			// Hide alerts on click
+			.on('click', '.alert', function() {
+				if ( $(this).hasClass('alert-sticky') ) {
+					return;
+				}
 
-		// Hide alerts on click
-		$(document).on('click', '.alert .alert-cancel', function(e) {
-			e.stopPropagation();
+				$('#overlay, .alert').hide();
+			})
+			// Collapse item on double tap
+			.on('touchstart', 'article', function() {
+				if ( $(this).data('item-id') === app.items.activeItemId && app.items.activeItem.hasClass('expanded') ) {
+					if ( doubleTap ) {
+						app.items.collapse();
+					} else {
+						doubleTap = true;
 
-			$('#overlay, .alert').hide();
-		});
-
-		// Hide alerts on click
-		$(document).on('click', '.alert', function() {
-			if ( $(this).hasClass('alert-sticky') ) {
-				return;
-			}
-
-			$('#overlay, .alert').hide();
-		});
+						setTimeout(function() {
+							doubleTap = false;
+						}, 500);
+					}
+				}
+			});
 
 		if ( app.prefs.externalLinks === app.PREF_LINKS_NEW_TAB ) {
 			$(document).on('click', 'a', function(e) {
