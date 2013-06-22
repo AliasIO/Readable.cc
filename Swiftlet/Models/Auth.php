@@ -201,8 +201,8 @@ class Auth extends \Swiftlet\Model
 
 	protected function generateHash($password)
 	{
-    $salt = sprintf('$2a$%02d$', $this->bcryptCost) . strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+		$salt = sprintf('$2a$%02d$', $this->bcryptCost) . strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
 
-    return crypt($password, $salt);
+		return crypt($password, $salt);
 	}
 }
