@@ -72,6 +72,8 @@
 			.on('touchstart', 'article', function() {
 				if ( $(this).data('item-id') === app.items.activeItemId && app.items.activeItem.hasClass('expanded') ) {
 					if ( doubleTap ) {
+						e.preventDefault();
+
 						app.items.collapse();
 					} else {
 						doubleTap = true;
