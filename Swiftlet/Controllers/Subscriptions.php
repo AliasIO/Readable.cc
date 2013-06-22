@@ -21,6 +21,8 @@ class Subscriptions extends \Swiftlet\Controller
 	{
 		parent::__construct($app, $view);
 
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		// Get currently subscribed feeds
@@ -38,7 +40,7 @@ class Subscriptions extends \Swiftlet\Controller
 				users_feeds.user_id = :user_id
 			ORDER BY feeds.title
 			LIMIT 10000
-			;');
+			');
 
 		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 
@@ -60,8 +62,6 @@ class Subscriptions extends \Swiftlet\Controller
 	 */
 	public function index()
 	{
-		$userId = $this->app->getSingleton('helper')->ensureValidUser();
-
 		if ( !empty($_POST['form']) ) {
 			switch ( $_POST['form'] ) {
 				case 'subscribe':
@@ -92,8 +92,6 @@ class Subscriptions extends \Swiftlet\Controller
 	public function subscribe()
 	{
 		header('Content-type: application/json');
-
-		$this->app->getSingleton('helper')->ensureValidUser();
 
 		$success = false;
 		$error   = false;
@@ -151,8 +149,6 @@ class Subscriptions extends \Swiftlet\Controller
 	{
 		header('Content-type: application/json');
 
-		$this->app->getSingleton('helper')->ensureValidUser(true);
-
 		$id  = !empty($_POST['id'])  ? (int) $_POST['id']  : null;
 		$url = !empty($_POST['url']) ?       $_POST['url'] : null;
 
@@ -167,8 +163,6 @@ class Subscriptions extends \Swiftlet\Controller
 	public function folder()
 	{
 		header('Content-type: application/json');
-
-		$this->app->getSingleton('helper')->ensureValidUser(true);
 
 		$id       = !empty($_POST['id'])       ? (int) $_POST['id']       : null;
 		$folderId = !empty($_POST['folderId']) ? (int) $_POST['folderId'] : null;
@@ -194,7 +188,7 @@ class Subscriptions extends \Swiftlet\Controller
 		header('Content-type: application/xml');
 		header('Content-Disposition: attachment; filename="feeds.opml.xml"');
 
-		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+		$userId = $this->app->getSingleton('session')->get('id');
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
@@ -245,7 +239,7 @@ class Subscriptions extends \Swiftlet\Controller
 	 */
 	protected function import()
 	{
-		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+		$userId = $this->app->getSingleton('session')->get('id');
 
 		$success = false;
 		$error   = false;
@@ -361,7 +355,7 @@ class Subscriptions extends \Swiftlet\Controller
 	 */
 	protected function folders()
 	{
-		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+		$userId = $this->app->getSingleton('session')->get('id');
 
 		$success = false;
 		$error   = false;
@@ -449,5 +443,4 @@ class Subscriptions extends \Swiftlet\Controller
 			$this->view->set('success', 'The folders have been saved.');
 		}
 	}
-
 }
