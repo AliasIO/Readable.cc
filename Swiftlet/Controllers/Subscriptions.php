@@ -52,8 +52,27 @@ class Subscriptions extends \Swiftlet\Controller
 			$this->app->getSingleton('helper')->localize($feed->last_fetched_at);
 		}
 
+		$folders = $this->app->getSingleton('helper')->getUserFolders();
+
+		$grouped = array('none' => (object) array(
+			'folder' => null,
+			'feeds'  => array()
+			));
+
+		foreach ( $folders as $folder ) {
+			$grouped[$folder->id] = (object) array(
+				'folder' => $folder,
+				'feeds'  => array()
+				);
+		}
+
+		foreach ( $feeds as $feed ) {
+			$grouped[$feed->folder_id ?: 'none']->feeds[] = $feed;
+		}
+
+		$this->view->set('grouped', $grouped);
 		$this->view->set('feeds',   $feeds);
-		$this->view->set('folders', $this->app->getSingleton('helper')->getUserFolders());
+		$this->view->set('folders', $folders);
 		$this->view->set('paid',    $this->app->getSingleton('helper')->userPaid());
 	}
 

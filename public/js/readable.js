@@ -256,7 +256,7 @@
 					case 13: // Enter
 					case 79: // o
 						if ( app.items.activeItem ) {
-							app.items.activeItem.click();
+							app.items.activeItem.trigger('click');
 						}
 
 						break;
@@ -935,7 +935,11 @@
 
 	app.subscriptions = {
 		init: function() {
-			$('#table-subscriptions button').click(function() {
+			$('#subscriptions-grouped h3').on('click', function() {
+				$(this).next('table').toggle();
+			});
+
+			$('#subscriptions-grouped button').on('click', function() {
 				var
 					el     = $(this),
 					id     = el.data('feed-id'),
@@ -957,7 +961,7 @@
 				});
 			});
 
-			$('#table-subscriptions-suggestions button').click(function() {
+			$('#table-subscriptions-suggestions button').on('click', function() {
 				var
 					el     = $(this),
 					url    = el.data('url'),
@@ -1025,7 +1029,7 @@
 				});
 			});
 
-			$('#table-subscriptions select').on('change', function() {
+			$('#subscriptions-grouped select').on('change', function() {
 				var id = $(this).data('feed-id');
 
 				$.ajax({

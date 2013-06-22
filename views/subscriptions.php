@@ -14,7 +14,7 @@
 </div>
 <?php endif ?>
 
-<?php $feeds = $this->get('feeds') ?>
+<?php $feeds = $this->feeds ?>
 
 <div class="jump">
 	<p>
@@ -46,46 +46,56 @@
 
 <h2 id="subscriptions">Subscriptions</h3>
 
-<table id="table-subscriptions" class="table table-list">
-	<thead>
-		<tr>
-			<th>Subscription</th>
-			<th>Folder</th>
-			<th>Action</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php foreach ( $feeds as $feed ): ?>
-		<tr>
-			<td>
-				<a href="<?= $this->app->getSingleton('helper')->getFeedLink($feed->id, $feed->title) ?>"><?= $feed->title ?></a>
-				<span>
-					<a href="<?= $feed->link ?>" title="Visit the website at <?= parse_url($feed->link, PHP_URL_HOST) ?>"><i class="entypo link"></i></a>
-					<a href="<?= $feed->url  ?>" title="View the feed at <?= parse_url($feed->url,  PHP_URL_HOST) ?>"><i class="entypo rss"></i></a>
-					<small>
-						&nbsp;
-						<em><?= $feed->last_fetched_at ? 'Last fetched on ' . date('F j, Y', $feed->last_fetched_at) : 'Never successfully fetched' ?></em>
-						&nbsp;
-					</small>
-				</span>
-			</td>
-			<td>
-				<select data-feed-id="<?= $feed->id ?>">
-					<option value=""></option>
-					<?php foreach ( $folders as $folder ): ?>
-					<option value="<?= $folder->id ?>"<?= $feed->folder_id == $folder->id ? ' selected="selected"' : '' ?>>
-						<?= $folder->title ?>
-					</option>
-					<?php endforeach ?>
-				</select>
-			</td>
-			<td>
-				<button class="btn btn-danger btn-small unsubscribe" data-feed-id="<?= $feed->id ?>" data-feed-name="<?= $feed->title ?>">Unsubscribe</button>
-			</td>
-		</tr>
-		<?php endforeach ?>
-	</tbody>
-</table>
+<div id="subscriptions-grouped">
+	<?php foreach ( $this->grouped as $group ): ?>
+	<?php if ( $group->feeds ): ?>
+	<h3><a href="javascript: void(0)"><?= $group->folder ? $group->folder->title : 'Unsorted' ?></a></h3>
+
+	<table class="table table-list">
+		<thead>
+			<tr>
+				<th>Subscription</th>
+				<th>Folder</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach ( $group->feeds as $feed ): ?>
+			<?php if ( !$group->folder || $feed->folder_id == $group->folder->id ): ?>
+			<tr>
+				<td>
+					<a href="<?= $this->app->getSingleton('helper')->getFeedLink($feed->id, $feed->title) ?>"><?= $this->htmlDecode($feed->title) ?></a>
+					<span>
+						<a href="<?= $feed->link ?>" title="Visit the website at <?= parse_url($feed->link, PHP_URL_HOST) ?>"><i class="entypo link"></i></a>
+						<a href="<?= $feed->url  ?>" title="View the feed at <?= parse_url($feed->url, PHP_URL_HOST) ?>"><i class="entypo rss"></i></a>
+						<small>
+							&nbsp;
+							<em><?= $feed->last_fetched_at ? 'Last fetched on ' . date('F j, Y', $feed->last_fetched_at) : 'Never successfully fetched' ?></em>
+							&nbsp;
+						</small>
+					</span>
+				</td>
+				<td>
+					<select data-feed-id="<?= $feed->id ?>">
+						<option value=""></option>
+						<?php foreach ( $folders as $folder ): ?>
+						<option value="<?= $folder->id ?>"<?= $feed->folder_id == $folder->id ? ' selected="selected"' : '' ?>>
+							<?= $folder->title ?>
+						</option>
+						<?php endforeach ?>
+					</select>
+				</td>
+				<td>
+					<button class="btn btn-danger btn-small unsubscribe" data-feed-id="<?= $feed->id ?>" data-feed-name="<?= $feed->title ?>">Unsubscribe</button>
+				</td>
+			</tr>
+			<?php endif ?>
+			<?php endforeach ?>
+		</tbody>
+	</table>
+	<?php endif ?>
+	<?php endforeach ?>
+</div>
 
 <div class="divider"></div>
 <?php else: ?>

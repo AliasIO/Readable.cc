@@ -835,22 +835,25 @@ table {
   min-width: 80px;
   width: 80px; }
 
-#table-subscriptions td:first-child i {
+#subscriptions-grouped td:first-child i {
   font-size: 2em; }
-#table-subscriptions td em {
+#subscriptions-grouped td em {
   color: #555555; }
-#table-subscriptions td span {
+#subscriptions-grouped td span {
   visibility: hidden; }
-#table-subscriptions td:hover span {
+#subscriptions-grouped td:hover span {
   visibility: visible; }
-#table-subscriptions td button, #table-subscriptions td select, #table-subscriptions td input[type="text"] {
+#subscriptions-grouped td button, #subscriptions-grouped td select, #subscriptions-grouped td input[type="text"] {
   margin: 0;
   min-width: 0;
   width: 100%; }
-#table-subscriptions td button {
+#subscriptions-grouped td button {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=10);
   opacity: 0.1; }
-#table-subscriptions tr:hover td button, #table-subscriptions tr:hover td select, #table-subscriptions tr:hover td input[type="text"] {
+#subscriptions-grouped td select {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
+  opacity: 0.3; }
+#subscriptions-grouped tr:hover td button, #subscriptions-grouped tr:hover td select, #subscriptions-grouped tr:hover td input[type="text"] {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1; }
 
@@ -955,10 +958,9 @@ table {
     #page-head p {
       display: none; }
 
-  #table-subscriptions span {
+  #subscriptions-grouped span {
     display: none; }
-
-  #subscriptions td:last-child button {
+  #subscriptions-grouped td button, #subscriptions-grouped td select {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
     opacity: 1; }
 

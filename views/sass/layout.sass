@@ -923,7 +923,7 @@ table
 			min-width: 80px
 			width: 80px
 
-#table-subscriptions
+#subscriptions-grouped
 
 	td
 
@@ -948,6 +948,9 @@ table
 
 		button
 			+opacity(.1)
+
+		select
+			+opacity(.3)
 
 	tr:hover td
 
@@ -1070,13 +1073,15 @@ table
 		p
 			display: none
 
-	#table-subscriptions
+	#subscriptions-grouped
 		
 		span
 			display: none
 
-	#subscriptions td:last-child button
-		+opacity(1)
+		td
+			
+			button, select
+				+opacity(1)
 
 	#feedback
 		display: none
