@@ -114,7 +114,23 @@ class Settings extends \Swiftlet\Controller
 
 					break;
 			}
+		} else {
+			if ( !$this->app->getSingleton('session')->get('enabled') ) {
+				$this->view->set('error', 'Please verify your email address to fully activate your account. <a href="' . $this->app->getRootPath() . 'settings/verify">Resend verification email</a>.');
+			}
 		}
+	}
+
+	/**
+	 * Resend verification email
+	 */
+	public function verify()
+ 	{
+		$email = $this->app->getSingleton('session')->get('email');
+
+		$this->app->getSingleton('auth')->verify($email);
+
+		$this->view->set('success', 'Thank you, an email with instructions has been sent to ' . $email . '.');
 	}
 
 	/**

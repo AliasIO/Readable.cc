@@ -32,6 +32,7 @@ class Signin extends \Swiftlet\Controller
 
 				$session->set('id',             $user->id);
 				$session->set('email',          $user->email);
+				$session->set('enabled',        $user->enabled);
 				$session->set('external_links', $user->external_links);
 				$session->set('item_order',     $user->item_order);
 				$session->set('timezone',       $user->timezone);
@@ -44,7 +45,7 @@ class Signin extends \Swiftlet\Controller
 					WHERE
 						id = :id
 					LIMIT 1
-					;');
+					');
 
 				$sth->bindParam('id', $user->id, \PDO::PARAM_INT);
 
@@ -62,7 +63,7 @@ class Signin extends \Swiftlet\Controller
 				header('Location: ' . $this->app->getRootPath() . 'reading');
 
 				exit;
-			} catch ( \SwiftletException $e ) {
+			} catch ( \Swiftlet\Exception $e ) {
 				switch ( $e->getCode() ) {
 					case $auth::EMAIL_INVALID:
 						$error = 'Please provide a valid email address.';
@@ -110,7 +111,7 @@ class Signin extends \Swiftlet\Controller
 					activation_code            = :activation_code AND
 					activation_code_expires_at > UTC_TIMESTAMP()
 				LIMIT 1
-				;');
+				');
 
 			$sth->bindParam('activation_code', $activationCode);
 
@@ -118,8 +119,10 @@ class Signin extends \Swiftlet\Controller
 
 			if ( $sth->rowCount() ) {
 				$success = 'Thank you, your email address has been verified!';
+
+				$this->app->getSingleton('session')->set('enabled', $user->enabled);
 			} else {
-				$error = 'The verfication code is invalid, expired or has already been used. Please use the "Forgot password" link if you need to recover your account.';
+				$error = 'The verfication code is invalid, expired or has already been used. Please use the &lsquo;<a href="' . $this->app->getRootPath() . 'forgot">Forgot password</a>&rsquo; link if you need to recover your account.';
 			}
 		} else {
 			$error = 'No verification code.';

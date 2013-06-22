@@ -23,10 +23,12 @@ class AutoSignin extends \Swiftlet\Plugin
 					if ( $user ) {
 						$session = $this->app->getSingleton('session');
 
-						$session->set('id',          $user->id);
-						$session->set('email',       $user->email);
-						$session->set('timezone',    $user->timezone);
-						$session->set('sessionHash', $_COOKIE['session']);
+						$session->set('id',             $user->id);
+						$session->set('email',          $user->email);
+						$session->set('enabled',        $user->enabled);
+						$session->set('external_links', $user->external_links);
+						$session->set('item_order',     $user->item_order);
+						$session->set('timezone',       $user->timezone);
 					}
 				} catch ( \Swiftlet\Exception $e ) {
 				}

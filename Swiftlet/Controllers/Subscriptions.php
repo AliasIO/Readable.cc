@@ -13,28 +13,13 @@ class Subscriptions extends \Swiftlet\Controller
 		;
 
 	/**
-	 * Default action
+	 * Constructor
+	 * @param object $app
+	 * @param object $view
 	 */
-	public function index()
+	public function __construct(\Swiftlet\Interfaces\App $app, \Swiftlet\Interfaces\View $view)
 	{
-		$userId = $this->app->getSingleton('helper')->ensureValidUser();
-
-		if ( !empty($_POST['form']) ) {
-			switch ( $_POST['form'] ) {
-				case 'subscribe':
-					$this->subscribe();
-
-					break;
-				case 'import':
-					$this->import();
-
-					break;
-				case 'folders':
-					$this->folders();
-
-					break;
-			}
-		}
+		parent::__construct($app, $view);
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
@@ -68,6 +53,35 @@ class Subscriptions extends \Swiftlet\Controller
 		$this->view->set('feeds',   $feeds);
 		$this->view->set('folders', $this->app->getSingleton('helper')->getUserFolders());
 		$this->view->set('paid',    $this->app->getSingleton('helper')->userPaid());
+	}
+
+	/**
+	 * Default action
+	 */
+	public function index()
+	{
+		$userId = $this->app->getSingleton('helper')->ensureValidUser();
+
+		if ( !empty($_POST['form']) ) {
+			switch ( $_POST['form'] ) {
+				case 'subscribe':
+					$this->subscribe();
+
+					break;
+				case 'import':
+					$this->import();
+
+					break;
+				case 'folders':
+					$this->folders();
+
+					break;
+			}
+		} else {
+			if ( !$this->app->getSingleton('session')->get('enabled') ) {
+				$this->view->set('error', 'Please verify your email address to fully activate your account. <a href="' . $this->app->getRootPath() . 'settings/verify">Resend verification email</a>.');
+			}
+		}
 	}
 
 	/**
@@ -170,8 +184,6 @@ class Subscriptions extends \Swiftlet\Controller
 	public function welcome()
 	{
 		$this->view->set('success', 'Welcome! Your account has been created and you have been signed in.');
-
-		$this->index();
 	}
 
 	/**

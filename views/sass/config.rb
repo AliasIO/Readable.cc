@@ -2,11 +2,11 @@
 
 # Set this to the root of your project when deployed:
 http_path = "/"
-css_dir = "public/css"
-sass_dir = "views/sass"
-images_dir = "public/images"
-javascripts_dir = "public/js"
-fonts_dir = "public/fonts"
+css_dir = "../../public/css"
+sass_dir = "../../views/sass"
+images_dir = "../../public/images"
+javascripts_dir = "../../public/js"
+fonts_dir = "../../public/fonts"
 output_style = :nested
 relative_assets = true
 line_comments = false

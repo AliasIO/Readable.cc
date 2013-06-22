@@ -6,13 +6,13 @@
 
 <?php if ( $this->get('success') ): ?>
 <div class="alert alert-success">
-	<?= $this->get('success'); ?>
+	<?= $this->get('success', true); ?>
 </div>
 <?php endif ?>
 
 <?php if ( $this->get('error') ): ?>
 <div class="alert alert-error">
-	<?= $this->get('error'); ?>
+	<?= $this->error; ?>
 </div>
 <?php endif ?>
 

@@ -89,8 +89,6 @@ class Auth extends \Swiftlet\Model
 
 		$hash = $this->generateHash($password);
 
-		$activationCode = sha1(uniqid(mt_rand(), true));
-
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		$sth = $dbh->prepare('
@@ -99,42 +97,61 @@ class Auth extends \Swiftlet\Model
 				password,
 				created_at,
 				updated_at,
-				last_active_at,
-				activation_code,
-				activation_code_expires_at
+				last_active_at
 			) VALUES (
 				:email,
 				:password,
 				UTC_TIMESTAMP(),
 				UTC_TIMESTAMP(),
-				UTC_TIMESTAMP(),
-				:activation_code,
-				DATE_ADD(UTC_TIMESTAMP(), INTERVAL 1 DAY)
+				UTC_TIMESTAMP()
 			)
-			;');
+			');
 
-		$sth->bindParam(':email',           $email);
-		$sth->bindParam(':password',        $hash);
+		$sth->bindParam(':email',    $email);
+		$sth->bindParam(':password', $hash);
+
+		$sth->execute();
+
+		$this->verify($email);
+
+		return $this->getUser($email);
+	}
+
+	/**
+	 * Send a verification email
+	 */
+	public function verify($email)
+	{
+		$activationCode = sha1(uniqid(mt_rand(), true));
+
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+			UPDATE users SET
+				activation_code            = :activation_code,
+				activation_code_expires_at = DATE_ADD(UTC_TIMESTAMP(), INTERVAL 1 DAY)
+			WHERE
+				id = :user_id
+			LIMIT 1
+			');
+
+		$sth->bindParam(':user_id',         $userId);
 		$sth->bindParam(':activation_code', $activationCode);
 
-		$result = $sth->execute();
+		$sth->execute();
 
-		if ( $result ) {
-			$message =
-				"Hi,\n\n" .
-				"Thanks for creating an account at " . $this->app->getConfig('siteName') . "!\n\n" .
-				"Please verify your email address by visiting the page at the following URL:\n\n" .
-				"  " . $this->app->getConfig('websiteUrl') . "/signin/verify/" . $activationCode . "\n\n" .
-				"If you do not respond to this email within 24 hours your account will automatically be disabled.\n\n" .
-				"--\n\n" .
-				"Please reply to this email if you have any questions, suggestions or just want to say hi.\n\n" .
-				"Follow " . $this->app->getConfig('siteName') . " on Twitter: https://twitter.com/" . $this->app->getConfig('twitterHandle')
-				;
+		$message =
+			"Hi,\n\n" .
+			"Thanks for creating an account at " . $this->app->getConfig('siteName') . "!\n\n" .
+			"Please verify your email address by visiting the page at the following URL:\n\n" .
+			"  " . $this->app->getConfig('websiteUrl') . "/signin/verify/" . $activationCode . "\n\n" .
+			"If you do not respond to this email within 24 hours your account will automatically be disabled.\n\n" .
+			"--\n\n" .
+			"Please reply to this email if you have any questions, suggestions or just want to say hi.\n\n" .
+			"Follow " . $this->app->getConfig('siteName') . " on Twitter: https://twitter.com/" . $this->app->getConfig('twitterHandle')
+			;
 
-			$this->app->getSingleton('helper')->sendMail($email, 'Please verify your email address', $message);
-
-			return $this->getUser($email);
-		}
+		$this->app->getSingleton('helper')->sendMail($email, 'Please verify your email address', $message);
 	}
 
 	/**
@@ -158,7 +175,7 @@ class Auth extends \Swiftlet\Model
 				id    = :id OR
 				email = :id
 			LIMIT 1
-			;');
+			');
 
 		$sth->bindParam(':id',       $id, \PDO::PARAM_INT);
 		$sth->bindParam(':password', $hash);

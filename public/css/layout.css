@@ -172,11 +172,21 @@ q:before, q:after, blockquote:before, blockquote:after {
   color: #1c9b47;
   background-color: #dff0d8;
   border-color: #d6e9c6; }
+  .alert-success a {
+    border-color: #aaddaa; }
+    .alert-success a:hover, .alert-success a:focus, .alert-success a:active {
+      color: #1c9b47;
+      border-color: #1c9b47; }
 
 .alert-error {
   color: #9c0001;
   background-color: #f2dede;
   border-color: #eed3d7; }
+  .alert-error a {
+    border-color: #ddaaaa; }
+    .alert-error a:hover, .alert-error a:focus, .alert-error a:active {
+      color: #9c0001;
+      border-color: #9c0001; }
 
 header {
   background: white;
