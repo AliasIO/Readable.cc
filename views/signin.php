@@ -6,7 +6,7 @@
 
 <?php if ( $this->get('success') ): ?>
 <div class="alert alert-success">
-	<?= $this->get('success', true); ?>
+	<?= $this->get('success', false); ?>
 </div>
 <?php endif ?>
 
