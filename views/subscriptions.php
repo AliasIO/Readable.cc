@@ -267,9 +267,14 @@
 <h2 id="feed-import-export">Import &amp; export feeds</h3>
 
 <p>
-	<em><a href="https://www.google.com/takeout/?pli=1#custom:reader">Export your <strong>Google Reader</strong> subscriptions through Google Takeout</a>. Extract the ZIP file
+	<em><a href="http://google.com/reader/subscriptions/export">Click here to export your <strong>Google Reader</strong> subscriptions</a>. Save the file and upload it below.</em>
+</p>
+
+<!--
+<a href="https://www.google.com/takeout/?pli=1#custom:reader">Export your <strong>Google Reader</strong> subscriptions through Google Takeout</a>. Extract the ZIP file
 	and upload the file called &lsquo;subscriptions.xml&rsquo; (in a folder called &lsquo;Reader&rsquo;) below.</em>
 </p>
+-->
 
 <p>
 	It may take up to a few hours for imported feeds to appear in &lsquo;<a href="<?= $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.
