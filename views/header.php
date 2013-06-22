@@ -14,7 +14,7 @@
 		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
 
 		<link href="<?= $this->app->getRootPath() ?>fonts/entypo/entypo.css" rel="stylesheet">
-		<link href="<?= $this->app->getRootPath() ?>css/layout.css?n" rel="stylesheet">
+		<link href="<?= $this->app->getRootPath() ?>css/layout.css?m" rel="stylesheet">
 
 		<script>
 			var readable = {};
