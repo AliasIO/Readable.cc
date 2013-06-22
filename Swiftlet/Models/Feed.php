@@ -220,7 +220,7 @@ class Feed extends \Swiftlet\Model
 					}
 				}
 			}
-		} catch ( \Swiftlet\Exception $e ) {
+		} catch ( \Exception $e ) {
 		}
 	}
 
