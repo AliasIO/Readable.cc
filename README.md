@@ -50,7 +50,7 @@ chmod 777 sessions HTMLPurifier/DefinitionCache/Serializer/HTML HTMLPurifier/Def
 Set up a cron job to periodically fetch feeds.
 
 ```shell
-*/5 * * * * /usr/bin/php /srv/readable.cc/index.php -q cron 2>&1 > /dev/null
+*/5 * * * * /usr/bin/php /srv/readable.cc/public/index.php -q cron 2>&1 > /dev/null
 ```
 
 Web server configuration
