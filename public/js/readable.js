@@ -22,8 +22,6 @@
 	};
 
 	app.init = function() {
-		var doubleTap = false;
-
 		$('.contact-email').text(app.email.replace(' ', '@')).attr('href', 'mailto:' + app.email.replace(' ', '@'));
 
 		$('header h2')
@@ -67,22 +65,6 @@
 				}
 
 				$('#overlay, .alert').hide();
-			})
-			// Collapse item on double tap
-			.on('touchstart', 'article', function(e) {
-				if ( $(this).data('item-id') === app.items.activeItemId && app.items.activeItem.hasClass('expanded') ) {
-					if ( doubleTap ) {
-						e.preventDefault();
-
-						app.items.collapse();
-					} else {
-						doubleTap = true;
-
-						setTimeout(function() {
-							doubleTap = false;
-						}, 500);
-					}
-				}
 			});
 
 		if ( app.prefs.externalLinks === app.PREF_LINKS_NEW_TAB ) {

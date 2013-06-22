@@ -78,7 +78,7 @@
 		</tr>
 		<tr>
 			<td><code>c</code></td>
-			<td>Collapse article (double-tap on mobile)</td>
+			<td>Collapse article</td>
 		</tr>
 		<tr>
 			<td><code>s</code></td>
