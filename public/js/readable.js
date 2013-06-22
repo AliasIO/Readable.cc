@@ -69,7 +69,7 @@
 				$('#overlay, .alert').hide();
 			})
 			// Collapse item on double tap
-			.on('touchstart', 'article', function() {
+			.on('touchstart', 'article', function(e) {
 				if ( $(this).data('item-id') === app.items.activeItemId && app.items.activeItem.hasClass('expanded') ) {
 					if ( doubleTap ) {
 						e.preventDefault();
