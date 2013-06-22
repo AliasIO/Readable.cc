@@ -327,7 +327,7 @@ class Subscriptions extends \Swiftlet\Controller
 							$link  = $xml->attributes()->htmlUrl;
 
 							if ( !$url || !$title || !$link ) {
-								throw new \Swiftlet\Exception('Invalid OPML');
+								continue;
 							}
 
 							$feed = $this->app->getModel('feed')->dummy($title, $url, $link, $folderId);
