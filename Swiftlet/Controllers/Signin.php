@@ -120,7 +120,7 @@ class Signin extends \Swiftlet\Controller
 			if ( $sth->rowCount() ) {
 				$success = 'Thank you, your email address has been verified!';
 
-				$this->app->getSingleton('session')->set('enabled', $user->enabled);
+				$this->app->getSingleton('session')->set('enabled', 1);
 			} else {
 				$error = 'The verfication code is invalid, expired or has already been used. Please use the &lsquo;<a href="' . $this->app->getRootPath() . 'forgot">Forgot password</a>&rsquo; link if you need to recover your account.';
 			}
