@@ -131,11 +131,11 @@ class Auth extends \Swiftlet\Model
 				activation_code            = :activation_code,
 				activation_code_expires_at = DATE_ADD(UTC_TIMESTAMP(), INTERVAL 1 DAY)
 			WHERE
-				id = :user_id
+				email = :email
 			LIMIT 1
 			');
 
-		$sth->bindParam(':user_id',         $userId);
+		$sth->bindParam(':email',           $email);
 		$sth->bindParam(':activation_code', $activationCode);
 
 		$sth->execute();
