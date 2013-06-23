@@ -77,9 +77,9 @@
 					</li>
 					<?php endif ?>
 
-					<li class="saved <?= $this->app->getControllerName() == 'Saved'  ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>saved"  >Saved</a></li>
-					<li class="search<?= $this->app->getControllerName() == 'Search' ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>search" >Search</a></li>
-					<li class="help  <?= $this->app->getControllerName() == 'Help'   ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>help"   >Help</a></li>
+					<li class="starred<?= $this->app->getControllerName() == 'Starred' ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>starred">Starred</a></li>
+					<li class="search <?= $this->app->getControllerName() == 'Search'  ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>search" >Search</a></li>
+					<li class="help   <?= $this->app->getControllerName() == 'Help'    ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>help"   >Help</a></li>
 
 					<li class="email">
 						<a href="javascript: void(0);"><span><?= $this->app->getSingleton('session')->get('email') ?></span>&nbsp;<i class="entypo chevron-down"></i></a>

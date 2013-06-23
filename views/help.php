@@ -32,7 +32,7 @@
 </p>
 
 <p>
-	Headlines are greyed out and stricken through when we believe you will find the article boring. If we guessed wrong, mark the item as &lsquo;interesting&rsquo;
+	Headlines are greyed out and stricken through when we believe you will find the article boring. If we guessed wrong, mark the item as interesting (thumbs up icon)
 	to help the system understand your interests better.
 </p>
 
@@ -41,7 +41,7 @@
 </p>
 
 <p>
-	Hit the &lsquo;save&rsquo; button on articles you wish to read later. They will appear on the &lsquo;<a href="<?= $this->app->getRootPath() ?>saved">Saved</a>&rsquo; page.
+	Hit the star icon on articles you wish to read later. They will appear on the &lsquo;<a href="<?= $this->app->getRootPath() ?>starred">Starred</a>&rsquo; page.
 </p>
 
 <p>
@@ -82,7 +82,7 @@
 		</tr>
 		<tr>
 			<td><code>s</code></td>
-			<td>Toggle save article</td>
+			<td>Toggle star article</td>
 		</tr>
 		<tr>
 			<td><code>m</code>, <code>a</code></td>

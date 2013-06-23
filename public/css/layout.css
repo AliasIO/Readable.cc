@@ -37,7 +37,7 @@ html {
 body {
   background: white;
   color: #333333;
-  font-family: MerriweatherRegular, Georgia, "Times New Roman", Times, serif;
+  font-family: MerriweatherRegular, Garamond, Georgia, "Times New Roman", Times, serif;
   font-size: 16px;
   line-height: 26px;
   margin: 0;
@@ -45,7 +45,7 @@ body {
   padding: 60px 0 100px 0; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: MerriweatherHeavy, Georgia, "Times New Roman", Times, serif;
+  font-family: MerriweatherHeavy, Garamond, Georgia, "Times New Roman", Times, serif;
   font-weight: bold;
   line-height: 1.2em;
   margin: 25px 0 15px 0;
@@ -97,10 +97,12 @@ p, table {
   margin: 0 0 15px; }
 
 strong, b {
-  font-family: MerriweatherBold, Georgia, "Times New Roman", Times, serif; }
+  font-family: MerriweatherBold, Garamond, Georgia, "Times New Roman", Times, serif; }
 
 em, i {
-  font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif; }
+  font-family: MerriweatherItalic, Garamond, Georgia, "Times New Roman", Times, serif; }
+  em strong, em b, i strong, i b {
+    font-family: MerriweatherItalic, Garamond, Georgia, "Times New Roman", Times, serif; }
 
 code {
   font-style: normal; }
@@ -143,7 +145,7 @@ pre {
 
 blockquote {
   background: #f8f8f8;
-  font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
+  font-family: MerriweatherItalic, Garamond, Georgia, "Times New Roman", Times, serif;
   font-style: italic;
   margin-bottom: 15px;
   padding: 15px 15px 0 15px;
@@ -204,7 +206,7 @@ header {
   header .container {
     position: relative; }
   header h1 {
-    font-family: MerriweatherBold, Georgia, "Times New Roman", Times, serif;
+    font-family: MerriweatherBold, Garamond, Georgia, "Times New Roman", Times, serif;
     font-size: 16px;
     line-height: inherit;
     margin: 0 0 0 -20px; }
@@ -221,7 +223,7 @@ header {
     header a:hover, header a:active {
       border-bottom: none; }
   header ul {
-    font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
+    font-family: MerriweatherItalic, Garamond, Georgia, "Times New Roman", Times, serif;
     font-size: 14px;
     font-style: italic;
     margin: 0;
@@ -357,11 +359,11 @@ header {
   text-align: center;
   vertical-align: middle; }
   #page-head h1 {
-    font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
+    font-family: MerriweatherItalic, Garamond, Georgia, "Times New Roman", Times, serif;
     font-weight: normal;
     margin: 40px 0 10px; }
   #page-head p {
-    font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
+    font-family: MerriweatherItalic, Garamond, Georgia, "Times New Roman", Times, serif;
     height: 40px;
     margin-bottom: 0;
     overflow: hidden;
@@ -388,7 +390,7 @@ header {
 
 #items-footer {
   color: #999999;
-  font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
+  font-family: MerriweatherItalic, Garamond, Georgia, "Times New Roman", Times, serif;
   font-style: italic;
   margin: 100px 0;
   text-align: center; }
@@ -403,7 +405,7 @@ header {
   border-bottom: 1px solid #cccccc;
   color: #666666;
   height: 0.75em;
-  font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
+  font-family: MerriweatherItalic, Garamond, Georgia, "Times New Roman", Times, serif;
   font-size: 14px;
   font-style: italic;
   margin: 15px 0 30px 0;
@@ -472,73 +474,54 @@ article {
       font-size: 1.7em; }
   article.active.expanded:hover .item-date .feed-options {
     display: inline; }
-  article .article-buttons {
+  article .article-actions {
     clear: both;
-    margin: -5px 0 45px 0; }
-    article .article-buttons a {
-      text-decoration: none; }
-    article .article-buttons .share {
+    color: #aaaaaa;
+    line-height: 40px;
+    margin: 30px 0 30px 0;
+    text-align: center; }
+    article .article-actions i {
+      cursor: pointer;
+      margin-right: 10px; }
+      article .article-actions i:hover {
+        color: #333333; }
+      article .article-actions i.active {
+        color: #9c0001; }
+    article .article-actions .entypo {
+      font-size: 40px; }
+    article .article-actions .share {
       display: inline-block;
       position: relative; }
-      article .article-buttons .share ul {
+      article .article-actions .share ul {
         background: white;
         border: 1px solid #cccccc;
-        bottom: 29px;
+        bottom: 40px;
+        color: #333333;
         display: none;
-        font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
+        font-family: MerriweatherItalic, Garamond, Georgia, "Times New Roman", Times, serif;
         font-size: 14px;
         font-style: italic;
-        left: 0;
+        right: 10px;
         margin: 0;
         padding: 10px 0;
         position: absolute;
         text-align: left;
         width: 120px; }
-        article .article-buttons .share ul li {
+        article .article-actions .share ul li {
           display: block;
           list-style: none;
           margin: 0; }
-          article .article-buttons .share ul li a {
+          article .article-actions .share ul li a {
             border: none;
             display: block;
             line-height: 30px;
             padding: 0 20px; }
-            article .article-buttons .share ul li a:hover {
+            article .article-actions .share ul li a:hover {
               background: #f8f8f8; }
-    article .article-buttons button {
-      font-size: 80%;
-      float: left;
-      margin: 15px 5px 0 0;
-      position: relative; }
-      article .article-buttons button.item-share ul {
-        background: white;
-        border: 1px solid #cccccc;
-        bottom: 28px;
-        font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
-        font-size: 14px;
-        font-style: italic;
-        left: -1px;
-        margin: 0;
-        padding: 10px 0;
-        position: absolute;
-        text-align: left;
-        width: 180px; }
-        article .article-buttons button.item-share ul li {
-          display: block;
-          list-style: none;
-          margin: 0; }
-          article .article-buttons button.item-share ul li a {
-            border: none;
-            display: block;
-            line-height: 30px;
-            padding: 0 20px; }
-            article .article-buttons button.item-share ul li a i {
-              font-size: 2em; }
-  article.inactive .article-buttons {
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
-    opacity: 0.5; }
+  article.inactive .article-actions {
+    visibility: hidden; }
   article p.caption {
-    font-family: MerriweatherItalic, Georgia, "Times New Roman", Times, serif;
+    font-family: MerriweatherItalic, Garamond, Georgia, "Times New Roman", Times, serif;
     font-size: 80%;
     font-style: italic;
     text-align: left; }
@@ -732,7 +715,7 @@ select {
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px;
-  font-family: MerriweatherRegular, Georgia, "Times New Roman", Times, serif;
+  font-family: MerriweatherRegular, Garamond, Georgia, "Times New Roman", Times, serif;
   font-size: inherit;
   height: 30px;
   margin: 1px;
@@ -779,7 +762,7 @@ table {
     width: 100%;
     margin-bottom: 30px; }
     table.table th {
-      font-family: MerriweatherBold, Georgia, "Times New Roman", Times, serif;
+      font-family: MerriweatherBold, Garamond, Georgia, "Times New Roman", Times, serif;
       font-weight: bold; }
     table.table td, table.table th {
       border-left: 1px solid #cccccc;
@@ -812,7 +795,7 @@ table {
 #form-pay img {
   vertical-align: middle; }
 #form-pay #total-amount {
-  font-family: MerriweatherBold, Georgia, "Times New Roman", Times, serif;
+  font-family: MerriweatherBold, Garamond, Georgia, "Times New Roman", Times, serif;
   font-weight: bold;
   font-size: 1.5em;
   line-height: 26px;
@@ -937,7 +920,7 @@ table {
   .control-group .control-label {
     display: block;
     float: none;
-    font-family: MerriweatherBold, Georgia, "Times New Roman", Times, serif;
+    font-family: MerriweatherBold, Garamond, Georgia, "Times New Roman", Times, serif;
     font-weight: bold;
     text-align: left;
     margin-bottom: 5px;
@@ -1048,12 +1031,16 @@ table {
   #items .date-separator {
     font-size: 80%; }
 
-  article .article-buttons .share ul {
-    bottom: 39px;
-    font-size: 22px;
-    width: 150px; }
-    article .article-buttons .share ul li a {
-      line-height: 40px; }
+  article .article-actions {
+    line-height: 60px; }
+    article .article-actions .entypo {
+      font-size: 60px; }
+    article .article-actions .share ul {
+      bottom: 60px;
+      font-size: 22px;
+      width: 150px; }
+      article .article-actions .share ul li a {
+        line-height: 40px; }
 
   button, .btn {
     line-height: 40px;

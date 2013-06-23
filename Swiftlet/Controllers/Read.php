@@ -155,18 +155,18 @@ class Read extends \Swiftlet\Controller
 	}
 
 	/**
-	 * Save item
+	 * Star item
 	 */
-	public function save()
+	public function star()
 	{
 		header('Content-type: application/json');
 
 		$userId = $this->app->getSingleton('helper')->ensureValidUser(true);
 
 		$itemId = isset($_POST['item_id']) ? (int) $_POST['item_id'] : null;
-		$save   = isset($_POST['save'])    ? (int) $_POST['save']    : null;
+		$star   = isset($_POST['star'])    ? (int) $_POST['star']    : null;
 
-		if ( !$itemId || ( $save != 0 && $save != 1 ) ) {
+		if ( !$itemId || ( $star != 0 && $star != 1 ) ) {
 			header('HTTP/1.0 400 Bad Request');
 
 			exit(json_encode(array('message' => 'Invalid arguments')));
@@ -190,7 +190,7 @@ class Read extends \Swiftlet\Controller
 
 		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 		$sth->bindParam('item_id', $itemId, \PDO::PARAM_INT);
-		$sth->bindParam('saved',   $save,   \PDO::PARAM_INT);
+		$sth->bindParam('saved',   $star,   \PDO::PARAM_INT);
 
 		$sth->execute();
 

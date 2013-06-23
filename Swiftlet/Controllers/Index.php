@@ -48,7 +48,7 @@ class Index extends \Swiftlet\Controllers\Read
 				items.id,
 				items.score,
 				0           AS vote,
-				0           AS saved,
+				0           AS starred,
 				0           AS feed_subscribed
 			FROM       items
 			INNER JOIN feeds ON feeds.id = items.feed_id AND feeds.hidden = 0
@@ -70,7 +70,7 @@ class Index extends \Swiftlet\Controllers\Read
 					main.feed_link,
 					COALESCE(users_items.score, 0)   AS score,
 					COALESCE(users_items.vote,  0)   AS vote,
-					COALESCE(users_items.saved, 0)   AS saved,
+					COALESCE(users_items.saved, 0)   AS starred,
 					IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
 				FROM (
 					' . $select . '

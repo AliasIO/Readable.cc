@@ -100,7 +100,7 @@ class Reading extends \Swiftlet\Controllers\Read
 				users_feeds.folder_id,
 				COALESCE(users_items.vote,  0) AS vote,
 				COALESCE(users_items.score, 0) AS score,
-				COALESCE(users_items.saved, 0) AS saved,
+				COALESCE(users_items.saved, 0) AS starred,
 				1 AS feed_subscribed
 			' . $sql . '
 			ORDER BY DATE(COALESCE(items.posted_at, items.created_at)) DESC' . ( $this->app->getSingleton('session')->get('item_order') == self::ITEM_SORT_RELEVANCE_TIME ? ', users_items.score DESC' : '' ) . '

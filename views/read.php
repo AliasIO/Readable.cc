@@ -66,23 +66,12 @@
 			<?= $item->contents ?>
 		</div>
 
-		<div class="article-buttons">
-			<button class="btn btn-small item-vote<?= $item->vote == 1 ? ' btn-inverse voted' : '' ?>" data-item-id="<?= $item->id ?>" data-vote="1"  title="Promote articles like these in &lsquo;My Reading&rsquo;">
-				<i class="entypo thumbs-up"></i>&nbsp;Interesting
-			</button>
-
-			<button class="btn btn-small item-vote<?= $item->vote == -1 ? ' btn-inverse voted' : '' ?>" data-item-id="<?= $item->id ?>" data-vote="-1" title="Demote articles like these in &lsquo;My Reading&rsquo;">
-				<i class="entypo thumbs-down"></i>&nbsp;Boring
-			</button>
-
-			<button class="btn btn-small item-save<?= $item->saved ? ' btn-inverse saved' : '' ?>" data-item-id="<?= $item->id ?>" title="Save this article to read later">
-				<i class="entypo install"></i>&nbsp;Save<?= $item->saved ? 'd' : '' ?>
-			</button>
-
+		<div class="article-actions">
+			<i data-item-id="<?= $item->id ?>"                class="item-star entypo star<?=        $item->starred    ? ' active' : '' ?>" title="Star this article to read later"></i>
+			<i data-item-id="<?= $item->id ?>" data-vote="1"  class="item-vote entypo thumbs-up<?=   $item->vote ==  1 ? ' active' : '' ?>" title="Promote articles like these in &lsquo;My Reading&rsquo;"></i>
+			<i data-item-id="<?= $item->id ?>" data-vote="-1" class="item-vote entypo thumbs-down<?= $item->vote == -1 ? ' active' : '' ?>" title="Demote articles like these in &lsquo;My Reading&rsquo;"></i>
 			<div class="share">
-				<button class="btn btn-small item-share" title="Share this article">
-					<i class="entypo share"></i>&nbsp;Share
-				</button>
+				<i data-item-id="<?= $item->id ?>" class="item-share entypo share" title="Share this article"></i>
 
 				<ul>
 					<li><a href="http://www.facebook.com/sharer.php?s=100&amp;p[url]=<?= rawurlencode($item->url) ?>&amp;p[title]=<?= rawurlencode($item->title) ?>">Facebook</a></li>
@@ -94,7 +83,7 @@
 
 		<?php if ( $item->score < 0 ): ?>
 		<p class="alert">
-			Based on content you voted on this article has automatically been marked as &lsquo;Boring&rsquo;. If we got it wrong, press &lsquo;Interesting&rsquo; to help us understand your interests better.
+			Based on content you voted on this article has automatically been marked as boring. If we got it wrong, press the thumbs up icon to help us understand your interests better.
 		</p>
 		<?php endif ?>
 	</div>

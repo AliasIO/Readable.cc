@@ -137,7 +137,7 @@ class Folder extends \Swiftlet\Controllers\Read
 						items.posted_at,
 						COALESCE(users_items.vote,  0) AS vote,
 						COALESCE(users_items.score, 0) AS score,
-						COALESCE(users_items.saved, 0) AS saved,
+						COALESCE(users_items.saved, 0) AS starred,
 						1 AS feed_subscribed
 					' . $sql . '
 					ORDER BY DATE(COALESCE(items.posted_at, items.created_at)) DESC, users_items.score DESC
@@ -168,7 +168,7 @@ class Folder extends \Swiftlet\Controllers\Read
 						items.contents,
 						items.posted_at,
 						0                AS vote,
-						0                AS saved,
+						0                AS starred,
 						0                AS score,
 						0                AS feed_subscribed
 					FROM       folders

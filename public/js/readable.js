@@ -46,10 +46,10 @@
 				}
 
 				if ( !$(e.target).closest('.share').length ) {
-					$('.article-buttons').find('.share ul').hide();
+					$('.article-actions').find('.share ul').hide();
 				}
 			})
-			.on('click', 'button.item-share', function(e) {
+			.on('click', '.item-share', function(e) {
 				$(this).trigger('blur').parent().find('ul').toggle();
 			})
 			// Hide alerts on click
@@ -86,7 +86,7 @@
 		switch ( app.controller ) {
 			case 'Index':
 			case 'Reading':
-			case 'Saved':
+			case 'Starred':
 			case 'Feed':
 			case 'Folder':
 				app.items.init();
@@ -275,7 +275,7 @@
 						break;
 					case 83: // s
 						if ( app.signedIn && app.items.activeItem ) {
-							app.items.activeItem.find('.item-save').trigger('click');
+							app.items.activeItem.find('.item-star').trigger('click');
 						}
 
 						break;
@@ -374,7 +374,7 @@
 
 				$(this).trigger('blur');
 
-				app.items.vote($(this).data('item-id'), $(this).hasClass('voted') ? 0 : $(this).data('vote'));
+				app.items.vote($(this).data('item-id'), $(this).hasClass('active') ? 0 : $(this).data('vote'));
 			});
 
 			// Register votes
@@ -391,12 +391,12 @@
 				app.items.subscribe(feedId, action);
 			});
 
-			$('#items').on('click', 'article.active .item-save', function(e) {
+			$('#items').on('click', 'article.active .item-star', function(e) {
 				e.preventDefault();
 
 				$(this).trigger('blur');
 
-				app.items.save($(this).data('item-id'), $(this).hasClass('saved') ? 0 : 1);
+				app.items.star($(this).data('item-id'), $(this).hasClass('active') ? 0 : 1);
 			});
 
 			$(document).on('click', '.mark-all-read-confirm', function(e) {
@@ -547,24 +547,30 @@
 
 				el.find('p > img:first-child, p > a:first-child > img:first-child').each(function() {
 					if ( $(this).closest('p').text().trim().length && $(this).closest('p').html().match(/^\s*(<a [^>]+>\s*)?<img /) ) {
-						$(this).addClass('image-left');
+						$(this)
+							.addClass('image-left')
+							.next('br').remove()
+							;
 					}
 				});
 
 				// Images at end of paragraph or alone in paragraph
 				el.find('p > img:last-child, p > a:last-child > img:last-child').each(function() {
 					if ( $(this).closest('p').text().trim().length && $(this).closest('p').html().match(/<img [^>]+>(\s*<\/a>)?\s*$/) ) {
-						$(this).addClass('image-right');
+						$(this)
+							.addClass('image-right')
+							.prev('br').remove()
+							;
 					}
 				});
 
 				// Feature first image not preceded by text
 				el.find('p:not(:last-child):first-child > a:first-child > img:first-child:not(.image-alone), p:not(:last-child):first-child > img:first-child:not(.image-alone)').each(function() {
 					if ( $(this).closest('p').html().match(/^\s*(<a [^>]+>\s*)?<img /) ) {
-						$(this).addClass('feature');
-
-						// Remove newline directly after feature image
-						$(this).closest('p').find('.feature + br').remove();
+						$(this)
+							.addClass('feature')
+							.next('br').remove()
+							;
 					}
 				});
 
@@ -682,7 +688,7 @@
 		},
 
 		vote: function(itemId, vote) {
-			var buttonUp, buttonDown, buttonLastActive, buttonActive;
+			var iconUp, iconDown, iconLastActive, iconActive;
 
 			app.trackEvent('app.items', 'vote', vote);
 
@@ -692,16 +698,16 @@
 				return;
 			}
 
-			buttonUp         = $('article .item-vote[data-item-id=' + itemId + '][data-vote=1]');
-			buttonDown       = $('article .item-vote[data-item-id=' + itemId + '][data-vote=-1]');
-			buttonLastActive = $('article .item-vote[data-item-id=' + itemId + '].voted');
-			buttonActive     = vote === 1 ? buttonUp : ( vote === -1 ? buttonDown : null );
+			iconUp         = $('article .item-vote[data-item-id=' + itemId + '][data-vote=1]');
+			iconDown       = $('article .item-vote[data-item-id=' + itemId + '][data-vote=-1]');
+			iconLastActive = $('article .item-vote[data-item-id=' + itemId + '].active');
+			iconActive     = vote === 1 ? iconUp : ( vote === -1 ? iconDown : null );
 
-			buttonUp  .removeClass('btn-inverse voted');
-			buttonDown.removeClass('btn-inverse voted');
+			iconUp  .removeClass('active');
+			iconDown.removeClass('active');
 
-			if ( buttonActive ) {
-				buttonActive.addClass('btn-inverse voted');
+			if ( iconActive ) {
+				iconActive.addClass('active');
 			}
 
 			$.ajax({
@@ -709,11 +715,11 @@
 				method: 'post',
 				data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
 			}).fail(function() {
-				buttonUp  .removeClass('btn-inverse voted');
-				buttonDown.removeClass('btn-inverse voted');
+				iconUp  .removeClass('active');
+				iconDown.removeClass('active');
 
-				if ( buttonLastActive ) {
-					buttonLastActive.addClass('btn-inverse voted');
+				if ( iconLastActive ) {
+					iconLastActive.addClass('active');
 				}
 			});
 
@@ -767,10 +773,10 @@
 			return app.items;
 		},
 
-		save: function(itemId, save) {
-			var button;
+		star: function(itemId, star) {
+			var icon;
 
-			app.trackEvent('app.items', 'save');
+			app.trackEvent('app.items', 'star');
 
 			if ( !app.signedIn ) {
 				app.notSignedIn();
@@ -778,24 +784,24 @@
 				return;
 			}
 
-			button = $('article .item-save[data-item-id=' + itemId + ']');
+			icon = $('article .item-star[data-item-id=' + itemId + ']');
 
-			if ( save ) {
-				button.addClass('btn-inverse saved').html('<i class="entypo install"></i>&nbsp;Saved');
+			if ( star ) {
+				icon.addClass('active');
 			} else {
-				button.removeClass('btn-inverse saved').html('<i class="entypo install"></i>&nbsp;Save');
+				icon.removeClass('active');
 			}
 
 			if ( app.signedIn ) {
 				$.ajax({
-					url: app.rootPath + 'read/save/',
+					url: app.rootPath + 'read/star/',
 					method: 'post',
-					data: { item_id: itemId, save: save, sessionId: app.sessionId }
+					data: { item_id: itemId, star: star, sessionId: app.sessionId }
 				}).fail(function() {
-					if ( save ) {
-						button.removeClass('btn-inverse saved').html('<i class="entypo install"></i>&nbsp;Save');
+					if ( star ) {
+						icon.removeClass('starred');
 					} else {
-						button.addClass('btn-inverse saved').html('<i class="entypo install"></i>&nbsp;Saved');
+						icon.addClass('starred');
 					}
 				});
 			}

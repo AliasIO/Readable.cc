@@ -1,15 +1,16 @@
 @import compass
 
-$fontBody: MerriweatherRegular, Georgia, "Times New Roman", Times, serif
-$fontBodyItalic: MerriweatherItalic, Georgia, "Times New Roman", Times, serif
-$fontBodyBold: MerriweatherBold, Georgia, "Times New Roman", Times, serif
-$fontHeading: MerriweatherHeavy, Georgia, "Times New Roman", Times, serif
-$fontCode: Consolas, "DejaVu Sans Mono", "Liberation Mono", Courier, monospace
+$fontBody:       MerriweatherRegular, Garamond, Georgia, "Times New Roman", Times, serif
+$fontBodyItalic: MerriweatherItalic,  Garamond, Georgia, "Times New Roman", Times, serif
+$fontBodyBold:   MerriweatherBold,    Garamond, Georgia, "Times New Roman", Times, serif
+$fontHeading:    MerriweatherHeavy,   Garamond, Georgia, "Times New Roman", Times, serif
+$fontCode:       Consolas, "DejaVu Sans Mono", "Liberation Mono", Courier, monospace
 
 $colorBorder: #ccc
 $colorError: #9c0001
 $colorText: #333
-$colorTextSecondary: #666
+$colorText2: #666
+$colorText3: #9c0001
 
 $textMargin: 15px
 
@@ -17,9 +18,9 @@ $small: 80%
 $medium: 85%
 
 +font-face('MerriweatherRegular', font-files('merriweather/Merriweather-Regular-webfont.woff', 'merriweather/Merriweather-Regular-webfont.ttf', 'merriweather/Merriweather-Regular-webfont.svg#MerriweatherRegular'), 'merriweather/Merriweather-Regular-webfont.eot', normal, normal) 
-+font-face('MerriweatherItalic', font-files('merriweather/Merriweather-Italic-webfont.woff', 'merriweather/Merriweather-Italic-webfont.ttf', 'merriweather/Merriweather-Italic-webfont.svg#MerriweatherItalic'), 'merriweather/Merriweather-Italic-webfont.eot', normal, italic) 
-+font-face('MerriweatherBold', font-files('merriweather/Merriweather-Bold-webfont.woff', 'merriweather/Merriweather-Bold-webfont.ttf', 'merriweather/Merriweather-Bold-webfont.svg#MerriweatherBold'), 'merriweather/Merriweather-Bold-webfont.eot', bold, normal) 
-+font-face('MerriweatherHeavy', font-files('merriweather/Merriweather-Black-webfont.woff', 'merriweather/Merriweather-Black-webfont.ttf', 'merriweather/Merriweather-Black-webfont.svg#MerriweatherHeavy'), 'merriweather/Merriweather-Black-webfont.eot', bold, normal) 
++font-face('MerriweatherItalic',  font-files('merriweather/Merriweather-Italic-webfont.woff',  'merriweather/Merriweather-Italic-webfont.ttf',  'merriweather/Merriweather-Italic-webfont.svg#MerriweatherItalic'),   'merriweather/Merriweather-Italic-webfont.eot',  normal, italic) 
++font-face('MerriweatherBold',    font-files('merriweather/Merriweather-Bold-webfont.woff',    'merriweather/Merriweather-Bold-webfont.ttf',    'merriweather/Merriweather-Bold-webfont.svg#MerriweatherBold'),       'merriweather/Merriweather-Bold-webfont.eot',    bold,   normal) 
++font-face('MerriweatherHeavy',   font-files('merriweather/Merriweather-Black-webfont.woff',   'merriweather/Merriweather-Black-webfont.ttf',   'merriweather/Merriweather-Black-webfont.svg#MerriweatherHeavy'),     'merriweather/Merriweather-Black-webfont.eot',   bold,   normal) 
 
 *
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
@@ -100,6 +101,9 @@ strong, b
 
 em, i
 	font-family: $fontBodyItalic 
+
+	strong, b
+		font-family: $fontBodyItalic 
 
 code
 	font-style: normal
@@ -426,7 +430,7 @@ header
 
 	.date-separator
 		border-bottom: 1px solid $colorBorder
-		color: $colorTextSecondary
+		color: $colorText2
 		height: .75em
 		font-family: $fontBodyItalic 
 		font-size: 14px
@@ -507,7 +511,7 @@ article
 		display: none
 
 	.item-date
-		color: $colorTextSecondary
+		color: $colorText2
 		font-size: $medium
 		font-size: 13px
 		margin-bottom: 20px
@@ -526,12 +530,25 @@ article
 		&:hover .item-date .feed-options
 			display: inline
 
-	.article-buttons
+	.article-actions
 		clear: both
-		margin: -5px 0 $textMargin * 3 0
+		color: #aaa
+		line-height: 40px
+		margin: $textMargin * 2 0 $textMargin * 2 0
+		text-align: center
 
-		a
-			text-decoration: none
+		i
+			cursor: pointer
+			margin-right: 10px
+
+			&:hover
+				color: #333
+
+			&.active
+				color: $colorText3
+
+		.entypo
+			font-size: 40px
 
 		.share	
 			display: inline-block
@@ -540,12 +557,13 @@ article
 			ul
 				background: #fff
 				border: 1px solid $colorBorder
-				bottom: 29px
+				bottom: 40px
+				color: $colorText
 				display: none
 				font-family: $fontBodyItalic
 				font-size: 14px
 				font-style: italic
-				left: 0
+				right: 10px
 				margin: 0
 				padding: 10px 0
 				position: absolute
@@ -566,44 +584,8 @@ article
 						&:hover
 							background: #f8f8f8
 
-		button
-			font-size: $small
-			float: left
-			margin: $textMargin 5px 0 0
-			position: relative
-
-			&.item-share
-
-				ul
-					background: #fff
-					border: 1px solid $colorBorder
-					bottom: 28px
-					font-family: $fontBodyItalic
-					font-size: 14px
-					font-style: italic
-					left: -1px
-					margin: 0
-					padding: 10px 0
-					position: absolute
-					text-align: left
-					width: 180px
-
-					li
-						display: block
-						list-style: none
-						margin: 0
-
-						a
-							border: none
-							display: block
-							line-height: 30px
-							padding: 0 20px
-
-							i
-								font-size: 2em
-
-	&.inactive .article-buttons
-		+opacity(.5)
+	&.inactive .article-actions
+		visibility: hidden
 
 	p
 
@@ -1185,12 +1167,16 @@ table
 	
 	article
 
-		.article-buttons
+		.article-actions
+			line-height: 60px
+
+			.entypo
+				font-size: 60px
 
 			.share
 
 				ul
-					bottom: 39px
+					bottom: 60px
 					font-size: 22px
 					width: 150px
 

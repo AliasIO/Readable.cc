@@ -2,10 +2,10 @@
 
 namespace Swiftlet\Controllers;
 
-class Saved extends \Swiftlet\Controllers\Read
+class Starred extends \Swiftlet\Controllers\Read
 {
 	protected
-		$title = 'Saved'
+		$title = 'Starred'
 		;
 
 	/**
@@ -46,15 +46,15 @@ class Saved extends \Swiftlet\Controllers\Read
 
 		$sth = $dbh->prepare($sql='
       SELECT
-				feeds.id    AS feed_id,
-				feeds.title AS feed_title,
-				feeds.link  AS feed_link,
+				feeds.id          AS feed_id,
+				feeds.title       AS feed_title,
+				feeds.link        AS feed_link,
 				items.id,
 				items.url,
 				items.title,
 				items.contents,
 				items.posted_at,
-				users_items.saved,
+				users_items.saved AS starred,
 				users_items.vote,
 				users_items.score,
 				IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
