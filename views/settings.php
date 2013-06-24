@@ -20,9 +20,7 @@
 	</p>
 
 	<ul>
-		<!--
 		<li><a href="#payments">Payments</a></li>
-		-->
 		<li><a href="#account">Account</a></il>
 	</ul>
 </div>
@@ -131,7 +129,6 @@
 
 <div class="divider"></div>
 
-<!--
 <h2 id="payments">Payments</h2>
 
 <?php if ( $payments ): ?>
@@ -176,7 +173,6 @@
 <?php endif ?>
 
 <div class="divider"></div>
--->
 
 <h2 id="delete">Delete account</h2>
 

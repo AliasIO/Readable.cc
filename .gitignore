@@ -1,3 +1,4 @@
+config/main.php
 config/pdo.php
 config/pin.net.au.php
 parser/config.yml

@@ -437,6 +437,22 @@ class Pay extends \Swiftlet\Controller
 						'Your credit card has been charged <strong>' . $result->response->currency . ' ' . number_format($result->response->amount / 100, 2) . '</strong>. ' .
 						'Your payment is valid until <strong>' . date('F j, Y', $expiresAt) . '</strong>.'
 						;
+
+					/*
+					$message =
+						"Name: " . $name . "\n" .
+						"Payment date: " . date('F j, Y', strtotime($result->response->created_at)) . "\n\n" .
+						"This is your receipt of payment in the amount of " . $result->response->currency . " " . number_format($result->response->amount / 100, 2) . ".\n\n" .
+						"Thank you for your support!\n\n" .
+						"If you have any questions, please reply to this email.\n\n" .
+						"Sincerely,\n\n" .
+						$this->app->getConfig('siteName') . "\n" .
+						$this->app->getConfig('websiteUrl')
+						;
+
+					$this->app->getSingleton('helper')->sendMail($this->app->getSingleton('session')->get('email'), 'Payment receipt', $message);
+					$this->app->getSingleton('helper')->sendMail($this->app->getConfig('emailFrom'),                'Payment receipt', $message);
+					*/
 				}
 
 				if ( isset($result->error) ) {

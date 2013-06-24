@@ -15,7 +15,7 @@
 <?php endif ?>
 
 <p>
-	Almost done. Please provide your payment details and billing address.
+	Almost done. Please provide your payment details.
 </p>
 
 <p>

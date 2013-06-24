@@ -89,6 +89,9 @@ a {
     color: black;
     outline: none; }
 
+small {
+  font-size: 80%; }
+
 img {
   color: #999999;
   font-size: 80%; }

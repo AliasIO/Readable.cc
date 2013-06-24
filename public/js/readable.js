@@ -931,6 +931,10 @@
 		init: function() {
 			$('#name').focus();
 
+			$('#form-pay').on('submit', function() {
+				$(this).find('button').prop('disabled', true);
+			});
+
 			$('#amount, #months').on('change blur keyup', function() {
 				$('#total-amount').text('$' + $('#amount').val() * $('#months').val());
 			}).trigger('change');
