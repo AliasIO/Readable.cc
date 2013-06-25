@@ -112,7 +112,7 @@ class Search extends \Swiftlet\Controllers\Read
 					FROM (
 						SELECT
 							items.id,
-							COALESCE(items.posted_at, items.created_at) AS posted_at
+							IF(items.posted_at, items.posted_at, items.created_at) AS posted_at
 						FROM (
 							SELECT
 								id
