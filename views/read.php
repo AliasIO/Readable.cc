@@ -33,7 +33,7 @@
 	class="inactive collapsed <?= $item->score < 0 ? ' boring' : '' ?>"
 	>
 	<h1<?= $item->score < 0 ? ' title="You may find this article uninteresting (based on articles you voted on)"' : '' ?>>
-		<a href="<?= $this->htmlEncode($item->url) ?>"><?= $item->title ?></a>
+		<a href="<?= $this->htmlEncode($item->url) ?>"><?= trim($item->title) ?: '(No title)' ?></a>
 	</h1>
 
 	<p class="item-date">
@@ -63,7 +63,7 @@
 
 	<div class="item-wrap">
 		<div class="item-contents">
-			<?= $item->contents ?>
+			<?= trim($item->contents) ?: '<em>(No content)</em>' ?>
 		</div>
 
 		<div class="article-actions">

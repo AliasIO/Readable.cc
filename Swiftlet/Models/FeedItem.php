@@ -150,14 +150,14 @@ class FeedItem extends \Swiftlet\Model
 	 */
 	private function getData()
 	{
-		$data = new \stdClass;
+		$data = new \StdClass;
 
 		$nsContent = $this->xml->children(Feed::NS_CONTENT);
 		$nsDc      = $this->xml->children(Feed::NS_DC);
 
 		switch ( $this->feed->getType() ) {
 			case 'rss2':
-				$contents = $nsContent->encoded ? $nsContent->encoded : ( $this->xml->description ? $this->xml->description : false );
+				$contents = trim($nsContent->encoded) ? $nsContent->encoded : ( trim($this->xml->description) ? $this->xml->description : false );
 
 				$data->url      = (string) $this->xml->link;
 				$data->title    = (string) $this->xml->title;
@@ -174,10 +174,10 @@ class FeedItem extends \Swiftlet\Model
 				}
 
 				if ( !isset($link) ) {
-					return new \stdClass;
+					return new \StdClass;
 				}
 
-				$contents = $this->xml->content ? $this->xml->content : ( $this->xml->summary ? $this->xml->summary : false );
+				$contents = trim($this->xml->content) ? $this->xml->content : ( trim($this->xml->summary) ? $this->xml->summary : false );
 
 				$date = $this->xml->published ? $this->xml->published : ( $this->xml->updated ? $this->xml->updated : false );
 
@@ -196,7 +196,7 @@ class FeedItem extends \Swiftlet\Model
 				break;
 			case 'rss1':
 			case 'rss1-rdf':
-				$contents = $nsContent->encoded ? $nsContent->encoded : ( $this->xml->description ? $this->xml->description : false );
+				$contents = trim($nsContent->encoded) ? $nsContent->encoded : ( trim($this->xml->description) ? $this->xml->description : false );
 
 				$date = $this->xml->pubDate ? $this->xml->pubDate : ( $nsDc->date ? $nsDc->date : false );
 
