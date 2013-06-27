@@ -1,6 +1,5 @@
 <p>
-	You are free to evaluate <?= $this->app->getConfig('siteName') ?> for as long as you wish.
-	If you feel compelled to give your support, consider making a one time payment of however much it's worth to you.
+	If you feel <?= $this->app->getConfig('siteName') ?> is worth more than nothing, consider making a one time payment. No obligation.
 </p>
 
 <form id="form-pay" method="post" action="<?= $this->app->getRootPath() ?>pay" class="well">

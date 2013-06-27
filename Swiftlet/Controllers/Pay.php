@@ -308,8 +308,9 @@ class Pay extends \Swiftlet\Controller
 
 		if ( !empty($_POST['form']) ) {
 			if ( $_POST['form'] == 'pay-partial' ) {
-				$this->view->set('amount', $amount);
-				$this->view->set('months', $months);
+				$this->view->set('amount',   $amount);
+				$this->view->set('currency', $currency);
+				$this->view->set('months',   $months);
 
 				return;
 			}
@@ -375,7 +376,7 @@ class Pay extends \Swiftlet\Controller
 				$result = $this->curl('charges', array(
 					'amount'                 => (int) $amount * (int) $months * 100,
 					'currency'               => $currency,
-					'description'            => 'Readable.cc',
+					'description'            => $this->app->getConfig('siteName') . ' - Thank you!',
 					'email'                  => $this->app->getSingleton('session')->get('email'),
 					'ip_address'             => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '',
 					'[card]number'           => $number,
@@ -433,7 +434,7 @@ class Pay extends \Swiftlet\Controller
 					$this->app->getSingleton('helper')->localize($expiresAt);
 
 					$success =
-						'Thank you very much for your support!<br><br>' .
+						'Thank you!<br><br>' .
 						'Your credit card has been charged <strong>' . $result->response->currency . ' ' . number_format($result->response->amount / 100, 2) . '</strong>. ' .
 						'Your payment is valid until <strong>' . date('F j, Y', $expiresAt) . '</strong>.'
 						;

@@ -123,7 +123,7 @@
 		</div>
 
 		<div class="control-group <?= $this->get('error-address-city') ? 'error' : '' ?>">
-			<label class="control-label" for="name">City</label>
+			<label class="control-label" for="name">City / Suburb</label>
 
 			<div class="controls">
 				<input id="address-city" name="address-city" type="text" placeholder="Gotham City" value="<?= $this->get('address-city') ?>">
@@ -139,7 +139,7 @@
 		</div>
 
 		<div class="control-group <?= $this->get('error-address-state') ? 'error' : '' ?>">
-			<label class="control-label" for="address-state">State</label>
+			<label class="control-label" for="address-state">State / Province</label>
 
 			<div class="controls">
 				<input id="address-state" name="address-state" type="text" placeholder="" value="<?= $this->get('address-state') ?>">
@@ -165,5 +165,9 @@
 		</div>
 	</fieldset>
 </form>
+
+<p>
+	<small>Please read our <a href="<?= $this->app->getRootPath() ?>terms">Terms &amp; Conditions</a> and <a href="<?= $this->app->getRootPath() ?>privacy">Privacy Statement</a>.</small>
+</p>
 
 <?php require 'footer.php' ?>

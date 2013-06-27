@@ -48,6 +48,10 @@
 	<?= $this->app->getConfig('siteName') ?> is free and <a href="<?= $this->app->getConfig('repoUrl') ?>">open source</a>.
 </p>
 
+<p>
+	<small>Please read our <a href="<?= $this->app->getRootPath() ?>terms">Terms &amp; Conditions</a> and <a href="<?= $this->app->getRootPath() ?>privacy">Privacy Statement</a>.</small>
+</p>
+
 <div class="divider"></div>
 
 <h2 id="shortcuts">Keyboard shortcuts</h2>
