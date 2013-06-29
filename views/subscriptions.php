@@ -31,9 +31,9 @@
 	</ul>
 </div>
 
-<?php $folders = $this->get('folders') ?>
+<?php $grouped = $this->grouped ?>
 
-<?php if ( $feeds ): ?>
+<?php if ( $this->feedCount ): ?>
 <?php if ( !$this->get('paid') ): ?>
 <h2>Pay what you want</h2>
 
@@ -45,7 +45,7 @@
 <h2 id="subscriptions">Subscriptions</h3>
 
 <div id="subscriptions-grouped">
-	<?php foreach ( $this->grouped as $group ): ?>
+	<?php foreach ( $grouped as $group ): ?>
 	<?php if ( $group->feeds ): ?>
 	<h3><a href="javascript: void(0)"><?= $group->folder ? $group->folder->title : 'Unsorted' ?></a></h3>
 
@@ -76,10 +76,12 @@
 				<td>
 					<select data-feed-id="<?= $feed->id ?>">
 						<option value=""></option>
-						<?php foreach ( $folders as $folder ): ?>
-						<option value="<?= $folder->id ?>"<?= $feed->folder_id == $folder->id ? ' selected="selected"' : '' ?>>
-							<?= $folder->title ?>
+						<?php foreach ( $grouped as $group2 ): ?>
+						<?php if ( $group2->folder ): ?>
+						<option value="<?= $group2->folder->id ?>"<?= $feed->folder_id == $group2->folder->id ? ' selected' : '' ?>>
+							<?= $group2->folder->title ?>
 						</option>
+						<?php endif ?>
 						<?php endforeach ?>
 					</select>
 				</td>
@@ -197,10 +199,12 @@
 			<div class="controls">
 				<select id="folder" name="folder">
 					<option value="">No folder</option>
-					<?php foreach ( $folders as $folder ): ?>
-					<option value="<?= $folder->id ?>">
-						<?= $folder->title ?>
+					<?php foreach ( $grouped as $group ): ?>
+					<?php if ( $group->folder ): ?>
+					<option value="<?= $group->folder->id ?>">
+						<?= $group->folder->title ?>
 					</option>
+					<?php endif ?>
 					<?php endforeach ?>
 				</select>
 			</div>
@@ -226,7 +230,7 @@
 	<input type="hidden" name="form" value="folders">
 	<input type="hidden" name="sessionId" value="<?= $this->app->getSingleton('session')->getId() ?>">
 
-	<?php if ( $folders ): ?>
+	<?php if ( count($grouped) > 1 ): ?>
 	<fieldset>
 		<table id="folders" class="table table-bordered table-striped table-hover table-list">
 			<thead>
@@ -238,15 +242,17 @@
 			<tbody>
 				<tr>
 				<tr>
-				<?php foreach ( $folders as $folder ): ?>
+				<?php foreach ( $grouped as $group ): ?>
+				<?php if ( $group->folder ): ?>
 				<tr>
 					<td>
-						<input type="text" name="titles[<?= $folder->id ?>]" value="<?= $folder->title ?>" class="input-block-level">
+						<input type="text" name="titles[<?= $group->folder->id ?>]" value="<?= $group->folder->title ?>" class="input-block-level">
 					</td>
 					<td>
-						<input type="checkbox" name="delete[<?= $folder->id ?>]" value="1">
+						<input type="checkbox" name="delete[<?= $group->folder->id ?>]" value="1">
 					</td>
 				</tr>
+				<?php endif ?>
 				<?php endforeach ?>
 			</tbody>
 		</table>

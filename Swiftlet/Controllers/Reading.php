@@ -128,15 +128,15 @@ class Reading extends \Swiftlet\Controllers\Read
 
 		$this->prepare($items);
 
-		$folders = $this->app->getSingleton('helper')->getUserFolders();
+		$grouped = $this->app->getSingleton('helper')->getFolders();
 
 		foreach ( $items as $i => $item ) {
 			$item->folder_title = '';
 
 			if ( $item->folder_id ) {
-				foreach ( $folders as $folder ) {
-					if ( $item->folder_id == $folder->id ) {
-						$item->folder_title = $folder->title;
+				foreach ( $grouped as $group ) {
+					if ( $group->folder && $item->folder_id == $group->folder->id ) {
+						$item->folder_title = $group->folder->title;
 					}
 				}
 			}

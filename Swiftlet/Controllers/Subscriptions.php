@@ -25,55 +25,17 @@ class Subscriptions extends \Swiftlet\Controller
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
-		// Get currently subscribed feeds
-		$sth = $dbh->prepare('
-			SELECT
-				feeds.id,
-				feeds.url,
-				feeds.title,
-				feeds.link,
-				feeds.last_fetched_at,
-				users_feeds.folder_id
-			FROM       users_feeds
-			INNER JOIN feeds       ON users_feeds.feed_id = feeds.id
-			WHERE
-				users_feeds.user_id = :user_id
-			ORDER BY feeds.title
-			LIMIT 10000
-			');
+		$grouped = $this->app->getSingleton('helper')->getFolders();
 
-		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+		$feedCount = 0;
 
-		$sth->execute();
-
-		$feeds = $sth->fetchAll(\PDO::FETCH_OBJ);
-
-		foreach ( $feeds as $feed ) {
-			$this->app->getSingleton('helper')->localize($feed->last_fetched_at);
+		foreach ( $grouped as $group ) {
+			$feedCount += count($group->feeds);
 		}
 
-		$folders = $this->app->getSingleton('helper')->getUserFolders();
-
-		$grouped = array('none' => (object) array(
-			'folder' => null,
-			'feeds'  => array()
-			));
-
-		foreach ( $folders as $folder ) {
-			$grouped[$folder->id] = (object) array(
-				'folder' => $folder,
-				'feeds'  => array()
-				);
-		}
-
-		foreach ( $feeds as $feed ) {
-			$grouped[$feed->folder_id ?: 'none']->feeds[] = $feed;
-		}
-
-		$this->view->set('grouped', $grouped);
-		$this->view->set('feeds',   $feeds);
-		$this->view->set('folders', $folders);
-		$this->view->set('paid',    $this->app->getSingleton('helper')->userPaid());
+		$this->view->set('feedCount', $feedCount);
+		$this->view->set('grouped',   $grouped);
+		$this->view->set('paid',      $this->app->getSingleton('helper')->userPaid());
 	}
 
 	/**
@@ -280,7 +242,7 @@ class Subscriptions extends \Swiftlet\Controller
 
 					$feeds = array();
 
-					$folders = $this->app->getSingleton('helper')->getUserFolders();
+					$grouped = $this->app->getSingleton('helper')->getFolders();
 
 					foreach ( $xml->body->outline as $outline ) {
 						$folderId = null;
@@ -291,9 +253,9 @@ class Subscriptions extends \Swiftlet\Controller
 							$folderTitle = $outline->attributes()->title ? $outline->attributes()->title : ( $outline->attributes()->text ? $outline->attributes()->text : '' );
 
 							if ( $folderTitle ) {
-								foreach ( $folders as $folder ) {
-									if ( strtolower($folder->title) == strtolower($folderTitle) ) {
-										$folderId = $folder->id;
+								foreach ( $grouped as $group ) {
+									if ( $group->folder && strtolower($group->folder->title) == strtolower($folderTitle) ) {
+										$folderId = $group->folder->id;
 									}
 								}
 

@@ -32,7 +32,7 @@ class Helper extends \Swiftlet\Model
 	 *
 	 * @return array
 	 */
-	public function getUserFolders()
+	public function getFolders()
 	{
 		$userId = $this->app->getSingleton('session')->get('id');
 
@@ -47,7 +47,7 @@ class Helper extends \Swiftlet\Model
 		 		user_id = :user_id
 			ORDER BY folders.title
 			LIMIT 1000
-			;');
+			');
 
 		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
 
@@ -55,7 +55,49 @@ class Helper extends \Swiftlet\Model
 
 		$folders = $sth->fetchAll(\PDO::FETCH_OBJ);
 
-		return $folders;
+		$grouped = array('none' => (object) array(
+			'folder' => null,
+			'feeds'  => array()
+			));
+
+		foreach ( $folders as $folder ) {
+			$grouped[$folder->id] = (object) array(
+				'folder' => $folder,
+				'feeds'  => array()
+				);
+		}
+
+		$sth = $dbh->prepare('
+			SELECT
+				feeds.id,
+				feeds.url,
+				feeds.title,
+				feeds.link,
+				feeds.last_fetched_at,
+				users_feeds.folder_id
+			FROM       users_feeds
+			INNER JOIN feeds       ON users_feeds.feed_id = feeds.id
+			WHERE
+				users_feeds.user_id = :user_id
+			ORDER BY feeds.title
+			LIMIT 10000
+			');
+
+		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+
+		$sth->execute();
+
+		$feeds = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+		foreach ( $feeds as $feed ) {
+			$this->app->getSingleton('helper')->localize($feed->last_fetched_at);
+		}
+
+		foreach ( $feeds as $feed ) {
+			$grouped[$feed->folder_id ?: 'none']->feeds[] = $feed;
+		}
+
+		return $grouped;
 	}
 
 	/**

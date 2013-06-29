@@ -63,19 +63,40 @@
 						<a href="<?= $this->app->getRootPath() ?>reading">My Reading<span class="item-count"> (<span>0</span>)</span>
 					</a></li>
 
-					<?php if ( $folders = $this->app->getSingleton('helper')->getUserFolders() ): ?>
+					<?php $grouped = $this->app->getSingleton('helper')->getFolders() ?>
+
 					<li class="folders <?= $this->app->getControllerName() === 'Folder' ? 'active' : '' ?>">
 						<a href="javascript: void(0);">Folder<span class="item-count"> (<span>0</span>)</span></a>
 
-						<ul class="collapsed">
-							<?php foreach ( $folders as $folder ): ?>
-							<li class="folder"><a href="<?= $this->app->getSingleton('helper')->getFolderLink($folder->id, $folder->title) ?>">
-								<?= $this->htmlEncode($folder->title) ?>
-							</a></li>
+						<ul class="folder collapsed">
+							<?php foreach ( $grouped as $group ): ?>
+							<?php if ( $group->feeds ): ?>
+							<li class="folder" data-folder-id="<?= $group->folder ? $group->folder->id : 'none' ?>">
+								<?php if ( $group->folder ): ?>
+								<a href="<?= $this->app->getSingleton('helper')->getFolderLink($group->folder->id, $group->folder->title) ?>">
+									<?= $this->htmlEncode($group->folder->title) ?>
+								<?php else: ?>
+								<a href="javascript: void(0)">
+									(No folder)
+								<?php endif ?>
+								</a>
+							</li>
+							<?php endif ?>
 							<?php endforeach ?>
 						</ul>
+
+						<?php foreach ( $grouped as $group ): ?>
+						<?php if ( $group->feeds ): ?>
+						<ul class="feeds collapsed" data-folder-id="<?= $group->folder ? $group->folder->id : 'none' ?>">
+							<?php foreach ( $group->feeds as $feed ): ?>
+							<li>
+								<a href="<?= $this->app->getSingleton('helper')->getFeedLink($feed->id, $feed->title) ?>"><?= $feed->title ?></a>
+							</li>
+							<?php endforeach ?>
+						</ul>
+						<?php endif ?>
+						<?php endforeach ?>
 					</li>
-					<?php endif ?>
 
 					<li class="starred<?= $this->app->getControllerName() == 'Starred' ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>starred">Starred</a></li>
 					<li class="search <?= $this->app->getControllerName() == 'Search'  ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>search" >Search</a></li>

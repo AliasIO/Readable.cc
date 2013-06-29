@@ -37,12 +37,25 @@
 
 		$('header ul ul').parent().on('click', function() {
 			$(this).find('ul').toggleClass('collapsed');
+
+			$(this).find('ul.feeds').addClass('collapsed');
 		});
+
+		$('header li.folder')
+			.on('mouseover', function() {
+				$(this).parents(2).find('ul.feeds').addClass('collapsed');
+
+				$(this).parents(2).find('ul[data-folder-id=' + $(this).data('folder-id') + ']').removeClass('collapsed');
+			})
+			.on('click', function() {
+				$(this).parents(2).find('ul.feeds').addClass('collapsed');
+			});
+			;
 
 		$(document)
 			.on('click', function(e) {
 				if ( !$(e.target).closest('header ul').length ) {
-					$('header ul, header ul ul').addClass('collapsed');
+					$('header ul').addClass('collapsed');
 				}
 
 				if ( !$(e.target).closest('.share').length ) {
