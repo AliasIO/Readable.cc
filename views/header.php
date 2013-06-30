@@ -65,6 +65,7 @@
 
 					<?php $grouped = $this->app->getSingleton('helper')->getFolders() ?>
 
+					<?php if ( count($grouped) > 1 || $grouped['none']->feeds ): ?>
 					<li class="folders <?= $this->app->getControllerName() === 'Folder' ? 'active' : '' ?>">
 						<a href="javascript: void(0);">Folders</a>
 
@@ -102,6 +103,7 @@
 						<?php endif ?>
 						<?php endforeach ?>
 					</li>
+					<?php endif ?>
 
 					<li class="starred<?= $this->app->getControllerName() == 'Starred' ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>starred">Starred</a></li>
 					<li class="search <?= $this->app->getControllerName() == 'Search'  ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>search" >Search</a></li>

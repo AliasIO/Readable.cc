@@ -394,7 +394,8 @@ header {
     position: absolute;
     width: 100%; }
     #page-head span:first-child {
-      display: block; }
+      display: block;
+      z-index: 1; }
 
 #items-read-line {
   color: #cccccc;

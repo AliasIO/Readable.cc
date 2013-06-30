@@ -7,12 +7,12 @@
 		<form id="form-search" method="get">
 			<input type="text" id="query" name="query" value="<?= $this->get('query') ?>" placeholder="Enter keywords">
 
-			<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
+			<?php if ( $this->app->getSingleton('session')->get('id') && $feeds = $this->get('feeds') ): ?>
 			<select id="feed" name="feed">
 				<option value="">All feeds</option>
 				<option value="my"<?= $this->get('feed') == 'my' ? ' selected="selected"' : '' ?>>My feeds</option>
 				<optgroup label="Feed">
-					<?php foreach ( $this->get('feeds') as $feed ): ?>
+					<?php foreach ( $feeds as $feed ): ?>
 					<option value="<?= $feed->id ?>"<?= $this->get('feed') == $feed->id ? ' selected="selected"' : '' ?>><?= $feed->title ?></option>
 					<?php endforeach ?>
 				</optgroup>
