@@ -932,7 +932,7 @@
 
 			$('.unread-items-total span').text(Math.max(0, app.unreadItems.total));
 
-			$('.active .unread-items:hidden').toggle(app.unreadItems.total > 0);
+			$('.unread-items-total').toggle(app.unreadItems.total > 0);
 		}
 	};
 

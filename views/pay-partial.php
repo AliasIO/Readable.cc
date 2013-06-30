@@ -12,7 +12,6 @@
 
 			<div class="controls">
 				<select id="amount" name="amount">
-					<option>Select amount&hellip;</option>
 					<option value="2">$2 / month</option>
 					<option value="5" selected="selected">$5 / month</option>
 					<option value="10">$10 / month</option>
