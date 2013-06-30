@@ -263,9 +263,19 @@ header
 				padding-bottom: 10px
 
 			a
+				clear: both
 				display: inline-block
 				padding: 0 20px
 				line-height: 60px
+
+				.unread-items
+					background: #f8f8f8
+					+border-radius(1em)
+					color: $colorText3
+					float: right
+					font-size: $medium
+					line-height: 1.4em
+					padding: 0 5px
 
 			&.email ul
 				right: 20px
@@ -278,7 +288,7 @@ header
 				padding: 10px 0
 				right: -1px
 				top: 60px
-				width: 150px
+				width: 200px
 				z-index: 99
 
 				&.collapsed
@@ -301,13 +311,15 @@ header
 						&:hover
 							background: #f8f8f8
 
+							.unread-items
+								background: #eee
+
 				&.feeds
 					border-left: 1px solid #eee
 					left: 100%
-					width: 300px
+					width: 350px
 
-.item-count
-	display: none
+.unread-items-total
 	font-size: $small
 	line-height: 1em
 	position: relative

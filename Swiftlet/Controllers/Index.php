@@ -87,7 +87,8 @@ class Index extends \Swiftlet\Controllers\Read
 				items.url,
 				items.title,
 				items.contents,
-				items.posted_at
+				items.posted_at,
+				NULL AS folder_id
 			FROM (
 				' . $select . '
 				LIMIT ?, ?

@@ -93,6 +93,7 @@ class Feed extends \Swiftlet\Controllers\Read
 					items.title,
 					items.contents,
 					items.posted_at,
+					NULL             AS folder_id,
 					0                AS vote,
 					0                AS starred,
 					0                AS score,

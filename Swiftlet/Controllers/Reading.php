@@ -48,44 +48,6 @@ class Reading extends \Swiftlet\Controllers\Read
 
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
-		$sql = '
-			FROM             items
-      INNER JOIN users_feeds ON users_feeds.feed_id = items.feed_id
-      INNER JOIN       feeds ON       feeds.id      = items.feed_id
-			LEFT  JOIN users_items ON users_items.item_id = items.id      AND users_items.user_id = ?
-			WHERE
-				  users_feeds.user_id = ?                               AND
-				( users_items.read    = 0 OR users_items.read IS NULL )
-				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
-			';
-
-		// Count items
-		$sth = $dbh->prepare('
-			SELECT
-				COUNT(main.id) AS item_count
-			FROM (
-				SELECT
-					items.id
-				' . $sql . '
-				LIMIT 1001
-				) AS main
-			');
-
-		$i = 1;
-
-		$sth->bindParam($i ++, $userId, \PDO::PARAM_INT);
-		$sth->bindParam($i ++, $userId, \PDO::PARAM_INT);
-
-		foreach( $excludes as $key => $itemId ) {
-			$sth->bindParam($i ++, $excludes[$key], \PDO::PARAM_INT);
-		}
-
-		$sth->execute();
-
-		$result = $sth->fetch(\PDO::FETCH_OBJ);
-
-		$this->view->set('itemCount', $result->item_count);
-
 		// Fetch items
 		$sth = $dbh->prepare('
       SELECT
@@ -102,7 +64,14 @@ class Reading extends \Swiftlet\Controllers\Read
 				COALESCE(users_items.score, 0) AS score,
 				COALESCE(users_items.saved, 0) AS starred,
 				1 AS feed_subscribed
-			' . $sql . '
+      FROM       users_feeds
+			INNER JOIN       items ON       items.feed_id = users_feeds.feed_id
+      INNER JOIN       feeds ON       feeds.id      =       items.feed_id
+			LEFT  JOIN users_items ON users_items.item_id =       items.id      AND users_items.user_id = ?
+			WHERE
+				users_feeds.user_id = ? AND
+				( users_items.read    = 0 OR users_items.read IS NULL )
+				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
 			ORDER BY DATE(IF(items.posted_at, items.posted_at, items.created_at)) DESC' . ( $this->app->getSingleton('session')->get('item_order') == self::ITEM_SORT_RELEVANCE_TIME ? ', users_items.score DESC' : '' ) . '
 			LIMIT ?
 			');
@@ -122,9 +91,7 @@ class Reading extends \Swiftlet\Controllers\Read
 
 		$sth->execute();
 
-		$result = $sth->fetchAll(\PDO::FETCH_OBJ);
-
-		$items = $result;
+		$items = $sth->fetchAll(\PDO::FETCH_OBJ);
 
 		$this->prepare($items);
 

@@ -257,9 +257,22 @@ header {
         margin-bottom: 10px;
         padding-bottom: 10px; }
       header ul li a {
+        clear: both;
         display: inline-block;
         padding: 0 20px;
         line-height: 60px; }
+        header ul li a .unread-items {
+          background: #f8f8f8;
+          -webkit-border-radius: 1em;
+          -moz-border-radius: 1em;
+          -ms-border-radius: 1em;
+          -o-border-radius: 1em;
+          border-radius: 1em;
+          color: #9c0001;
+          float: right;
+          font-size: 85%;
+          line-height: 1.4em;
+          padding: 0 5px; }
       header ul li.email ul {
         right: 20px; }
       header ul li ul {
@@ -270,7 +283,7 @@ header {
         padding: 10px 0;
         right: -1px;
         top: 60px;
-        width: 150px;
+        width: 200px;
         z-index: 99; }
         header ul li ul.collapsed {
           display: none; }
@@ -289,13 +302,14 @@ header {
             padding: 5px 20px; }
             header ul li ul li a:hover {
               background: #f8f8f8; }
+              header ul li ul li a:hover .unread-items {
+                background: #eeeeee; }
         header ul li ul.feeds {
           border-left: 1px solid #eeeeee;
           left: 100%;
-          width: 300px; }
+          width: 350px; }
 
-.item-count {
-  display: none;
+.unread-items-total {
   font-size: 80%;
   line-height: 1em;
   position: relative;

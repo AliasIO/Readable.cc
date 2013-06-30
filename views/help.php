@@ -108,7 +108,7 @@
 </p>
 
 <p>
-	&nbsp; <em><a class="contact-email" href="mailto:<?= $this->app->getConfig('emailHoneyPot') ?>"><?= $this->app->getConfig('emailHoneyPot') ?></a></em>
+	&nbsp; <em><a class="contact-email" href="mailto:<?= $this->app->getConfig('emailHoneyPot') ?>"><?= $this->app->getConfig('emailHoneyPot') ?></a> (<a href="<?= $this->app->getConfig('emailPGPUrl') ?>">PGP Key</a>)</em>
 </p>
 
 <p>

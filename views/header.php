@@ -20,15 +20,15 @@
 			var readable = {};
 
 			(function(app) {
-				app.email      = '<?= str_replace('@', ' ', $this->app->getConfig('emailFrom')) ?>';
-				app.controller = '<?= $this->app->getControllerName() ?>';
-				app.args       = [<?= $this->app->getArgs() ? '\'' . implode('\', \'', $this->app->getArgs()) . '\'' : '' ?>];
-				app.sessionId  = '<?= $this->app->getSingleton('session')->getId() ?>';
-				app.rootPath   = '<?= $this->app->getRootPath() ?>';
-				app.signedIn   = <?= $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
-				app.itemCount  = 0;
-				app.page       = <?= !empty($_GET['page']) && (int) $_GET['page'] - 1 ? (int) $_GET['page'] - 1 : 0 ?>;
-				app.prefs      = {
+				app.email       = '<?= str_replace('@', ' ', $this->app->getConfig('emailFrom')) ?>';
+				app.controller  = '<?= $this->app->getControllerName() ?>';
+				app.args        = [<?= $this->app->getArgs() ? '\'' . implode('\', \'', $this->app->getArgs()) . '\'' : '' ?>];
+				app.sessionId   = '<?= $this->app->getSingleton('session')->getId() ?>';
+				app.rootPath    = '<?= $this->app->getRootPath() ?>';
+				app.signedIn    = <?= $this->app->getSingleton('session')->get('id') ? 'true' : 'false' ?>;
+				app.unreadItems = <?= json_encode($this->app->getSingleton('helper')->getUnreadItems()) ?>;
+				app.page        = <?= !empty($_GET['page']) && (int) $_GET['page'] - 1 ? (int) $_GET['page'] - 1 : 0 ?>;
+				app.prefs       = {
 					externalLinks: <?= (int) $this->app->getSingleton('session')->get('external_links') ?>
 				};
 			}(readable));
@@ -51,7 +51,7 @@
 					<a href="javascript: void(0);">
 						<?= $this->get('pageTitle') ?>
 						<?php if ( $this->app->getControllerName() === 'Reading' || $this->app->getControllerName() === 'Folder' ): ?>
-						<span class="item-count">(<span>0</span>)</span>
+						<span class="unread-items-total">(<span>0</span>)</span>
 						<?php endif ?>
 						<i class="entypo chevron-down"></i>
 					</a>
@@ -60,13 +60,13 @@
 				<ul class="collapsed">
 					<?php if ( $this->app->getSingleton('session')->get('id') ): ?>
 					<li class="reading <?= $this->name == 'reading' ? 'active' : '' ?>">
-						<a href="<?= $this->app->getRootPath() ?>reading">My Reading<span class="item-count"> (<span>0</span>)</span>
+						<a href="<?= $this->app->getRootPath() ?>reading">My Reading<span class="unread-items-total"> (<span>0</span>)</span>
 					</a></li>
 
 					<?php $grouped = $this->app->getSingleton('helper')->getFolders() ?>
 
 					<li class="folders <?= $this->app->getControllerName() === 'Folder' ? 'active' : '' ?>">
-						<a href="javascript: void(0);">Folder<span class="item-count"> (<span>0</span>)</span></a>
+						<a href="javascript: void(0);">Folders</a>
 
 						<ul class="folder collapsed">
 							<?php foreach ( $grouped as $group ): ?>
@@ -75,9 +75,11 @@
 								<?php if ( $group->folder ): ?>
 								<a href="<?= $this->app->getSingleton('helper')->getFolderLink($group->folder->id, $group->folder->title) ?>">
 									<?= $this->htmlEncode($group->folder->title) ?>
+									<span class="unread-items" data-folder-id="<?= $group->folder->id ?>">0</span>
 								<?php else: ?>
 								<a href="javascript: void(0)">
 									(No folder)
+									<span class="unread-items" data-folder-id="none">0</span>
 								<?php endif ?>
 								</a>
 							</li>
@@ -90,7 +92,10 @@
 						<ul class="feeds collapsed" data-folder-id="<?= $group->folder ? $group->folder->id : 'none' ?>">
 							<?php foreach ( $group->feeds as $feed ): ?>
 							<li>
-								<a href="<?= $this->app->getSingleton('helper')->getFeedLink($feed->id, $feed->title) ?>"><?= $feed->title ?></a>
+								<a href="<?= $this->app->getSingleton('helper')->getFeedLink($feed->id, $feed->title) ?>">
+									<?= $feed->title ?>
+									<span class="unread-items" data-feed-id="<?= $feed->id ?>">0</span>
+								</a>
 							</li>
 							<?php endforeach ?>
 						</ul>

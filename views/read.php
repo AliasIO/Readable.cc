@@ -1,8 +1,6 @@
-<?php if ( $this->app->getControllerName() === 'Reading' || $this->app->getControllerName() === 'Folder' ): ?>
 <script>
-	readable.itemCount = <?= $this->get('itemCount') ?>;
+	readable.unreadItems = <?= json_encode($this->app->getSingleton('helper')->getUnreadItems()) ?>;
 </script>
-<?php endif ?>
 
 <?php $items = $this->get('items', false) ?>
 
@@ -29,6 +27,8 @@
 	data-item-score="<?= $item->score ?>"
 	data-item-url="<?= $this->htmlEncode($item->url) ?>"
 	data-item-date="<?= $item->posted_at ? date('F j, Y', $item->posted_at) : '' ?>"
+	data-folder-id="<?= $item->folder_id ?: 'none' ?>"
+	data-feed-id="<?= $item->feed_id ?>"
 	data-feed-host="<?= parse_url($item->feed_link, PHP_URL_HOST) ?>"
 	class="inactive collapsed <?= $item->score < 0 ? ' boring' : '' ?>"
 	>

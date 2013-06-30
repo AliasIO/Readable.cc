@@ -130,6 +130,8 @@
 
 		app.header.init();
 
+		app.items.updateUnreadItems();
+
 		return app;
 	};
 
@@ -220,8 +222,6 @@
 			var
 				scrolled = false
 				;
-
-			app.items.updateItemCount();
 
 			// Keyboard shortcuts
 			$(document).keydown(function(e) {
@@ -751,7 +751,9 @@
 
 				el.addClass('read');
 
-				app.items.updateItemCount(-1);
+				if ( app.controller === 'Reading' ) {
+					app.items.updateUnreadItems(el.data('folder-id'), el.data('feed-id'), -1);
+				}
 
 				$.ajax({
 					url: app.rootPath + 'read/markRead/',
@@ -907,24 +909,30 @@
 			return app.items;
 		},
 
-		updateItemCount: function(diff) {
-			if ( app.controller !== 'Reading' && app.controller !== 'Folder' ) {
-				return;
+		updateUnreadItems: function(folderId, feedId, diff) {
+			if ( diff ) {
+				if ( app.unreadItems.folders[folderId] ) {
+					app.unreadItems.folders[folderId] += diff;
+				}
+
+				if ( app.unreadItems.feeds[feedId] ) {
+					app.unreadItems.feeds[feedId] += diff;
+				}
+
+				app.unreadItems.total += diff;
 			}
 
-			if ( diff && app.itemCount <= 1000 ) {
-				app.itemCount += diff;
-			}
+			$.each(app.unreadItems.folders, function(folderId, count) {
+				$('.unread-items[data-folder-id=' + folderId + ']').text(Math.max(0, count));
+			});
 
-			app.itemCount = Math.max(0, app.itemCount);
+			$.each(app.unreadItems.feeds, function(feedId, count) {
+				$('.unread-items[data-feed-id=' + feedId + ']').text(Math.max(0, count));
+			});
 
-			$('.item-count span').text(app.itemCount > 1000 ? '1000+' : app.itemCount);
+			$('.unread-items-total span').text(Math.max(0, app.unreadItems.total));
 
-			if ( app.itemCount ) {
-				$('.active .item-count:hidden').show();
-			} else {
-				$('.active .item-count:visible').hide();
-			}
+			$('.active .unread-items:hidden').toggle(app.unreadItems.total > 0);
 		}
 	};
 

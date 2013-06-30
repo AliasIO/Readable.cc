@@ -101,6 +101,56 @@ class Helper extends \Swiftlet\Model
 	}
 
 	/**
+	 * Get the number of unread items per folder and feed
+	 *
+	 * @return object
+	 */
+	public function getUnreadItems()
+	{
+		$userId = $this->app->getSingleton('session')->get('id');
+
+		$dbh = $this->app->getSingleton('pdo')->getHandle();
+
+		$sth = $dbh->prepare('
+			SELECT
+				users_feeds.feed_id,
+				users_feeds.folder_id,
+				COUNT(items.id) AS unread_items
+			FROM       users_feeds
+      INNER JOIN       items ON       items.feed_id = users_feeds.feed_id
+			LEFT  JOIN users_items ON users_items.item_id =       items.id      AND users_items.user_id = :user_id
+			WHERE
+				users_feeds.user_id = :user_id AND ( users_items.read = 0 OR users_items.read IS NULL )
+			GROUP BY
+				users_feeds.feed_id
+			');
+
+		$sth->bindParam('user_id', $userId, \PDO::PARAM_INT);
+
+		$sth->execute();
+
+		$counts = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+		$unreadItems = (object) array(
+			'total'   => 0,
+			'folders' => array(),
+			'feeds'   => array()
+			);
+
+		foreach ( $counts as $count ) {
+			if ( !isset($unreadItems->folders[$count->folder_id]) ) {
+				$unreadItems->folders[$count->folder_id ?: 'none'] = 0;
+			}
+
+			$unreadItems->total                                += (int) $count->unread_items;
+			$unreadItems->folders[$count->folder_id ?: 'none'] += (int) $count->unread_items;
+			$unreadItems->feeds[$count->feed_id]                = (int) $count->unread_items;
+		}
+
+		return $unreadItems;
+	}
+
+	/**
 	 * Check if the user has currently valid payment
 	 *
 	 * @return boolean
