@@ -37,7 +37,7 @@
 		-->
 
 		<script src="<?= $this->app->getRootPath() ?>lib/jquery-1.9.1.min.js"></script>
-		<script src="<?= $this->app->getRootPath() ?>js/readable.js?q"></script>
+		<script src="<?= $this->app->getRootPath() ?>js/readable.js?r"></script>
 
 		<script>
 			var _gaq = _gaq || [];

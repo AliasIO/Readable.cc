@@ -713,11 +713,13 @@ button, .btn {
       color: white;
       background-color: #9c0001; }
 
+button,
 input[type="checkbox"],
 input[type="radio"],
 select {
   cursor: pointer;
   margin: 1px; }
+  button::-moz-focus-inner,
   input[type="checkbox"]::-moz-focus-inner,
   input[type="radio"]::-moz-focus-inner,
   select::-moz-focus-inner {
