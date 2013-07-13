@@ -19,8 +19,8 @@ class Cron extends \Swiftlet\Controller
 				feeds.id,
 				feeds.url
 			FROM       users
-			INNER JOIN users_feeds ON       users.id      = users_feeds.user_id
-			INNER JOIN feeds       ON users_feeds.feed_id =       feeds.id
+			STRAIGHT_JOIN users_feeds ON       users.id      = users_feeds.user_id
+			STRAIGHT_JOIN feeds       ON users_feeds.feed_id =       feeds.id
 			WHERE
 			    users.enabled                 = 1                                                                                       AND -- Fetch feed for enabled users
 			    users.last_active_at          > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY)                                              AND -- Fetch feed for active users

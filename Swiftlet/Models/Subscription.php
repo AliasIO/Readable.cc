@@ -90,7 +90,7 @@ class Subscription extends \Swiftlet\Model
 			DELETE
 				users_feeds
 			FROM      users_feeds
-			INNER JOIN      feeds ON feeds.id = users_feeds.feed_id
+			STRAIGHT_JOIN      feeds ON feeds.id = users_feeds.feed_id
 			WHERE
 				users_feeds.user_id = :user_id AND
 				' . ( $id ? 'feeds.id = :id' : 'feeds.url = :url' ) . '

@@ -60,8 +60,8 @@ class Starred extends \Swiftlet\Controllers\Read
 				users_items.score,
 				IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
 			FROM       users_items
-			INNER JOIN       items ON       items.id      = users_items.item_id
-      INNER JOIN       feeds ON       feeds.id      = items.feed_id
+			STRAIGHT_JOIN       items ON       items.id      = users_items.item_id
+      STRAIGHT_JOIN       feeds ON       feeds.id      = items.feed_id
       LEFT  JOIN users_feeds ON users_feeds.feed_id = feeds.id            AND users_feeds.user_id = ?
 			WHERE
 				users_items.user_id = ? AND

@@ -69,11 +69,11 @@ class Learn extends \Swiftlet\Model
 								users_items.user_id,
 								users_items.vote
 							FROM      items
-							INNER JOIN users_items ON users_items.item_id = items.id AND users_items.vote != 0 AND users_items.user_id = :user_id
+							STRAIGHT_JOIN users_items ON users_items.item_id = items.id AND users_items.vote != 0 AND users_items.user_id = :user_id
 							ORDER BY items.id DESC
 							LIMIT 1000
 						) AS users_items
-						INNER JOIN items_words ON items_words.item_id = users_items.item_id
+						STRAIGHT_JOIN items_words ON items_words.item_id = users_items.item_id
 						GROUP BY items_words.word_id
 						ORDER BY SUM(items_words.`count`) DESC
 					) AS main, (
@@ -105,8 +105,8 @@ class Learn extends \Swiftlet\Model
 						items.id    AS item_id,
 						users_words.score * CAST(items_words.count AS SIGNED) AS score
 					FROM       users_feeds
-					INNER JOIN       users ON users.id            = users_feeds.user_id
-					INNER JOIN       items ON items.feed_id       = users_feeds.feed_id
+					STRAIGHT_JOIN       users ON users.id            = users_feeds.user_id
+					STRAIGHT_JOIN       items ON items.feed_id       = users_feeds.feed_id
 					LEFT  JOIN users_items ON users_items.item_id =       items.id      AND users_items.vote != 0
 					LEFT  JOIN items_words ON items_words.item_id =       items.id
 					LEFT  JOIN users_words ON users_words.word_id = items_words.word_id AND users_words.user_id = users.id
@@ -125,7 +125,7 @@ class Learn extends \Swiftlet\Model
 
 			$sth = $dbh->prepare('
 				UPDATE LOW_PRIORITY items
-				INNER JOIN (
+				STRAIGHT_JOIN (
 					SELECT
 						users_items.item_id,
 						AVG(users_items.score) AS score

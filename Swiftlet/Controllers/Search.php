@@ -51,7 +51,7 @@ class Search extends \Swiftlet\Controllers\Read
 					feeds.id,
 					feeds.title
 				FROM       users_feeds
-				INNER JOIN feeds       ON users_feeds.feed_id = feeds.id
+				STRAIGHT_JOIN feeds       ON users_feeds.feed_id = feeds.id
 				WHERE
 					users_feeds.user_id = :user_id
 				ORDER BY feeds.title
@@ -123,9 +123,9 @@ class Search extends \Swiftlet\Controllers\Read
 							GROUP BY words.id
 							LIMIT 10                                                     -- Search 10 words at most
 						) AS main
-						INNER JOIN items_words ON items_words.word_id =        main.id
-						INNER JOIN items       ON       items.id      = items_words.item_id
-						INNER JOIN feeds       ON       feeds.id      =       items.feed_id' . ( $feedIds ? ' AND feeds.id IN ( ' . implode(', ', array_fill(0, count($feedIds), '?')) . ' ) ' : '' ) . '
+						STRAIGHT_JOIN items_words ON items_words.word_id =        main.id
+						STRAIGHT_JOIN items       ON       items.id      = items_words.item_id
+						STRAIGHT_JOIN feeds       ON       feeds.id      =       items.feed_id' . ( $feedIds ? ' AND feeds.id IN ( ' . implode(', ', array_fill(0, count($feedIds), '?')) . ' ) ' : '' ) . '
 						WHERE
 							items.posted_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY) AND -- Search items no more than a month old
 							items.posted_at < UTC_TIMESTAMP()                                -- Do not return future dated items
@@ -136,8 +136,8 @@ class Search extends \Swiftlet\Controllers\Read
 					ORDER BY matches DESC, main.posted_at DESC
 					LIMIT ?, ?
 				) AS main
-				INNER JOIN items ON items.id = main.id
-				INNER JOIN feeds ON feeds.id = items.feed_id
+				STRAIGHT_JOIN items ON items.id = main.id
+				STRAIGHT_JOIN feeds ON feeds.id = items.feed_id
 				');
 
 			$i = 1;
