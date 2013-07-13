@@ -34,7 +34,7 @@
 			<label class="control-label" for="email">Email address</label>
 
 			<div class="controls">
-				<input id="email" name="email" type="email" value="<?= $this->get('email') ?>">
+				<input id="email" name="email" type="email" value="<?= $this->get('email') ?>" placeholder="john.doe@example.com">
 			</div>
 		</div>
 

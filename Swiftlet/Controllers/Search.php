@@ -101,6 +101,7 @@ class Search extends \Swiftlet\Controllers\Read
 					items.title,
 					items.contents,
 					items.posted_at,
+					NULL             AS folder_id,
 					0                AS vote,
 					0                AS starred,
 					0                AS score,
@@ -128,11 +129,11 @@ class Search extends \Swiftlet\Controllers\Read
 						WHERE
 							items.posted_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY) AND -- Search items no more than a month old
 							items.posted_at < UTC_TIMESTAMP()                                -- Do not return future dated items
-						ORDER BY DATE(items.posted_at) DESC
+						ORDER BY items.posted_at DESC
 						LIMIT 1000                                                         -- Return at most the last 1000 matching items
 					) AS main
 					GROUP BY id
-					ORDER BY matches DESC, DATE(main.posted_at) DESC
+					ORDER BY matches DESC, main.posted_at DESC
 					LIMIT ?, ?
 				) AS main
 				INNER JOIN items ON items.id = main.id

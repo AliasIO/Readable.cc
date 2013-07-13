@@ -228,20 +228,14 @@
 				var next, previous;
 
 				switch ( e.keyCode ) {
-					case 32: // Space
-						if ( $(':focus').length ) {
-							return;
-						}
-
-						e.preventDefault();
 					case 74: // j
 						next = app.items.activeItem ? app.items.activeItem.nextAll('article').first() : $('#items article').first();
 
-						if ( app.items.noMoreItems ) {
-							app.notice($('.modal-no-more-items').html());
-						}
-
 						if ( !next[0] ) {
+							if ( app.items.noMoreItems ) {
+								app.notice($('.modal-no-more-items').html());
+							}
+
 							return;
 						}
 
@@ -440,11 +434,11 @@
 					nextDate = el.next('article').data('item-date')
 					;
 
-				// Add separator betweens items of different date
 				if ( $.inArray(el.data('item-id'), app.excludes) === -1 ) {
 					app.excludes.push(el.data('item-id'));
 				}
 
+				// Add separator betweens items of different date
 				if ( nextDate && date !== nextDate ) {
 					if ( !el.next('.date-separator').length ) {
 						el.after('<p class="date-separator"><span>' + nextDate + '</span></p>');

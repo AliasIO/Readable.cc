@@ -110,7 +110,7 @@
 					<li class="help   <?= $this->app->getControllerName() == 'Help'    ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>help"   >Help</a></li>
 
 					<li class="email">
-						<a href="javascript: void(0);"><span><?= $this->app->getSingleton('session')->get('email') ?></span>&nbsp;<i class="entypo chevron-down"></i></a>
+						<a href="javascript: void(0);"><!--span><?= $this->app->getSingleton('session')->get('email') ?></span>&nbsp;--><i class="entypo cog"></i></a>
 
 						<ul class="collapsed">
 							<?php if ( $this->app->getControllerName() === 'Reading' || $this->app->getControllerName() === 'Folder' ): ?>

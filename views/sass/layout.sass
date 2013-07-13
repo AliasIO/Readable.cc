@@ -244,6 +244,7 @@ header
 			border-width: 0 1px
 			display: inline-block
 			float: left
+			margin-left: -1px
 			position: relative
 
 			&.signup span
@@ -278,7 +279,12 @@ header
 					padding: 0 5px
 
 			&.email ul
-				right: 20px
+
+			&.email .entypo
+				font-size: 2em
+
+			&.folders ul
+				width: 250px
 
 			ul
 				background: #fff
@@ -287,9 +293,9 @@ header
 				max-height: 500px
 				overflow-y: auto
 				padding: 10px 0
-				right: -2px
+				right: -1px
 				top: 60px
-				width: 200px
+				width: 150px
 				z-index: 99
 
 				&.collapsed
@@ -318,7 +324,6 @@ header
 				&.feeds
 					border-left: 1px solid #eee
 					left: 100%
-					margin-left: 1px
 					width: 350px
 
 .unread-items-total
@@ -332,7 +337,7 @@ header
 	padding: 0 20px
 	margin: 0 auto
 	min-width: 240px
-	max-width: 940px
+	max-width: 700px
 	width: auto !important
 
 .divider
@@ -494,7 +499,7 @@ article
 			margin-top: 5px
 	
 	h1, h2, h3, h4, h5, h6
-		line-height: 1.2em
+		line-height: 1.5em
 
 	h1
 		font-size: 22px
@@ -817,6 +822,7 @@ select
 	outline: none
 	padding: 5px 5px
 	vertical-align: middle
+	width: 300px
 
 	&::-moz-focus-inner
 		border: 0
@@ -902,11 +908,11 @@ table
 
 		&[name="amount"]
 			min-width: 164px
-			width: 164px
+			width: 204px
 
 		&[name="currency"]
 			min-width: 80px
-			width: 80px
+			width: 90px
 
 		&[name="expiry-month"]
 			min-width: 80px

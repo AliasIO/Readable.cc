@@ -55,6 +55,7 @@ CREATE  TABLE IF NOT EXISTS `readable_cc`.`items` (
   INDEX `short` (`short` ASC) ,
   INDEX `english` (`english` ASC) ,
   INDEX `score` (`score` ASC) ,
+  INDEX `posted_at` (`posted_at` ASC) ,
   CONSTRAINT `items_feed_id`
     FOREIGN KEY (`feed_id` )
     REFERENCES `readable_cc`.`feeds` (`id` )

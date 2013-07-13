@@ -351,6 +351,10 @@ class Subscriptions extends \Swiftlet\Controller
 				break;
 			}
 
+			if ( !$title ) {
+				$title = '(No name)';
+			}
+
 			if ( isset($delete[$folderId]) ) {
 				$sth = $dbh->prepare('
 					UPDATE users_feeds SET

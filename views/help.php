@@ -69,7 +69,7 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><code>j</code>, <code>Spacebar</code></td>
+			<td><code>j</code></td>
 			<td>Next article</td>
 		</tr>
 		<tr>
