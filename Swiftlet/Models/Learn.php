@@ -90,7 +90,7 @@ class Learn extends \Swiftlet\Model
 		// Rank items
 		if ( $itemIds ) {
 			$sth = $dbh->prepare('
-				INSERT DELAYED INTO users_items (
+				INSERT LOW_PRIORITY INTO users_items (
 					user_id,
 					item_id,
 					score
