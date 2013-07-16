@@ -334,7 +334,7 @@ class Feed extends \Swiftlet\Model
 
 		// Add the feed
 		$sth = $dbh->prepare('
-			INSERT LOW_PRIORITY IGNORE INTO feeds (
+			INSERT DELAYED IGNORE INTO feeds (
 				url,
 				title,
 				link,
@@ -384,7 +384,7 @@ class Feed extends \Swiftlet\Model
 		// Cross reference feed and user
 		if ( $this->id ) {
 			$sth = $dbh->prepare('
-				INSERT LOW_PRIORITY IGNORE INTO users_feeds (
+				INSERT DELAYED IGNORE INTO users_feeds (
 					user_id,
 					feed_id,
 					folder_id
