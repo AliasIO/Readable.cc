@@ -30,7 +30,7 @@ class FeedItem extends \Swiftlet\Model
 		$dbh = $this->app->getSingleton('pdo')->getHandle();
 
 		$sth = $dbh->prepare('
-			INSERT LOW_PRIORITY IGNORE INTO items (
+			INSERT DELAYED IGNORE INTO items (
 				url,
 				title,
 				contents,
@@ -88,7 +88,7 @@ class FeedItem extends \Swiftlet\Model
 				}
 
 				$sth = $dbh->prepare('
-					INSERT LOW_PRIORITY IGNORE INTO words (
+					INSERT DELAYED IGNORE INTO words (
 						word
 					) VALUES ' . implode(', ', array_fill(0, count($words), '( ? )')) . '
 					');
@@ -113,7 +113,7 @@ class FeedItem extends \Swiftlet\Model
 				}
 
 				$sth = $dbh->prepare('
-					INSERT LOW_PRIORITY IGNORE INTO items_words (
+					INSERT DELAYED IGNORE INTO items_words (
 						item_id,
 						word_id,
 						count
