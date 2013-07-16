@@ -99,7 +99,7 @@ class Feed extends \Swiftlet\Controllers\Read
 					0                AS score,
 					0                AS feed_subscribed
 				FROM       feeds
-				INNER JOIN items ON items.feed_id = feeds.id
+				STRAIGHT_JOIN items ON items.feed_id = feeds.id
 				WHERE
 					feeds.id = :feed_id
 				GROUP BY items.id

@@ -51,7 +51,7 @@ class Index extends \Swiftlet\Controllers\Read
 				0           AS starred,
 				0           AS feed_subscribed
 			FROM       items
-			INNER JOIN feeds ON feeds.id = items.feed_id AND feeds.hidden = 0
+			STRAIGHT_JOIN feeds ON feeds.id = items.feed_id AND feeds.hidden = 0
 			WHERE
 				items.score   > 0 AND
 				items.hidden  = 0 AND
@@ -93,7 +93,7 @@ class Index extends \Swiftlet\Controllers\Read
 				' . $select . '
 				LIMIT ?, ?
 			) AS main
-			INNER JOIN items ON items.id = main.id
+			STRAIGHT_JOIN items ON items.id = main.id
 			';
 
 		$sth = $dbh->prepare($select);

@@ -76,7 +76,7 @@ class Helper extends \Swiftlet\Model
 				feeds.last_fetched_at,
 				users_feeds.folder_id
 			FROM       users_feeds
-			INNER JOIN feeds       ON users_feeds.feed_id = feeds.id
+			STRAIGHT_JOIN feeds       ON users_feeds.feed_id = feeds.id
 			WHERE
 				users_feeds.user_id = :user_id
 			ORDER BY feeds.title
@@ -117,7 +117,7 @@ class Helper extends \Swiftlet\Model
 				users_feeds.folder_id,
 				COUNT(items.id) AS unread_items
 			FROM       users_feeds
-      INNER JOIN       items ON       items.feed_id = users_feeds.feed_id
+      STRAIGHT_JOIN       items ON       items.feed_id = users_feeds.feed_id
 			LEFT  JOIN users_items ON users_items.item_id =       items.id      AND users_items.user_id = :user_id
 			WHERE
 				users_feeds.user_id = :user_id AND ( users_items.read = 0 OR users_items.read IS NULL )

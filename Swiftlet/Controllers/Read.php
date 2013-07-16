@@ -106,9 +106,9 @@ class Read extends \Swiftlet\Controller
 					1
 				FROM       users_feeds
 				' . ( $folderId ? '
-				INNER JOIN folders     ON folders.id      = users_feeds.folder_id AND folders.id = :folder_id
+				STRAIGHT_JOIN folders     ON folders.id      = users_feeds.folder_id AND folders.id = :folder_id
 		 		' : '' ) . '
-				INNER JOIN items       ON   items.feed_id = users_feeds.feed_id
+				STRAIGHT_JOIN items       ON   items.feed_id = users_feeds.feed_id
 				WHERE
 					users_feeds.user_id = :user_id
 				ON DUPLICATE KEY UPDATE

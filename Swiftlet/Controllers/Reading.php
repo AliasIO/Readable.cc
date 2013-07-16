@@ -65,8 +65,8 @@ class Reading extends \Swiftlet\Controllers\Read
 				COALESCE(users_items.saved, 0) AS starred,
 				1 AS feed_subscribed
       FROM       users_feeds
-			INNER JOIN       items ON       items.feed_id = users_feeds.feed_id
-      INNER JOIN       feeds ON       feeds.id      =       items.feed_id
+			STRAIGHT_JOIN       items ON       items.feed_id = users_feeds.feed_id
+      STRAIGHT_JOIN       feeds ON       feeds.id      =       items.feed_id
 			LEFT  JOIN users_items ON users_items.item_id =       items.id      AND users_items.user_id = ?
 			WHERE
 				users_feeds.user_id = ? AND

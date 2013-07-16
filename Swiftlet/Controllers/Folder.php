@@ -102,9 +102,9 @@ class Folder extends \Swiftlet\Controllers\Read
 						COALESCE(users_items.saved, 0) AS starred,
 						1 AS feed_subscribed
 					FROM       folders
-					INNER JOIN users_feeds ON users_feeds.folder_id =     folders.id
-					INNER JOIN feeds       ON       feeds.id        = users_feeds.feed_id
-					INNER JOIN items       ON       items.feed_id   =       feeds.id
+					STRAIGHT_JOIN users_feeds ON users_feeds.folder_id =     folders.id
+					STRAIGHT_JOIN feeds       ON       feeds.id        = users_feeds.feed_id
+					STRAIGHT_JOIN items       ON       items.feed_id   =       feeds.id
 					LEFT  JOIN users_items ON users_items.item_id   =       items.id      AND users_items.user_id = ?
 					WHERE
 						folders.id         = ? AND
@@ -143,9 +143,9 @@ class Folder extends \Swiftlet\Controllers\Read
 						0                AS score,
 						0                AS feed_subscribed
 					FROM       folders
-					INNER JOIN users_feeds ON users_feeds.folder_id =     folders.id
-					INNER JOIN feeds       ON       feeds.id        = users_feeds.feed_id
-					INNER JOIN items       ON       items.feed_id   =       feeds.id
+					STRAIGHT_JOIN users_feeds ON users_feeds.folder_id =     folders.id
+					STRAIGHT_JOIN feeds       ON       feeds.id        = users_feeds.feed_id
+					STRAIGHT_JOIN items       ON       items.feed_id   =       feeds.id
 					WHERE
 						folders.id = :folder_id
 					LIMIT :limit_from, :limit_count
