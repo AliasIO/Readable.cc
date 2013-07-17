@@ -97,19 +97,17 @@ class Learn extends \Swiftlet\Model
 				FROM (
 					SELECT
 						users_feeds.user_id,
-						items.id    AS item_id,
+						items.id AS item_id,
 						users_words.score * CAST(items_words.count AS SIGNED) AS score
-					FROM       users_feeds
-					STRAIGHT_JOIN       users ON users.id            = users_feeds.user_id
-					STRAIGHT_JOIN       items ON items.feed_id       = users_feeds.feed_id
-					LEFT  JOIN users_items ON users_items.item_id =       items.id      AND users_items.vote != 0
-					LEFT  JOIN items_words ON items_words.item_id =       items.id
-					LEFT  JOIN users_words ON users_words.word_id = items_words.word_id AND users_words.user_id = users.id
+					FROM          items
+					STRAIGHT_JOIN users_feeds ON users_feeds.feed_id =       items.feed_id
+					STRAIGHT_JOIN users       ON users.id            = users_feeds.user_id AND users.enabled     = 1 AND users.last_active_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY)
+					LEFT JOIN     users_items ON users_items.item_id =       items.id      AND users_items.vote != 0
+					LEFT JOIN     items_words ON items_words.item_id =       items.id
+					LEFT JOIN     users_words ON users_words.word_id = items_words.word_id AND users_words.user_id = users.id
 					WHERE
-						items.id             IN ( ' . implode(', ', $itemIds) . ' )       AND -- Learn only for new items
-						items.short          = 0                                          AND -- Learn only for long items
-						users.enabled        = 1                                          AND -- Learn only for enabled users
-						users.last_active_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY)     -- Learn only for active users
+						items.id IN ( ' . implode(', ', $itemIds) . ' ) AND
+						items.short = 0
 					) AS main
 				GROUP BY user_id, item_id
 				');
