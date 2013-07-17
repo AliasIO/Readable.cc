@@ -13,8 +13,6 @@ class Index extends \Swiftlet\Controllers\Read
 	 */
 	public function index()
 	{
-		$this->app->getSingleton('learn')->learn(array(2181));
-		exit;
 		$this->getItems();
 	}
 
