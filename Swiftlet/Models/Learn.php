@@ -90,11 +90,6 @@ class Learn extends \Swiftlet\Model
 		// Rank items
 		if ( $itemIds ) {
 			$sth = $dbh->prepare('
-				INSERT LOW_PRIORITY INTO users_items (
-					user_id,
-					item_id,
-					score
-					)
 				SELECT
 					user_id,
 					item_id,
@@ -117,30 +112,66 @@ class Learn extends \Swiftlet\Model
 						users.last_active_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY)     -- Learn only for active users
 					) AS main
 				GROUP BY user_id, item_id
+				');
+
+			$sth->execute();
+
+			$results = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+			$sth = $dbh->prepare('
+				INSERT LOW_PRIORITY INTO users_items (
+					user_id,
+					item_id,
+					score
+				) VALUES ' . implode(', ', array_fill(0, count($results), '( ?, ?, ? )')) . '
 				ON DUPLICATE KEY UPDATE
 					score = VALUES(score)
 				');
 
+			$i = 1;
+
+			foreach( $results as $key => $result ) {
+				$sth->bindParam($i ++, $results[$key]->user_id, \PDO::PARAM_INT);
+				$sth->bindParam($i ++, $results[$key]->item_id, \PDO::PARAM_INT);
+				$sth->bindParam($i ++, $results[$key]->score,   \PDO::PARAM_INT);
+			}
+
 			$sth->execute();
 
+			unset($results);
+
 			$sth = $dbh->prepare('
-				UPDATE LOW_PRIORITY items
-				STRAIGHT_JOIN (
-					SELECT
-						users_items.item_id,
-						AVG(users_items.score) AS score
-					FROM users_items
-					WHERE
-						users_items.item_id IN ( ' . implode(', ', $itemIds) . ' )
-					GROUP BY users_items.item_id
-					) AS main ON main.item_id = items.id
-				SET
-					items.score = main.score
+				SELECT
+					items.id,
+					AVG(users_items.score) AS score
+				FROM                items
+				STRAIGHT_JOIN users_items ON users_items.item_id = items.id
 				WHERE
+					items.id IN ( ' . implode(', ', $itemIds) . ' ) AND
 					items.short = 0
+				GROUP BY items.id
 				');
 
 			$sth->execute();
+
+			$results = $sth->fetchAll(\PDO::FETCH_OBJ);
+
+			foreach ( $results as $result ) {
+				$sth = $dbh->prepare('
+					UPDATE LOW_PRIORITY items
+					SET
+						score = :score
+					WHERE
+						id = :id
+					');
+
+				$sth->bindParam('id',    $result->id,    \PDO::PARAM_INT);
+				$sth->bindParam('score', $result->score, \PDO::PARAM_INT);
+
+				$sth->execute();
+			}
+
+			unset($results);
 		}
 
 		return array(count($itemIds), count($userIds));
