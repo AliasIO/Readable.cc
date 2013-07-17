@@ -118,27 +118,29 @@ class Learn extends \Swiftlet\Model
 
 			$results = $sth->fetchAll(\PDO::FETCH_OBJ);
 
-			$sth = $dbh->prepare('
-				INSERT LOW_PRIORITY INTO users_items (
-					user_id,
-					item_id,
-					score
-				) VALUES ' . implode(', ', array_fill(0, count($results), '( ?, ?, ? )')) . '
-				ON DUPLICATE KEY UPDATE
-					score = VALUES(score)
-				');
+			if ( $results ) {
+				$sth = $dbh->prepare('
+					INSERT LOW_PRIORITY INTO users_items (
+						user_id,
+						item_id,
+						score
+					) VALUES ' . implode(', ', array_fill(0, count($results), '( ?, ?, ? )')) . '
+					ON DUPLICATE KEY UPDATE
+						score = VALUES(score)
+					');
 
-			$i = 1;
+				$i = 1;
 
-			foreach( $results as $key => $result ) {
-				$sth->bindParam($i ++, $results[$key]->user_id, \PDO::PARAM_INT);
-				$sth->bindParam($i ++, $results[$key]->item_id, \PDO::PARAM_INT);
-				$sth->bindParam($i ++, $results[$key]->score,   \PDO::PARAM_INT);
+				foreach ( $results as $key => $result ) {
+					$sth->bindParam($i ++, $results[$key]->user_id, \PDO::PARAM_INT);
+					$sth->bindParam($i ++, $results[$key]->item_id, \PDO::PARAM_INT);
+					$sth->bindParam($i ++, $results[$key]->score,   \PDO::PARAM_INT);
+				}
+
+				$sth->execute();
+
+				unset($results);
 			}
-
-			$sth->execute();
-
-			unset($results);
 
 			$sth = $dbh->prepare('
 				SELECT
@@ -156,22 +158,24 @@ class Learn extends \Swiftlet\Model
 
 			$results = $sth->fetchAll(\PDO::FETCH_OBJ);
 
-			foreach ( $results as $result ) {
-				$sth = $dbh->prepare('
-					UPDATE LOW_PRIORITY items
-					SET
-						score = :score
-					WHERE
-						id = :id
-					');
+			if ( $results ) {
+				foreach ( $results as $result ) {
+					$sth = $dbh->prepare('
+						UPDATE LOW_PRIORITY items
+						SET
+							score = :score
+						WHERE
+							id = :id
+						');
 
-				$sth->bindParam('id',    $result->id,    \PDO::PARAM_INT);
-				$sth->bindParam('score', $result->score, \PDO::PARAM_INT);
+					$sth->bindParam('id',    $result->id,    \PDO::PARAM_INT);
+					$sth->bindParam('score', $result->score, \PDO::PARAM_INT);
 
-				$sth->execute();
+					$sth->execute();
+				}
+
+				unset($results);
 			}
-
-			unset($results);
 		}
 
 		return array(count($itemIds), count($userIds));
