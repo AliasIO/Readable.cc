@@ -2,13 +2,32 @@
 
 namespace Swiftlet;
 
+/**
+ * Controller class
+ * @abstract
+ * @property Interfaces\App $app
+ * @property Interfaces\View $view
+ * @property string $title
+ */
 abstract class Controller implements Interfaces\Controller
 {
-	protected
-		$app,
-		$view,
-		$title
-		;
+	/**
+	 * Application instance
+	 * @var Interfaces\App
+	 */
+	protected $app;
+
+	/**
+	 * View instance
+	 * @var Interfaces\View
+	 */
+	protected $view;
+
+	/**
+	 * Page title
+	 * @var string
+	 */
+	protected $title;
 
 	/**
 	 * Constructor
@@ -28,15 +47,5 @@ abstract class Controller implements Interfaces\Controller
 	 */
 	public function index()
 	{
-	}
-
-	/**
-	 * Fallback in case action doesn't exist
-	 *
-	 * @throws Exception
-	 */
-	public function notImplemented()
-	{
-		throw new Exception('Action ' . $this->view->htmlEncode($this->app->getAction()) . ' not implemented in ' . get_called_class());
 	}
 }

@@ -2,20 +2,70 @@
 
 namespace Swiftlet;
 
+/**
+ * Application class
+ */
 class App implements Interfaces\App
 {
-	protected
-		$action         = 'index',
-		$args           = array(),
-		$config         = array(),
-		$controller,
-		$controllerName = 'Index',
-		$hooks          = array(),
-		$plugins        = array(),
-		$rootPath       = '/',
-		$singletons     = array(),
-		$view
-		;
+	/**
+	 * Action name
+	 * @var string
+	 */
+	protected $action = 'index';
+
+	/**
+	 * Arguments
+	 * @var array
+	 */
+	protected $args = array();
+
+	/**
+	 * Configuration values
+	 * @var array
+	 */
+	protected $config = array();
+
+	/**
+	 * Controller intance
+	 * @var Interfaces/Controller
+	 */
+	protected $controller;
+
+	/**
+	 * Controller name
+	 * @var string
+	 */
+	protected $controllerName = 'Index';
+
+	/**
+	 * Hooks
+	 * @var array
+	 */
+	protected $hooks = array();
+
+	/**
+	 * Plugins
+	 * @var array
+	 */
+	protected $plugins = array();
+
+	/**
+	 * Root path
+	 * @var string
+	 */
+	protected $rootPath = '/';
+
+	/**
+	 * Re-usable model instances
+	 * @var array
+	 */
+	protected $singletons = array();
+
+	/**
+	 * View instance
+	 * @var Interfaces/View
+	 */
+	protected $view;
 
 	/**
 	 * Run the application
@@ -40,7 +90,7 @@ class App implements Interfaces\App
 
 		// Extract controller name, view name, action name and arguments from URL
 		if ( !empty($_GET['q']) ) {
-			$this->args = explode('/', $_GET['q']);
+			$this->args = explode('/', preg_replace('/^public\//', '', $_GET['q']));
 
 			if ( $this->args ) {
 				$this->controllerName = str_replace(' ', '/', ucwords(str_replace('_', ' ', str_replace('-', '', array_shift($this->args)))));
@@ -98,10 +148,18 @@ class App implements Interfaces\App
 			if ( $method->isPublic() && !$method->isFinal() && !$method->isConstructor() ) {
 				$this->controller->{$this->action}();
 			} else {
-				$this->controller->notImplemented();
+				$this->controller = new Controllers\Error404($this, $this->view);
+
+				$this->view->name = 'error404';
+
+				$this->controller->index();
 			}
 		} else {
-			$this->controller->notImplemented();
+			$this->controller = new Controllers\Error404($this, $this->view);
+
+			$this->view->name = 'error404';
+
+			$this->controller->index();
 		}
 
 		$this->registerHook('actionAfter');
@@ -252,7 +310,6 @@ class App implements Interfaces\App
 	 * @param string $string
 	 * @param string $file
 	 * @param int $line
-	 *
 	 * @throws Exception
 	 */
 	public function error($number, $string, $file, $line)

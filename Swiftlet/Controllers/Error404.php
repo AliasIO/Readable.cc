@@ -18,12 +18,4 @@ class Error404 extends \Swiftlet\Controller
 			header('Status: 404 Not Found');
 		}
 	}
-
-	/**
-	 * Not implemented action
-	 */
-	public function notImplemented()
-	{
-		$this->index();
-	}
 }
