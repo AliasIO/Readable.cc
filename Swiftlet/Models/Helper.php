@@ -242,7 +242,13 @@ class Helper extends \Swiftlet\Model
 	{
 		$string = trim(preg_replace('/\s+/', ' ', preg_replace('/\b([0-9]+.)\b/', ' ', preg_replace('/\W/', ' ', preg_replace('/&[a-z]+/', '', strtolower($string))))));
 
-		return array_filter(explode(' ', $string));
+		$words = array_filter(explode(' ', $string));
+
+		foreach ( $words as $i => $word ) {
+			$words[$i] = substr($word, 0, 15);
+		}
+
+		return array_unique($words);
 	}
 
 	/**

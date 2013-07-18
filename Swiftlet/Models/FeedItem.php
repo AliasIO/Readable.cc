@@ -88,7 +88,7 @@ class FeedItem extends \Swiftlet\Model
 				}
 
 				$sth = $dbh->prepare('
-					INSERT LOW_PRIORITY IGNORE INTO words (
+					INSERT IGNORE INTO words (
 						word
 					) VALUES ' . implode(', ', array_fill(0, count($words), '( ? )')) . '
 					');
@@ -102,16 +102,6 @@ class FeedItem extends \Swiftlet\Model
 				$sth->execute();
 
 				// Link item to words
-				$inserts = array();
-
-				foreach( $words as $word ) {
-					$inserts[] = array(
-						'id'    => $this->id,
-						'word'  => $word,
-						'count' => $wordsCount[$word]
-						);
-				}
-
 				$sth = $dbh->prepare('
 					INSERT LOW_PRIORITY IGNORE INTO items_words (
 						item_id,

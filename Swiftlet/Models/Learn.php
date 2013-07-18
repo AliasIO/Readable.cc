@@ -109,6 +109,7 @@ class Learn extends \Swiftlet\Model
 						items.id IN ( ' . implode(', ', $itemIds) . ' ) AND
 						items.short = 0
 					) AS main
+				WHERE score NOT NULL
 				GROUP BY user_id, item_id
 				');
 
