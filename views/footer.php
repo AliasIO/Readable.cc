@@ -39,20 +39,6 @@
 		<script src="<?= $this->app->getRootPath() ?>lib/jquery-1.9.1.min.js"></script>
 		<script src="<?= $this->app->getRootPath() ?>js/readable.js?r"></script>
 
-		<script>
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-216336-24']);
-			_gaq.push(['_setDomainName', 'readable.cc']);
-			_gaq.push(['_setAllowLinker', true]);
-			_gaq.push(['_trackPageview']);
-
-			(function() {
-				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			})();
-		</script>
-
 		<!-- Piwik -->
 		<script type="text/javascript">
 			var _paq = _paq || [];
