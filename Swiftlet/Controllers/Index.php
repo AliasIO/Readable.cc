@@ -47,7 +47,7 @@ class Index extends \Swiftlet\Controllers\Read
 				feeds.link  AS feed_link,
 				items.*
 			FROM feeds
-			STRAIGHT JOIN (
+			STRAIGHT_JOIN (
 				SELECT
 					id,
 					feed_id,
