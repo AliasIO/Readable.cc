@@ -44,21 +44,25 @@ class Index extends \Swiftlet\Controllers\Read
 			SELECT
 				feeds.id    AS feed_id,
 				feeds.title AS feed_title,
-				feeds.link  AS feed_link,
-				items.id,
-				items.score,
-				0           AS vote,
-				0           AS starred,
-				0           AS feed_subscribed
-			FROM       items
-			STRAIGHT_JOIN feeds ON feeds.id = items.feed_id AND feeds.hidden = 0
-			WHERE
-				items.score   > 0 AND
-				items.hidden  = 0 AND
-				items.english = 1 AND
-				items.short   = 0
-				' . ( $userId && $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
-			ORDER BY DATE(IF(items.posted_at, items.posted_at, items.created_at)) DESC, items.score DESC
+				feeds.link  AS feed_link
+			FROM feeds
+			STRAIGHT JOIN (
+				SELECT
+					id,
+					feed_id,
+					score,
+					0           AS vote,
+					0           AS starred,
+					0           AS feed_subscribed
+				FROM          items
+				WHERE
+					items.score   > 0 AND
+					items.hidden  = 0 AND
+					items.english = 1 AND
+					items.short   = 0
+					' . ( $userId && $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
+				ORDER BY DATE(IF(items.posted_at, items.posted_at, items.created_at)) DESC, items.score DESC
+			) AS items ON items.feed_id = feeds.id
 			';
 
 		if ( $userId ) {
