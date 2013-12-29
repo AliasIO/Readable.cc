@@ -42,7 +42,6 @@ class Index extends \Swiftlet\Controllers\Read
 
 		$select = '
 			SELECT
-				feeds.id    AS feed_id,
 				feeds.title AS feed_title,
 				feeds.link  AS feed_link,
 				items.*
