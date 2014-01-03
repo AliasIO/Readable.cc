@@ -27,4 +27,10 @@
 </div>
 <?php endif ?>
 
+<p id="donate">
+	<a href="<?= $this->app->getRootPath() ?>donate">Support Readable.cc with a donation.</a>
+
+	<a class="close" href="javascript: void(0);">&times;</a>
+</p>
+
 <?php require 'footer.php' ?>

@@ -28,10 +28,6 @@
 
 		<div id="overlay"></div>
 
-		<p id="feedback">
-			<a href="<?= $this->app->getRootPath() ?>help#contact">Feedback</a>
-		</p>
-
 		<!--
 		<script src="<?= $this->app->getRootPath() ?>lib/mathjax/MathJax.js?config=readable.js"></script>
 		-->

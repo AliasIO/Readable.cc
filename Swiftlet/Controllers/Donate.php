@@ -2,10 +2,10 @@
 
 namespace Swiftlet\Controllers;
 
-class Privacy extends \Swiftlet\Controller
+class Donate extends \Swiftlet\Controller
 {
 	protected
-		$title = 'Privacy Statement'
+		$title = 'Donate'
 		;
 
 	/**

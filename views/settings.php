@@ -14,6 +14,7 @@
 </div>
 <?php endif ?>
 
+<?php /*
 <div class="jump">
 	<p>
 		Jump to:
@@ -26,6 +27,7 @@
 </div>
 
 <?php $payments = $this->get('payments') ?>
+*/ ?>
 
 <form id="form-settings" method="post" action="<?= $this->app->getRootPath() ?>settings" class="well">
 	<input type="hidden" name="form" value="settings">
@@ -127,6 +129,7 @@
 	</fieldset>
 </form>
 
+<?php /*
 <div class="divider"></div>
 
 <h2 id="payments">Payments</h2>
@@ -171,6 +174,7 @@
 <?php if ( !$this->get('paid') ): ?>
 <?php require('views/pay-partial.php') ?>
 <?php endif ?>
+*/ ?>
 
 <div class="divider"></div>
 

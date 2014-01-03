@@ -17,10 +17,10 @@ $textMargin: 15px
 $small: 80%
 $medium: 85%
 
-+font-face('MerriweatherRegular', font-files('merriweather/Merriweather-Regular-webfont.woff', 'merriweather/Merriweather-Regular-webfont.ttf', 'merriweather/Merriweather-Regular-webfont.svg#MerriweatherRegular'), 'merriweather/Merriweather-Regular-webfont.eot', normal, normal) 
-+font-face('MerriweatherItalic',  font-files('merriweather/Merriweather-Italic-webfont.woff',  'merriweather/Merriweather-Italic-webfont.ttf',  'merriweather/Merriweather-Italic-webfont.svg#MerriweatherItalic'),   'merriweather/Merriweather-Italic-webfont.eot',  normal, italic) 
-+font-face('MerriweatherBold',    font-files('merriweather/Merriweather-Bold-webfont.woff',    'merriweather/Merriweather-Bold-webfont.ttf',    'merriweather/Merriweather-Bold-webfont.svg#MerriweatherBold'),       'merriweather/Merriweather-Bold-webfont.eot',    bold,   normal) 
-+font-face('MerriweatherHeavy',   font-files('merriweather/Merriweather-Black-webfont.woff',   'merriweather/Merriweather-Black-webfont.ttf',   'merriweather/Merriweather-Black-webfont.svg#MerriweatherHeavy'),     'merriweather/Merriweather-Black-webfont.eot',   bold,   normal) 
++font-face('MerriweatherRegular', font-files('merriweather/Merriweather-Regular-webfont.woff', 'merriweather/Merriweather-Regular-webfont.ttf', 'merriweather/Merriweather-Regular-webfont.svg#MerriweatherRegular'), 'merriweather/Merriweather-Regular-webfont.eot', normal, normal)
++font-face('MerriweatherItalic',  font-files('merriweather/Merriweather-Italic-webfont.woff',  'merriweather/Merriweather-Italic-webfont.ttf',  'merriweather/Merriweather-Italic-webfont.svg#MerriweatherItalic'),   'merriweather/Merriweather-Italic-webfont.eot',  normal, italic)
++font-face('MerriweatherBold',    font-files('merriweather/Merriweather-Bold-webfont.woff',    'merriweather/Merriweather-Bold-webfont.ttf',    'merriweather/Merriweather-Bold-webfont.svg#MerriweatherBold'),       'merriweather/Merriweather-Bold-webfont.eot',    bold,   normal)
++font-face('MerriweatherHeavy',   font-files('merriweather/Merriweather-Black-webfont.woff',   'merriweather/Merriweather-Black-webfont.ttf',   'merriweather/Merriweather-Black-webfont.svg#MerriweatherHeavy'),     'merriweather/Merriweather-Black-webfont.eot',   bold,   normal)
 
 *
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
@@ -100,13 +100,13 @@ p, table
 	margin: 0 0 $textMargin
 
 strong, b
-	font-family: $fontBodyBold 
+	font-family: $fontBodyBold
 
 em, i
-	font-family: $fontBodyItalic 
+	font-family: $fontBodyItalic
 
 	strong, b
-		font-family: $fontBodyItalic 
+		font-family: $fontBodyItalic
 
 code
 	font-style: normal
@@ -146,7 +146,7 @@ pre
 
 blockquote
 	background: #f8f8f8
-	font-family: $fontBodyItalic 
+	font-family: $fontBodyItalic
 	font-style: italic
 	margin-bottom: $textMargin
 	padding: $textMargin $textMargin 0 $textMargin
@@ -405,7 +405,7 @@ header
 		margin: 40px 0 10px
 
 	p
-		font-family: $fontBodyItalic 
+		font-family: $fontBodyItalic
 		height: 40px
 		margin-bottom: 0
 		overflow: hidden
@@ -436,7 +436,7 @@ header
 
 #items-footer
 	color: #999
-	font-family: $fontBodyItalic 
+	font-family: $fontBodyItalic
 	font-style: italic
 	margin: 100px 0
 	text-align: center
@@ -455,7 +455,7 @@ header
 		border-bottom: 1px solid $colorBorder
 		color: $colorText2
 		height: .75em
-		font-family: $fontBodyItalic 
+		font-family: $fontBodyItalic
 		font-size: 14px
 		font-style: italic
 		margin: $textMargin 0 $textMargin + 15 0
@@ -495,7 +495,7 @@ article
 
 		ul
 			margin-top: 5px
-	
+
 	h1, h2, h3, h4, h5, h6
 		line-height: 1.5em
 
@@ -524,8 +524,8 @@ article
 		a
 			border-bottom: none
 
-	&.collapsed 
-	
+	&.collapsed
+
 		a, a:hover, a:focus, a:active
 			border-bottom: none
 			color: inherit
@@ -549,7 +549,7 @@ article
 			font-size: 1.7em
 
 	&.active.expanded
-		
+
 		&:hover .item-date .feed-options
 			display: inline
 
@@ -573,7 +573,7 @@ article
 		.entypo
 			font-size: 40px
 
-		.share	
+		.share
 			display: inline-block
 			position: relative
 
@@ -613,7 +613,7 @@ article
 	p
 
 		&.caption
-			font-family: $fontBodyItalic 
+			font-family: $fontBodyItalic
 			font-size: $small
 			font-style: italic
 			text-align: left
@@ -689,7 +689,7 @@ form
 		margin-bottom: $textMargin * 2
 		overflow: hidden
 
-		&.error 
+		&.error
 
 			.control-label
 				color: $colorError
@@ -709,16 +709,16 @@ form
 		padding-top: 5px
 		text-align: right
 		width: 160px
-	
+
 	.controls
-		margin-left: 180px	
+		margin-left: 180px
 
 		.control-label
 			margin-right: $textMargin
 			padding-top: 5px
 			text-align: left
 			width: auto
-	
+
 fieldset
 	border: 0
 	border-bottom: 1px solid $colorBorder
@@ -999,25 +999,35 @@ table
 #form-search
 	margin-top: 15px
 
-#feedback
-	border: 2px solid #fff
-	line-height: 30px
+#donate
+	display: none
+	line-height: 40px
 	font-size: $small
 	position: fixed
 	text-align: center
-	bottom: 0
-	margin: 0
-	right: 0
-	width: 100px
+	bottom: -60px
+	width: 700px
 
 	a
-		background: #ccc
-		border: none
+		background: #ffe
+		border: 1px solid #eec
+		+box-shadow(0 0 50px rgba(0, 0, 0, 0.05))
+		color: $colorText3
 		display: block
-		color: #fff
+		width: 100%
+
+		&.close
+			background: none
+			border: 0
+			color: #333
+			font-weight: bold
+			position: absolute
+			top: 0
+			right: 0
+			width: 40px
 
 		&:hover
-			background: $colorText
+			text-decoration: underline
 
 @media all and (max-width: 995px)
 	.alert
@@ -1081,16 +1091,16 @@ table
 			display: none
 
 	#subscriptions-grouped
-		
+
 		span
 			display: none
 
 		td
-			
+
 			button, select
 				+opacity(1)
 
-	#feedback
+	#donate
 		display: none
 
 @media all and (max-width: 600px)
@@ -1192,7 +1202,7 @@ table
 
 		.date-separator
 			font-size: $small
-	
+
 	article
 
 		.article-actions
@@ -1217,11 +1227,11 @@ table
 		line-height: 40px
 		height: 40px
 		padding: 0 30px
-	
+
 	form
 
 		.control-group
 			margin-bottom: 20px
-	
+
 	fieldset
 		margin-top: 15px

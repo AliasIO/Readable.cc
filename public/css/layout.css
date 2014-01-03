@@ -895,23 +895,34 @@ table {
 #form-search {
   margin-top: 15px; }
 
-#feedback {
-  border: 2px solid white;
-  line-height: 30px;
+#donate {
+  display: none;
+  line-height: 40px;
   font-size: 80%;
   position: fixed;
   text-align: center;
-  bottom: 0;
-  margin: 0;
-  right: 0;
-  width: 100px; }
-  #feedback a {
-    background: #cccccc;
-    border: none;
+  bottom: -60px;
+  width: 700px; }
+  #donate a {
+    background: #ffffee;
+    border: 1px solid #eeeecc;
+    -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
+    color: #9c0001;
     display: block;
-    color: white; }
-    #feedback a:hover {
-      background: #333333; }
+    width: 100%; }
+    #donate a.close {
+      background: none;
+      border: 0;
+      color: #333333;
+      font-weight: bold;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40px; }
+    #donate a:hover {
+      text-decoration: underline; }
 
 @media all and (max-width: 995px) {
   .alert {
@@ -976,7 +987,7 @@ table {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
     opacity: 1; }
 
-  #feedback {
+  #donate {
     display: none; } }
 @media all and (max-width: 600px) {
   fieldset {

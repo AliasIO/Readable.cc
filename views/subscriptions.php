@@ -34,6 +34,7 @@
 <?php $grouped = $this->grouped ?>
 
 <?php if ( $this->feedCount ): ?>
+<?php /*
 <?php if ( !$this->get('paid') ): ?>
 <h2>Pay what you want</h2>
 
@@ -41,6 +42,7 @@
 
 <div class="divider"></div>
 <?php endif ?>
+*/ ?>
 
 <h2 id="subscriptions">Subscriptions</h3>
 
