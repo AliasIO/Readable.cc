@@ -81,7 +81,7 @@ class Signin extends \Swiftlet\Controller
 
 						break;
 					default:
-						throw new \SwiftletException($e->getMessage());
+						throw new \Swiftlet\Exception($e->getMessage());
 				}
 
 				$this->view->set('error', $error);
