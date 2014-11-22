@@ -59,11 +59,6 @@ class Cron extends \Swiftlet\Controller
 			}
 		}
 
-		// Learning
-		$result = $this->app->getSingleton('learn')->learn($itemIds);
-
-		echo 'Learned for ' . $result[0] . ' items and ' . $result[1] . " users<br>\n";
-
 		// Prune sessions
 		if ( $handle = opendir('sessions') ) {
 			while ( ( $file = readdir($handle) ) !== FALSE ) {

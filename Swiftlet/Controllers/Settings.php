@@ -54,7 +54,6 @@ class Settings extends \Swiftlet\Controller
 		$session = $this->app->getSingleton('session');
 
 		$this->view->set('links',    $session->get('external_links'));
-		$this->view->set('order',    $session->get('item_order'));
 		$this->view->set('timezone', $session->get('timezone'));
 		$this->view->set('email',    $session->get('email'));
 		$this->view->set('paid',     $this->app->getSingleton('helper')->userPaid());
@@ -141,7 +140,6 @@ class Settings extends \Swiftlet\Controller
 		$session = $this->app->getSingleton('session');
 
 		$links    = isset($_POST['links'])    ? $_POST['links']    : 0;
-		$order    = isset($_POST['order'])    ? $_POST['order']    : 0;
 		$timeZone = isset($_POST['timezone']) ? $_POST['timezone'] : 0;
 
 		$success = false;
@@ -153,7 +151,6 @@ class Settings extends \Swiftlet\Controller
 			$sth = $dbh->prepare($sql='
 				UPDATE users SET
 					external_links = :external_links,
-					item_order     = :item_order,
 					timezone       = :timezone,
 					updated_at     = UTC_TIMESTAMP()
 				WHERE
@@ -163,7 +160,6 @@ class Settings extends \Swiftlet\Controller
 
 			$sth->bindParam(':id',             $this->userId, \PDO::PARAM_INT);
 			$sth->bindParam(':external_links', $links,        \PDO::PARAM_INT);
-			$sth->bindParam(':item_order',     $order,        \PDO::PARAM_INT);
 			$sth->bindParam(':timezone',       $timeZone,     \PDO::PARAM_INT);
 
 			$sth->execute();
@@ -171,7 +167,6 @@ class Settings extends \Swiftlet\Controller
 			$success = 'Your changes have been saved.';
 
 			$session->set('external_links', $links);
-			$session->set('item_order',     $order);
 			$session->set('timezone',       $timeZone);
 		}
 
@@ -182,7 +177,6 @@ class Settings extends \Swiftlet\Controller
 		}
 
 		$this->view->set('links',    $links);
-		$this->view->set('order',    $order);
 		$this->view->set('timezone', $timeZone);
 	}
 

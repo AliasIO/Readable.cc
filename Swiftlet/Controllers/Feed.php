@@ -94,9 +94,7 @@ class Feed extends \Swiftlet\Controllers\Read
 					items.contents,
 					items.posted_at,
 					NULL             AS folder_id,
-					0                AS vote,
 					0                AS starred,
-					0                AS score,
 					0                AS feed_subscribed
 				FROM       feeds
 				STRAIGHT_JOIN items ON items.feed_id = feeds.id

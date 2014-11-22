@@ -59,6 +59,11 @@ class FeedItem extends \Swiftlet\Model
 			return;
 		}
 
+		// Don't save items older than 6 months
+		if ( strtotime($data->postedAt) < strtotime('-6 months') ) {
+			return;
+		}
+
 		$sth->bindParam('title',     $data->title);
 		$sth->bindParam('url',       $data->url);
 		$sth->bindParam('contents',  $data->contents);

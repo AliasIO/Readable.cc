@@ -60,19 +60,17 @@ class Reading extends \Swiftlet\Controllers\Read
 				items.contents,
 				items.posted_at,
 				users_feeds.folder_id,
-				COALESCE(users_items.vote,  0) AS vote,
-				COALESCE(users_items.score, 0) AS score,
 				COALESCE(users_items.saved, 0) AS starred,
 				1 AS feed_subscribed
       FROM       users_feeds
 			STRAIGHT_JOIN       items ON       items.feed_id = users_feeds.feed_id
       STRAIGHT_JOIN       feeds ON       feeds.id      =       items.feed_id
-			LEFT  JOIN users_items ON users_items.item_id =       items.id      AND users_items.user_id = ?
+			LEFT     JOIN users_items ON users_items.item_id =       items.id      AND users_items.user_id = ?
 			WHERE
 				users_feeds.user_id = ? AND
 				( users_items.read    = 0 OR users_items.read IS NULL )
 				' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
-			ORDER BY DATE(IF(items.posted_at, items.posted_at, items.created_at)) DESC' . ( $this->app->getSingleton('session')->get('item_order') == self::ITEM_SORT_RELEVANCE_TIME ? ', users_items.score DESC' : '' ) . '
+			ORDER BY DATE(IF(items.posted_at, items.posted_at, items.created_at)) DESC
 			LIMIT ?
 			');
 

@@ -41,7 +41,6 @@ class Signup extends \Swiftlet\Controller
 						$session->set('email',          $user->email);
 						$session->set('enabled',        $user->enabled);
 						$session->set('external_links', $user->external_links);
-						$session->set('item_order',     $user->item_order);
 						$session->set('timezone',       $user->timezone);
 
 						header('Location: ' . $this->app->getRootPath() . 'subscriptions/welcome');

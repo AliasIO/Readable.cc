@@ -50,18 +50,15 @@ class Index extends \Swiftlet\Controllers\Read
 				SELECT
 					id,
 					feed_id,
-					score,
-					0           AS vote,
 					0           AS starred,
 					0           AS feed_subscribed
 				FROM          items
 				WHERE
-					items.score   > 0 AND
 					items.hidden  = 0 AND
 					items.english = 1 AND
 					items.short   = 0
 					' . ( $userId && $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
-				ORDER BY DATE(IF(items.posted_at, items.posted_at, items.created_at)) DESC, items.score DESC
+				ORDER BY DATE(IF(items.posted_at, items.posted_at, items.created_at)) DESC
 			) AS items ON items.feed_id = feeds.id
 			';
 
@@ -72,8 +69,6 @@ class Index extends \Swiftlet\Controllers\Read
 					main.feed_id,
 					main.feed_title,
 					main.feed_link,
-					COALESCE(users_items.score, 0)   AS score,
-					COALESCE(users_items.vote,  0)   AS vote,
 					COALESCE(users_items.saved, 0)   AS starred,
 					IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
 				FROM (

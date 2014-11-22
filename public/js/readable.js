@@ -388,16 +388,7 @@
 				app.items.scrollTo($(this));
 			});
 
-			// Register votes
-			$('#items').on('click', 'article.active .item-vote', function(e) {
-				e.preventDefault();
-
-				$(this).trigger('blur');
-
-				app.items.vote($(this).data('item-id'), $(this).hasClass('active') ? 0 : $(this).data('vote'));
-			});
-
-			// Register votes
+			// Register subscribes
 			$('#items').on('click', 'article.active .subscription', function(e) {
 				var
 					feedId = $(this).data('feed-id'),
@@ -701,45 +692,6 @@
 					}
 
 					return false;
-				}
-			});
-
-			return app.items;
-		},
-
-		vote: function(itemId, vote) {
-			var iconUp, iconDown, iconLastActive, iconActive;
-
-			app.trackEvent('app.items', 'vote', vote);
-
-			if ( !app.signedIn ) {
-				app.notSignedIn();
-
-				return;
-			}
-
-			iconUp         = $('article .item-vote[data-item-id=' + itemId + '][data-vote=1]');
-			iconDown       = $('article .item-vote[data-item-id=' + itemId + '][data-vote=-1]');
-			iconLastActive = $('article .item-vote[data-item-id=' + itemId + '].active');
-			iconActive     = vote === 1 ? iconUp : ( vote === -1 ? iconDown : null );
-
-			iconUp  .removeClass('active');
-			iconDown.removeClass('active');
-
-			if ( iconActive ) {
-				iconActive.addClass('active');
-			}
-
-			$.ajax({
-				url: app.rootPath + 'read/vote/',
-				method: 'post',
-				data: { item_id: itemId, vote: vote, sessionId: app.sessionId }
-			}).fail(function() {
-				iconUp  .removeClass('active');
-				iconDown.removeClass('active');
-
-				if ( iconLastActive ) {
-					iconLastActive.addClass('active');
 				}
 			});
 

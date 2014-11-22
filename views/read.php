@@ -24,15 +24,14 @@
 <?php foreach ( $items as $item ): ?>
 <article
 	data-item-id="<?= $item->id ?>"
-	data-item-score="<?= $item->score ?>"
 	data-item-url="<?= $this->htmlEncode($item->url) ?>"
 	data-item-date="<?= $item->posted_at ? date('F j, Y', $item->posted_at) : '' ?>"
 	data-folder-id="<?= $item->folder_id ?: 'none' ?>"
 	data-feed-id="<?= $item->feed_id ?>"
 	data-feed-host="<?= parse_url($item->feed_link, PHP_URL_HOST) ?>"
-	class="inactive collapsed <?= $item->score < 0 ? ' boring' : '' ?>"
+	class="inactive collapsed"
 	>
-	<h1<?= $item->score < 0 ? ' title="You may find this article uninteresting (based on articles you voted on)"' : '' ?>>
+	<h1>
 		<a href="<?= $this->htmlEncode($item->url) ?>"><?= trim($item->title) ?: '(No title)' ?></a>
 	</h1>
 
@@ -67,9 +66,7 @@
 		</div>
 
 		<div class="article-actions">
-			<i data-item-id="<?= $item->id ?>"                class="item-star entypo star<?=        $item->starred    ? ' active' : '' ?>" title="Star this article to read later"></i>
-			<i data-item-id="<?= $item->id ?>" data-vote="1"  class="item-vote entypo thumbs-up<?=   $item->vote ==  1 ? ' active' : '' ?>" title="Promote articles like these in &lsquo;My Reading&rsquo;"></i>
-			<i data-item-id="<?= $item->id ?>" data-vote="-1" class="item-vote entypo thumbs-down<?= $item->vote == -1 ? ' active' : '' ?>" title="Demote articles like these in &lsquo;My Reading&rsquo;"></i>
+			<i data-item-id="<?= $item->id ?>" class="item-star entypo star<?= $item->starred ? ' active' : '' ?>" title="Star this article to read later"></i>
 			<div class="share">
 				<i data-item-id="<?= $item->id ?>" class="item-share entypo share" title="Share this article"></i>
 
@@ -80,12 +77,6 @@
 				</ul>
 			</div>
 		</div>
-
-		<?php if ( $item->score < 0 ): ?>
-		<p class="alert">
-			Based on content you voted on this article has automatically been marked as boring. If we got it wrong, press the thumbs up icon to help us understand your interests better.
-		</p>
-		<?php endif ?>
 	</div>
 </article>
 <?php endforeach ?>

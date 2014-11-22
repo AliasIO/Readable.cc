@@ -23,7 +23,7 @@
 </p>
 
 <p>
-	Sign up to manage your own <a href="https://en.wikipedia.org/wiki/Web_feed">feeds</a> and vote on articles. Articles we believe you'll find interesting are promoted to the top of your reading list.
+	Sign up to manage your own <a href="https://en.wikipedia.org/wiki/Web_feed">feeds</a>.
 </p>
 
 <form id="form-signup" method="post" action="<?= $this->app->getRootPath() ?>signup" class="form-horizontal well">

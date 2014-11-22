@@ -27,16 +27,6 @@
 </p>
 
 <p>
-	New and interesting content is automatically promoted to the top of your reading list based on articles you vote for. Content the majority is likely to find
-	interesting appears on the &lsquo;<a href="<?= $this->app->getRootPath() ?>">Popular Reading</a>&rsquo; page.
-</p>
-
-<p>
-	Headlines are greyed out and stricken through when we believe you will find the article boring. If we guessed wrong, mark the item as interesting (thumbs up icon)
-	to help the system understand your interests better.
-</p>
-
-<p>
 	Organise your subscriptions in folders. Folders are public and can be shared anonymously with anyone.
 </p>
 

@@ -97,8 +97,6 @@ class Folder extends \Swiftlet\Controllers\Read
 						items.contents,
 						items.posted_at,
 						users_feeds.folder_id,
-						COALESCE(users_items.vote,  0) AS vote,
-						COALESCE(users_items.score, 0) AS score,
 						COALESCE(users_items.saved, 0) AS starred,
 						1 AS feed_subscribed
 					FROM       folders
@@ -110,7 +108,7 @@ class Folder extends \Swiftlet\Controllers\Read
 						folders.id         = ? AND
 						( users_items.read = 0 OR users_items.read IS NULL )
 						' . ( $excludes ? 'AND items.id NOT IN ( ' . implode(', ', array_fill(0, count($excludes), '?')) . ' )' : '' ) . '
-					ORDER BY DATE(IF(items.posted_at, items.posted_at, items.created_at)) DESC, users_items.score DESC
+					ORDER BY DATE(IF(items.posted_at, items.posted_at, items.created_at)) DESC
 					LIMIT ?
 					');
 
@@ -138,9 +136,7 @@ class Folder extends \Swiftlet\Controllers\Read
 						items.contents,
 						items.posted_at,
 						folders.id       AS folder_id,
-						0                AS vote,
 						0                AS starred,
-						0                AS score,
 						0                AS feed_subscribed
 					FROM       folders
 					STRAIGHT_JOIN users_feeds ON users_feeds.folder_id =     folders.id

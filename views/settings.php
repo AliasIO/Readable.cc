@@ -45,17 +45,6 @@
 			</div>
 		</div>
 
-		<div class="control-group <?= $this->get('error-order') ? 'error' : '' ?>">
-			<label class="control-label" for="order">Sort articles by</label>
-
-			<div class="controls">
-				<select name="order" id="order">
-					<option value="0"<?= $this->get('order') == 0 ? ' selected="selected"' : '' ?>>Time and relevance</option>
-					<option value="1"<?= $this->get('order') == 1 ? ' selected="selected"' : '' ?>>Time</option>
-				</select>
-			</div>
-		</div>
-
 		<div class="control-group <?= $this->get('error-password-repeat') ? 'error' : '' ?>">
 			<label class="control-label" for="timezone">Time zone</label>
 
