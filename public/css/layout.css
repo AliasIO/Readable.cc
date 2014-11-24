@@ -191,8 +191,8 @@ q:before, q:after, blockquote:before, blockquote:after {
   .alert-notice a {
     border-color: #cc9; }
     .alert-notice a:hover, .alert-notice a:focus, .alert-notice a:active {
-      color: #996;
-      border-color: #996; }
+      color: #774;
+      border-color: #774; }
 
 .alert-error {
   color: #9c0001;
