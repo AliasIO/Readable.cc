@@ -185,9 +185,9 @@ q:before, q:after, blockquote:before, blockquote:after {
       border-color: #1c9b47; }
 
 .alert-notice {
-  color: #996;
+  color: #774;
   background-color: #ffc;
-  border-color: #eec; }
+  border-color: #eaeacc; }
   .alert-notice a {
     border-color: #cc9; }
     .alert-notice a:hover, .alert-notice a:focus, .alert-notice a:active {

@@ -16,7 +16,7 @@
 
 <?php if ( $this->feedCount ): ?>
 <div class="alert alert-notice">
-	<p>Please support Readable.cc with a <a href="">donation</a>!</p>
+	Please support Readable.cc with a <a href="">donation</a>!
 </div>
 <?php endif ?>
 
