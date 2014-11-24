@@ -16,6 +16,12 @@
 
 <?php $feeds = $this->feeds ?>
 
+<?php if ( $this->feedCount ): ?>
+<p id="donate">
+	Please support Readable.cc with a <a href="">donation</a>!
+</p>
+<?php endif ?>
+
 <div class="jump">
 	<p>
 		Jump to:
@@ -45,10 +51,6 @@
 */ ?>
 
 <h2 id="subscriptions">Subscriptions</h3>
-
-<p>
-	Please support Readable.cc with a <a href="">donation</a>!
-</p>
 
 <div id="subscriptions-grouped">
 	<?php foreach ( $grouped as $group ): ?>

@@ -994,34 +994,7 @@ table
 	margin-top: 15px
 
 #donate
-	display: none
-	line-height: 40px
-	font-size: $small
-	position: fixed
-	text-align: center
-	bottom: -60px
-	width: 700px
-
-	a
-		background: #ffe
-		border: 1px solid #eec
-		+box-shadow(0 0 50px rgba(0, 0, 0, 0.05))
-		color: $colorText3
-		display: block
-		width: 100%
-
-		&.close
-			background: none
-			border: 0
-			color: #333
-			font-weight: bold
-			position: absolute
-			top: 0
-			right: 0
-			width: 40px
-
-		&:hover
-			text-decoration: underline
+	color: $colorText3
 
 @media all and (max-width: 995px)
 	.alert
@@ -1093,9 +1066,6 @@ table
 
 			button, select
 				+opacity(1)
-
-	#donate
-		display: none
 
 @media all and (max-width: 600px)
 	fieldset

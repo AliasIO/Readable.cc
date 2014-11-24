@@ -896,33 +896,8 @@ table {
   margin-top: 15px; }
 
 #donate {
-  display: none;
-  line-height: 40px;
-  font-size: 80%;
-  position: fixed;
-  text-align: center;
-  bottom: -60px;
-  width: 700px; }
-  #donate a {
-    background: #ffffee;
-    border: 1px solid #eeeecc;
-    -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
-    -moz-box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
-    color: #9c0001;
-    display: block;
-    width: 100%; }
-    #donate a.close {
-      background: none;
-      border: 0;
-      color: #333333;
-      font-weight: bold;
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 40px; }
-    #donate a:hover {
-      text-decoration: underline; }
+	color: #9c0001;
+}
 
 @media all and (max-width: 995px) {
   .alert {
