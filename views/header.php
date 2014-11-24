@@ -41,10 +41,10 @@
 	<body>
 		<header>
 			<div class="container">
-				<h1><a href="<?= $this->app->getRootPath() ?>" title="Readable.cc RSS Reader">Readable.cc <strong>RSS Reader</strong></a></h1>
+				<h1><a href="<?= $this->app->getRootPath() ?>" title="<?= $this->app->getConfig('siteName') ?> RSS Reader"><?= $this->app->getConfig('siteName') ?> <strong>RSS Reader</strong></a></h1>
 
 				<p>
-					Readable.cc is the best web-based Google Reader alternative. RSS feeds are made readable and interesting content is identified algorithmically.
+					<?= $this->app->getConfig('siteName') ?> makes RSS feeds readable. Cost-free and ad-free.
 				</p>
 
 				<h2 class="active">
