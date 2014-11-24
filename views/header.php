@@ -10,7 +10,7 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-		<meta name="description" content="<?= $this->get('pageDescription') ? $this->get('pageDescription') . ' ' : '' ?>Readable.cc is an RSS reader that makes feeds readable. Vote on articles to improve your personal reading list.">
+		<meta name="description" content="<?= $this->get('pageDescription') ? $this->get('pageDescription') . ' ' : '' ?><?= $this->app->getConfig('siteName') ?> is a free RSS reader that makes feeds readable.">
 		<meta name="keywords"    content="readable, feed, rss, atom, reader, google, news, articles, content, reading">
 
 		<link href="<?= $this->app->getRootPath() ?>fonts/entypo/entypo.css" rel="stylesheet">
