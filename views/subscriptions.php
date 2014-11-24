@@ -14,13 +14,13 @@
 </div>
 <?php endif ?>
 
-<?php $feeds = $this->feeds ?>
-
 <?php if ( $this->feedCount ): ?>
-<p id="donate">
-	Please support Readable.cc with a <a href="">donation</a>!
-</p>
+<div class="alert alert-notice">
+	<p>Please support Readable.cc with a <a href="">donation</a>!</p>
+</div>
 <?php endif ?>
+
+<?php $feeds = $this->feeds ?>
 
 <div class="jump">
 	<p>

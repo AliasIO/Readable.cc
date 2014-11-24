@@ -184,6 +184,16 @@ q:before, q:after, blockquote:before, blockquote:after {
       color: #1c9b47;
       border-color: #1c9b47; }
 
+.alert-notice {
+  color: #996;
+  background-color: #ffc;
+  border-color: #eec; }
+  .alert-notice a {
+    border-color: #cc9; }
+    .alert-notice a:hover, .alert-notice a:focus, .alert-notice a:active {
+      color: #996;
+      border-color: #996; }
+
 .alert-error {
   color: #9c0001;
   background-color: #f2dede;
@@ -894,10 +904,6 @@ table {
 
 #form-search {
   margin-top: 15px; }
-
-#donate {
-	color: #9c0001;
-}
 
 @media all and (max-width: 995px) {
   .alert {
