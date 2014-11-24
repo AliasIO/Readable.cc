@@ -46,6 +46,10 @@
 
 <h2 id="subscriptions">Subscriptions</h3>
 
+<p>
+	Please support Readable.cc with a <a href="">donation</a>!
+</p>
+
 <div id="subscriptions-grouped">
 	<?php foreach ( $grouped as $group ): ?>
 	<?php if ( $group->feeds ): ?>
@@ -281,10 +285,6 @@
 <div class="divider"></div>
 
 <h2 id="feed-import-export">Import &amp; export feeds</h3>
-
-<p>
-	<em><a href="http://google.com/reader/subscriptions/export">Click here to export your <strong>Google Reader</strong> subscriptions</a>. Save the file and upload it below.</em>
-</p>
 
 <p>
 	It may take up to a few hours for imported feeds to appear in &lsquo;<a href="<?= $this->app->getRootPath() ?>reading">My Reading</a>&rsquo;.

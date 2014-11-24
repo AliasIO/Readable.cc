@@ -80,12 +80,6 @@
 				$('#overlay, .alert').hide();
 			});
 
-		$('#donate .close').on('click', function() {
-			$('#donate').animate({ bottom: -60 }, function() {
-				$(this).remove();
-			});
-		});
-
 		if ( app.prefs.externalLinks === app.PREF_LINKS_NEW_TAB ) {
 			$(document).on('click', 'a', function(e) {
 				if ( this.hostname && this.hostname !== window.location.hostname ) {
@@ -200,13 +194,6 @@
 				$('#items-read-line:hidden').fadeIn(app.duration.fade);
 			} else {
 				$('#items-read-line:visible').fadeOut(app.duration.fade);
-			}
-
-			// Donation
-			if ( scrollTop > 1000 && !$('#donate').is(':visible') ) {
-				$('#donate')
-					.show()
-					.animate({ bottom: -15 });
 			}
 
 			return app.header;

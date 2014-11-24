@@ -28,10 +28,6 @@
 
 		<div id="overlay"></div>
 
-		<!--
-		<script src="<?= $this->app->getRootPath() ?>lib/mathjax/MathJax.js?config=readable.js"></script>
-		-->
-
 		<script src="<?= $this->app->getRootPath() ?>lib/jquery-1.9.1.min.js"></script>
 		<script src="<?= $this->app->getRootPath() ?>js/readable.js?r"></script>
 
