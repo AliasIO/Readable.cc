@@ -56,8 +56,6 @@ class Starred extends \Swiftlet\Controllers\Read
 				items.posted_at,
 				users_feeds.folder_id AS folder_id,
 				users_items.saved     AS starred,
-				users_items.vote,
-				users_items.score,
 				IF(users_feeds.id IS NULL, 0, 1) AS feed_subscribed
 			FROM       users_items
 			STRAIGHT_JOIN       items ON       items.id      = users_items.item_id

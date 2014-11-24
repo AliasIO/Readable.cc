@@ -47,14 +47,12 @@ CREATE TABLE IF NOT EXISTS `readable_cc`.`items` (
   `language` VARCHAR(255) NULL,
   `short` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
   `english` TINYINT(1) UNSIGNED NOT NULL,
-  `score` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `feed_id_posted_at_url` (`feed_id` ASC, `posted_at` ASC, `url` ASC),
   INDEX `hidden` (`hidden` ASC),
   INDEX `language` (`language` ASC),
   INDEX `short` (`short` ASC),
   INDEX `english` (`english` ASC),
-  INDEX `score` (`score` ASC),
   INDEX `posted_at` (`posted_at` ASC),
   INDEX `created_at` (`created_at` ASC),
   INDEX `english` (`english` ASC),
@@ -205,13 +203,10 @@ CREATE TABLE IF NOT EXISTS `readable_cc`.`users_items` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` INT(11) UNSIGNED NOT NULL,
   `item_id` INT(11) UNSIGNED NOT NULL,
-  `vote` TINYINT(1) NOT NULL DEFAULT 0,
-  `score` INT(11) NOT NULL DEFAULT 0,
   `read` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
   `saved` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `user_item` (`user_id` ASC, `item_id` ASC),
-  INDEX `vote` (`vote` ASC),
   INDEX `users_items_user_id_idx` (`user_id` ASC),
   INDEX `users_items_item_id_idx` (`item_id` ASC),
   INDEX `read` (`read` ASC),
@@ -224,35 +219,6 @@ CREATE TABLE IF NOT EXISTS `readable_cc`.`users_items` (
   CONSTRAINT `users_items_item_id`
     FOREIGN KEY (`item_id`)
     REFERENCES `readable_cc`.`items` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `readable_cc`.`users_words`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `readable_cc`.`users_words` ;
-
-CREATE TABLE IF NOT EXISTS `readable_cc`.`users_words` (
-  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` INT(11) UNSIGNED NOT NULL,
-  `word_id` INT(11) UNSIGNED NOT NULL,
-  `score` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `user_word` (`user_id` ASC, `word_id` ASC),
-  INDEX `score` (`score` ASC),
-  INDEX `users_words_user_id_idx` (`user_id` ASC),
-  INDEX `users_words_word_id_idx` (`word_id` ASC),
-  CONSTRAINT `users_words_user_id`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `readable_cc`.`users` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `users_words_word_id`
-    FOREIGN KEY (`word_id`)
-    REFERENCES `readable_cc`.`words` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
