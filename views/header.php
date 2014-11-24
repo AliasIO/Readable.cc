@@ -124,7 +124,7 @@
 					<?php else: ?>
 					<li class="search<?= $this->app->getControllerName() == 'Search' ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>search">Search</a></li>
 					<li class="help  <?= $this->app->getControllerName() == 'Help'   ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>help"  >Help</a></li>
-					<li class="signup<?= $this->app->getControllerName() == 'Signup' ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>signup" title="Sign up for free!"><span>Create account</span></a></li>
+					<li class="signup<?= $this->app->getControllerName() == 'Signup' ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>signup" title="Sign up for free!"><span>Create a free account</span></a></li>
 					<li class="signin<?= $this->app->getControllerName() == 'Signin' ? ' active' : '' ?>"><a href="<?= $this->app->getRootPath() ?>signin">Sign in</a></li>
 					<?php endif ?>
 				</ul>
