@@ -7,7 +7,7 @@
 		<p>
 			<span>Navigate to next and previous articles with <code>j</code> and <code>k</code> (<a href="<?= $this->app->getRootPath() ?>help#shortcuts">more</a>).</span>
 			<?php if ( !$this->app->getSingleton('session')->get('id') ): ?>
-			<span><a href="<?= $this->app->getRootPath() ?>signup">Sign up</a> to subscribe to RSS feeds and vote on articles for personalised reading.</span>
+			<span><a href="<?= $this->app->getRootPath() ?>signup">Sign up</a> to subscribe to RSS feeds for personalised reading.</span>
 			<?php endif ?>
 		</p>
 	</div>
