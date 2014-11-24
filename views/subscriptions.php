@@ -16,7 +16,7 @@
 
 <?php if ( $this->feedCount ): ?>
 <div class="alert alert-notice">
-	Please support Readable.cc with a <a href="">donation</a>!
+	Please support <?= $this->app->getConfig('siteName') ?> with a <a href="<?= $this->app->getRootPath() ?>donate">donation</a>!
 </div>
 <?php endif ?>
 
