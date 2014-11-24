@@ -52,7 +52,13 @@ class Index extends \Swiftlet\Controllers\Read
 					feed_id,
 					0           AS starred,
 					0           AS feed_subscribed
-				FROM          items
+				FROM (
+					SELECT
+						*
+					FROM items
+					ORDER BY id DESC
+					LIMIT 1000
+				) AS items
 				WHERE
 					items.hidden  = 0 AND
 					items.english = 1 AND
